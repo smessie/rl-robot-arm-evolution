@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ML-Agents", "Unity.ML-Agents.csproj", "{bc280a80-f1f3-1e0a-e658-18822265666c}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ML-Agents.CommunicatorObjects", "Unity.ML-Agents.CommunicatorObjects.csproj", "{77d9e4f0-85c6-4406-2581-80e83ec99208}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{98782ff0-c63c-7bb0-9e67-5ebec1e27c98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ML-Agents.Editor", "Unity.ML-Agents.Editor.csproj", "{98d819fd-d98c-8969-d921-8b0aaedbf787}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ML-Agents.Runtime.Sensor.Tests", "Unity.ML-Agents.Runtime.Sensor.Tests.csproj", "{60f33082-5add-0c6e-db06-c3984b4a38b8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ML-Agents.Runtime.Tests", "Unity.ML-Agents.Runtime.Tests.csproj", "{e60f1f52-283c-2429-0323-51d908a2239f}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ML-Agents.Editor.Tests", "Unity.ML-Agents.Editor.Tests.csproj", "{7564f835-586b-5c87-428b-dc5e6cf6a42a}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ML-Agents.Editor.Tests.PublicAPI", "Unity.ML-Agents.Editor.Tests.PublicAPI.csproj", "{3af1a6c7-bc19-ea86-a092-e73fcf739d27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ML-Agents.Runtime.Utils.Tests", "Unity.ML-Agents.Runtime.Utils.Tests.csproj", "{8b3593bf-a1a9-8e32-21a4-e059bdfa40e6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{bc280a80-f1f3-1e0a-e658-18822265666c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{bc280a80-f1f3-1e0a-e658-18822265666c}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77d9e4f0-85c6-4406-2581-80e83ec99208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77d9e4f0-85c6-4406-2581-80e83ec99208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98782ff0-c63c-7bb0-9e67-5ebec1e27c98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98782ff0-c63c-7bb0-9e67-5ebec1e27c98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98d819fd-d98c-8969-d921-8b0aaedbf787}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98d819fd-d98c-8969-d921-8b0aaedbf787}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60f33082-5add-0c6e-db06-c3984b4a38b8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60f33082-5add-0c6e-db06-c3984b4a38b8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{e60f1f52-283c-2429-0323-51d908a2239f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{e60f1f52-283c-2429-0323-51d908a2239f}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7564f835-586b-5c87-428b-dc5e6cf6a42a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7564f835-586b-5c87-428b-dc5e6cf6a42a}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3af1a6c7-bc19-ea86-a092-e73fcf739d27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3af1a6c7-bc19-ea86-a092-e73fcf739d27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8b3593bf-a1a9-8e32-21a4-e059bdfa40e6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8b3593bf-a1a9-8e32-21a4-e059bdfa40e6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
