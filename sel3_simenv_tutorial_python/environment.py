@@ -69,7 +69,7 @@ if __name__ == '__main__':
     f = open('robot.urdf', 'r')
     urdf = str(f.read())
 
-    simenv = SimulatorEnvironment(env_path='./unity_environment/simenv.app',
+    simenv = SimulatorEnvironment(env_path='./unity_environment/env.x86_64',
                                   worker_id=0,
                                   use_graphics=True,
                                   urdf=urdf)
