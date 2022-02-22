@@ -2,13 +2,13 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
-./[Ll]ibrary/
-./[Tt]emp/
-./[Oo]bj/
-./[Bb]uild/
-./[Bb]uilds/
-./[Ll]ogs/
-./[Uu]ser[Ss]ettings/
+/sel3_simenv_tutorial/[Ll]ibrary/
+/sel3_simenv_tutorial/[Tt]emp/
+/sel3_simenv_tutorial/[Oo]bj/
+/sel3_simenv_tutorial/[Bb]uild/
+/sel3_simenv_tutorial/[Bb]uilds/
+/sel3_simenv_tutorial/[Ll]ogs/
+/sel3_simenv_tutorial/[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -74,3 +74,4 @@ crashlytics-build.properties
 # Extra files containing pc related paths
 ./Packages/manifest.json
 ./Packages/packages-lock.json
+Unity.ML-Agents.*
