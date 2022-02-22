@@ -15,7 +15,7 @@ public class JointController : MonoBehaviour
         var articulationBody = ArticulationBodies[jointIndex];
 
         var xDrive = articulationBody.xDrive;
-        var newTarget = xDrive.target + step * step;
+        var newTarget = xDrive.target + stepSize * step;
         xDrive.target = Mathf.Clamp(newTarget, xDrive.lowerLimit, xDrive.upperLimit);
         articulationBody.xDrive = xDrive;
     }
