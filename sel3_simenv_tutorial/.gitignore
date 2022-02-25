@@ -9,6 +9,9 @@
 /sel3_simenv_tutorial/[Bb]uilds/
 /sel3_simenv_tutorial/[Ll]ogs/
 /sel3_simenv_tutorial/[Uu]ser[Ss]ettings/
+Library
+Logs
+obj
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
