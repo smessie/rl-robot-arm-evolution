@@ -37,7 +37,7 @@ class Evaluator:
             return self.joint_angles
 
         angle_step = self.env.JOINT_ANGLE_STEP
-        joint0_angle_options = list(range(-180, 180, angle_step * 2))
+        joint0_angle_options = list(range(-180, 180, angle_step * 4))
         joint_angle_options = list(range(0, 105, angle_step))
 
         t1 = 1
