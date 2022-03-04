@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Tuple
 
+import os
 import gym
 import numpy as np
 from mlagents_envs.base_env import ActionTuple
@@ -84,8 +85,14 @@ class SimEnv(gym.Env):
 
 if __name__ == '__main__':
     import xml.etree.ElementTree as ET
-    PATH_TO_YOUR_UNITY_EXECUTABLE = 'src/environment/unity_environment/simenv.x86_64'
-    urdf = ET.tostring(ET.parse('src/environment/robot.urdf').getroot(), encoding='unicode')
+
+    # make absolute paths to avoid file-not-found errors
+    here = os.path.dirname(os.path.abspath(__file__))
+    urdf_filename = os.path.join(here, 'robot.urdf')
+    env_filename = os.path.join(here, 'unity_environment/simenv.x86_64')
+
+    PATH_TO_YOUR_UNITY_EXECUTABLE = env_filename 
+    urdf = ET.tostring(ET.parse(urdf_filename).getroot(), encoding='unicode')
 
     env = SimEnv(env_path=PATH_TO_YOUR_UNITY_EXECUTABLE,
                  urdf=urdf,
