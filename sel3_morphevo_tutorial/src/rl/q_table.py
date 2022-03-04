@@ -34,5 +34,5 @@ class QTable:
         except KeyError:
             return np.random.randint(self.n_actions)
 
-    def calculate_coverage(self) -> float:
+    def calculate_state_coverage(self) -> float:
         return len(self.table) / self.n_states

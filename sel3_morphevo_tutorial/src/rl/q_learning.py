@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 from src.environment.environment import SimEnv
 import xml.etree.ElementTree as ET
-
+from logger import Logger
 
 
 
@@ -36,6 +36,8 @@ class QLearner:
                                 len(self.ACTIONS),
                                 self.ALPHA,
                                 self.GAMMA)
+
+        self.logger = Logger()
 
     def _discretize_position(self, pos: np.ndarray) -> np.np.ndarray:
         discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
@@ -93,6 +95,8 @@ class QLearner:
 
                 epiqode_step += 1
                 state = new_state
+
+            self.logger.log_episode(episode, state, goal, episode_step, self.q_table)
 
         self.env.close()
         self.save()
