@@ -74,7 +74,7 @@ class QLearner:
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
             observations = self.env.reset()
             goal = self._generate_goal()
-            state = self._calculate_reward(observations, goal)
+            state = self._calculate_state(observations, goal)
 
             episode_step = 0
             finished = False
@@ -93,7 +93,7 @@ class QLearner:
                 # QTable update
                 self.q_table.update(state, new_state, action_index, reward)
 
-                epiqode_step += 1
+                episode_step += 1
                 state = new_state
 
             self.logger.log_episode(episode, state, goal, episode_step, self.q_table)

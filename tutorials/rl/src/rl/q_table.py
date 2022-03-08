@@ -17,7 +17,7 @@ class QTable:
         state = tuple(state)
         new_state = tuple(new_state)
 
-        if state not in self.tables:
+        if state not in self.table:
             self.table[state] = np.zeros(self.n_actions)
         if new_state not in self.table:
             self.table[new_state] = np.zeros(self.n_actions)
