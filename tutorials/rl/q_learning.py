@@ -3,12 +3,12 @@ import random
 from typing import Tuple, Set
 
 import numpy as np
-from q_table import QTable
+from src.rl.q_table import QTable
 from tqdm import tqdm
 
 from src.environment.environment import SimEnv
 import xml.etree.ElementTree as ET
-from logger import Logger
+from src.rl.logger import Logger
 
 
 
@@ -39,12 +39,12 @@ class QLearner:
 
         self.logger = Logger()
 
-    def _discretize_position(self, pos: np.ndarray) -> np.np.ndarray:
+    def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
         discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
         return discretized_pos
 
     def _get_workspace(self) -> Set[Tuple[float, float]]:
-        with open ('../environment/robot_workspace.pkl', "rb") as f:
+        with open ('src/environment/robot_workspace.pkl', "rb") as f:
             workspace = pickle.load(f)
 
         workspace = {tuple(self._discretize_position(np.array(pos))) for pos in workspace}
@@ -113,8 +113,8 @@ class QLearner:
 
 if __name__ == "__main__":
 
-    env_path = "../environment/unity_environment/simenv.x86_64"
-    urdf_path = "../environment/robot.urdf"
+    env_path = "src/environment/unity_environment/simenv.x86_64"
+    urdf_path = "src/environment/robot.urdf"
 
     model = QLearner(env_path, urdf_path, True)
     model.learn()
