@@ -242,3 +242,5 @@ crashlytics-build.properties
 Unity.ML-Agents.*
 
 .vscode/
+html/
+latex/
