@@ -1,10 +1,8 @@
 import uuid
 
 from mlagents_envs.side_channel import IncomingMessage
-from mlagents_envs.side_channel.side_channel import (
-    SideChannel,
-    OutgoingMessage,
-)
+from mlagents_envs.side_channel.side_channel import (OutgoingMessage,
+                                                     SideChannel)
 
 
 # Create the StringLogChannel class

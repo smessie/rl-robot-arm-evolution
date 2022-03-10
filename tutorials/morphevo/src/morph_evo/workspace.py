@@ -1,5 +1,7 @@
 from collections import defaultdict
+
 import numpy as np
+
 
 class Workspace:
     def __init__(self, side_length: float = 13, discretization_step: float = 1.0):
@@ -23,11 +25,9 @@ class Workspace:
     def calculate_coverage(self) -> float:
         return len(self.grid) / self.n_grid_cells
 
-
     def calculate_average_redundancy(self) -> float:
         visit_counts = 0
         for v in self.grid.values():
             visit_counts += len(v)
 
         return visit_counts / self.n_grid_cells
-

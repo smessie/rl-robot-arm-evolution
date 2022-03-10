@@ -1,28 +1,33 @@
-from environment.environment import SimEnv
-from genetic_encoding import Genome
-from tqdm import tqdm
 from itertools import count
-from evaluator import Evaluator
-from logger import Logger
+
 import numpy as np
-import ray
-from ray.util import ActorPool
 import psutil
+import ray
+from environment.environment import SimEnv
+from evaluator import Evaluator
+from genetic_encoding import Genome
+from logger import Logger
+from ray.util import ActorPool
+from tqdm import tqdm
+
+
+GENERATIONS = 100
+ENV_PATH = 'environment/unity_environment/simenv.x86_64'
+# MU = # parents
+# LAMBDA = # children
+MU, LAMBDA = 5, 5
+NUM_CORES = psutil.cpu_count()
+
 
 def calculate_fitness(genome: Genome) -> float:
     return genome.workspace.calculate_coverage()
 
-def evolution():
-    GENERATIONS = 100 
-    ENV_PATH = 'environment/unity_environment/simenv.x86_64'
-    # MU = # parents
-    # LAMBDA = # children
-    MU, LAMBDA = 5, 5
-    NUM_CORES = psutil.cpu_count()
 
+def evolution():
     genome_indexer = count(0)
 
-    evaluators = [Evaluator.remote(ENV_PATH, use_graphics=False) for _ in range(NUM_CORES)]
+    evaluators = [Evaluator.remote(ENV_PATH, use_graphics=False)
+                  for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 
     logger = Logger()
@@ -32,7 +37,8 @@ def evolution():
 
     for generation in tqdm(range(GENERATIONS), desc='Generation'):
         # Evaluate children
-        children = list(pool.map_unordered(lambda evaluator, genome: evaluator.eval_genome.remote(genome), children))
+        children = list(pool.map_unordered(
+            lambda evaluator, genome: evaluator.eval_genome.remote(genome), children))
 
         children_fitnesses = []
         for child in children:
@@ -59,4 +65,3 @@ def evolution():
             children.append(child)
 
         logger.log(generation, parents)
-

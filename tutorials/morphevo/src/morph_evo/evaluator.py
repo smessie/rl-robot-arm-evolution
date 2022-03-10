@@ -1,10 +1,12 @@
 from typing import Tuple
+
+import numpy as np
+import ray
 from environment.environment import SimEnv
 from genetic_encoding import Genome
-import numpy as np
-from workspace import Workspace
 from mlagents_envs.exception import UnityWorkerInUseException
-import ray
+from workspace import Workspace
+
 
 @ray.remote(num_cpus=1)
 class Evaluator:
@@ -18,14 +20,18 @@ class Evaluator:
         env_created = False
         while not env_created:
             try:
-                env = SimEnv(self.env_path, urdf, use_graphics=self.use_graphics, worker_id=worker_id)
+                env = SimEnv(self.env_path, urdf,
+                             use_graphics=self.use_graphics,
+                             worker_id=worker_id)
                 env_created = True
             except UnityWorkerInUseException:
                 worker_id = np.random.randint(low=1000, high=9000) + worker_id
 
         return env
 
-    def _parse_observation(self, observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    def _parse_observation(self,
+                           observations: np.ndarray) -> Tuple[np.ndarray,
+                                                              np.ndarray]:
         # [j0angel, j0x, j0y, j0z, ..., eex, eey, eez]
         joint_angles = observations[[0, 4, 8, 12]]
         ee_pos = observations[16:19]
@@ -40,28 +46,27 @@ class Evaluator:
         joint0_angle_options = list(range(-180, 180, angle_step * 4))
         joint_angle_options = list(range(0, 105, angle_step))
 
-        t1 = 1
-        t2 = 1
-        t3 = 1
+        t_1 = 1
+        t_2 = 1
+        t_3 = 1
         self.joint_angles = []
-        for j0 in joint0_angle_options:
-            for j1 in joint_angle_options[::t1]:
-                for j2 in joint_angle_options[::t2]:
-                    for j3 in joint_angle_options[::t3]:
-                        self.joint_angles.append([j0, j1, j2, j3])
-                    t3 *= -1
-                t2 *= -1
-            t1 *= -1
-        
+        for j_0 in joint0_angle_options:
+            for j_1 in joint_angle_options[::t_1]:
+                for j_2 in joint_angle_options[::t_2]:
+                    for j_3 in joint_angle_options[::t_3]:
+                        self.joint_angles.append([j_0, j_1, j_2, j_3])
+                    t_3 *= -1
+                t_2 *= -1
+            t_1 *= -1
+
         self.joint_angles = np.array(self.joint_angles)
         return self.joint_angles
-
-        
 
     def _step_until_target_angles(self, observations: np.ndarray, target_angles: np.ndarray,
                                   workspace: Workspace) -> np.ndarray:
 
-        target_angles = (target_angles // self.env.JOINT_ANGLE_STEP) * self.env.JOINT_ANGLE_STEP
+        target_angles = (
+            target_angles // self.env.JOINT_ANGLE_STEP) * self.env.JOINT_ANGLE_STEP
 
         target_angles[0] = np.clip(target_angles[0], -180, 180)
         target_angles[1:] = np.clip(target_angles[1:], 0, 100)
@@ -82,7 +87,6 @@ class Evaluator:
             actions[angle_diff > 0] = -1
             actions[angle_diff < 0] = 1
 
-
             if np.count_nonzero(actions) == 0:
                 done = True
             else:
@@ -92,21 +96,18 @@ class Evaluator:
 
         return observations
 
-
     def eval_genome(self, genome: Genome) -> Genome:
-        self.env = self._initialize_environment(genome.get_urdf(), genome.genome_id)
+        self.env = self._initialize_environment(
+            genome.get_urdf(), genome.genome_id)
 
         observations = self.env.reset()
 
         joint_angles = self._generate_joint_angle()
 
         for target_angles in joint_angles:
-            observations = self._step_until_target_angles(observations, target_angles, genome.workspace)
+            observations = self._step_until_target_angles(
+                observations, target_angles, genome.workspace)
 
         self.env.close()
 
-
         return genome
-
-
-

@@ -1,10 +1,10 @@
+import logging
 import xml.etree.ElementTree as ET
-from environment.environment import SimEnv
+
 import numpy as np
 import ray
-import logging
+from environment.environment import SimEnv
 from morph_evo.evolution import evolution
-
 
 if __name__ == '__main__':
     ray.init(log_to_driver=False, logging_level=logging.WARNING)
@@ -32,4 +32,3 @@ if __name__ == '__main__':
         obs = env.step(actions)
 
     env.close()
-
