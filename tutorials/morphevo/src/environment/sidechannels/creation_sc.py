@@ -22,5 +22,5 @@ class CreationSC(SideChannel):
         # We call this method to queue the data we want to send
         super().queue_message_to_send(msg)
 
-    def on_message_received(self, msg: IncomingMessage) -> None:
+    def on_message_received(self, _: IncomingMessage) -> None:
         self.creation_done = True
