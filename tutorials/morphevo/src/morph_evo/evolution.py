@@ -2,12 +2,11 @@ from itertools import count
 
 import numpy as np
 import psutil
-from ray.util import ActorPool
-from tqdm import tqdm
-
 from evaluator import Evaluator
 from genetic_encoding import Genome
 from logger import Logger
+from ray.util import ActorPool
+from tqdm import tqdm
 
 GENERATIONS = 100
 ENV_PATH = 'environment/unity_environment/simenv.x86_64'
