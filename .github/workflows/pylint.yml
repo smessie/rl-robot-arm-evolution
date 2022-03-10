@@ -22,15 +22,6 @@ jobs:
         # You may pin to the exact commit or the version.
         # uses: isort/isort-action@245468f11b1fda7916b9127e07af532df40286d3
         uses: isort/isort-action@v0.1.0
-        with:
-          # Version of isort to use
-          isortVersion: # optional, default is
-          # files or directories to sort
-          sortPaths: # optional, default is .
-          # isort configuration options
-          configuration: # optional, default is --check-only --diff
-          # path(s) to requirements files that should be installed to properly configure third-party imports
-          requirementsFiles: # optional, default is
       - name: Analysing the code with pylint
         run: |
           pylint $(git ls-files '*.py')
