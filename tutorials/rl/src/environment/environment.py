@@ -10,7 +10,6 @@ from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 from src.environment.sidechannels.creation_sc import CreationSC
 
-
 class SimEnv(gym.Env):
     """Custom Environment that follows gym interface"""
     metadata = {'render.modes': ['human']}
