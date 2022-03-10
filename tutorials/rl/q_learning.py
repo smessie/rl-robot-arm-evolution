@@ -1,9 +1,11 @@
 import pickle
 import random
 import xml.etree.ElementTree as ET
-from typing import Set, Tuple
 
 import numpy as np
+from typing import Set, Tuple
+
+
 from src.environment.environment import SimEnv
 from src.rl.logger import Logger
 from src.rl.q_table import QTable
