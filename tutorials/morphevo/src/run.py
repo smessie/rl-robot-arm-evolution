@@ -1,15 +1,16 @@
+import logging
+import sys
 import xml.etree.ElementTree as ET
-from environment.environment import SimEnv
+
 import numpy as np
 import ray
-import logging
+from environment.environment import SimEnv
 from morph_evo.evolution import evolution
-
 
 if __name__ == '__main__':
     ray.init(log_to_driver=False, logging_level=logging.WARNING)
     evolution()
-    exit(0)
+    sys.exit(0)
     PATH_TO_UNITY_EXECUTABLE = 'environment/unity_environment/simenv.x86_64'
     PATH_TO_URDF = 'environment/urdf_example.urdf'
     # PATH_TO_YOUR_UNITY_EXECUTABLE = '../../sel3_simenv_tutorial_python/unity_environment/env.x86_64'
@@ -32,4 +33,3 @@ if __name__ == '__main__':
         obs = env.step(actions)
 
     env.close()
-

@@ -5,9 +5,9 @@ import gym
 import numpy as np
 from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.environment import UnityEnvironment
-from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
-
-from sidechannels.creationSC import CreationSC
+from mlagents_envs.side_channel.engine_configuration_channel import \
+    EngineConfigurationChannel
+from sidechannels.creation_sc import CreationSC
 
 
 class SimEnv(gym.Env):
@@ -16,12 +16,15 @@ class SimEnv(gym.Env):
     MAX_N_MODULES = 10
     JOINT_ANGLE_STEP = 10
 
-    def __init__(self, env_path: str, urdf: str, use_graphics: bool, worker_id: int = 0) -> None:
-        super(SimEnv, self).__init__()
+    def __init__(self, env_path: str, urdf: str, use_graphics: bool,
+                 worker_id: int = 0) -> None:
+        super().__init__()
 
-        assert Path(env_path).exists(), f"Given environment file path does not exist: {env_path}\n" \
-                                        f"Make sure this points to the environment executable " \
-                                        f"that you can download from Ufora."
+        assert Path(env_path).exists(), (
+            f"Given environment file path does not exist: {env_path}\n"
+            f"Make sure this points to the environment executable "
+            f"that you can download from Ufora."
+        )
 
         self.env_path = env_path
         self.urdf = urdf
@@ -53,18 +56,20 @@ class SimEnv(gym.Env):
         return creation_sc, env
 
     def _get_unity_observations(self) -> np.ndarray:
-        decision_steps, terminal_steps = self.u_env.get_steps(self.behavior_name)
+        decision_steps, _ = self.u_env.get_steps(
+            self.behavior_name)
         return decision_steps.obs[0][0]
 
     def _set_unity_actions(self, actions: np.ndarray) -> None:
         # Assume the user of this already mapped the actions to -1, 0 or 1
-        #   We want to allow both discrete and continuous actions to stay as generic as possible
+        #   We want to allow both discrete and continuous actions
+        #   to stay as generic as possible
         actions = np.pad(actions, (0, self.MAX_N_MODULES - len(actions)))
         actions = actions[None, :]
         self.u_env.set_actions(self.behavior_name, action=ActionTuple(actions))
 
-    def step(self, actions: np.ndarray) -> np.ndarray:
-        self._set_unity_actions(actions)
+    def step(self, action: np.ndarray) -> np.ndarray:
+        self._set_unity_actions(action)
         self.u_env.step()
 
         observations = self._get_unity_observations()
@@ -79,5 +84,3 @@ class SimEnv(gym.Env):
     def close(self) -> None:
         del self.creation_sc
         self.u_env.close()
-
-

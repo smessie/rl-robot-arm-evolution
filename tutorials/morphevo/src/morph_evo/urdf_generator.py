@@ -1,7 +1,8 @@
 import xml.etree.ElementTree as ET
 
+
 class URDFGenerator:
-    def __init__(self, genome_id:str ) -> None:
+    def __init__(self, genome_id: str) -> None:
         self.urdf = ET.Element('robot')
         self.urdf.set('name', f'robot_{genome_id}')
 
@@ -15,11 +16,11 @@ class URDFGenerator:
         ET.SubElement(geometry, 'anchor_module')
 
     def add_module(self, length: float) -> None:
-        link = ET.SubElement(self.urdf, 'link', {'name': f'module_{self.module_index}'})
+        link = ET.SubElement(self.urdf, 'link', {
+                             'name': f'module_{self.module_index}'})
         visual = ET.SubElement(link, 'visual')
         geometry = ET.SubElement(visual, 'geometry')
         ET.SubElement(geometry, 'base_module', {'length': str(length)})
-
 
         joint = ET.SubElement(self.urdf, 'joint', {'name': f'module_{self.module_index}_joint',
                                                    'type': 'revolute'})
@@ -30,7 +31,6 @@ class URDFGenerator:
         ET.SubElement(joint, 'child', {'link': f'module_{self.module_index}'})
 
         self.module_index += 1
-
 
     def get_urdf(self) -> str:
         return ET.tostring(self.urdf, encoding='unicode')
