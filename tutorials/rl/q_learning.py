@@ -24,7 +24,6 @@ class QLearner:
     EPSILON = 0.1
     ALPHA = 0.1
     GAMMA = 0.99
-    
 
     def __init__(self, env_path: str, urdf_path: str,
                  use_graphics: bool = False) -> None:
