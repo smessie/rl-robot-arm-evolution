@@ -24,12 +24,14 @@ class QLearner:
     EPSILON = 0.1
     ALPHA = 0.1
     GAMMA = 0.99
+    
 
     def __init__(self, env_path: str, urdf_path: str,
                  use_graphics: bool = False) -> None:
         urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
         self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
-        self.workspace = self._get_workspace()
+        self.workspace = set(self._get_workspace())
+        self.goal_samples = self.workspace.copy()
 
         self.q_table = QTable(len(self.workspace) ** 2,
                               len(self.ACTIONS),
@@ -51,7 +53,13 @@ class QLearner:
         return workspace
 
     def _generate_goal(self) -> np.ndarray:
-        return np.array(random.sample(self.workspace, k=1)[0])
+        if len(self.goal_samples) == 0:
+            self.goal_samples = self.workspace.copy()
+
+        goal = random.sample(self.goal_samples, k=1)[0]
+        self.goal_samples.remove(goal)
+
+        return np.array(goal)
 
     def _calculate_state(self, observations: np.ndarray,
                          goal: np.ndarray) -> np.ndarray:
