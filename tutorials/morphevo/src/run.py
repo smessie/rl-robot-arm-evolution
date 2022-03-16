@@ -6,12 +6,12 @@ import numpy as np
 import ray
 from environment.environment import SimEnv
 from morphevo.evolution import evolution
+from env import PATH_TO_UNITY_EXECUTABLE
 
 if __name__ == '__main__':
     ray.init(log_to_driver=False, logging_level=logging.WARNING)
     evolution()
     sys.exit(0)
-    PATH_TO_UNITY_EXECUTABLE = 'environment/unity_environment/simenv.x86_64'
     PATH_TO_URDF = 'environment/urdf_example.urdf'
     # PATH_TO_YOUR_UNITY_EXECUTABLE = '../../sel3_simenv_tutorial_python/unity_environment/env.x86_64'
     urdf = ET.tostring(ET.parse(PATH_TO_URDF).getroot(), encoding='unicode')

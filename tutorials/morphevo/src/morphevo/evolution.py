@@ -2,6 +2,8 @@ from itertools import count
 
 import numpy as np
 import psutil
+
+from env import PATH_TO_UNITY_EXECUTABLE
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
@@ -9,7 +11,6 @@ from ray.util import ActorPool
 from tqdm import tqdm
 
 GENERATIONS = 100
-ENV_PATH = 'environment/unity_environment/simenv.x86_64'
 # MU = # parents
 # LAMBDA = # children
 MU, LAMBDA = 5, 5
@@ -23,7 +24,7 @@ def calculate_fitness(genome: Genome) -> float:
 def evolution():
     genome_indexer = count(0)
 
-    evaluators = [Evaluator.remote(ENV_PATH, use_graphics=True)
+    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=True)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 

@@ -249,3 +249,6 @@ latex/
 # build things
 /tutorials/simenv/simenv*
 /tutorials/simenv/*.debug
+
+# Environment file for Python projects holding environment/PC specific variables.
+env.py
