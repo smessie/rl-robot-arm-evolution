@@ -1,5 +1,7 @@
 import pickle
 import random
+import sys
+import signal
 import xml.etree.ElementTree as ET
 from typing import Set, Tuple
 
@@ -9,7 +11,6 @@ from src.rl.logger import Logger
 from src.rl.q_table import QTable
 from tqdm import tqdm
 
-import signal
 
 
 class QLearner:
@@ -33,6 +34,7 @@ class QLearner:
         self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
         self.workspace = set(self._get_workspace())
         self.goal_samples = self.workspace.copy()
+        self.testing = False
 
         self.q_table = QTable(len(self.workspace) ** 2,
                               len(self.ACTIONS),
@@ -42,10 +44,11 @@ class QLearner:
         self.logger = Logger()
 
     def handler(self, signum, frame):
-        res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
-        if res == 'y':
-            self.save()
-            exit(1)
+        if not self.testing:
+            res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
+            if res == 'y':
+                self.save()
+                exit(1)
 
     def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
         discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
@@ -153,8 +156,8 @@ class QLearner:
         with open('./q_tables/q_table.pkl', 'wb') as file:
             pickle.dump(self.q_table, file, protocol=pickle.HIGHEST_PROTOCOL)
 
-    def test(self, max_steps: int = 500):
-        with open('./q_tables/q_table.pkl', 'rb') as file:
+    def test(self, filename, max_steps: int = 500):
+        with open(filename, 'rb') as file:
             self.q_table = pickle.load(file)
 
         for i, goal in enumerate(self.workspace):
@@ -198,4 +201,8 @@ if __name__ == "__main__":
     model = QLearner(ENV_PATH, URDF_PATH, True)
     signal.signal(signal.SIGINT, model.handler)
 
-    #model.learn()
+    if len(sys.argv) == 2:
+        model.testing = True
+        model.test(sys.argv[1])
+    else:
+        model.learn()
