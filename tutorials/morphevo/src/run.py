@@ -4,9 +4,9 @@ import xml.etree.ElementTree as ET
 
 import numpy as np
 import ray
+from env import PATH_TO_UNITY_EXECUTABLE
 from environment.environment import SimEnv
 from morphevo.evolution import evolution
-from env import PATH_TO_UNITY_EXECUTABLE
 
 if __name__ == '__main__':
     ray.init(log_to_driver=False, logging_level=logging.WARNING)

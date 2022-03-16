@@ -2,7 +2,6 @@ from itertools import count
 
 import numpy as np
 import psutil
-
 from env import PATH_TO_UNITY_EXECUTABLE
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome

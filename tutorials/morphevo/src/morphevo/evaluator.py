@@ -3,8 +3,8 @@ from typing import Tuple
 import numpy as np
 import ray
 from environment.environment import SimEnv
-from morphevo.genetic_encoding import Genome
 from mlagents_envs.exception import UnityWorkerInUseException
+from morphevo.genetic_encoding import Genome
 from morphevo.workspace import Workspace
 
 
