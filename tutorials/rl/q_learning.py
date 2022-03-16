@@ -137,19 +137,19 @@ class QLearner:
             pickle.dump(self.q_table, file, protocol=pickle.HIGHEST_PROTOCOL)
 
     # todo: nieuwe klasse "QAgent"? 
-    def test(self, num_episodes: int = 10000,
-              steps_per_episode: int = 500):
+    def test(self, max_steps: int = 500):
         with open('./q_tables/q_table.pkl', 'rb') as file:
             self.q_table = pickle.load(file)
 
-        for episode in tqdm(range(num_episodes), desc='Q-Learning'):
+        for i, goal in enumerate(self.workspace):
+            goal = np.array(goal)
             observations = self.env.reset()
-            goal = self._generate_goal()
             state = self._calculate_state(observations, goal)
 
             episode_step = 0
             finished = False
-            while not finished and episode_step < steps_per_episode:
+            while not finished and episode_step < max_steps:
+
                 # Get an action
                 action_index = self.predict(state, stochastic=True)
                 actions = np.array(self.ACTIONS[action_index])
@@ -166,7 +166,7 @@ class QLearner:
                 state = new_state
 
             self.logger.log_test(
-                episode, state, goal, episode_step)
+                episode_step, state, goal, i)
 
         self.env.close()
 
