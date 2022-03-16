@@ -1,10 +1,10 @@
 from typing import Tuple
 from environment.environment import SimEnv
-from genetic_encoding import Genome
-import numpy as np
-from workspace import Workspace
+from morph_evo.genetic_encoding import Genome
+from morph_evo.workspace import Workspace
 from mlagents_envs.exception import UnityWorkerInUseException
 import ray
+import numpy as np
 
 @ray.remote(num_cpus=1)
 class Evaluator:

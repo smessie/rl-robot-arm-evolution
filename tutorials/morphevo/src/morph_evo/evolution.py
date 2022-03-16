@@ -1,11 +1,9 @@
-from environment.environment import SimEnv
-from genetic_encoding import Genome
+from morph_evo.genetic_encoding import Genome
 from tqdm import tqdm
 from itertools import count
-from evaluator import Evaluator
-from logger import Logger
+from morph_evo.evaluator import Evaluator
+from morph_evo.logger import Logger
 import numpy as np
-import ray
 from ray.util import ActorPool
 import psutil
 

@@ -1,5 +1,5 @@
 from typing import List
-from genetic_encoding import Genome
+from morph_evo.genetic_encoding import Genome
 import wandb
 import numpy as np
 

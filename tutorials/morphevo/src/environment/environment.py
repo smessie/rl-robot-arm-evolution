@@ -7,7 +7,7 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
 
-from sidechannels.creationSC import CreationSC
+from environment.sidechannels.creationSC import CreationSC
 
 
 class SimEnv(gym.Env):
