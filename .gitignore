@@ -1,4 +1,5 @@
 wandb
+tutorials/morphevo/src/pyrightconfig.json
 environment/unity_environment/simenv_Data
 environment/unity_environment/simenv_BurstDebugInformation_DoNotShip
 environment/unity_environment/UnityPlayer.so
