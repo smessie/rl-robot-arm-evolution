@@ -5,6 +5,10 @@ wandb
 /tutorials/simenv/simenv_BurstDebugInformation_DoNotShip
 /tutorials/simenv/UnityPlayer.so
 
+
+## dumb ass timer file
+Tutorial_timers.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
