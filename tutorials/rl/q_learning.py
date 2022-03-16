@@ -43,6 +43,10 @@ class QLearner:
         discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
         return discretized_pos
 
+    def _discretize_direction(self, pos: np.ndarray, goal: np.ndarray):
+        direction = pos - goal
+        return np.round(direction/np.abs(direction))
+
     def _get_workspace(self) -> Set[Tuple[float, float]]:
         with open('src/environment/robot_workspace.pkl', "rb") as file:
             workspace = pickle.load(file)
@@ -67,13 +71,15 @@ class QLearner:
         # [EEPOS, GOAL_y, GOAL_z]
         ee_pos = observations[13:15]
 
+        goal = self._discretize_direction(ee_pos, goal)
         ee_pos = self._discretize_position(ee_pos)
+
         return np.array([ee_pos[0], ee_pos[1], goal[0], goal[1]], dtype=int)
 
-    def _calculate_reward(self, prev_state: np.ndarray, new_state: np.ndarray,
+    def _calculate_reward(self, prev_absolute_pos: np.ndarray, new_absolute_position: np.ndarray,
                           goal: np.ndarray) -> Tuple[float, bool]:
-        prev_distance_from_goal = np.linalg.norm(prev_state[:2] - goal)
-        new_distance_from_goal = np.linalg.norm(new_state[:2] - goal)
+        prev_distance_from_goal = np.linalg.norm(prev_absolute_pos - goal)
+        new_distance_from_goal = np.linalg.norm(new_absolute_position - goal)
 
         if new_distance_from_goal == 0:
             return 1000, True
@@ -86,6 +92,7 @@ class QLearner:
             observations = self.env.reset()
             goal = self._generate_goal()
             state = self._calculate_state(observations, goal)
+            prev_absolute_pos = observations[13:15]
 
             episode_step = 0
             finished = False
@@ -96,17 +103,21 @@ class QLearner:
 
                 # Execute the action in the environment
                 observations = self.env.step(actions)
+
                 new_state = self._calculate_state(observations, goal)
 
                 # Calculate reward
                 reward, finished = self._calculate_reward(
-                    state, new_state, goal)
+                    prev_absolute_pos, observations[13:15], goal)
+                prev_absolute_pos = observations[13:15]  # this is not in the state, but is useful for reward calculation
 
                 # QTable update
                 self.q_table.update(state, new_state, action_index, reward)
 
                 episode_step += 1
                 state = new_state
+
+            print(f"Finished was {finished} in episode {episode}")
 
             self.logger.log_episode(
                 episode, state, goal, episode_step, self.q_table)
@@ -128,5 +139,5 @@ if __name__ == "__main__":
     ENV_PATH = "src/environment/unity_environment/simenv.x86_64"
     URDF_PATH = "src/environment/robot.urdf"
 
-    model = QLearner(ENV_PATH, URDF_PATH, True)
+    model = QLearner(ENV_PATH, URDF_PATH, False)
     model.learn()
