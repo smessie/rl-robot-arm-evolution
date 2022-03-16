@@ -111,14 +111,13 @@ class QLearner:
             prev_absolute_pos = self._discretize_position(observations[13:15])
 
             episode_step = 0
-            print(finished)
             finished = False
             while not finished and episode_step < steps_per_episode:
                 # Get an action
                 action_index = self.predict(state, stochastic=True)
                 actions = np.array(self.ACTIONS[action_index])
 
-                # Execute the action in the environment
+                # Execute the action in the environmenthttps://wandb.ai/selab/sel3-rl-tutorial/runs/lvq90jw0
                 observations = self.env.step(actions)
 
                 new_state = self._calculate_state(observations, goal)
@@ -158,7 +157,7 @@ class QLearner:
         with open('./q_tables/q_table.pkl', 'rb') as file:
             self.q_table = pickle.load(file)
 
-        for goal in self.workspace:
+        for i, goal in enumerate(self.workspace):
             goal = np.array(goal)
             observations = self.env.reset()
             state = self._calculate_state(observations, goal)
@@ -186,7 +185,7 @@ class QLearner:
                 state = new_state
 
             self.logger.log_test(
-                episode_step, prev_absolute_pos, goal)
+                episode_step, prev_absolute_pos, goal, i)
 
         self.env.close()
 
