@@ -9,6 +9,8 @@ from src.rl.logger import Logger
 from src.rl.q_table import QTable
 from tqdm import tqdm
 
+import signal
+
 
 class QLearner:
     ACTIONS = [
@@ -38,6 +40,12 @@ class QLearner:
                               self.GAMMA)
 
         self.logger = Logger()
+
+    def handler(self, signum, frame):
+        res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
+        if res == 'y':
+            self.save()
+            exit(1)
 
     def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
         discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
@@ -189,4 +197,6 @@ if __name__ == "__main__":
     URDF_PATH = "src/environment/robot.urdf"
 
     model = QLearner(ENV_PATH, URDF_PATH, False)
+    signal.signal(signal.SIGINT, model.handler)
+
     model.learn()
