@@ -1,7 +1,7 @@
 wandb
-environment/unity_environment/simenv_Data
-environment/unity_environment/simenv_BurstDebugInformation_DoNotShip
-environment/unity_environment/UnityPlayer.so
+simenv_Data
+simenv_BurstDebugInformation_DoNotShip
+UnityPlayer.so
 .DS_Store
 .idea
 
