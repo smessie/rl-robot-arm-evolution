@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import Optional
 
 import numpy as np
-from urdf_generator import URDFGenerator
-from workspace import Workspace
+from morphevo.urdf_generator import URDFGenerator
+from morphevo.workspace import Workspace
 
 
 class Genome:

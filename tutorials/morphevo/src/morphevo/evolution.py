@@ -2,9 +2,9 @@ from itertools import count
 
 import numpy as np
 import psutil
-from evaluator import Evaluator
-from genetic_encoding import Genome
-from logger import Logger
+from morphevo.evaluator import Evaluator
+from morphevo.genetic_encoding import Genome
+from morphevo.logger import Logger
 from ray.util import ActorPool
 from tqdm import tqdm
 

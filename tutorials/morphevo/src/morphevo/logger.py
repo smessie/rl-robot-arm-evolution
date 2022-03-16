@@ -2,7 +2,7 @@ from typing import List
 
 import numpy as np
 import wandb
-from genetic_encoding import Genome
+from morphevo.genetic_encoding import Genome
 
 
 class Logger:
