@@ -17,7 +17,7 @@ public class Builder : MonoBehaviour
     public GameObject manipulatorAgentPrefab;
 
     public GameObject anchor;
-    
+
     private GameObject endEffector;
 
     private List<ArticulationBody> _articulationBodies = new List<ArticulationBody>();
@@ -31,7 +31,7 @@ public class Builder : MonoBehaviour
 
         XmlSerializer serializer = new XmlSerializer(typeof(RobotSpecification));
         RobotSpecification robotSpec = (RobotSpecification) serializer.Deserialize(stream);
-        
+
         // Now we extract module length, later we'll have to also extract joint angles and degrees of freedom of joint.
         List<float> ml = new List<float>();
         foreach (var link in robotSpec.Links)
@@ -45,7 +45,7 @@ public class Builder : MonoBehaviour
 
         return ml.ToArray();
     }
-    
+
     public void BuildAgent(string urdf)
     {
         // Parse URDF
@@ -74,7 +74,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
-        
+
         yPos += length;
         GameObject moduleBody = Instantiate(
             moduleBodyPrefab, // type GameObject we want to make
@@ -83,10 +83,9 @@ public class Builder : MonoBehaviour
             module.transform
         );
         moduleBody.transform.localScale = new Vector3(1f, length, 1f);
-        
+
         // Change mass according to length.
         moduleBody.GetComponent<ArticulationBody>().mass = length;
-        
 
         yPos += length;
         GameObject moduleHead = Instantiate(
@@ -99,30 +98,51 @@ public class Builder : MonoBehaviour
         moduleBody.transform.parent = moduleTail.transform;
         moduleHead.transform.parent = moduleBody.transform;
         module.transform.parent = endEffector.transform;
-        
-        ConfigureRevoluteJoint(moduleTail);
-        
+
+        ConfigureTiltingJoint(moduleTail);
+        ConfigureRotatingJoint(moduleBody);
+
         endEffector = moduleHead;
     }
 
-    void ConfigureRevoluteJoint(GameObject moduleTail)
+    void ConfigureTiltingJoint(GameObject moduleTail)
     {
         ArticulationBody articulationBody = moduleTail.GetComponent<ArticulationBody>();
 
         articulationBody.jointType = ArticulationJointType.RevoluteJoint;
         articulationBody.anchorRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
-        
+
         // Articulation degree of freedom
         articulationBody.twistLock = ArticulationDofLock.LimitedMotion;
 
         ArticulationDrive xDrive = articulationBody.xDrive;
         xDrive.lowerLimit = 0f;
-        xDrive.upperLimit = 100f;
+        xDrive.upperLimit = 90f;
         xDrive.stiffness = 100000;
         xDrive.damping = 10000;
         articulationBody.xDrive = xDrive;
-        
+
         _articulationBodies.Add(moduleTail.GetComponent<ArticulationBody>());
+    }
+
+    void ConfigureRotatingJoint(GameObject moduleBody)
+    {
+        ArticulationBody articulationBody = moduleBody.GetComponent<ArticulationBody>();
+
+        articulationBody.jointType = ArticulationJointType.RevoluteJoint;
+        articulationBody.anchorRotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
+
+        // Articulation degree of freedom
+        articulationBody.twistLock = ArticulationDofLock.LimitedMotion;
+
+        ArticulationDrive xDrive = articulationBody.xDrive;
+        xDrive.lowerLimit = 0f;
+        xDrive.upperLimit = 360f;
+        xDrive.stiffness = 100000;
+        xDrive.damping = 10000;
+        articulationBody.xDrive = xDrive;
+
+        _articulationBodies.Add(moduleBody.GetComponent<ArticulationBody>());
     }
 
     // This function is called every time before we'll do a physics update. Before all forces and positions are calculated again in the scene, this function is called.

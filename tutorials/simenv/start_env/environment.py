@@ -1,4 +1,6 @@
 import os
+import time
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Tuple
 
@@ -87,34 +89,44 @@ class SimEnv(gym.Env):
         self.u_env.close()
 
 
-if __name__ == '__main__':
-    import xml.etree.ElementTree as ET
+def test_environment():
 
     # make absolute paths to avoid file-not-found errors
-    HERE = os.path.dirname(os.path.abspath(__file__))
-    URDF_FILENAME = os.path.join(HERE, 'robot.urdf')
-    ENV_FILENAME = os.path.join(HERE, '../simenv.x86_64')
+    here = os.path.dirname(os.path.abspath(__file__))
+    urdf_filename = os.path.join(here, 'robot.urdf')
+    unity_executable_path = os.path.join(here, '../simenv.x86_64')
 
-    PATH_TO_YOUR_UNITY_EXECUTABLE = ENV_FILENAME
-    URDF = ET.tostring(ET.parse(URDF_FILENAME).getroot(), encoding='unicode')
+    urdf = ET.tostring(ET.parse(urdf_filename).getroot(), encoding='unicode')
 
-    ENV = SimEnv(env_path=PATH_TO_YOUR_UNITY_EXECUTABLE,
-                 urdf=URDF,
+    env = SimEnv(env_path=unity_executable_path,
+                 urdf=urdf,
                  use_graphics=True)
 
-    obs = ENV.reset()
-    for _ in range(1000):
-        # obs -> MODEL > actions
-        ACTIONS = np.random.rand(3)
+    _ = env.reset()
 
-        ACTIONS = (ACTIONS - 0.5) * 2  # Map to [-1, 1] range
-        ACTIONS[ACTIONS > 0.2] = 1
-        ACTIONS[ACTIONS < -0.2] = -1
-        ACTIONS[np.abs(ACTIONS) < 0.2] = 0
+    actions = [0, 45, 45, 45, 90, 0]
+    env.step(actions)
 
-        # We will not actuate the first joint in this tutorial
-        ACTIONS[0] = 0.
+    for _ in range(10000):
+        env.step([0]*6)
 
-        obs = ENV.step(ACTIONS)
+    # for _ in range(1000):
+    #     # obs -> MODEL > actions
+    #     ACTIONS = np.random.rand(3)
 
-    ENV.close()
+    #     ACTIONS = (ACTIONS - 0.5) * 2  # Map to [-1, 1] range
+    #     ACTIONS[ACTIONS > 0.2] = 1
+    #     ACTIONS[ACTIONS < -0.2] = -1
+    #     ACTIONS[np.abs(ACTIONS) < 0.2] = 0
+
+    #     # We will not actuate the first joint in this tutorial
+    #     ACTIONS[0] = 0.
+
+    #     obs = ENV.step(ACTIONS)
+
+    env.close()
+
+
+if __name__ == '__main__':
+
+    test_environment()
