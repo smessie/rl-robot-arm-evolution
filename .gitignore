@@ -1,11 +1,9 @@
 wandb
-simenv_Data
-simenv_BurstDebugInformation_DoNotShip
-UnityPlayer.so
 .DS_Store
 .idea
-
-
+/tutorials/simenv/simenv_Data
+/tutorials/simenv/simenv_BurstDebugInformation_DoNotShip
+/tutorials/simenv/UnityPlayer.so
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
