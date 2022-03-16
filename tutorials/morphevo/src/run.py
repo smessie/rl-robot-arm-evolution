@@ -8,7 +8,7 @@ from environment.environment import SimEnv
 from morphevo.evolution import evolution
 
 if __name__ == '__main__':
-    ray.init(log_to_driver=True, logging_level=logging.WARNING)
+    ray.init(log_to_driver=False, logging_level=logging.WARNING)
     evolution()
     sys.exit(0)
     PATH_TO_UNITY_EXECUTABLE = 'environment/unity_environment/simenv.x86_64'

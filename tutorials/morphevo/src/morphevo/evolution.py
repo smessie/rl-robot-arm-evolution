@@ -23,7 +23,7 @@ def calculate_fitness(genome: Genome) -> float:
 def evolution():
     genome_indexer = count(0)
 
-    evaluators = [Evaluator.remote(ENV_PATH, use_graphics=False)
+    evaluators = [Evaluator.remote(ENV_PATH, use_graphics=True)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 
