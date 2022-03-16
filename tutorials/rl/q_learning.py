@@ -101,7 +101,7 @@ class QLearner:
 
         return prev_distance_from_goal - new_distance_from_goal, False
 
-    def learn(self, num_episodes: int = 300,
+    def learn(self, num_episodes: int = 10000,
               steps_per_episode: int = 500) -> None:
         finished = False
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
@@ -169,7 +169,7 @@ class QLearner:
             while not finished and episode_step < max_steps:
 
                 # Get an action
-                action_index = self.predict(state, stochastic=True)
+                action_index = self.predict(state, stochastic=False)
                 actions = np.array(self.ACTIONS[action_index])
 
                 # Execute the action in the environment
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     ENV_PATH = "src/environment/unity_environment/simenv.x86_64"
     URDF_PATH = "src/environment/robot.urdf"
 
-    model = QLearner(ENV_PATH, URDF_PATH, False)
+    model = QLearner(ENV_PATH, URDF_PATH, True)
     signal.signal(signal.SIGINT, model.handler)
 
-    model.learn()
+    #model.learn()
