@@ -19,11 +19,11 @@ class Logger:
         }, step=episode)
 
     def log_test(self, episode_steps: int,
-                    current_position, goal: np.ndarray):
+                    current_position, goal: np.ndarray, goal_number: int):
 
         final_distance = np.linalg.norm(current_position - goal)
 
         wandb.log({
-            'goal/actions needed to reach goal': episode_steps,
-            'goal/final distance': final_distance,
-        }, step=goal)
+            'goal number/actions needed to reach goal': episode_steps,
+            'goal number/final distance': final_distance,
+        }, step=goal_number)
