@@ -82,12 +82,14 @@ class QLearner:
 
     def learn(self, num_episodes: int = 10000,
               steps_per_episode: int = 500) -> None:
+        finished = False
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
             observations = self.env.reset()
             goal = self._generate_goal()
             state = self._calculate_state(observations, goal)
 
             episode_step = 0
+            print(finished)
             finished = False
             while not finished and episode_step < steps_per_episode:
                 # Get an action
@@ -120,7 +122,42 @@ class QLearner:
         return self.q_table.lookup(state)
 
     def save(self):
-        pass
+        with open('./q_tables/q_table.pkl', 'wb') as file:
+            pickle.dump(self.q_table, file, protocol=pickle.HIGHEST_PROTOCOL)
+
+    # todo: nieuwe klasse "QAgent"? 
+    def test(self, num_episodes: int = 10000,
+              steps_per_episode: int = 500):
+        with open('./q_tables/q_table.pkl', 'rb') as file:
+            self.q_table = pickle.load(file)
+
+        for episode in tqdm(range(num_episodes), desc='Q-Learning'):
+            observations = self.env.reset()
+            goal = self._generate_goal()
+            state = self._calculate_state(observations, goal)
+
+            episode_step = 0
+            finished = False
+            while not finished and episode_step < steps_per_episode:
+                # Get an action
+                action_index = self.predict(state, stochastic=True)
+                actions = np.array(self.ACTIONS[action_index])
+
+                # Execute the action in the environment
+                observations = self.env.step(actions)
+                new_state = self._calculate_state(observations, goal)
+
+                # Calculate reward
+                reward, finished = self._calculate_reward(
+                    state, new_state, goal)
+
+                episode_step += 1
+                state = new_state
+
+            self.logger.log_test(
+                episode, state, goal, episode_step)
+
+        self.env.close()
 
 
 if __name__ == "__main__":
@@ -128,5 +165,5 @@ if __name__ == "__main__":
     ENV_PATH = "src/environment/unity_environment/simenv.x86_64"
     URDF_PATH = "src/environment/robot.urdf"
 
-    model = QLearner(ENV_PATH, URDF_PATH, True)
+    model = QLearner(ENV_PATH, URDF_PATH, False)
     model.learn()
