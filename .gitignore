@@ -5,6 +5,8 @@ wandb
 /tutorials/simenv/simenv_BurstDebugInformation_DoNotShip
 /tutorials/simenv/UnityPlayer.so
 
+tutorials/morphevo/src/pyrightconfig.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
