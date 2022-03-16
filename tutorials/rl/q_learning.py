@@ -93,7 +93,7 @@ class QLearner:
 
         return prev_distance_from_goal - new_distance_from_goal, False
 
-    def learn(self, num_episodes: int = 10000,
+    def learn(self, num_episodes: int = 300,
               steps_per_episode: int = 500) -> None:
         finished = False
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
@@ -146,15 +146,15 @@ class QLearner:
         with open('./q_tables/q_table.pkl', 'wb') as file:
             pickle.dump(self.q_table, file, protocol=pickle.HIGHEST_PROTOCOL)
 
-    # todo: nieuwe klasse "QAgent"? 
     def test(self, max_steps: int = 500):
         with open('./q_tables/q_table.pkl', 'rb') as file:
             self.q_table = pickle.load(file)
 
-        for i, goal in enumerate(self.workspace):
+        for goal in self.workspace:
             goal = np.array(goal)
             observations = self.env.reset()
             state = self._calculate_state(observations, goal)
+            prev_absolute_pos = self._discretize_position(observations[13:15])
 
             episode_step = 0
             finished = False
@@ -169,14 +169,16 @@ class QLearner:
                 new_state = self._calculate_state(observations, goal)
 
                 # Calculate reward
-                reward, finished = self._calculate_reward(
-                    state, new_state, goal)
+                new_absolute_pos = self._discretize_position(observations[13:15])
+                _, finished = self._calculate_reward(
+                    prev_absolute_pos, new_absolute_pos, goal)
+                prev_absolute_pos = new_absolute_pos  # this is not in the state, but is useful for reward calculation
 
                 episode_step += 1
                 state = new_state
 
             self.logger.log_test(
-                episode_step, state, goal, i)
+                episode_step, prev_absolute_pos, goal)
 
         self.env.close()
 
@@ -186,5 +188,5 @@ if __name__ == "__main__":
     ENV_PATH = "src/environment/unity_environment/simenv.x86_64"
     URDF_PATH = "src/environment/robot.urdf"
 
-    model = QLearner(ENV_PATH, URDF_PATH, True)
+    model = QLearner(ENV_PATH, URDF_PATH, False)
     model.learn()

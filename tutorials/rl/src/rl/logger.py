@@ -18,11 +18,12 @@ class Logger:
             "Q-Table/state_coverage": q_table.calculate_state_coverage
         }, step=episode)
 
-    def log_test(self, episode_steps: int, final_state: np.ndarray,
-                    goal: np.ndarray, goal_number: int):
+    def log_test(self, episode_steps: int,
+                    current_position, goal: np.ndarray):
 
-        final_distance = np.linalg.norm(final_state[:2] - goal)
+        final_distance = np.linalg.norm(current_position - goal)
 
         wandb.log({
             'goal/actions needed to reach goal': episode_steps,
+            'goal/final distance': final_distance,
         }, step=goal)
