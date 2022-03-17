@@ -1,5 +1,4 @@
 import os
-import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Tuple
@@ -103,12 +102,29 @@ def test_environment():
                  use_graphics=True)
 
     _ = env.reset()
-    for _ in range(200):
-        actions = [0, 0, 0, 0, 0, 0]
+    # Rotate second module 90 degrees
+    for _ in range(9):
+        actions = [0, 0, 0, 1, 0, 0]
         _ = env.step(actions)
-
-    for _ in range(4000):
-        actions = [0, 0.02, 0, 0, 0.05, 0]
+    # Rotate first module 45 degrees
+    for _ in range(9):
+        actions = [0, 0.5, 0, 0, 0, 0]
+        _ = env.step(actions)
+    # Tilt first module 45 degrees
+    for _ in range(9):
+        actions = [0.5, 0, 0, 0, 0, 0]
+        _ = env.step(actions)
+    # Tilt second module 45 degrees
+    for _ in range(9):
+        actions = [0, 0, 0.5, 0, 0, 0]
+        _ = env.step(actions)
+    # Tilt third module 90 degrees
+    for _ in range(9):
+        actions = [0, 0, 0, 0, 1, 0]
+        _ = env.step(actions)
+    # Keep simulation running
+    for _ in range(2000):
+        actions = [0, 0, 0, 0, 0, 0]
         _ = env.step(actions)
 
     env.close()
