@@ -103,26 +103,13 @@ def test_environment():
                  use_graphics=True)
 
     _ = env.reset()
+    for _ in range(200):
+        actions = [0, 0, 0, 0, 0, 0]
+        _ = env.step(actions)
 
-    actions = [0, 45, 45, 45, 90, 0]
-    env.step(actions)
-
-    for _ in range(10000):
-        env.step([0]*6)
-
-    # for _ in range(1000):
-    #     # obs -> MODEL > actions
-    #     ACTIONS = np.random.rand(3)
-
-    #     ACTIONS = (ACTIONS - 0.5) * 2  # Map to [-1, 1] range
-    #     ACTIONS[ACTIONS > 0.2] = 1
-    #     ACTIONS[ACTIONS < -0.2] = -1
-    #     ACTIONS[np.abs(ACTIONS) < 0.2] = 0
-
-    #     # We will not actuate the first joint in this tutorial
-    #     ACTIONS[0] = 0.
-
-    #     obs = ENV.step(ACTIONS)
+    for _ in range(4000):
+        actions = [0, 0.02, 0, 0, 0.05, 0]
+        _ = env.step(actions)
 
     env.close()
 
