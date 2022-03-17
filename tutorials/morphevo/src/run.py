@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 
 import numpy as np
 import ray
-from env import PATH_TO_UNITY_EXECUTABLE
+from env import PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
 from environment.environment import SimEnv
 from morphevo.evolution import evolution
 
@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     env = SimEnv(env_path=PATH_TO_UNITY_EXECUTABLE,
                  urdf=urdf,
-                 use_graphics=True)
+                 use_graphics=USE_GRAPHICS)
 
     obs = env.reset()
     for _ in range(1000):

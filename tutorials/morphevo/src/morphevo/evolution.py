@@ -2,7 +2,7 @@ from itertools import count
 
 import numpy as np
 import psutil
-from env import PATH_TO_UNITY_EXECUTABLE
+from env import PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
@@ -23,7 +23,7 @@ def calculate_fitness(genome: Genome) -> float:
 def evolution():
     genome_indexer = count(0)
 
-    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=True)
+    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 
