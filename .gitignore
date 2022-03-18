@@ -252,3 +252,6 @@ latex/
 
 # Environment file for Python projects holding environment/PC specific variables.
 env.py
+
+# Output directory where we can write our generated output to.
+output/

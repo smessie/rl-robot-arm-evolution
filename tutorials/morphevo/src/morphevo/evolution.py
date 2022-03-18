@@ -1,4 +1,7 @@
+import locale
+import time
 from itertools import count
+from xml.dom import minidom
 
 import numpy as np
 import psutil
@@ -50,6 +53,13 @@ def evolution():
         parent_indices = np.argsort(population_fitnesses)[-MU:]
         parents = [population[i] for i in parent_indices]
         parent_fitnesses = [population_fitnesses[i] for i in parent_indices]
+
+        # Save URDF of the best genome to file
+        filename = f'output/{int(time.time())}-mu_{MU}-lambda_{LAMBDA}-generation_{generation}.xml'
+        best_genome = population[parent_indices[-1]]
+        xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
+        with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
+            f.write(xml_str)
 
         # create new children from selected parents
         children = []
