@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SELAB3: src.morph_evo.urdf_generator.URDFGenerator Class Reference</title>
+<title>SELAB3: src.morphevo.evaluator.Evaluator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,41 +62,44 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>src</b></li><li class="navelem"><b>morph_evo</b></li><li class="navelem"><b>urdf_generator</b></li><li class="navelem"><a class="el" href="classsrc_1_1morph__evo_1_1urdf__generator_1_1URDFGenerator.html">URDFGenerator</a></li>  </ul>
+<li class="navelem"><b>src</b></li><li class="navelem"><b>morphevo</b></li><li class="navelem"><b>evaluator</b></li><li class="navelem"><a class="el" href="classsrc_1_1morphevo_1_1evaluator_1_1Evaluator.html">Evaluator</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="classsrc_1_1morph__evo_1_1urdf__generator_1_1URDFGenerator-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">src.morph_evo.urdf_generator.URDFGenerator Class Reference</div></div>
+<a href="classsrc_1_1morphevo_1_1evaluator_1_1Evaluator-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">src.morphevo.evaluator.Evaluator Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af5b13576d0b1f10a05c8b625d55b503a"><td class="memItemLeft" align="right" valign="top"><a id="af5b13576d0b1f10a05c8b625d55b503a" name="af5b13576d0b1f10a05c8b625d55b503a"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, str genome_id)</td></tr>
-<tr class="separator:af5b13576d0b1f10a05c8b625d55b503a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd760f063862ae1fa371755dc2a0ae2c"><td class="memItemLeft" align="right" valign="top"><a id="afd760f063862ae1fa371755dc2a0ae2c" name="afd760f063862ae1fa371755dc2a0ae2c"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>add_module</b> (self, float length)</td></tr>
-<tr class="separator:afd760f063862ae1fa371755dc2a0ae2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdd815bb9b2b9847bfc2d2f18c6089d0"><td class="memItemLeft" align="right" valign="top"><a id="abdd815bb9b2b9847bfc2d2f18c6089d0" name="abdd815bb9b2b9847bfc2d2f18c6089d0"></a>
-str&#160;</td><td class="memItemRight" valign="bottom"><b>get_urdf</b> (self)</td></tr>
-<tr class="separator:abdd815bb9b2b9847bfc2d2f18c6089d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93f175ced0ada380bd7e65e415a18ce1"><td class="memItemLeft" align="right" valign="top"><a id="a93f175ced0ada380bd7e65e415a18ce1" name="a93f175ced0ada380bd7e65e415a18ce1"></a>
+None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, str env_path, bool use_graphics=True)</td></tr>
+<tr class="separator:a93f175ced0ada380bd7e65e415a18ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02679d834374a553c8aa5bda794b7691"><td class="memItemLeft" align="right" valign="top"><a id="a02679d834374a553c8aa5bda794b7691" name="a02679d834374a553c8aa5bda794b7691"></a>
+<a class="el" href="classsrc_1_1morphevo_1_1genetic__encoding_1_1Genome.html">Genome</a>&#160;</td><td class="memItemRight" valign="bottom"><b>eval_genome</b> (self, <a class="el" href="classsrc_1_1morphevo_1_1genetic__encoding_1_1Genome.html">Genome</a> genome)</td></tr>
+<tr class="separator:a02679d834374a553c8aa5bda794b7691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a23f4a393fc85c99e880912cbc66d3c01"><td class="memItemLeft" align="right" valign="top"><a id="a23f4a393fc85c99e880912cbc66d3c01" name="a23f4a393fc85c99e880912cbc66d3c01"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>urdf</b></td></tr>
-<tr class="separator:a23f4a393fc85c99e880912cbc66d3c01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b969b769560a2f9f5b507a0cf1fd939"><td class="memItemLeft" align="right" valign="top"><a id="a3b969b769560a2f9f5b507a0cf1fd939" name="a3b969b769560a2f9f5b507a0cf1fd939"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>module_index</b></td></tr>
-<tr class="separator:a3b969b769560a2f9f5b507a0cf1fd939"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7fde941281866387c9be4545344fada"><td class="memItemLeft" align="right" valign="top"><a id="ad7fde941281866387c9be4545344fada" name="ad7fde941281866387c9be4545344fada"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>env_path</b></td></tr>
+<tr class="separator:ad7fde941281866387c9be4545344fada"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cc072b491728b3c0b62f76a6ca4e933"><td class="memItemLeft" align="right" valign="top"><a id="a1cc072b491728b3c0b62f76a6ca4e933" name="a1cc072b491728b3c0b62f76a6ca4e933"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>env</b></td></tr>
+<tr class="separator:a1cc072b491728b3c0b62f76a6ca4e933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9b0c7bde2032f5a44f81181ccabbac9"><td class="memItemLeft" align="right" valign="top"><a id="af9b0c7bde2032f5a44f81181ccabbac9" name="af9b0c7bde2032f5a44f81181ccabbac9"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>joint_angles</b></td></tr>
+<tr class="separator:af9b0c7bde2032f5a44f81181ccabbac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aded35b00edacbc83ce40f5c42abcc3a6"><td class="memItemLeft" align="right" valign="top"><a id="aded35b00edacbc83ce40f5c42abcc3a6" name="aded35b00edacbc83ce40f5c42abcc3a6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>use_graphics</b></td></tr>
+<tr class="separator:aded35b00edacbc83ce40f5c42abcc3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>tutorials/morphevo/src/morph_evo/urdf_generator.py</li>
+<li>tutorials/morphevo/src/morphevo/evaluator.py</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
