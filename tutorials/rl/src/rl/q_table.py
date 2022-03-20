@@ -68,7 +68,6 @@ class QTable:
         plt.gca().invert_yaxis()
         for j, i, label in filtered_q_table:
             plt.text(i, j, label, ha='center', va='center')
-            #ax2.text(i, j, label, ha='center', va='center')
         plt.show()
 
 

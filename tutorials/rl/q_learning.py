@@ -119,7 +119,7 @@ class QLearner:
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
             observations = self.env.reset()
             print((observations[13:15]))
-            goal = self._generate_goal() if not self.testing else (20,20)
+            goal = self._generate_goal() # if not self.testing else (20,20)
             print(goal)
             state = self._calculate_state(observations, goal)
             print(state)
