@@ -21,7 +21,7 @@ class QLearner:
         [0, 0, -1]
     ]
 
-    WORKSPACE_DISCRETIZATION = 0.5
+    WORKSPACE_DISCRETIZATION = 0.2
 
     # hyperparameters
     EPSILON = 0.1
@@ -62,9 +62,9 @@ class QLearner:
     def _discretize_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = pos - goal
         result = [0,0]
-        if np.round(direction[0]) != 0:
+        if direction[0] != 0:
             result[0] = direction[0] / np.abs(direction[0])
-        if np.round(direction[1]) != 0:
+        if direction[1] != 0:
             result[1] = direction[1] / np.abs(direction[1])
 
         return result
@@ -104,8 +104,8 @@ class QLearner:
         prev_distance_from_goal = np.linalg.norm(prev_absolute_pos - goal)
         new_distance_from_goal = np.linalg.norm(new_absolute_pos - goal)
 
-        if new_distance_from_goal == 0:
-            return 1000, True
+        if new_distance_from_goal <= 2*self.WORKSPACE_DISCRETIZATION:
+            return 10, True
 
         return prev_distance_from_goal - new_distance_from_goal, False
 
@@ -161,7 +161,7 @@ class QLearner:
         return self.q_table.lookup(state)
 
     def save(self):
-        with open('./q_tables/q_table.pkl', 'wb') as file:
+        with open('q_tables/q_table.pkl', 'wb') as file:
             pickle.dump(self.q_table, file, protocol=pickle.HIGHEST_PROTOCOL)
 
     def test(self, filename, max_steps: int = 500):
@@ -169,6 +169,7 @@ class QLearner:
             self.q_table = pickle.load(file)
 
         for i, goal in enumerate(self.workspace):
+            print(f"Going to goal {i}")
             goal = np.array(goal)
             observations = self.env.reset()
             state = self._calculate_state(observations, goal)
@@ -216,3 +217,4 @@ if __name__ == "__main__":
 
     signal.signal(signal.SIGINT, model.handler)
     model.learn()
+
