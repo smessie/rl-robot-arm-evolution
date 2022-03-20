@@ -29,17 +29,22 @@ class QLearner:
     GAMMA = 0.99
 
     def __init__(self, env_path: str, urdf_path: str,
-                 use_graphics: bool = False) -> None:
+                 use_graphics: bool = False, filename = "") -> None:
         urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
         self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
         self.workspace = set(self._get_workspace())
         self.goal_samples = self.workspace.copy()
         self.testing = False
 
-        self.q_table = QTable(len(self.workspace) ** 2,
-                              len(self.ACTIONS),
-                              self.ALPHA,
-                              self.GAMMA)
+        if filename != "":
+            with open(filename, 'rb') as file:
+                self.q_table = pickle.load(file)
+            self.testing = True
+        else:
+            self.q_table = QTable(len(self.workspace) ** 2,
+                                len(self.ACTIONS),
+                                self.ALPHA,
+                                self.GAMMA)
 
         self.logger = Logger()
 
@@ -117,7 +122,7 @@ class QLearner:
             finished = False
             while not finished and episode_step < steps_per_episode:
                 # Get an action
-                action_index = self.predict(state, stochastic=True)
+                action_index = self.predict(state, stochastic=(not self.testing))
                 actions = np.array(self.ACTIONS[action_index])
 
                 # Execute the action in the environmenthttps://wandb.ai/selab/sel3-rl-tutorial/runs/lvq90jw0
@@ -132,12 +137,13 @@ class QLearner:
                 prev_absolute_pos = new_absolute_pos  # this is not in the state, but is useful for reward calculation
 
                 # QTable update
-                self.q_table.update(state, new_state, action_index, reward)
+                if not self.testing:
+                    self.q_table.update(state, new_state, action_index, reward)
 
                 episode_step += 1
                 state = new_state
 
-            print(f"Finished was {finished} in episode {episode}")
+            # print(f"Finished was {finished} in episode {episode}")
             # print(f"direction:::{state[2:]}")
             # print(f"goal:::{goal}      pos:::{prev_absolute_pos}")
 
@@ -145,10 +151,12 @@ class QLearner:
                 episode, state, goal, episode_step, self.q_table)
 
         self.env.close()
-        self.save()
+        if not self.testing:
+            self.save()
 
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.EPSILON:
+            print("random")
             return np.random.randint(len(self.ACTIONS))
         return self.q_table.lookup(state)
 
@@ -194,15 +202,17 @@ class QLearner:
 
 
 if __name__ == "__main__":
+    # execute test loop by adding file to read qtable from
+    # without file it will train
 
     ENV_PATH = "src/environment/unity_environment/simenv.x86_64"
     URDF_PATH = "src/environment/robot.urdf"
 
-    model = QLearner(ENV_PATH, URDF_PATH, True)
-    signal.signal(signal.SIGINT, model.handler)
-
     if len(sys.argv) == 2:
-        model.testing = True
-        model.test(sys.argv[1])
+        model = QLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
+        # model.test(sys.argv[1])
     else:
-        model.learn()
+        model = QLearner(ENV_PATH, URDF_PATH, False)
+
+    signal.signal(signal.SIGINT, model.handler)
+    model.learn()
