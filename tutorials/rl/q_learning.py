@@ -10,6 +10,7 @@ from src.environment.environment import SimEnv
 from src.rl.logger import Logger
 from src.rl.q_table import QTable
 from tqdm import tqdm
+from pprint import pprint
 
 
 
@@ -46,9 +47,12 @@ class QLearner:
                                 self.ALPHA,
                                 self.GAMMA)
 
+        #self.q_table.visualize()
         self.logger = Logger()
 
+
     def handler(self, signum, frame):
+        self.q_table.visualize()
         if not self.testing:
             res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
             if res == 'y':
@@ -60,7 +64,7 @@ class QLearner:
         return discretized_pos
 
     def _discretize_direction(self, pos: np.ndarray, goal: np.ndarray):
-        direction = pos - goal
+        direction = goal - pos
         result = [0,0]
         if direction[0] != 0:
             result[0] = direction[0] / np.abs(direction[0])
@@ -114,8 +118,11 @@ class QLearner:
         finished = False
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
             observations = self.env.reset()
-            goal = self._generate_goal()
+            print((observations[13:15]))
+            goal = self._generate_goal() if not self.testing else (20,20)
+            print(goal)
             state = self._calculate_state(observations, goal)
+            print(state)
             prev_absolute_pos = self._discretize_position(observations[13:15])
 
             episode_step = 0
@@ -149,6 +156,7 @@ class QLearner:
 
             self.logger.log_episode(
                 episode, state, goal, episode_step, self.q_table)
+            #pprint(self.q_table.table)
 
         self.env.close()
         if not self.testing:
@@ -156,7 +164,6 @@ class QLearner:
 
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.EPSILON:
-            print("random")
             return np.random.randint(len(self.ACTIONS))
         return self.q_table.lookup(state)
 
@@ -210,7 +217,7 @@ if __name__ == "__main__":
     URDF_PATH = "src/environment/robot.urdf"
 
     if len(sys.argv) == 2:
-        model = QLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
+        model = QLearner(ENV_PATH, URDF_PATH, True, sys.argv[1])
         # model.test(sys.argv[1])
     else:
         model = QLearner(ENV_PATH, URDF_PATH, False)

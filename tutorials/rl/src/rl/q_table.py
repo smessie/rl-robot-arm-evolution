@@ -1,6 +1,7 @@
 
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class QTable:
@@ -37,6 +38,39 @@ class QTable:
             return int(np.argmax(self.table[tuple(state)]))
         except KeyError:
             return np.random.randint(self.n_actions)
+
+    def visualize(self):
+        self.visualize_quadrant(-1, -1)
+        self.visualize_quadrant(-1, 1)
+        self.visualize_quadrant(1, -1)
+        self.visualize_quadrant(1, 1)
+
+
+    def visualize_quadrant(self, dir_y, dir_z):
+
+        filtered_q_table = set()
+        for state, action_rewards in self.table.items():
+            if (state[2] == dir_y) and (state[3] == dir_z):
+                filtered_q_table.add((state[0], state[1], np.argmax(action_rewards)))
+        print(filtered_q_table)
+        max_y = -np.inf
+        max_z = -np.inf
+        for y, z, _ in filtered_q_table:
+            if y > max_y:
+                max_y = y
+            if z > max_z:
+                max_z = z
+        grid = [[-1 for _ in range(max_z+1)] for _ in range(max_y+1)]
+        for y, z, index in filtered_q_table:
+            grid[y][z] = index
+        plt.imshow(grid)
+        plt.title(f"y_dir={dir_y}, z_dir={dir_z}")
+        plt.gca().invert_yaxis()
+        for j, i, label in filtered_q_table:
+            plt.text(i, j, label, ha='center', va='center')
+            #ax2.text(i, j, label, ha='center', va='center')
+        plt.show()
+
 
     def calculate_state_coverage(self) -> float:
         return len(self.table) / self.n_states
