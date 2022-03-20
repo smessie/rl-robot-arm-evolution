@@ -47,7 +47,8 @@ class QLearner:
                                 self.ALPHA,
                                 self.GAMMA)
 
-        #self.q_table.visualize()
+        if self.testing:
+            self.q_table.visualize()
         self.logger = Logger()
 
 
@@ -109,7 +110,7 @@ class QLearner:
         new_distance_from_goal = np.linalg.norm(new_absolute_pos - goal)
 
         if new_distance_from_goal <= 2*self.WORKSPACE_DISCRETIZATION:
-            return 10, True
+            return 1000, True
 
         return prev_distance_from_goal - new_distance_from_goal, False
 
