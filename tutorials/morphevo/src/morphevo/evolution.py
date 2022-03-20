@@ -1,15 +1,18 @@
+import locale
+import time
 from itertools import count
+from xml.dom import minidom
 
 import numpy as np
 import psutil
-from evaluator import Evaluator
-from genetic_encoding import Genome
-from logger import Logger
+from env import PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
+from morphevo.evaluator import Evaluator
+from morphevo.genetic_encoding import Genome
+from morphevo.logger import Logger
 from ray.util import ActorPool
 from tqdm import tqdm
 
 GENERATIONS = 100
-ENV_PATH = 'environment/unity_environment/simenv.x86_64'
 # MU = # parents
 # LAMBDA = # children
 MU, LAMBDA = 5, 5
@@ -23,7 +26,7 @@ def calculate_fitness(genome: Genome) -> float:
 def evolution():
     genome_indexer = count(0)
 
-    evaluators = [Evaluator.remote(ENV_PATH, use_graphics=False)
+    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 
@@ -50,6 +53,13 @@ def evolution():
         parent_indices = np.argsort(population_fitnesses)[-MU:]
         parents = [population[i] for i in parent_indices]
         parent_fitnesses = [population_fitnesses[i] for i in parent_indices]
+
+        # Save URDF of the best genome to file
+        filename = f'output/{int(time.time())}-mu_{MU}-lambda_{LAMBDA}-generation_{generation}.xml'
+        best_genome = population[parent_indices[-1]]
+        xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
+        with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
+            f.write(xml_str)
 
         # create new children from selected parents
         children = []

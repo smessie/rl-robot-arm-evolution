@@ -3,9 +3,9 @@ from typing import Tuple
 import numpy as np
 import ray
 from environment.environment import SimEnv
-from genetic_encoding import Genome
 from mlagents_envs.exception import UnityWorkerInUseException
-from workspace import Workspace
+from morphevo.genetic_encoding import Genome
+from morphevo.workspace import Workspace
 
 
 @ray.remote(num_cpus=1)
