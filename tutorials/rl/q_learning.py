@@ -1,7 +1,7 @@
 import pickle
 import random
-import sys
 import signal
+import sys
 import xml.etree.ElementTree as ET
 from typing import Set, Tuple
 
@@ -10,8 +10,6 @@ from src.environment.environment import SimEnv
 from src.rl.logger import Logger
 from src.rl.q_table import QTable
 from tqdm import tqdm
-from pprint import pprint
-
 
 
 class QLearner:
@@ -52,13 +50,13 @@ class QLearner:
         self.logger = Logger()
 
 
-    def handler(self, signum, frame):
+    def handler(self):
         self.q_table.visualize()
         if not self.testing:
             res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
             if res == 'y':
                 self.save()
-                exit(1)
+                sys.exit(1)
 
     def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
         discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
@@ -225,4 +223,3 @@ if __name__ == "__main__":
 
     signal.signal(signal.SIGINT, model.handler)
     model.learn()
-

@@ -1,16 +1,14 @@
 import pickle
 import random
-from typing import Tuple, Set
+import sys
+import xml.etree.ElementTree as ET
+from typing import Set, Tuple
 
 import numpy as np
+from src.environment.environment import SimEnv
+from src.rl.logger import Logger
 from src.rl.q_table import QTable
 from tqdm import tqdm
-
-from src.environment.environment import SimEnv
-import xml.etree.ElementTree as ET
-from src.rl.logger import Logger
-import sys
-
 
 
 class QLearner:
@@ -94,7 +92,6 @@ class QLearner:
                 # Execute the action in the environment
                 observations = self.env.step(actions)
                 new_state = self._calculate_state(observations, goal)
-                
                 # Calculate reward
                 reward, finished =  self._calculate_reward(state, new_state, goal)
 
@@ -114,8 +111,7 @@ class QLearner:
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.EPSILON:
             return np.random.randint(len(self.ACTIONS))
-        else:
-            return self.q_table.lookup(state)
+        return self.q_table.lookup(state)
 
     def save(self):
         with open('q_tables/q_table_tutorial_3k_2.pkl', 'wb') as file:
