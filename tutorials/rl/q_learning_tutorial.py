@@ -78,7 +78,7 @@ class QLearner:
 
         return prev_distance_from_goal - new_distance_from_goal, False
 
-    def learn(self, num_episodes: int = 10000, steps_per_episode: int = 500) -> None:
+    def learn(self, num_episodes: int = 1000, steps_per_episode: int = 500) -> None:
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
             observations = self.env.reset()
             goal = self._generate_goal()
@@ -118,7 +118,8 @@ class QLearner:
             return self.q_table.lookup(state)
 
     def save(self):
-        pass
+        with open('q_tables/q_table_tutorial_3k_2.pkl', 'wb') as file:
+            pickle.dump(self.q_table, file, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 if __name__ == "__main__":
