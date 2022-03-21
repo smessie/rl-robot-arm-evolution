@@ -50,7 +50,7 @@ class QLearner:
         self.logger = Logger()
 
 
-    def handler(self):
+    def handler(self, signum, frame):
         self.q_table.visualize()
         if not self.testing:
             res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
@@ -219,7 +219,7 @@ if __name__ == "__main__":
         model = QLearner(ENV_PATH, URDF_PATH, True, sys.argv[1])
         # model.test(sys.argv[1])
     else:
-        model = QLearner(ENV_PATH, URDF_PATH, False)
+        model = QLearner(ENV_PATH, URDF_PATH, True)
 
     signal.signal(signal.SIGINT, model.handler)
     model.learn()
