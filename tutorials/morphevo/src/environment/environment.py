@@ -3,11 +3,11 @@ from typing import Tuple
 
 import gym
 import numpy as np
+from environment.sidechannels.creation_sc import CreationSC
 from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
-from sidechannels.creation_sc import CreationSC
 
 
 class SimEnv(gym.Env):

@@ -5,9 +5,10 @@ wandb
 /tutorials/simenv/simenv_BurstDebugInformation_DoNotShip
 /tutorials/simenv/UnityPlayer.so
 
-
-## dumb ass timer file
 *timers.json
+tutorials/morphevo/src/environment/unity_environment/simenv_BurstDebugInformation_DoNotShip/
+tutorials/morphevo/src/environment/unity_environment/simenv_Data/
+tutorials/morphevo/src/pyrightconfig.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -249,3 +250,9 @@ latex/
 # build things
 /tutorials/simenv/simenv*
 /tutorials/simenv/*.debug
+
+# Environment file for Python projects holding environment/PC specific variables.
+env.py
+
+# Output directory where we can write our generated output to.
+output/
