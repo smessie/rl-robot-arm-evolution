@@ -78,8 +78,7 @@ class SimEnv(gym.Env):
         return observations
 
     def reset(self) -> np.ndarray:
-        self.u_env._is_first_message = True
-        #self.u_env.reset()
+        self.u_env.reset()
         observations = self._get_unity_observations()
         return observations
 
