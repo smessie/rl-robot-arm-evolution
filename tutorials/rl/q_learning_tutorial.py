@@ -114,7 +114,7 @@ class QLearner:
         return self.q_table.lookup(state)
 
     def save(self):
-        with open('q_tables/q_table_tutorial_3k_2.pkl', 'wb') as file:
+        with open('q_tables/q_table.pkl', 'wb') as file:
             pickle.dump(self.q_table, file, protocol=pickle.HIGHEST_PROTOCOL)
 
 

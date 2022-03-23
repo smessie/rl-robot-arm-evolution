@@ -108,7 +108,7 @@ class QLearner:
         new_distance_from_goal = np.linalg.norm(new_absolute_pos - goal)
 
         if new_distance_from_goal <= 2*self.WORKSPACE_DISCRETIZATION:
-            return 1000, True
+            return 10, True
 
         return prev_distance_from_goal - new_distance_from_goal, False
 
@@ -117,11 +117,11 @@ class QLearner:
         finished = False
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
             observations = self.env.reset()
-            print((observations[13:15]))
+            print()
+            print(f"The end effector start position is: {(observations[13:15])}")
             goal = self._generate_goal() # if not self.testing else (20,20)
-            print(goal)
+            print(f"The discretized end effector start position is: {self._discretize_position(observations[13:15])}")
             state = self._calculate_state(observations, goal)
-            print(state)
             prev_absolute_pos = self._discretize_position(observations[13:15])
 
             episode_step = 0
@@ -213,13 +213,13 @@ if __name__ == "__main__":
     # without file it will train
 
     ENV_PATH = "src/environment/unity_environment_tutorial/simenv.x86_64"
-    URDF_PATH = "src/environment/robot.urdf"
+    URDF_PATH = "src/environment/robot_tutorial.urdf"
 
     if len(sys.argv) == 2:
-        model = QLearner(ENV_PATH, URDF_PATH, True, sys.argv[1])
+        model = QLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
         # model.test(sys.argv[1])
     else:
-        model = QLearner(ENV_PATH, URDF_PATH, True)
+        model = QLearner(ENV_PATH, URDF_PATH, False)
 
     signal.signal(signal.SIGINT, model.handler)
     model.learn()
