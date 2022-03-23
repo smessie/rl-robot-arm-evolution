@@ -10,6 +10,7 @@ from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 from sidechannels.creation_sc import CreationSC
+from sidechannels.goal_sc import GoalSC
 
 
 class SimEnv(gym.Env):
@@ -33,16 +34,17 @@ class SimEnv(gym.Env):
         self.use_graphics = use_graphics
         self.worker_id = worker_id
 
-        self.creation_sc, self.u_env = self._initialize_unity_env()
+        self.creation_sc, self.goal_sc, self.u_env = self._initialize_unity_env()
         self.behavior_name = 'ManipulatorBehavior?team=0'
         self.behavior_spec = self.u_env.behavior_specs[self.behavior_name]
 
     def _initialize_unity_env(self) -> Tuple[CreationSC, UnityEnvironment]:
         creation_sc = CreationSC()
+        goal_sc = GoalSC()
         conf_channel = EngineConfigurationChannel()
 
         env = UnityEnvironment(file_name=self.env_path,
-                               side_channels=[conf_channel, creation_sc],
+                               side_channels=[conf_channel, creation_sc, goal_sc],
                                worker_id=self.worker_id,
                                no_graphics=not self.use_graphics)
         if self.use_graphics:
@@ -55,7 +57,7 @@ class SimEnv(gym.Env):
         env.reset()
         while not creation_sc.creation_done:
             pass
-        return creation_sc, env
+        return creation_sc, goal_sc, env
 
     def _get_unity_observations(self) -> np.ndarray:
         decision_steps, _ = self.u_env.get_steps(
@@ -69,6 +71,9 @@ class SimEnv(gym.Env):
         actions = np.pad(actions, (0, self.MAX_N_MODULES - len(actions)))
         actions = actions[None, :]
         self.u_env.set_actions(self.behavior_name, action=ActionTuple(actions))
+
+    def set_goal(self, goal: tuple) -> None:
+        self.goal_sc.send_goal_position(goal)
 
     def step(self, action: np.ndarray) -> np.ndarray:
         self._set_unity_actions(action)
@@ -102,6 +107,7 @@ def test_environment():
                  use_graphics=True)
 
     _ = env.reset()
+    env.set_goal((3.0, 2.0, 4.0))
     # Rotate second module 90 degrees
     for _ in range(9):
         actions = [0, 0, 0, 1, 0, 0]
@@ -123,9 +129,15 @@ def test_environment():
         actions = [0, 0, 0, 0, 1, 0]
         _ = env.step(actions)
     # Keep simulation running
+    for _ in range(200):
+        actions = [0, 0, 0, 0, 0, 0]
+        _ = env.step(actions)
+    env.set_goal((-3.0, 2.0, -4.0))
+    # Keep simulation running
     for _ in range(2000):
         actions = [0, 0, 0, 0, 0, 0]
         _ = env.step(actions)
+
 
     env.close()
 
