@@ -98,7 +98,6 @@ class QLearner:
         ee_pos = self._discretize_position(ee_pos)
         goal = self._discretize_direction(ee_pos, goal)
 
-
         return np.array([ee_pos[0], ee_pos[1], goal[0], goal[1]], dtype=int)
 
     def _calculate_reward(self, prev_absolute_pos: np.ndarray, new_absolute_pos: np.ndarray,
@@ -113,13 +112,13 @@ class QLearner:
 
     def learn(self, num_episodes: int = 10000,
               steps_per_episode: int = 500) -> None:
-        finished = False
+
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
+            # the end effector position is already randomized after reset()
             observations = self.env.reset()
-            print()
-            print(f"The end effector start position is: {(observations[13:15])}")
-            goal = self._generate_goal() # if not self.testing else (20,20)
-            print(f"The discretized end effector start position is: {self._discretize_position(observations[13:15])}")
+
+            goal = self._generate_goal()
+
             state = self._calculate_state(observations, goal)
             prev_absolute_pos = self._discretize_position(observations[13:15])
 
@@ -148,13 +147,8 @@ class QLearner:
                 episode_step += 1
                 state = new_state
 
-            # print(f"Finished was {finished} in episode {episode}")
-            # print(f"direction:::{state[2:]}")
-            # print(f"goal:::{goal}      pos:::{prev_absolute_pos}")
-
             self.logger.log_episode(
                 episode, state, goal, episode_step, self.q_table)
-            #pprint(self.q_table.table)
 
         self.env.close()
         if not self.testing:
@@ -215,8 +209,7 @@ if __name__ == "__main__":
     URDF_PATH = "src/environment/robot_tutorial.urdf"
 
     if len(sys.argv) == 2:
-        model = QLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
-        # model.test(sys.argv[1])
+        model = QLearner(ENV_PATH, URDF_PATH, True, sys.argv[1])
     else:
         model = QLearner(ENV_PATH, URDF_PATH, False)
 
