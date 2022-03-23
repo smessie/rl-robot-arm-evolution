@@ -212,7 +212,7 @@ if __name__ == "__main__":
     # execute test loop by adding file to read qtable from
     # without file it will train
 
-    ENV_PATH = "src/environment/unity_environment/simenv.x86_64"
+    ENV_PATH = "src/environment/unity_environment_tutorial/simenv.x86_64"
     URDF_PATH = "src/environment/robot.urdf"
 
     if len(sys.argv) == 2:
