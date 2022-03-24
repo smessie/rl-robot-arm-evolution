@@ -24,45 +24,61 @@ public class Builder : MonoBehaviour
 
     public GameObject EndEffector => endEffector;
 
-    private float[] ParseURDF(string urdf)
+    private RobotSpecification ParseURDF(string urdf)
     {
         byte[] byteArray = Encoding.ASCII.GetBytes(urdf);
         MemoryStream stream = new MemoryStream(byteArray);
 
         XmlSerializer serializer = new XmlSerializer(typeof(RobotSpecification));
-        RobotSpecification robotSpec = (RobotSpecification) serializer.Deserialize(stream);
+        return (RobotSpecification) serializer.Deserialize(stream);
+    }
 
-        // Now we extract module length, later we'll have to also extract joint angles and degrees of freedom of joint.
-        List<float> ml = new List<float>();
+    private void AddModules(RobotSpecification robotSpec)
+    {
+        // Get joint angle bounds
+        List<float> joint_angles_lower_bounds = new List<float>();
+        List<float> joint_angles_upper_bounds = new List<float>();
+        foreach (var joint in robotSpec.Joints)
+        {
+            AngleSpec angleSpec = joint.AngleSpec;
+            if (angleSpec != null)
+            {
+                joint_angles_lower_bounds.Add(angleSpec.LowerBound);
+                joint_angles_upper_bounds.Add(angleSpec.UpperBound);
+            }
+        }
+        // Add modules
+        int i = 0;
         foreach (var link in robotSpec.Links)
         {
             BaseModule baseModule = link.VisualSpec.Geometry.BaseModule;
-            if (baseModule != null)
+            RotationSpec rotationSpec = link.RotationSpec;
+            if (baseModule != null && rotationSpec != null)
             {
-                ml.Add(baseModule.Length);
+                AddModule(baseModule.Length, rotationSpec.LowerBound, rotationSpec.UpperBound,
+                          joint_angles_lower_bounds[i], joint_angles_upper_bounds[i]);
+                i++;
             }
         }
 
-        return ml.ToArray();
     }
 
     public void BuildAgent(string urdf)
     {
         // Parse URDF
-        moduleLengths = ParseURDF(urdf);
+        RobotSpecification robotSpec = ParseURDF(urdf);
 
         endEffector = anchor;
-        foreach (var length in moduleLengths)
-        {
-            AddModule(length);
-        }
+
+        AddModules(robotSpec);
 
         GetComponent<JointController>().ArticulationBodies = _articulationBodies;
 
         Instantiate(manipulatorAgentPrefab, Vector3.zero, Quaternion.identity, transform);
     }
 
-    void AddModule(float length) {
+    void AddModule(float length, float rotation_lower_bound, float rotation_upper_bound,
+                   float angle_lower_bound, float angle_upper_bound) {
         // Add a module with the given length.
         GameObject module = new GameObject("Module");
 
@@ -99,13 +115,13 @@ public class Builder : MonoBehaviour
         moduleHead.transform.parent = moduleBody.transform;
         module.transform.parent = endEffector.transform;
 
-        ConfigureTiltingJoint(moduleTail);
-        ConfigureRotatingJoint(moduleBody);
+        ConfigureTiltingJoint(moduleTail, angle_lower_bound, angle_upper_bound);
+        ConfigureRotatingJoint(moduleBody, rotation_lower_bound, rotation_upper_bound);
 
         endEffector = moduleHead;
     }
 
-    void ConfigureTiltingJoint(GameObject moduleTail)
+    void ConfigureTiltingJoint(GameObject moduleTail, float lower_bound, float upper_bound)
     {
         ArticulationBody articulationBody = moduleTail.GetComponent<ArticulationBody>();
 
@@ -116,8 +132,8 @@ public class Builder : MonoBehaviour
         articulationBody.twistLock = ArticulationDofLock.LimitedMotion;
 
         ArticulationDrive xDrive = articulationBody.xDrive;
-        xDrive.lowerLimit = 0f;
-        xDrive.upperLimit = 90f;
+        xDrive.lowerLimit = lower_bound;
+        xDrive.upperLimit = upper_bound;
         xDrive.stiffness = 100000;
         xDrive.damping = 10000;
         articulationBody.xDrive = xDrive;
@@ -125,7 +141,7 @@ public class Builder : MonoBehaviour
         _articulationBodies.Add(moduleTail.GetComponent<ArticulationBody>());
     }
 
-    void ConfigureRotatingJoint(GameObject moduleBody)
+    void ConfigureRotatingJoint(GameObject moduleBody, float lower_bound, float upper_bound)
     {
         ArticulationBody articulationBody = moduleBody.GetComponent<ArticulationBody>();
 
@@ -136,8 +152,8 @@ public class Builder : MonoBehaviour
         articulationBody.twistLock = ArticulationDofLock.LimitedMotion;
 
         ArticulationDrive xDrive = articulationBody.xDrive;
-        xDrive.lowerLimit = 0f;
-        xDrive.upperLimit = 360f;
+        xDrive.lowerLimit = lower_bound;
+        xDrive.upperLimit = upper_bound;
         xDrive.stiffness = 100000;
         xDrive.damping = 10000;
         articulationBody.xDrive = xDrive;
