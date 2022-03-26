@@ -15,10 +15,13 @@ class URDFGenerator:
         geometry = ET.SubElement(visual, 'geometry')
         ET.SubElement(geometry, 'anchor_module')
 
-    def add_module(self, length: float) -> None:
+    def add_module(self, length: float, rotation_lower_bound: float = 0, rotation_upper_bound: float = 180,
+                   angle_lower_bound: float = 0, angle_upper_bound: float = 90) -> None:
         link = ET.SubElement(self.urdf, 'link', {
                              'name': f'module_{self.module_index}'})
         visual = ET.SubElement(link, 'visual')
+        ET.SubElement(link, 'rotation', {'lower_bound': f'{rotation_lower_bound}',
+                                         'upper_bound': f'{rotation_upper_bound}'})
         geometry = ET.SubElement(visual, 'geometry')
         ET.SubElement(geometry, 'base_module', {'length': str(length)})
 
@@ -29,6 +32,8 @@ class URDFGenerator:
 
         ET.SubElement(joint, 'parent', {'link': parent_link})
         ET.SubElement(joint, 'child', {'link': f'module_{self.module_index}'})
+        ET.SubElement(joint, 'angle', {'lower_bound': f'{angle_lower_bound}',
+                                       'upper_bound': f'{angle_upper_bound}'})
 
         self.module_index += 1
 
