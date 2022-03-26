@@ -138,7 +138,6 @@ def test_environment():
         actions = [0, 0, 0, 0, 0, 0]
         _ = env.step(actions)
 
-
     env.close()
 
 
