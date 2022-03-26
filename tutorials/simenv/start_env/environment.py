@@ -108,34 +108,34 @@ def test_environment():
 
     _ = env.reset()
     env.set_goal((3.0, 2.0, 4.0))
+    # (Comments not including 'anchor module')
     # Rotate second module 90 degrees
     for _ in range(9):
-        actions = [0, 0, 0, 1, 0, 0]
+        actions = [0, 0, 0, 0, 1, 0, 0]
         _ = env.step(actions)
     # Rotate first module 45 degrees
     for _ in range(9):
-        actions = [0, 0.5, 0, 0, 0, 0]
+        actions = [0, 0, 0.5, 0, 0, 0, 0]
         _ = env.step(actions)
     # Tilt first module 45 degrees
     for _ in range(9):
-        actions = [0.5, 0, 0, 0, 0, 0]
+        actions = [0, 0.5, 0, 0, 0, 0, 0]
         _ = env.step(actions)
     # Tilt second module 45 degrees
     for _ in range(9):
-        actions = [0, 0, 0.5, 0, 0, 0]
+        actions = [0, 0, 0, 0.5, 0, 0, 0]
         _ = env.step(actions)
     # Tilt third module 90 degrees
     for _ in range(9):
-        actions = [0, 0, 0, 0, 1, 0]
+        actions = [0, 0, 0, 0, 0, 1, 0]
         _ = env.step(actions)
-    # Keep simulation running
-    for _ in range(200):
-        actions = [0, 0, 0, 0, 0, 0]
+    # Turn around the base running
+    for _ in range(360):
+        actions = [0.1, 0, 0, 0, 0, 0, 0]
         _ = env.step(actions)
-    env.set_goal((-3.0, 2.0, -4.0))
     # Keep simulation running
     for _ in range(2000):
-        actions = [0, 0, 0, 0, 0, 0]
+        actions = [0, 0, 0, 0, 0, 0, 0]
         _ = env.step(actions)
 
     env.close()
