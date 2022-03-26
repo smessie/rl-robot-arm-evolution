@@ -32,6 +32,7 @@ class Genome:
 
     def get_urdf(self) -> str:
         urdf_generator = URDFGenerator(self.genome_id)
+        urdf_generator.add_anchor(length=1)
         for module_lenght in self.module_lenghts:
             urdf_generator.add_module(module_lenght)
         return urdf_generator.get_urdf()
