@@ -1,6 +1,7 @@
 import logging
-from os.path import exists
 import sys
+from os.path import exists
+
 import ray
 
 from morphevo.evolution import evolution

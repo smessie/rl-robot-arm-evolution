@@ -4,10 +4,10 @@ from itertools import count
 from xml.dom import minidom
 
 import numpy as np
-from tqdm import tqdm
 from ray.util import ActorPool
+from tqdm import tqdm
 
-from env import PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS, NUM_CORES
+from env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
