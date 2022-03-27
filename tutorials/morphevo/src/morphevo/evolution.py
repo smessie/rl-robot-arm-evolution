@@ -1,8 +1,7 @@
 from itertools import count
 
 import numpy as np
-import psutil
-from env import PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
+from env import PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS, NUM_CORES
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
@@ -13,7 +12,6 @@ GENERATIONS = 100
 # MU = # parents
 # LAMBDA = # children
 MU, LAMBDA = 5, 5
-NUM_CORES = psutil.cpu_count()
 
 
 def calculate_fitness(genome: Genome) -> float:

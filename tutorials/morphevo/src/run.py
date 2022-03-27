@@ -13,7 +13,6 @@ if __name__ == '__main__':
     evolution()
     sys.exit(0)
     PATH_TO_URDF = 'environment/urdf_example.urdf'
-    # PATH_TO_YOUR_UNITY_EXECUTABLE = '../../sel3_simenv_tutorial_python/unity_environment/env.x86_64'
     urdf = ET.tostring(ET.parse(PATH_TO_URDF).getroot(), encoding='unicode')
 
     env = SimEnv(env_path=PATH_TO_UNITY_EXECUTABLE,
