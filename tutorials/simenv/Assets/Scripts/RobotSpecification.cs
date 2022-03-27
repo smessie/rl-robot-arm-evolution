@@ -17,12 +17,14 @@ namespace DefaultNamespace
     {
         [XmlAttribute("name")] public string Name;
         [XmlElement("visual")] public VisualSpec VisualSpec;
+        [XmlElement("rotation")] public RotationSpec RotationSpec;
     }
-    
+
     public class JointSpec
     {
         [XmlElement("parent")] public JointLink ParentLink;
         [XmlElement("child")] public JointLink ChildLink;
+        [XmlElement("angle")] public AngleSpec AngleSpec;
     }
 
     public class JointLink
@@ -48,5 +50,17 @@ namespace DefaultNamespace
 
     public class AnchorModule
     {
+    }
+
+    public class RotationSpec
+    {
+        [XmlAttribute("lower_bound")] public float LowerBound;
+        [XmlAttribute("upper_bound")] public float UpperBound;
+    }
+
+    public class AngleSpec
+    {
+        [XmlAttribute("lower_bound")] public float LowerBound;
+        [XmlAttribute("upper_bound")] public float UpperBound;
     }
 }
