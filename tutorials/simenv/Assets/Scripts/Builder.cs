@@ -17,52 +17,68 @@ public class Builder : MonoBehaviour
     public GameObject manipulatorAgentPrefab;
 
     public GameObject anchor;
-    
+
     private GameObject endEffector;
 
     private List<ArticulationBody> _articulationBodies = new List<ArticulationBody>();
 
     public GameObject EndEffector => endEffector;
 
-    private float[] ParseURDF(string urdf)
+    private RobotSpecification ParseURDF(string urdf)
     {
         byte[] byteArray = Encoding.ASCII.GetBytes(urdf);
         MemoryStream stream = new MemoryStream(byteArray);
 
         XmlSerializer serializer = new XmlSerializer(typeof(RobotSpecification));
-        RobotSpecification robotSpec = (RobotSpecification) serializer.Deserialize(stream);
-        
-        // Now we extract module length, later we'll have to also extract joint angles and degrees of freedom of joint.
-        List<float> ml = new List<float>();
+        return (RobotSpecification) serializer.Deserialize(stream);
+    }
+
+    private void AddModules(RobotSpecification robotSpec)
+    {
+        // Get joint angle bounds
+        List<float> joint_angles_lower_bounds = new List<float>();
+        List<float> joint_angles_upper_bounds = new List<float>();
+        foreach (var joint in robotSpec.Joints)
+        {
+            AngleSpec angleSpec = joint.AngleSpec;
+            if (angleSpec != null)
+            {
+                joint_angles_lower_bounds.Add(angleSpec.LowerBound);
+                joint_angles_upper_bounds.Add(angleSpec.UpperBound);
+            }
+        }
+        // Add modules
+        int i = 0;
         foreach (var link in robotSpec.Links)
         {
             BaseModule baseModule = link.VisualSpec.Geometry.BaseModule;
-            if (baseModule != null)
+            RotationSpec rotationSpec = link.RotationSpec;
+            if (baseModule != null && rotationSpec != null)
             {
-                ml.Add(baseModule.Length);
+                AddModule(baseModule.Length, rotationSpec.LowerBound, rotationSpec.UpperBound,
+                          joint_angles_lower_bounds[i], joint_angles_upper_bounds[i]);
+                i++;
             }
         }
 
-        return ml.ToArray();
     }
-    
+
     public void BuildAgent(string urdf)
     {
         // Parse URDF
-        moduleLengths = ParseURDF(urdf);
+        RobotSpecification robotSpec = ParseURDF(urdf);
 
         endEffector = anchor;
-        foreach (var length in moduleLengths)
-        {
-            AddModule(length);
-        }
+
+        AddModules(robotSpec);
 
         GetComponent<JointController>().ArticulationBodies = _articulationBodies;
 
         Instantiate(manipulatorAgentPrefab, Vector3.zero, Quaternion.identity, transform);
     }
 
-    void AddModule(float length) {
+    void AddModule(float length, float rotation_lower_bound, float rotation_upper_bound,
+                   float angle_lower_bound, float angle_upper_bound) {
         // Add a module with the given length.
         GameObject module = new GameObject("Module");
 
@@ -74,7 +90,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
-        
+
         yPos += length;
         GameObject moduleBody = Instantiate(
             moduleBodyPrefab, // type GameObject we want to make
@@ -83,10 +99,9 @@ public class Builder : MonoBehaviour
             module.transform
         );
         moduleBody.transform.localScale = new Vector3(1f, length, 1f);
-        
+
         // Change mass according to length.
         moduleBody.GetComponent<ArticulationBody>().mass = length;
-        
 
         yPos += length;
         GameObject moduleHead = Instantiate(
@@ -99,30 +114,51 @@ public class Builder : MonoBehaviour
         moduleBody.transform.parent = moduleTail.transform;
         moduleHead.transform.parent = moduleBody.transform;
         module.transform.parent = endEffector.transform;
-        
-        ConfigureRevoluteJoint(moduleTail);
-        
+
+        ConfigureTiltingJoint(moduleTail, angle_lower_bound, angle_upper_bound);
+        ConfigureRotatingJoint(moduleBody, rotation_lower_bound, rotation_upper_bound);
+
         endEffector = moduleHead;
     }
 
-    void ConfigureRevoluteJoint(GameObject moduleTail)
+    void ConfigureTiltingJoint(GameObject moduleTail, float lower_bound, float upper_bound)
     {
         ArticulationBody articulationBody = moduleTail.GetComponent<ArticulationBody>();
 
         articulationBody.jointType = ArticulationJointType.RevoluteJoint;
         articulationBody.anchorRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
-        
+
         // Articulation degree of freedom
         articulationBody.twistLock = ArticulationDofLock.LimitedMotion;
 
         ArticulationDrive xDrive = articulationBody.xDrive;
-        xDrive.lowerLimit = 0f;
-        xDrive.upperLimit = 100f;
+        xDrive.lowerLimit = lower_bound;
+        xDrive.upperLimit = upper_bound;
         xDrive.stiffness = 100000;
         xDrive.damping = 10000;
         articulationBody.xDrive = xDrive;
-        
+
         _articulationBodies.Add(moduleTail.GetComponent<ArticulationBody>());
+    }
+
+    void ConfigureRotatingJoint(GameObject moduleBody, float lower_bound, float upper_bound)
+    {
+        ArticulationBody articulationBody = moduleBody.GetComponent<ArticulationBody>();
+
+        articulationBody.jointType = ArticulationJointType.RevoluteJoint;
+        articulationBody.anchorRotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
+
+        // Articulation degree of freedom
+        articulationBody.twistLock = ArticulationDofLock.LimitedMotion;
+
+        ArticulationDrive xDrive = articulationBody.xDrive;
+        xDrive.lowerLimit = lower_bound;
+        xDrive.upperLimit = upper_bound;
+        xDrive.stiffness = 100000;
+        xDrive.damping = 10000;
+        articulationBody.xDrive = xDrive;
+
+        _articulationBodies.Add(moduleBody.GetComponent<ArticulationBody>());
     }
 
     // This function is called every time before we'll do a physics update. Before all forces and positions are calculated again in the scene, this function is called.
