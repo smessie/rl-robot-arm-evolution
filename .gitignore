@@ -5,6 +5,7 @@ wandb
 /tutorials/simenv/simenv_BurstDebugInformation_DoNotShip
 /tutorials/simenv/UnityPlayer.so
 
+*timers.json
 tutorials/morphevo/src/environment/unity_environment/simenv_BurstDebugInformation_DoNotShip/
 tutorials/morphevo/src/environment/unity_environment/simenv_Data/
 tutorials/morphevo/src/pyrightconfig.json

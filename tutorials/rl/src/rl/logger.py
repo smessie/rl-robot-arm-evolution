@@ -15,5 +15,15 @@ class Logger:
         wandb.log({
             'Episode/final_distance': final_distance,
             "Episode/timesteps": timesteps,
-            "Q-Table/state_coverate": q_table.calculate_state_coverage
+            "Q-Table/state_coverage": q_table.calculate_state_coverage
         }, step=episode)
+
+    def log_test(self, episode_steps: int,
+                    current_position, goal: np.ndarray, goal_number: int):
+
+        final_distance = np.linalg.norm(current_position - goal)
+
+        wandb.log({
+            'goal number/actions needed to reach goal': episode_steps,
+            'goal number/final distance': final_distance,
+        }, step=goal_number)
