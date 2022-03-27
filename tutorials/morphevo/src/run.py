@@ -1,7 +1,7 @@
 import logging
-import ray
-import sys
 from os.path import exists
+import sys
+import ray
 
 from morphevo.evolution import evolution
 from morphevo.parameters import Parameters

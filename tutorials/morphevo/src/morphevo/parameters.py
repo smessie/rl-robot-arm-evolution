@@ -1,6 +1,8 @@
 import yaml
 
+
 class Parameters:
+
     def __init__(self, config_file_name: str) -> None:
         stream = open(config_file_name, 'r')
         evolution_config = yaml.load(stream, yaml.FullLoader)
