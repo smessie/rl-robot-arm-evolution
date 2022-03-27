@@ -18,7 +18,7 @@ def calculate_fitness(genome: Genome) -> float:
     return genome.workspace.calculate_coverage()
 
 
-def evolution():
+def evolution(evolution_parameters):
     genome_indexer = count(0)
 
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
@@ -28,7 +28,7 @@ def evolution():
     logger = Logger()
 
     parents, parent_fitnesses = [], []
-    children = [Genome(next(genome_indexer)) for _ in range(LAMBDA)]
+    children = [Genome(next(genome_indexer)) for _ in range(evolution_parameters.LAMBDA)]
 
     for generation in tqdm(range(GENERATIONS), desc='Generation'):
         # Evaluate children
@@ -45,7 +45,7 @@ def evolution():
         population_fitnesses = children_fitnesses + parent_fitnesses
 
         # Selection
-        parent_indices = np.argsort(population_fitnesses)[-MU:]
+        parent_indices = np.argsort(population_fitnesses)[-evolution_parameters.MU:]
         parents = [population[i] for i in parent_indices]
         parent_fitnesses = [population_fitnesses[i] for i in parent_indices]
 
@@ -54,7 +54,7 @@ def evolution():
         parent_index = 0
         while len(children) < LAMBDA:
             parent = parents[parent_index]
-            parent_index = (parent_index + 1) % MU
+            parent_index = (parent_index + 1) % evolution_parameters.MU
 
             child = Genome(next(genome_indexer), parent_genome=parent)
             children.append(child)
