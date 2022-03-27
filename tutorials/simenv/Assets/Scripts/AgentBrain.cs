@@ -13,6 +13,9 @@ public class AgentBrain : Agent
     private GameObject _anchor;
     private GameObject _endEffector;
 
+    private bool _makeScreenshots = false;
+    private int _screenshotCounter = 0;
+
     // Start function of Agent class, will be called before something else happens.
     private void Awake()
     {
@@ -36,10 +39,10 @@ public class AgentBrain : Agent
         foreach (var articulationBody in _jointController.ArticulationBodies)
         {
             sensor.AddObservation(articulationBody.xDrive.target);
-            
+
             sensor.AddObservation(articulationBody.transform.position - _anchor.transform.position);
         }
-        
+
         // End effector -> position
         sensor.AddObservation(_endEffector.transform.position - _anchor.transform.position);
 
@@ -60,5 +63,15 @@ public class AgentBrain : Agent
             _jointController.ActuateJoint(i, angleStep);
         }
         base.OnActionReceived(actions);
+    }
+
+    // This function is called every time before we'll do a physics update. Before all forces and positions are calculated again in the scene, this function is called.
+    // All physics related updates, you perform in the FixedUpdate method.
+    private void FixedUpdate()
+    {
+        _screenshotCounter++;
+        if (_makeScreenshots && _screenshotCounter % 100 == 0) {
+            ScreenCapture.CaptureScreenshot("screenshot-" + _screenshotCounter / 100 + ".png", 20);
+        }
     }
 }
