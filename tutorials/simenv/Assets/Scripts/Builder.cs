@@ -35,6 +35,13 @@ public class Builder : MonoBehaviour
 
     private void AddModules(RobotSpecification robotSpec)
     {
+        LinkSpec anchorLink = robotSpec.Links[0];
+        if (anchorLink.VisualSpec.Geometry.AnchorModule != null) {
+            AddAnchorModule(anchorLink.VisualSpec.Geometry.AnchorModule.Length,
+                            anchorLink.RotationSpec.LowerBound, anchorLink.RotationSpec.UpperBound);
+        } else {
+            return;
+        }
         // Get joint angle bounds
         List<float> joint_angles_lower_bounds = new List<float>();
         List<float> joint_angles_upper_bounds = new List<float>();
@@ -75,6 +82,39 @@ public class Builder : MonoBehaviour
         GetComponent<JointController>().ArticulationBodies = _articulationBodies;
 
         Instantiate(manipulatorAgentPrefab, Vector3.zero, Quaternion.identity, transform);
+    }
+
+    void AddAnchorModule(float length, float rotation_lower_bound, float rotation_upper_bound) {
+        // Add a module with the given length.
+        GameObject module = new GameObject("Module");
+
+        float yPos = endEffector.transform.position.y + 0.5f + length;
+
+        GameObject moduleBody = Instantiate(
+            moduleBodyPrefab, // type GameObject we want to make
+            new Vector3(0f, yPos, 0f), // Position on where we want to instantiate it
+            Quaternion.identity, // Turn/rotation
+            module.transform
+        );
+        moduleBody.transform.localScale = new Vector3(1f, length, 1f);
+
+        // Change mass according to length.
+        moduleBody.GetComponent<ArticulationBody>().mass = length;
+
+        yPos += length;
+        GameObject moduleHead = Instantiate(
+            moduleConnectorPrefab, // type GameObject we want to make
+            new Vector3(0f, yPos, 0f), // Position on where we want to instantiate it
+            Quaternion.identity, // Turn/rotation
+            module.transform
+        );
+
+        moduleHead.transform.parent = moduleBody.transform;
+        module.transform.parent = endEffector.transform;
+
+        ConfigureRotatingJoint(moduleBody, rotation_lower_bound, rotation_upper_bound);
+
+        endEffector = moduleHead;
     }
 
     void AddModule(float length, float rotation_lower_bound, float rotation_upper_bound,

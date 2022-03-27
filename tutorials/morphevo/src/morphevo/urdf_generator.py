@@ -6,17 +6,23 @@ class URDFGenerator:
         self.urdf = ET.Element('robot')
         self.urdf.set('name', f'robot_{genome_id}')
 
-        self._add_anchor()
+        self.anchor_added = False
         self.module_index = 0
 
-    def _add_anchor(self) -> None:
+    def add_anchor(self, length: float, rotation_lower_bound: float = 0, rotation_upper_bound: float = 180,) -> None:
         link = ET.SubElement(self.urdf, 'link', {'name': 'anchor'})
         visual = ET.SubElement(link, 'visual')
+        ET.SubElement(link, 'rotation', {'lower_bound': f'{rotation_lower_bound}',
+                                         'upper_bound': f'{rotation_upper_bound}'})
         geometry = ET.SubElement(visual, 'geometry')
-        ET.SubElement(geometry, 'anchor_module')
+        ET.SubElement(geometry, 'anchor_module', {'length': str(length)})
+        self.anchor_added = True
 
     def add_module(self, length: float, rotation_lower_bound: float = 0, rotation_upper_bound: float = 180,
                    angle_lower_bound: float = 0, angle_upper_bound: float = 90) -> None:
+        if not self.anchor_added:
+            raise Exception("Anchor has to be added first")
+
         link = ET.SubElement(self.urdf, 'link', {
                              'name': f'module_{self.module_index}'})
         visual = ET.SubElement(link, 'visual')

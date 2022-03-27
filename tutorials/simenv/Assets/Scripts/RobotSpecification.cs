@@ -50,6 +50,7 @@ namespace DefaultNamespace
 
     public class AnchorModule
     {
+        [XmlAttribute("length")] public float Length;
     }
 
     public class RotationSpec
