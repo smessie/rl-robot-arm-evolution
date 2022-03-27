@@ -3,7 +3,6 @@ import sys
 from os.path import exists
 
 import ray
-
 from morphevo.evolution import evolution
 from morphevo.parameters import Parameters
 
