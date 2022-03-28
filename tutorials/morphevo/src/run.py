@@ -1,35 +1,15 @@
 import logging
 import sys
-import xml.etree.ElementTree as ET
+from os.path import exists
 
-import numpy as np
 import ray
-from env import PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
-from environment.environment import SimEnv
 from morphevo.evolution import evolution
+from morphevo.parameters import Parameters
 
 if __name__ == '__main__':
+    if not exists(sys.argv[1]):
+        print(f"Configfile '{sys.argv[1]}' does not exist.")
+        sys.exit()
+    evolution_parameters = Parameters(sys.argv[1])
     ray.init(log_to_driver=False, logging_level=logging.WARNING)
-    evolution()
-    sys.exit(0)
-    PATH_TO_URDF = 'environment/urdf_example.urdf'
-    # PATH_TO_YOUR_UNITY_EXECUTABLE = '../../sel3_simenv_tutorial_python/unity_environment/env.x86_64'
-    urdf = ET.tostring(ET.parse(PATH_TO_URDF).getroot(), encoding='unicode')
-
-    env = SimEnv(env_path=PATH_TO_UNITY_EXECUTABLE,
-                 urdf=urdf,
-                 use_graphics=USE_GRAPHICS)
-
-    obs = env.reset()
-    for _ in range(1000):
-        # obs -> MODEL > actions
-        actions = np.random.rand(4)
-
-        actions = (actions - 0.5) * 2  # Map to [-1, 1] range
-        actions[actions > 0.2] = 1
-        actions[actions < -0.2] = -1
-        actions[np.abs(actions) < 0.2] = 0
-
-        obs = env.step(actions)
-
-    env.close()
+    evolution(evolution_parameters)

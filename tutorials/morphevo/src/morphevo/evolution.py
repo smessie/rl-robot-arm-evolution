@@ -4,26 +4,19 @@ from itertools import count
 from xml.dom import minidom
 
 import numpy as np
-import psutil
-from env import PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
+from env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
 from ray.util import ActorPool
 from tqdm import tqdm
 
-GENERATIONS = 100
-# MU = # parents
-# LAMBDA = # children
-MU, LAMBDA = 5, 5
-NUM_CORES = psutil.cpu_count()
-
 
 def calculate_fitness(genome: Genome) -> float:
     return genome.workspace.calculate_coverage()
 
 
-def evolution():
+def evolution(evolution_parameters):
     genome_indexer = count(0)
 
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
@@ -33,9 +26,9 @@ def evolution():
     logger = Logger()
 
     parents, parent_fitnesses = [], []
-    children = [Genome(next(genome_indexer)) for _ in range(LAMBDA)]
+    children = [Genome(next(genome_indexer)) for _ in range(evolution_parameters.LAMBDA)]
 
-    for generation in tqdm(range(GENERATIONS), desc='Generation'):
+    for generation in tqdm(range(evolution_parameters.GENERATIONS), desc='Generation'):
         # Evaluate children
         children = list(pool.map_unordered(
             lambda evaluator, genome: evaluator.eval_genome.remote(genome), children))
@@ -50,12 +43,13 @@ def evolution():
         population_fitnesses = children_fitnesses + parent_fitnesses
 
         # Selection
-        parent_indices = np.argsort(population_fitnesses)[-MU:]
+        parent_indices = np.argsort(population_fitnesses)[-evolution_parameters.MU:]
         parents = [population[i] for i in parent_indices]
         parent_fitnesses = [population_fitnesses[i] for i in parent_indices]
 
         # Save URDF of the best genome to file
-        filename = f'output/{int(time.time())}-mu_{MU}-lambda_{LAMBDA}-generation_{generation}.xml'
+        filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
+            f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
         best_genome = population[parent_indices[-1]]
         xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
         with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
@@ -64,9 +58,9 @@ def evolution():
         # create new children from selected parents
         children = []
         parent_index = 0
-        while len(children) < LAMBDA:
+        while len(children) < evolution_parameters.LAMBDA:
             parent = parents[parent_index]
-            parent_index = (parent_index + 1) % MU
+            parent_index = (parent_index + 1) % evolution_parameters.MU
 
             child = Genome(next(genome_indexer), parent_genome=parent)
             children.append(child)
