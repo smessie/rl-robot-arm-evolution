@@ -7,7 +7,7 @@ from morphevo.evolution import evolution
 from morphevo.parameters import Parameters
 
 if __name__ == '__main__':
-    if not len(sys.argv) > 1:
+    if len(sys.argv) <= 1:
         print("Something wrong with program arguments")
         sys.exit()
     if not exists(sys.argv[1]):
