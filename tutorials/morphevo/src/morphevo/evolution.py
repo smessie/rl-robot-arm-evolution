@@ -1,3 +1,4 @@
+from inspect import Parameter
 import locale
 import time
 from itertools import count
@@ -16,7 +17,7 @@ def calculate_fitness(genome: Genome) -> float:
     return genome.workspace.calculate_coverage()
 
 
-def evolution(evolution_parameters):
+def evolution(evolution_parameters: Parameter):
     genome_indexer = count(0)
 
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
@@ -28,7 +29,7 @@ def evolution(evolution_parameters):
     parents, parent_fitnesses = [], []
     children = [Genome(next(genome_indexer)) for _ in range(evolution_parameters.LAMBDA)]
 
-    for generation in tqdm(range(evolution_parameters.GENERATIONS), desc='Generation'):
+    for generation in tqdm(range(evolution_parameters.generations), desc='Generation'):
         # Evaluate children
         children = list(pool.map_unordered(
             lambda evaluator, genome: evaluator.eval_genome.remote(genome), children))
