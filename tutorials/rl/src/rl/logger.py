@@ -20,7 +20,7 @@ class Logger:
         }, step=episode)
 
         with open('output_testing', 'a') as file:
-           file.write(str(episode) + "," + "{:.2f}".format(total_finished/(episode+1)) + "\n") 
+           file.write(str(episode) + "," + "{:.10f}".format(total_finished/(episode+1)) + "\n")
 
     def log_test(self, episode_steps: int,
                     current_position, goal: np.ndarray, goal_number: int):

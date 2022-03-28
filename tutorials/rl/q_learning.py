@@ -212,7 +212,7 @@ if __name__ == "__main__":
     URDF_PATH = "src/environment/robot_tutorial.urdf"
 
     if len(sys.argv) == 2:
-        model = QLearner(ENV_PATH, URDF_PATH, True, sys.argv[1])
+        model = QLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
     else:
         model = QLearner(ENV_PATH, URDF_PATH, False)
 
