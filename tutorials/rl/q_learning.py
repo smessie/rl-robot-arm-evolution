@@ -113,6 +113,7 @@ class QLearner:
     def learn(self, num_episodes: int = 10000,
               steps_per_episode: int = 500) -> None:
 
+        total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
@@ -140,6 +141,9 @@ class QLearner:
                     prev_absolute_pos, new_absolute_pos, goal)
                 prev_absolute_pos = new_absolute_pos  # this is not in the state, but is useful for reward calculation
 
+                if finished:
+                    total_finished += 1
+
                 # QTable update
                 if not self.testing:
                     self.q_table.update(state, new_state, action_index, reward)
@@ -147,8 +151,7 @@ class QLearner:
                 episode_step += 1
                 state = new_state
 
-            self.logger.log_episode(
-                episode, state, goal, episode_step, self.q_table)
+            self.logger.log_episode(episode, state, goal, episode_step, finished, total_finished,self.q_table)
 
         self.env.close()
         if not self.testing:
