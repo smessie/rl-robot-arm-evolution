@@ -50,7 +50,7 @@ class QLearner:
         self.logger = Logger()
 
     def handler(self, *_):
-        self.q_table.visualize()
+        #self.q_table.visualize()
         if not self.testing:
             res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
             if res == 'y':
@@ -151,7 +151,7 @@ class QLearner:
                 episode_step += 1
                 state = new_state
 
-            self.logger.log_episode(episode, state, goal, episode_step, finished, total_finished,self.q_table)
+            self.logger.log_episode(episode, state, goal, episode_step, total_finished)
 
         self.env.close()
         if not self.testing:
