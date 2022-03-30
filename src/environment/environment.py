@@ -112,31 +112,31 @@ def test_environment():
     # Rotate second module 90 degrees
     for _ in range(9):
         actions = [0, 0, 0, 0, 1, 0, 0]
-        _ = env.step(actions)
+        _ = env.step(np.array(actions))
     # Rotate first module 45 degrees
     for _ in range(9):
         actions = [0, 0, 0.5, 0, 0, 0, 0]
-        _ = env.step(actions)
+        _ = env.step(np.array(actions))
     # Tilt first module 45 degrees
     for _ in range(9):
         actions = [0, 0.5, 0, 0, 0, 0, 0]
-        _ = env.step(actions)
+        _ = env.step(np.array(actions))
     # Tilt second module 45 degrees
     for _ in range(9):
         actions = [0, 0, 0, 0.5, 0, 0, 0]
-        _ = env.step(actions)
+        _ = env.step(np.array(actions))
     # Tilt third module 90 degrees
     for _ in range(9):
         actions = [0, 0, 0, 0, 0, 1, 0]
-        _ = env.step(actions)
+        _ = env.step(np.array(actions))
     # Turn around the base running
     for _ in range(360):
         actions = [0.1, 0, 0, 0, 0, 0, 0]
-        _ = env.step(actions)
+        _ = env.step(np.array(actions))
     # Keep simulation running
     for _ in range(2000):
         actions = [0, 0, 0, 0, 0, 0, 0]
-        _ = env.step(actions)
+        _ = env.step(np.array(actions))
 
     env.close()
 
