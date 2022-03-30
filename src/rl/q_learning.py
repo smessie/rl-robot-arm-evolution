@@ -208,7 +208,7 @@ if __name__ == "__main__":
     # without file it will train
 
     ENV_PATH = "../../build/simenv.x86_64"
-    URDF_PATH = "../environment/robot_tutorial.urdf"
+    URDF_PATH = "../environment/robot.urdf"
 
     if len(sys.argv) == 2:
         model = QLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
