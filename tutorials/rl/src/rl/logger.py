@@ -16,11 +16,11 @@ class Logger:
             'Episode/final_distance': final_distance,
             "Episode/timesteps": timesteps,
             "Q-Table/state_coverage": q_table.calculate_state_coverage,
-            "Episode/finished": 0 if finished else 1 
+            "Episode/finished": total_finished/(episode+1) 
         }, step=episode)
 
-        with open('output_testing', 'a') as file:
-           file.write(str(episode) + "," + "{:.10f}".format(total_finished/(episode+1)) + "\n")
+        #with open('output_testing', 'a') as file:
+        #   file.write(str(episode) + "," + "{:.10f}".format(total_finished/(episode+1)) + "\n")
 
     def log_test(self, episode_steps: int,
                     current_position, goal: np.ndarray, goal_number: int):
