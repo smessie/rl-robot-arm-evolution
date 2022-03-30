@@ -50,7 +50,6 @@ class QLearner:
         self.logger = Logger()
 
     def handler(self, *_):
-        self.q_table.visualize()
         if not self.testing:
             res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
             if res == 'y':
@@ -113,6 +112,7 @@ class QLearner:
     def learn(self, num_episodes: int = 10000,
               steps_per_episode: int = 500) -> None:
 
+        total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Q-Learning'):
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
@@ -140,6 +140,9 @@ class QLearner:
                     prev_absolute_pos, new_absolute_pos, goal)
                 prev_absolute_pos = new_absolute_pos  # this is not in the state, but is useful for reward calculation
 
+                if finished:
+                    total_finished += 1
+
                 # QTable update
                 if not self.testing:
                     self.q_table.update(state, new_state, action_index, reward)
@@ -147,8 +150,7 @@ class QLearner:
                 episode_step += 1
                 state = new_state
 
-            self.logger.log_episode(
-                episode, state, goal, episode_step, self.q_table)
+            self.logger.log_episode(episode, state, goal, episode_step, total_finished)
 
         self.env.close()
         if not self.testing:
@@ -209,7 +211,7 @@ if __name__ == "__main__":
     URDF_PATH = "src/environment/robot_tutorial.urdf"
 
     if len(sys.argv) == 2:
-        model = QLearner(ENV_PATH, URDF_PATH, True, sys.argv[1])
+        model = QLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
     else:
         model = QLearner(ENV_PATH, URDF_PATH, False)
 
