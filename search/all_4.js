@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['qlearner_0',['QLearner',['../classq__learning_1_1QLearner.html',1,'q_learning.QLearner'],['../classq__learning__tutorial_1_1QLearner.html',1,'q_learning_tutorial.QLearner']]],
-  ['qtable_1',['QTable',['../classsrc_1_1rl_1_1q__table_1_1QTable.html',1,'src::rl::q_table']]]
+  ['genome_0',['Genome',['../classsrc_1_1morphevo_1_1genetic__encoding_1_1Genome.html',1,'src::morphevo::genetic_encoding']]],
+  ['get_5fhand_5fscore_1',['get_hand_score',['../classdeep__q__learning_1_1DeepQLearningAgent.html#ae70cc9dd84e3dbb7fabf65b35d5f854d',1,'deep_q_learning::DeepQLearningAgent']]],
+  ['get_5freward_2',['get_reward',['../classdeep__q__learning_1_1DeepQLearningAgent.html#a48e67432c129987a04c03274568a36c3',1,'deep_q_learning::DeepQLearningAgent']]],
+  ['get_5fstate_3',['get_state',['../classdeep__q__learning_1_1DeepQLearningAgent.html#a7fd27aeeaf4a8c81a96fb05ac8d5792e',1,'deep_q_learning::DeepQLearningAgent']]]
 ];

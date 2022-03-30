@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logger_0',['Logger',['../classsrc_1_1morphevo_1_1logger_1_1Logger.html',1,'src.morphevo.logger.Logger'],['../classsrc_1_1rl_1_1logger_1_1Logger.html',1,'src.rl.logger.Logger']]]
+  ['deepqlearningagent_0',['DeepQLearningAgent',['../classdeep__q__learning_1_1DeepQLearningAgent.html',1,'deep_q_learning']]]
 ];
