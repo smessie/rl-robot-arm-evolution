@@ -50,7 +50,6 @@ class QLearner:
         self.logger = Logger()
 
     def handler(self, *_):
-        #self.q_table.visualize()
         if not self.testing:
             res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
             if res == 'y':
