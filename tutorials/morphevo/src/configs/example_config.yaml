@@ -1,6 +1,6 @@
 description: "Example config"
-generations: 100
-mu: 10
+generations: 75
+mu: 8
 lambda: 5
 # mu = # parents
 # lambda = # children
