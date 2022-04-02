@@ -13,10 +13,6 @@ from ray.util import ActorPool
 from tqdm import tqdm
 
 
-def calculate_fitness(genome: Genome) -> float:
-    return genome.workspace.calculate_coverage()
-
-
 def evolution(evolution_parameters: Parameter):
     genome_indexer = count(0)
 
@@ -49,12 +45,8 @@ def evolution(evolution_parameters: Parameter):
         parent_fitnesses = [population_fitnesses[i] for i in parent_indices]
 
         # Save URDF of the best genome to file
-        filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
-            f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
         best_genome = population[parent_indices[-1]]
-        xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
-        with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
-            f.write(xml_str)
+        save_best_genome(best_genome, generation, evolution_parameters)
 
         # create new children from selected parents
         children = []
@@ -67,3 +59,13 @@ def evolution(evolution_parameters: Parameter):
             children.append(child)
 
         logger.log(generation, parents)
+
+def calculate_fitness(genome: Genome) -> float:
+    return genome.workspace.calculate_coverage()
+
+def save_best_genome(best_genome, generation, evolution_parameters):
+    filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
+        f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
+    xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
+    with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
+        f.write(xml_str)

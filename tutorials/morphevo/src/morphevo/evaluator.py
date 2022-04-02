@@ -10,6 +10,9 @@ from morphevo.workspace import Workspace
 
 @ray.remote(num_cpus=1)
 class Evaluator:
+
+    JOINT_ANGLE_STEP = 10
+
     def __init__(self, env_path: str, use_graphics: bool = True) -> None:
         self.env_path = env_path
         self.env = None
@@ -42,7 +45,7 @@ class Evaluator:
         if self.joint_angles is not None:
             return self.joint_angles
 
-        angle_step = self.env.JOINT_ANGLE_STEP
+        angle_step = self.JOINT_ANGLE_STEP
         joint0_angle_options = list(range(-180, 180, angle_step * 4))
         joint_angle_options = list(range(0, 105, angle_step))
 
@@ -66,7 +69,7 @@ class Evaluator:
                                   workspace: Workspace) -> np.ndarray:
 
         target_angles = (
-            target_angles // self.env.JOINT_ANGLE_STEP) * self.env.JOINT_ANGLE_STEP
+            target_angles // self.JOINT_ANGLE_STEP) * self.JOINT_ANGLE_STEP
 
         target_angles[0] = np.clip(target_angles[0], -180, 180)
         target_angles[1:] = np.clip(target_angles[1:], 0, 100)
@@ -84,8 +87,8 @@ class Evaluator:
 
             angle_diff = current_angles - target_angles
             actions[abs(angle_diff) < 5] = 0
-            actions[angle_diff > 0] = -1
-            actions[angle_diff < 0] = 1
+            actions[angle_diff > 0] = -5
+            actions[angle_diff < 0] = 5
 
             if np.count_nonzero(actions) == 0:
                 done = True
