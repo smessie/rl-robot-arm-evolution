@@ -42,8 +42,8 @@ class Evaluator:
 
 
         observations = self.env.get_current_state()
-        prev_angles = np.ones(4)
-        actions = np.zeros(4)
+        prev_angles = np.ones(len(target_angles))
+        actions = np.zeros(len(target_angles))
 
         done = False
         while not done:
@@ -81,10 +81,8 @@ class Evaluator:
     def _create_observation_parser(self, genome:Genome):
 
         def parse_observation(observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-            number_of_modules = len(genome.module_lenghts)
-
-            joint_angles = observations[[i*4 for i in range(number_of_modules)]]
-            ee_pos = observations[number_of_modules*4: number_of_modules*4 + 3]
+            joint_angles = observations[[i*4 for i in range(genome.amount_of_modules)]]
+            ee_pos = observations[genome.amount_of_modules*4: genome.amount_of_modules*4 + 3]
 
             return joint_angles, ee_pos
 
