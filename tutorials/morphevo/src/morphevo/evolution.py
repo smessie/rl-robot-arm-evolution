@@ -46,14 +46,10 @@ def evolution(evolution_parameters: Parameter):
         save_best_genome(best_genome, generation, evolution_parameters)
 
         # create new children from selected parents
-        children = []
-        parent_index = 0
-        while len(children) < evolution_parameters.LAMBDA:
-            parent = parents[parent_index]
-            parent_index = (parent_index + 1) % evolution_parameters.MU
-
-            child = Genome(next(genome_indexer), parent_genome=parent)
-            children.append(child)
+        children = [
+            Genome(next(genome_indexer), parent) 
+            for parent in alternate_for(what=parents, times=evolution_parameters.LAMBDA)
+        ]
 
         logger.log(generation, parents)
 
@@ -67,3 +63,16 @@ def save_best_genome(best_genome, generation, evolution_parameters):
     xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
         f.write(xml_str)
+
+def alternate_times(what, times):
+    alternations = []
+    for alternation, _ in zip(alternate(what), range(times)):
+        alternations.append(alternation)
+
+    return alternations
+
+def alternate(list):
+    current_index = 0
+    while True:
+        yield list[current_index]
+        current_index = (current_index + 1) % len(list)
