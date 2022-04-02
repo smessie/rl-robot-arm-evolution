@@ -24,10 +24,14 @@ class Logger:
         self._log_metric('performance', 'redundancy', generation, redundancies)
 
         # morphologies -> module_INDEX_length / total length of morphology
-        for i in range(4):
-            lengths = [genome.module_lenghts[i] for genome in genomes]
+        for module_nr in range(10):
+            lengths = []
+            for genome in genomes:
+                if module_nr < genome.amount_of_modules:
+                    lengths.append(genome.module_lenghts[module_nr])
+
             self._log_metric(
-                'morphology', f'module{i}_length', generation, lengths)
+                'morphology', f'module{module_nr}_length', generation, lengths)
 
         total_length = [float(np.sum(genome.module_lenghts))
                         for genome in genomes]
