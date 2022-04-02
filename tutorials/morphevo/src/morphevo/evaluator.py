@@ -69,7 +69,7 @@ class Evaluator:
         self.env = self._initialize_environment(genome.get_urdf(), genome.genome_id)
         self.env.reset()
 
-        joint_angles = self._generate_joint_angle()
+        joint_angles = self._generate_joint_angles()
         observation_parser = self._create_observation_parser(genome)
 
         for target_angles in joint_angles:
@@ -90,7 +90,7 @@ class Evaluator:
 
         return parse_observation
 
-    def _generate_joint_angle(self) -> np.ndarray:
+    def _generate_joint_angles(self) -> np.ndarray:
         if self.joint_angles is not None:
             return self.joint_angles
 
