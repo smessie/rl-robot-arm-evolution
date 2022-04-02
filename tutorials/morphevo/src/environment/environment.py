@@ -83,3 +83,6 @@ class SimEnv(gym.Env):
     def close(self) -> None:
         del self.creation_sc
         self.u_env.close()
+
+    def get_current_state(self) -> np.ndarray:
+        return self._get_unity_observations()

@@ -32,9 +32,7 @@ class Evaluator:
 
         return env
 
-    def _parse_observation(self,
-                           observations: np.ndarray) -> Tuple[np.ndarray,
-                                                              np.ndarray]:
+    def _parse_observation(self, observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         # [j0angel, j0x, j0y, j0z, ..., eex, eey, eez]
         joint_angles = observations[[0, 4, 8, 12]]
         ee_pos = observations[16:19]
@@ -65,19 +63,19 @@ class Evaluator:
         self.joint_angles = np.array(self.joint_angles)
         return self.joint_angles
 
-    def _step_until_target_angles(self, observations: np.ndarray, target_angles: np.ndarray,
-                                  workspace: Workspace) -> np.ndarray:
+    def _step_until_target_angles(self, target_angles: np.ndarray, workspace: Workspace) -> None:
 
-        target_angles = (
-            target_angles // self.JOINT_ANGLE_STEP) * self.JOINT_ANGLE_STEP
+        target_angles = ( target_angles // self.JOINT_ANGLE_STEP) * self.JOINT_ANGLE_STEP
 
         target_angles[0] = np.clip(target_angles[0], -180, 180)
         target_angles[1:] = np.clip(target_angles[1:], 0, 100)
 
-        done = False
 
+        observations = self.env.get_current_state()
         prev_angles = np.ones(4)
         actions = np.zeros(4)
+
+        done = False
         while not done:
             current_angles, ee_pos = self._parse_observation(observations)
             workspace.add_ee_position(ee_pos, current_angles)
@@ -97,19 +95,14 @@ class Evaluator:
 
             prev_angles = current_angles
 
-        return observations
-
     def eval_genome(self, genome: Genome) -> Genome:
-        self.env = self._initialize_environment(
-            genome.get_urdf(), genome.genome_id)
-
-        observations = self.env.reset()
+        self.env = self._initialize_environment(genome.get_urdf(), genome.genome_id)
+        self.env.reset()
 
         joint_angles = self._generate_joint_angle()
 
         for target_angles in joint_angles:
-            observations = self._step_until_target_angles(
-                observations, target_angles, genome.workspace)
+            self._step_until_target_angles(target_angles, genome.workspace)
 
         self.env.close()
 
