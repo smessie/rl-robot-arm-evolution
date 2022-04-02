@@ -14,7 +14,6 @@ class SimEnv(gym.Env):
     """Custom Environment that follows gym interface"""
     metadata = {'render.modes': ['human']}
     MAX_N_MODULES = 10
-    JOINT_ANGLE_STEP = 10
 
     def __init__(self, env_path: str, urdf: str, use_graphics: bool,
                  worker_id: int = 0) -> None:

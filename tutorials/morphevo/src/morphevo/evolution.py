@@ -1,6 +1,6 @@
-from inspect import Parameter
 import locale
 import time
+from inspect import Parameter
 from itertools import count
 from xml.dom import minidom
 
