@@ -47,7 +47,7 @@ def evolution(evolution_parameters: Parameter):
 
         # create new children from selected parents
         children = [
-            Genome(next(genome_indexer), parent) 
+            Genome(next(genome_indexer), parent)
             for parent in alternate_for(what=parents, times=evolution_parameters.LAMBDA)
         ]
 
@@ -64,15 +64,15 @@ def save_best_genome(best_genome, generation, evolution_parameters):
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
         f.write(xml_str)
 
-def alternate_times(what, times):
+def alternate_for(what, times):
     alternations = []
     for alternation, _ in zip(alternate(what), range(times)):
         alternations.append(alternation)
 
     return alternations
 
-def alternate(list):
+def alternate(what):
     current_index = 0
     while True:
-        yield list[current_index]
-        current_index = (current_index + 1) % len(list)
+        yield what[current_index]
+        current_index = (current_index + 1) % len(what)
