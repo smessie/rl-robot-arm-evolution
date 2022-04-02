@@ -30,12 +30,9 @@ def evolution(evolution_parameters: Parameter):
         children = list(pool.map_unordered(
             lambda evaluator, genome: evaluator.eval_genome.remote(genome), children))
 
-        children_fitnesses = []
-        for child in children:
-            children_fitnesses.append(calculate_fitness(child))
+        children_fitnesses = [calculate_fitness(child) for child in children]
 
         # Combine children and parents in one population
-
         population = children + parents
         population_fitnesses = children_fitnesses + parent_fitnesses
 
@@ -66,6 +63,7 @@ def calculate_fitness(genome: Genome) -> float:
 def save_best_genome(best_genome, generation, evolution_parameters):
     filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
         f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
+
     xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
         f.write(xml_str)
