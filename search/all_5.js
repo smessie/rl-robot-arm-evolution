@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['firstpersoncontroller_0',['FirstPersonController',['../classStarterAssets_1_1FirstPersonController.html',1,'StarterAssets']]]
+  ['urdfgenerator_0',['URDFGenerator',['../classsrc_1_1morphevo_1_1urdf__generator_1_1URDFGenerator.html',1,'src::morphevo::urdf_generator']]]
 ];
