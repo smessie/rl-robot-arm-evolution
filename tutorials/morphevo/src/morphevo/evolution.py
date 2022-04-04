@@ -13,7 +13,8 @@ from ray.util import ActorPool
 from tqdm import tqdm
 
 
-def evolution(evolution_parameters: Parameter):
+def evolution(evolution_parameters: Parameter, workspace_type: str = 'normalized_cube', 
+              workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13):
     genome_indexer = count(0)
 
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
@@ -23,7 +24,9 @@ def evolution(evolution_parameters: Parameter):
     logger = Logger()
 
     parents, parent_fitnesses = [], []
-    children = [Genome(next(genome_indexer)) for _ in range(evolution_parameters.LAMBDA)]
+    children = [Genome(next(genome_indexer), workspace_type=workspace_type, workspace_cube_offset=workspace_cube_offset,
+                       workspace_side_length=workspace_side_length)
+                for _ in range(evolution_parameters.LAMBDA)]
 
     for generation in tqdm(range(evolution_parameters.generations), desc='Generation'):
         # Evaluate children
@@ -47,7 +50,8 @@ def evolution(evolution_parameters: Parameter):
 
         # create new children from selected parents
         children = [
-            Genome(next(genome_indexer), parent)
+            Genome(next(genome_indexer), parent_genome=parent, workspace_type=workspace_type,
+                   workspace_cube_offset=workspace_cube_offset, workspace_side_length=workspace_side_length)
             for parent in alternate(what=parents, times=evolution_parameters.LAMBDA)
         ]
 

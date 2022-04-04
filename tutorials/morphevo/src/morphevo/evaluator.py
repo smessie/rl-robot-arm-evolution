@@ -1,4 +1,4 @@
-from typing import Callable, Tuple
+from typing import Callable, Tuple, List
 
 import numpy as np
 import ray
@@ -65,12 +65,17 @@ class Evaluator:
 
     def _create_observation_parser(self, genome:Genome):
 
-        def parse_observation(observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        def parse_observation(observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray, List]:
+            # [j0angel, j0x, j0y, j0z, ..., eex, eey, eez]
             joint_angles = observations[[i*4 for i in range(genome.amount_of_modules)]]
-            ee_pos = observations[genome.amount_of_modules*4: genome.amount_of_modules*4 + 3]
+            ee_pos = observations[-3:]
+            joint_positions = []
+            i = 1
+            while i < len(observations) - 3:
+                joint_positions.append(tuple(observations[i:i + 3]))
+                i += 3
 
-            return joint_angles, ee_pos
-
+            return joint_angles, ee_pos, joint_positions
         return parse_observation
 
 
@@ -89,8 +94,8 @@ class Evaluator:
 
         done = False
         while not done:
-            current_angles, ee_pos = parse_observation(observations)
-            workspace.add_ee_position(ee_pos, current_angles)
+            current_angles, ee_pos, joint_positions = parse_observation(observations)
+            workspace.add_ee_position(ee_pos, current_angles, joint_positions)
 
             if abs(np.sum(current_angles - prev_angles)) < 0.01:
                 break
