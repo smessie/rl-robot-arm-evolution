@@ -14,6 +14,7 @@ class Logger:
         wandb.log({f'{prefix}/{name}_std': np.std(values)}, step=generation)
 
     def log(self, generation: int, genomes: List[Genome]) -> None:
+
         # performance -> coverage, redundancy
         coverages = [genome.workspace.calculate_coverage()
                      for genome in genomes]
@@ -29,6 +30,8 @@ class Logger:
             for genome in genomes:
                 if module_nr < genome.amount_of_modules:
                     lengths.append(genome.module_lenghts[module_nr])
+                else:
+                    lengths.append(0)
 
             self._log_metric(
                 'morphology', f'module{module_nr}_length', generation, lengths)

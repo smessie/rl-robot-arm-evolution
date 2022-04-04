@@ -2,6 +2,8 @@ import locale
 import time
 from inspect import Parameter
 from itertools import count
+from math import sqrt
+from typing import List
 from xml.dom import minidom
 
 import numpy as np
@@ -22,7 +24,7 @@ def evolution(evolution_parameters: Parameter):
 
     logger = Logger()
 
-    parents, parent_fitnesses = [], []
+    parents= []
     children = [Genome(next(genome_indexer)) for _ in range(evolution_parameters.LAMBDA)]
 
     for generation in tqdm(range(evolution_parameters.generations), desc='Generation'):
@@ -30,19 +32,13 @@ def evolution(evolution_parameters: Parameter):
         children = list(pool.map_unordered(
             lambda evaluator, genome: evaluator.eval_genome.remote(genome), children))
 
-        children_fitnesses = [calculate_fitness(child) for child in children]
-
-        # Combine children and parents in one population
         population = children + parents
-        population_fitnesses = children_fitnesses + parent_fitnesses
 
-        # Selection
-        parent_indices = np.argsort(population_fitnesses)[-evolution_parameters.MU:]
-        parents = [population[i] for i in parent_indices]
-        parent_fitnesses = [population_fitnesses[i] for i in parent_indices]
+        # moet gedaan worden do refactor so evolution_parameters is nice
+        parents = selection(population, evolution_parameters)
 
         # Save URDF of the best genome to file
-        best_genome = population[parent_indices[-1]]
+        best_genome = parents[0]
         save_best_genome(best_genome, generation, evolution_parameters)
 
         # create new children from selected parents
@@ -53,8 +49,50 @@ def evolution(evolution_parameters: Parameter):
 
         logger.log(generation, parents)
 
+
+def selection(current_population: List[Genome], evolution_parameters) -> List[Genome]:
+    current_parents = []
+    for _ in range(evolution_parameters.MU):
+        next_parent = select_next_parent(current_population, current_parents)
+        current_population.remove(next_parent)
+        current_parents.append(next_parent)
+
+    return current_parents
+
+def select_next_parent(population: List[Genome], parents: List[Genome]) -> Genome:
+
+    population_fitnesses = [calculate_fitness(genome) for genome in population]
+    population_diversities = [calculate_diversity(genome, parents) for genome in population]
+
+    selection_scores = calculate_selection_scores(population_fitnesses, population_diversities)
+
+    next_parent_index = np.argsort(selection_scores)[0]
+    next_parent = population[next_parent_index]
+
+
+    return next_parent
+
 def calculate_fitness(genome: Genome) -> float:
     return genome.workspace.calculate_coverage()
+
+def calculate_diversity(genome: Genome, others: List[Genome]) -> float:
+    if not others:
+        return 0
+    diversity_from_others = [genome.calculate_diversity_from(other) for other in others]
+    average_diversity = sum(diversity_from_others)/len(diversity_from_others)
+
+    return average_diversity
+
+def calculate_selection_scores(population_fitnesses: List[float], population_diversities: List[float]) -> List[float]:
+    max_fitness = max(population_fitnesses) if max(population_fitnesses) > 0 else 1
+    max_diversity = max(population_diversities) if max(population_diversities) > 0 else 1
+
+    selection_scores = [
+        sqrt((1 - fitness/max_fitness)**2 + (1 - diversity/max_diversity)**2)
+                        for fitness, diversity in zip(population_fitnesses, population_diversities)
+    ]
+
+    return selection_scores
 
 def save_best_genome(best_genome, generation, evolution_parameters):
     filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
