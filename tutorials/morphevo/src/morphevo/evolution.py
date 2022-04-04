@@ -13,7 +13,7 @@ from ray.util import ActorPool
 from tqdm import tqdm
 
 
-def evolution(evolution_parameters: Parameter, workspace_type: str = 'normalized_cube', 
+def evolution(evolution_parameters: Parameter, workspace_type: str = 'normalized_cube',
               workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13):
     genome_indexer = count(0)
 
@@ -57,23 +57,23 @@ def evolution(evolution_parameters: Parameter, workspace_type: str = 'normalized
 
         logger.log(generation, parents)
 
+
 def calculate_fitness(genome: Genome) -> float:
     return genome.workspace.calculate_coverage()
 
+
 def save_best_genome(best_genome, generation, evolution_parameters):
     filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
-        f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
+                f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
 
     xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
         f.write(xml_str)
 
-def alternate(what, times):
-    alternations = []
-    for alternation, _ in zip(alternate_infinite(what), range(times)):
-        alternations.append(alternation)
 
-    return alternations
+def alternate(what, times):
+    return [alternation for alternation, _ in zip(alternate_infinite(what), range(times))]
+
 
 def alternate_infinite(what):
     current_index = 0

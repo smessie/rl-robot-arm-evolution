@@ -1,4 +1,4 @@
-from typing import Callable, Tuple, List
+from typing import Callable, List, Tuple
 
 import numpy as np
 import ray
@@ -10,7 +10,6 @@ from morphevo.workspace import Workspace
 
 @ray.remote(num_cpus=1)
 class Evaluator:
-
     JOINT_ANGLE_STEP = 10
 
     def __init__(self, env_path: str, use_graphics: bool = True) -> None:
@@ -48,7 +47,7 @@ class Evaluator:
 
     # pylint: disable=too-many-arguments
     def _generate_extra_angle(self, joint_angles, angle_options, joint_options_others,
-                                    t_values,     angle_amount,  current_angle):
+                              t_values, angle_amount, current_angle):
         for joint_option in angle_options[::t_values[current_angle]]:
             if current_angle == angle_amount - 1:
                 joint_angles.append(joint_options_others[:] + [joint_option])
@@ -63,11 +62,11 @@ class Evaluator:
                 )
         t_values[current_angle] *= -1
 
-    def _create_observation_parser(self, genome:Genome):
+    def _create_observation_parser(self, genome: Genome):
 
         def parse_observation(observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray, List]:
             # [j0angel, j0x, j0y, j0z, ..., eex, eey, eez]
-            joint_angles = observations[[i*4 for i in range(genome.amount_of_modules)]]
+            joint_angles = observations[[i * 4 for i in range(genome.amount_of_modules)]]
             ee_pos = observations[-3:]
             joint_positions = []
             i = 1
@@ -76,17 +75,17 @@ class Evaluator:
                 i += 3
 
             return joint_angles, ee_pos, joint_positions
+
         return parse_observation
 
-
     def _step_until_target_angles(self, target_angles: np.ndarray, workspace: Workspace,
-                                  parse_observation: Callable[[np.ndarray], Tuple[np.ndarray, np.ndarray]]) -> None:
+                                  parse_observation: Callable[[np.ndarray], Tuple[np.ndarray, np.ndarray, List]]) \
+            -> None:
 
-        target_angles = ( target_angles // self.JOINT_ANGLE_STEP) * self.JOINT_ANGLE_STEP
+        target_angles = (target_angles // self.JOINT_ANGLE_STEP) * self.JOINT_ANGLE_STEP
 
         target_angles[0] = np.clip(target_angles[0], -180, 180)
         target_angles[1:] = np.clip(target_angles[1:], 0, 100)
-
 
         observations = self.env.get_current_state()
         prev_angles = np.ones(len(target_angles))
