@@ -35,7 +35,7 @@ def evolution(evolution_parameters: Parameter):
         population = children + parents
 
         # moet gedaan worden do refactor so evolution_parameters is nice
-        parents = selection(population, evolution_parameters)
+        parents = selection_fitness(population, evolution_parameters)
 
         # Save URDF of the best genome to file
         best_genome = parents[0]
@@ -50,7 +50,16 @@ def evolution(evolution_parameters: Parameter):
         logger.log(generation, parents)
 
 
-def selection(current_population: List[Genome], evolution_parameters) -> List[Genome]:
+def selection_fitness(current_population: List[Genome], evolution_parameters) -> List[Genome]:
+
+    population_fitnesses = [calculate_fitness(genome) for genome in current_population]
+
+    parent_indices = np.argsort(population_fitnesses)[-evolution_parameters.MU:]
+    parents = [current_population[i] for i in parent_indices]
+
+    return parents
+
+def selection_fitness_diversity(current_population: List[Genome], evolution_parameters) -> List[Genome]:
     current_parents = []
     for _ in range(evolution_parameters.MU):
         next_parent = select_next_parent(current_population, current_parents)
