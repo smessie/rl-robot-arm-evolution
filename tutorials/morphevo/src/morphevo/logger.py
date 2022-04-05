@@ -30,11 +30,10 @@ class Logger:
             for genome in genomes:
                 if module_nr < genome.amount_of_modules:
                     lengths.append(genome.module_lenghts[module_nr])
-                else:
-                    lengths.append(0)
 
-            self._log_metric(
-                'morphology', f'module{module_nr}_length', generation, lengths)
+            if lengths:
+                self._log_metric(
+                    'morphology', f'module{module_nr}_length', generation, lengths)
 
         total_length = [float(np.sum(genome.module_lenghts))
                         for genome in genomes]
