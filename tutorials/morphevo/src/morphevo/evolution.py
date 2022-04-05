@@ -34,7 +34,6 @@ def evolution(evolution_parameters: Parameter):
 
         population = children + parents
 
-        # moet gedaan worden do refactor so evolution_parameters is nice
         parents = selection_fitness(population, evolution_parameters)
 
         # Save URDF of the best genome to file
