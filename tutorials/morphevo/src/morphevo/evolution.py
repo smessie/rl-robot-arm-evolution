@@ -24,7 +24,7 @@ def evolution(evolution_parameters: Parameter):
 
     logger = Logger()
 
-    parents= []
+    parents = []
     children = [Genome(next(genome_indexer)) for _ in range(evolution_parameters.LAMBDA)]
 
     for generation in tqdm(range(evolution_parameters.generations), desc='Generation'):
