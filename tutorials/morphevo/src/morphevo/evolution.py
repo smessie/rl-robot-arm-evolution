@@ -3,6 +3,7 @@ import time
 from inspect import Parameter
 from itertools import count
 from math import sqrt
+from random import randint
 from typing import List
 from xml.dom import minidom
 
@@ -36,9 +37,7 @@ def evolution(evolution_parameters: Parameter):
 
         parents = selection_fitness(population, evolution_parameters)
 
-        # Save URDF of the best genome to file
-        best_genome = parents[0]
-        save_best_genome(best_genome, generation, evolution_parameters)
+        save_best_genome(parents[0], generation, evolution_parameters)
 
         # create new children from selected parents
         children = [
@@ -101,6 +100,19 @@ def calculate_selection_scores(population_fitnesses: List[float], population_div
     ]
 
     return selection_scores
+
+def create_crossover_children(parents: List[Genome], amount: int, genome_indexer):
+    if len(parents) < 1:
+        return []
+    children = []
+    while len(children) <= amount:
+        parent1 = parents[randint(0, len(parents) - 1)]
+        parent2 = parents[randint(0, len(parents) - 1)]
+        while parent1 is parent2:
+            parent2 = parents[randint(0, len(parents) - 1)]
+
+        children.append(parent1.crossover(parent2, next(genome_indexer)))
+    return children
 
 def save_best_genome(best_genome, generation, evolution_parameters):
     filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
