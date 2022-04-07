@@ -13,5 +13,5 @@ def alternate_infinite(what):
         current_index = (current_index + 1) % len(what)
 
 def normalize(raw):
-    sum_raw = sum(raw)
+    sum_raw = sum(raw) if sum(raw) != 0 else 1
     return [ i/sum_raw for i in raw ]
