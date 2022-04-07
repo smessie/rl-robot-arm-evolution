@@ -12,7 +12,7 @@ from env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
-from morphevo.utils import alternate
+from morphevo.utils import alternate, normalize
 from ray.util import ActorPool
 from tqdm import tqdm
 
@@ -93,12 +93,12 @@ def calculate_diversity(genome: Genome, others: List[Genome]) -> float:
     return average_diversity
 
 def calculate_selection_scores(population_fitnesses: List[float], population_diversities: List[float]) -> List[float]:
-    max_fitness = max(population_fitnesses) if max(population_fitnesses) > 0 else 1
-    max_diversity = max(population_diversities) if max(population_diversities) > 0 else 1
+    fitnesses_normalized = normalize(population_fitnesses)
+    diversities_normalized = normalize(population_diversities)
 
     selection_scores = [
-        sqrt((1 - fitness/max_fitness)**2 + (1 - diversity/max_diversity)**2)
-                        for fitness, diversity in zip(population_fitnesses, population_diversities)
+        sqrt((1 - fitness)**2 + (1 - diversity)**2)
+                        for fitness, diversity in zip(fitnesses_normalized, diversities_normalized)
     ]
 
     return selection_scores
