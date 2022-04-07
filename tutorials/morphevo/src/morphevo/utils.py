@@ -11,3 +11,7 @@ def alternate_infinite(what):
     while True:
         yield what[current_index]
         current_index = (current_index + 1) % len(what)
+
+def normalize(raw):
+    sum_raw = sum(raw)
+    return [ i/sum_raw for i in raw ]
