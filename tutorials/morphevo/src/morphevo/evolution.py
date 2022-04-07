@@ -12,11 +12,12 @@ from env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
+from morphevo.utils import alternate
 from ray.util import ActorPool
 from tqdm import tqdm
 
 
-def evolution(evolution_parameters: Parameter):
+def evolution(parameters: Parameter):
     genome_indexer = count(0)
 
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
@@ -26,24 +27,25 @@ def evolution(evolution_parameters: Parameter):
     logger = Logger()
 
     parents = []
-    children = [Genome(next(genome_indexer)) for _ in range(evolution_parameters.LAMBDA)]
+    children = [Genome(next(genome_indexer)) for _ in range(parameters.LAMBDA)]
 
-    for generation in tqdm(range(evolution_parameters.generations), desc='Generation'):
+    for generation in tqdm(range(parameters.generations), desc='Generation'):
         # Evaluate children
         children = list(pool.map_unordered(
             lambda evaluator, genome: evaluator.eval_genome.remote(genome), children))
 
         population = children + parents
 
-        parents = selection_fitness(population, evolution_parameters)
+        parents = selection_fitness(population, parameters)
 
-        save_best_genome(parents[0], generation, evolution_parameters)
+        save_best_genome(parents[0], generation, parameters)
 
         # create new children from selected parents
         children = [
             Genome(next(genome_indexer), parent)
-            for parent in alternate(what=parents, times=evolution_parameters.LAMBDA)
+            for parent in alternate(what=parents, times=parameters.LAMBDA - parameters.crossover_children)
         ]
+        children += create_crossover_children(parents, parameters.crossover_children, genome_indexer)
 
         logger.log(generation, parents)
 
@@ -121,16 +123,3 @@ def save_best_genome(best_genome, generation, evolution_parameters):
     xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
         f.write(xml_str)
-
-def alternate(what, times):
-    alternations = []
-    for alternation, _ in zip(alternate_infinite(what), range(times)):
-        alternations.append(alternation)
-
-    return alternations
-
-def alternate_infinite(what):
-    current_index = 0
-    while True:
-        yield what[current_index]
-        current_index = (current_index + 1) % len(what)
