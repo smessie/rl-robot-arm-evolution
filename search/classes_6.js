@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['workspace_0',['Workspace',['../classsrc_1_1morphevo_1_1workspace_1_1Workspace.html',1,'src::morphevo::workspace']]]
+  ['robotnetwork_0',['RobotNetwork',['../classdeep__q__learning_1_1RobotNetwork.html',1,'deep_q_learning']]]
 ];
