@@ -2,23 +2,28 @@ import torch
 import random
 from itertools import count
 from collections import deque
-from qtable import QTable
 from random import randint
-from skip import Skip
 from termcolor import colored
+import sys
+import pickle
+import random
+import sys
+import xml.etree.ElementTree as ET
+from typing import Set, Tuple
 
-N_ACTIONS = 13*4 + 1 
-SKIP = (0,0)
-START = (3,0)
+import numpy as np
+from src.environment.environment import SimEnv
+from src.rl.logger import Logger
+from src.rl.q_table import QTable
+from tqdm import tqdm
 
-output_to_action_mapping = [ SKIP ] + [ (rank, amount) for rank in range(3,16) for amount in range(1,5) ]
 
-class PresidentNetwork(torch.nn.Module):
-    def __init__(self, hidden_nodes):
-        super(PresidentNetwork, self).__init__()
-        self.linear1 = torch.nn.Linear(16, hidden_nodes)
+class RobotNetwork(torch.nn.Module):
+    def __init__(self, hidden_nodes, number_of_actions):
+        super(RobotNetwork, self).__init__()
+        self.linear1 = torch.nn.Linear(4, hidden_nodes)
         self.linear2 = torch.nn.Linear(hidden_nodes, hidden_nodes)
-        self.linear3 = torch.nn.Linear(hidden_nodes, N_ACTIONS)
+        self.linear3 = torch.nn.Linear(hidden_nodes, number_of_actions)
     
     def forward(self, x):
         x = torch.nn.functional.relu(self.linear1(x))
@@ -26,133 +31,158 @@ class PresidentNetwork(torch.nn.Module):
         return self.linear3(x)
 
 
-class DeepQLearningAgent(Player):
-    '''
-    Player class that implements a deep Q learning agent
-    '''
-    def __init__(self, name, train = False, network_path=None):
-        super().__init__(name)
-        self.training = train
-        self.name = name
+class DeepQLearner():
+    ACTIONS = [
+        [0, 1, 0],
+        [0, -1, 0],
+        [0, 0, 1],
+        [0, 0, -1]
+    ]
+
+    WORKSPACE_DISCRETIZATION = 0.2
+
+    def __init__(self, env_path: str, urdf_path: str,
+                 use_graphics: bool = False, network_path = "") -> None:
+        urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
+        self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
+        self.workspace = set(self._get_workspace())
+        self.goal_samples = self.workspace.copy()
+
         self.BATCH_SIZE = 64 
         self.MEM_SIZE = 1000
-        self.GAMMA = 0.5
+        self.GAMMA = 0.99
         self.EPS_END = 0.05
-        self.eps = 1.0
         self.EPS_DECAY = 0.9999
-        self.N_ACTIONS = N_ACTIONS 
+        self.eps = 1.0
+        self.N_ACTIONS = 4 #todo: should not be hard coded 
+
         if network_path:
             self.network = torch.load(network_path)
             self.network.eval()
+            self.training = False
         else:
-            self.network = PresidentNetwork(64)
+            self.network = RobotNetwork(64, self.N_ACTIONS)
+            self.training = True
+
         self.optimizer = torch.optim.Adam(self.network.parameters(), lr=1e-4)
         self.memory = deque(maxlen=self.MEM_SIZE)
-        self.last_action = None
-        self.last_action_illegal = False
-        self.last_state = None
-        self.done = False
-        self.plays_this_game = 0
-        self.cards_played_this_round = 0
-        self.plays_this_round = 0
+
         self.normalized = True
+        self.logger = Logger()
+
+    def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
+        discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
+        return discretized_pos
+
+    def _discretize_direction(self, pos: np.ndarray, goal: np.ndarray):
+        direction = goal - pos
+        result = [0,0]
+        if direction[0] != 0:
+            result[0] = direction[0] / np.abs(direction[0])
+        if direction[1] != 0:
+            result[1] = direction[1] / np.abs(direction[1])
+
+        return result
+
+    def _get_workspace(self) -> Set[Tuple[float, float]]:
+        with open('src/environment/robot_workspace.pkl', "rb") as file:
+            workspace = pickle.load(file)
+
+        workspace = {tuple(self._discretize_position(np.array(pos)))
+                     for pos in workspace}
+        return workspace
+
+    def _generate_goal(self) -> np.ndarray:
+        if len(self.goal_samples) == 0:
+            self.goal_samples = self.workspace.copy()
+
+        goal = random.sample(self.goal_samples, k=1)[0]
+        self.goal_samples.remove(goal)
+
+        return np.array(goal)
+
+    def _calculate_state(self, observations: np.ndarray,
+                         goal: np.ndarray) -> np.ndarray:
+        # [j0, j0x, j0y, j0z, j1, j1x, j1y, j1z,
+        #  j2, j2x, j2y, j2z, ee_x, ee_y, ee_z]
+        # [EEPOS, GOAL_y, GOAL_z]
+        ee_pos = observations[13:15]
+
+        ee_pos = self._discretize_position(ee_pos)
+        goal = self._discretize_direction(ee_pos, goal)
+
+        return np.array([ee_pos[0], ee_pos[1], goal[0], goal[1]], dtype=float)
+
+    def _calculate_reward(self, prev_absolute_pos: np.ndarray, new_absolute_pos: np.ndarray,
+                          goal: np.ndarray) -> Tuple[float, bool]:
+        prev_distance_from_goal = np.linalg.norm(prev_absolute_pos - goal)
+        new_distance_from_goal = np.linalg.norm(new_absolute_pos - goal)
+
+        if new_distance_from_goal <= 2*self.WORKSPACE_DISCRETIZATION:
+            return 10, True
+
+        return prev_distance_from_goal - new_distance_from_goal, False
     
-    def play(self, last_move):
-        '''
-        Overwriting parent method
-        '''
-        possible_moves = MoveGenerator().generate_possible_moves(self.cards, last_move)
-        possible_moves.append(Skip())
-        self.possible_moves = possible_moves
-                                           
-        state = self.get_state(last_move)
+    def step(self, state):
+        action_index = self.predict(state, stochastic=(self.training))
+        actions = np.array(self.ACTIONS[action_index])
 
-        # update plays counter
-        self.plays_this_game += 1
-        self.plays_this_round += 1
+        # Execute the action in the environment
+        observations = self.env.step(actions)
+        return action_index,observations
 
-        # depending on if we want to train the agent or not, use different methods
-        if not self.training:
-            # get action
-            action = self.optimal_play(state)
-            # transform action to move
-            next_move = self.action_to_move(action, possible_moves)
-            # check if move is a valid move
-            if next_move is None or next_move is Skip():
-                return Skip()
-            else:
-                self.cards = list(filter(lambda card: card not in next_move.cards, self.cards))
-                return next_move 
+    def learn(self, num_episodes: int = 10000,
+              steps_per_episode: int = 500) -> None:
 
+        total_finished = 0
+        for episode in tqdm(range(num_episodes), desc='Q-Learning'):
+            # the end effector position is already randomized after reset()
+            observations = self.env.reset()
 
-        
-        output = self.train_play(state)
-        #safe this action and state so we can use them when we get the new state, also reset last_action_illegal
-        self.last_action = output
-        self.last_state = state
-        self.last_action_illegal = False
-        next_move = self.action_to_move(self.output_to_action(output), possible_moves)
+            goal = self._generate_goal()
 
-        # if move is impossible, let move be a skip and remember we played an illegal action
-        if next_move is None:
-            next_move = Skip()
-            self.last_action_illegal = True
+            state = self._calculate_state(observations, goal)
+            prev_absolute_pos = self._discretize_position(observations[13:15])
 
-        if not next_move is Skip():
-            self.cards_played_this_round += next_move.amount
-            self.cards = list(filter(lambda card: card not in next_move.cards, self.cards))
-        
-        return next_move 
+            episode_step = 0
+            finished = False
+            while not finished and episode_step < steps_per_episode:
+                # Get an action and execute
+                action_index, observations = self.step(state)
 
+                new_state = self._calculate_state(observations, goal)
 
-    def train_play(self, _state):
-        '''
-        Method that will update the network and get a action from the network 
-        Parameters:
-            _state: [int]
-        Returns:
-            output: network_output
-        '''
-        # _state is de state dus [ .. ] maar nog niet in een tensor!
+                # Calculate reward
+                new_absolute_pos = self._discretize_position(observations[13:15])
+                reward, finished = self._calculate_reward(
+                    prev_absolute_pos, new_absolute_pos, goal)
+                prev_absolute_pos = new_absolute_pos  # this is not in the state, but is useful for reward calculation
 
-        # if we didn't do anything yet, generate a random move
-        # hoe groot kiezen we de eps?
-        if self.last_action == None: 
-            return self.select_action(torch.tensor([_state]).float(), 1)
+                if finished:
+                    total_finished += 1
 
-        self.update(_state)
+                # network update
+                if self.training:
+                    self.update(state, new_state,action_index, reward, finished)
 
-        return self.select_action(torch.tensor([_state]).float(), self.eps)
+                episode_step += 1
+                state = new_state
 
-    def optimal_play(self, _state):
-        '''
-        Method that will get the optimal play from the network
-        Parameters:
-            _state: [int]
-        Returns:
-            action: (amount, rank)
-        '''
-        state = torch.tensor([_state]).float()
-        output = self.select_action(state, 0)
-        action = self.output_to_action(output)
-        return action
+            self.logger.log_episode(episode, state, goal, episode_step, total_finished)
 
-    def update(self, _state):
+        self.env.close()
+
+    def update(self, _state, new_state, action, reward, finished):
         '''
         Method for updating the network
         Parameters: 
             _state: [int]
         '''
-            
-        # Select and perform an action
-        action = self.last_action 
-        done = self.done #if the game is over
-        reward = self.get_reward(_state)
-        state = torch.tensor([self.last_state])
-        next_state = torch.tensor([_state])
+        state = torch.tensor([_state], dtype=torch.float)
+        next_state = torch.tensor([new_state], dtype=torch.float)
 
         # Store the transition in memory
-        self.memory.append((state, action, reward, next_state, int(done)))
+        self.memory.append((state, action, reward, next_state, int(finished)))
 
         # Move to the next state
         state = next_state
@@ -181,7 +211,7 @@ class DeepQLearningAgent(Player):
             
             # Bereken de loss
             loss_fn = torch.nn.MSELoss()
-            loss = loss_fn(curr_Q, targets)
+            loss = loss_fn(curr_Q, targets.float())
             self.optimizer.zero_grad()
             loss.backward()
             
@@ -192,189 +222,29 @@ class DeepQLearningAgent(Player):
             self.eps *= self.EPS_DECAY
             self.eps = max(self.EPS_END, self.eps)
                 
-
-    def select_action(self, state, eps):
-        '''
-        Method that selects a action to play
-        Parameters:
-            state: tensor([[int]])
-            eps: float
-        Returns:
-            action: network_output
-        '''
-        if random.random() >= eps:
+    def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
+        if stochastic and np.random.rand() < self.eps:
             with torch.no_grad():
-
-                x = self.network(state)
-                probs, indices = torch.topk(x, 53, sorted=True)
-                move = None
-                for action in indices[0]:
-                    move = self.action_to_move(self.output_to_action(action.item()), self.possible_moves)
-                    if not move is None:
-                        return action.item()
+                x = self.network(torch.tensor([state], dtype=torch.float))
+                probs, indices = torch.topk(x, 1)
+                return indices[0].item()
+                #for action in indices[0]:
+                    #move = self.action_to_move(self.output_to_action(action.item()), self.possible_moves)
+                    #if not move is None:
+                        #return action.item()
 
 #                return self.network(state).argmax().item()
         else:
-            # kies random actie zonder te kijken naar state
-            # uiteindelijk zal de ai leren welke acties wel en niet mogen door rewards ?
-            return random.randrange(self.N_ACTIONS)    
+            return np.random.randint(len(self.ACTIONS))
 
-    def get_reward(self, state):
-        '''
-        Method that calculates the rewards for a given state
-        Parameters:
-            state: [int]
-        Returns:
-            reward: float
-        '''
-        start_score = self.get_hand_score(self.last_state) 
-        current_score = self.get_hand_score(state)
+if __name__ == "__main__":
 
-        longer_game_penalty = min((1.2)**(self.plays_this_game - 5), 4)
-        longer_game_penalty = 0
-        skip_penalty = 1.2**(self.plays_this_round - 2)
-        #print(f"skip_penalty: {skip_penalty}")
-        rel_hand_score = current_score/start_score
-        
-        #print(round(current_score, 2), round(start_score, 2), round(rel_hand_score, 2))
+    ENV_PATH = "src/environment/unity_environment_tutorial/simenv.x86_64"
+    URDF_PATH = "src/environment/robot_tutorial.urdf"
 
-        # you won
-        if current_score == 0:
-            return 10 
-        # you skipped
-        if current_score == start_score:
-            return -1.5 + skip_penalty 
-        ## others skipped, you won round
-        #if state[13:15] == [0,0] and not self.done:
-        #    return 3  
-        return rel_hand_score - longer_game_penalty
+    if len(sys.argv) == 2:
+        model = DeepQLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
+    else:
+        model = DeepQLearner(ENV_PATH, URDF_PATH, False)
 
-    def get_hand_score(self, state):
-        '''
-        Method to calculate the score of a hand
-        Parameters:
-            state: [int]
-        '''
-        if self.normalized:
-            state = [ int(x*2 + 2) for x in state ]
-
-        if not sum(state[:13]):
-            return 0
-
-        def score(rank, amount):
-            mapping = [4,2,1,0.5]
-            score = 0
-            for i in range(amount):
-                score += rank*mapping[i]
-            return score
-
-        return sum([score(i,state[i-1]) for i in range(1,14)]) / sum(state[:13])
-
-
-    def get_state(self, move):
-        '''
-        Method 
-        Parameters:
-            move: Move
-        Returns:
-            move: [ amount_3 amount_4 ... value_last amount_last ]
-        '''
-        if self.normalized:
-            norm_cards = list(map(lambda x: (x-2)/2, self.cards_to_list(self.cards)))
-            if move is Skip():
-                return  norm_cards +  [ 0, 0 ]+ [self.plays_this_game]
-            if move.is_round_start():
-                return  norm_cards + [ 3, 0 ]+ [self.plays_this_game]
-            return norm_cards + [move.rank, move.amount]+ [self.plays_this_game]
-        else:
-            if move is Skip():
-                return self.cards_to_list(self.cards) + [ 0, 0 ] + [self.plays_this_game]
-            if move.is_round_start():
-                return self.cards_to_list(self.cards) + [ 3, 0 ] + [self.plays_this_game]
-            return self.cards_to_list(self.cards) + [move.rank, move.amount] + [self.plays_this_game]
-
-    def cards_to_list(self, cards):
-        '''
-        Method that transforms a hand
-        Parameters:
-            cards: [Card]
-        Returns:
-            cards_int: [int]
-        '''
-        card_count = 13
-        cards_ints = [ 0 for _ in range(card_count) ]
-
-        for card in cards:
-            if card.rank == 2:
-                cards_ints[card_count-1] += 1
-            else:
-                cards_ints[card.rank-3] += 1
-        
-        return cards_ints
-
-    def output_to_action(self, output):
-        '''
-        Method that transforms a output of the network to a action
-        Parameters:
-            output: int
-        Returns:
-            action: (rank, amount) | Skip
-        '''
-        return output_to_action_mapping[output]
-
-    def move_to_action(self, move):
-        '''
-        Method that transforms a Move to a tuple used for indexing the QTable
-        Parameters:
-            move: Move
-        Returns:
-            action: (rank, amount)
-        '''
-        if move is Skip():
-            return  SKIP
-        return (move.rank, move.amount)
-
-    def action_to_move(self, action, possible_moves):
-        '''
-        Method that seeks the move corresponding to a action
-        Parameters:
-            action: (rank, amount)
-            possible_moves: [Move]
-        Returns:
-            move: Move
-        '''
-        l = list(filter(lambda move: self.move_to_action(move) == action, possible_moves))
-        if not l: 
-            return None 
-        return l[0]
-
-    def notify_round_end(self):
-        '''
-        Overwriting parent method
-        '''
-        if self.training:
-            self.update(self.get_state(Skip()))
-        self.cards_played_this_round = 0
-        self.plays_this_round = 0
-
-    def notify_game_end(self, rank):
-        '''
-        Overwriting parent method
-        '''
-        self.done = True
-        if self.training:
-            self.update(self.get_state(Skip()))
-        self.plays_this_game = 0
-        
-
-    def notify_game_start(self):
-        '''
-        Overwriting parent method
-        '''
-        self.done = False
-
-    def stop_training(self):
-        '''
-        Method that stops the training
-        '''
-        self.training = False
+    model.learn()
