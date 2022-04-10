@@ -1,10 +1,3 @@
-import torch
-import random
-from itertools import count
-from collections import deque
-from random import randint
-from termcolor import colored
-import sys
 import pickle
 import random
 import sys
@@ -13,22 +6,9 @@ from typing import Set, Tuple
 
 import numpy as np
 from src.environment.environment import SimEnv
+from src.rl.dqn import DQN
 from src.rl.logger import Logger
-from src.rl.q_table import QTable
 from tqdm import tqdm
-
-
-class RobotNetwork(torch.nn.Module):
-    def __init__(self, hidden_nodes, number_of_actions):
-        super(RobotNetwork, self).__init__()
-        self.linear1 = torch.nn.Linear(4, hidden_nodes)
-        self.linear2 = torch.nn.Linear(hidden_nodes, hidden_nodes)
-        self.linear3 = torch.nn.Linear(hidden_nodes, number_of_actions)
-    
-    def forward(self, x):
-        x = torch.nn.functional.relu(self.linear1(x))
-        x = torch.nn.functional.relu(self.linear2(x))
-        return self.linear3(x)
 
 
 class DeepQLearner():
@@ -48,26 +28,9 @@ class DeepQLearner():
         self.workspace = set(self._get_workspace())
         self.goal_samples = self.workspace.copy()
 
-        self.BATCH_SIZE = 64 
-        self.MEM_SIZE = 1000
-        self.GAMMA = 0.99
-        self.EPS_END = 0.05
-        self.EPS_DECAY = 0.9999
-        self.eps = 1.0
-        self.N_ACTIONS = 4 #todo: should not be hard coded 
+        self.dqn = DQN(len(self.ACTIONS), network_path)
+        self.training = not network_path
 
-        if network_path:
-            self.network = torch.load(network_path)
-            self.network.eval()
-            self.training = False
-        else:
-            self.network = RobotNetwork(64, self.N_ACTIONS)
-            self.training = True
-
-        self.optimizer = torch.optim.Adam(self.network.parameters(), lr=1e-4)
-        self.memory = deque(maxlen=self.MEM_SIZE)
-
-        self.normalized = True
         self.logger = Logger()
 
     def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
@@ -122,7 +85,7 @@ class DeepQLearner():
             return 10, True
 
         return prev_distance_from_goal - new_distance_from_goal, False
-    
+
     def step(self, state):
         action_index = self.predict(state, stochastic=(self.training))
         actions = np.array(self.ACTIONS[action_index])
@@ -135,7 +98,7 @@ class DeepQLearner():
               steps_per_episode: int = 500) -> None:
 
         total_finished = 0
-        for episode in tqdm(range(num_episodes), desc='Q-Learning'):
+        for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
 
@@ -163,7 +126,7 @@ class DeepQLearner():
 
                 # network update
                 if self.training:
-                    self.update(state, new_state,action_index, reward, finished)
+                    self.dqn.update(state, new_state,action_index, reward, finished)
 
                 episode_step += 1
                 state = new_state
@@ -172,70 +135,10 @@ class DeepQLearner():
 
         self.env.close()
 
-    def update(self, _state, new_state, action, reward, finished):
-        '''
-        Method for updating the network
-        Parameters: 
-            _state: [int]
-        '''
-        state = torch.tensor([_state], dtype=torch.float)
-        next_state = torch.tensor([new_state], dtype=torch.float)
-
-        # Store the transition in memory
-        self.memory.append((state, action, reward, next_state, int(finished)))
-
-        # Move to the next state
-        state = next_state
-
-        # Experience replay
-        if len(self.memory) >= self.BATCH_SIZE:
-            batch = random.sample(self.memory, self.BATCH_SIZE)
-            states, actions, rewards, n_states, dones = zip(*batch)
-            state_batch = torch.cat(states,0)
-            action_batch = torch.tensor(actions)
-            reward_batch = torch.tensor(rewards)
-            n_states = torch.cat(n_states)
-            dones = torch.tensor(dones)
-            
-            # EXPERIENCE REPLAY
-            
-            # Bereken de Q-values voor de gegeven toestanden
-            curr_Q = self.network(state_batch.float()).gather(1, action_batch.unsqueeze(1))
-            curr_Q = curr_Q.squeeze(1)
-                        
-            # Bereken de Q-values voor de volgende toestanden (n_states)
-            max_next_Q = (1-dones) * self.network(n_states.float()).max(1)[0].detach()
-
-            # Gebruik deze Q-values om targets te berekenen
-            targets = reward_batch + (self.GAMMA*max_next_Q)
-            
-            # Bereken de loss
-            loss_fn = torch.nn.MSELoss()
-            loss = loss_fn(curr_Q, targets.float())
-            self.optimizer.zero_grad()
-            loss.backward()
-            
-            # Voer een optimalisatiestap uit
-            self.optimizer.step()
-
-            # Decay exploration rate
-            self.eps *= self.EPS_DECAY
-            self.eps = max(self.EPS_END, self.eps)
-                
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
-        if stochastic and np.random.rand() < self.eps:
-            with torch.no_grad():
-                x = self.network(torch.tensor([state], dtype=torch.float))
-                probs, indices = torch.topk(x, 1)
-                return indices[0].item()
-                #for action in indices[0]:
-                    #move = self.action_to_move(self.output_to_action(action.item()), self.possible_moves)
-                    #if not move is None:
-                        #return action.item()
-
-#                return self.network(state).argmax().item()
-        else:
+        if stochastic and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.ACTIONS))
+        return self.dqn.lookup(state)
 
 if __name__ == "__main__":
 
