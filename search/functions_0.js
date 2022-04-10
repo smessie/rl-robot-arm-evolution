@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['update_0',['update',['../classdeep__q__learning_1_1DeepQLearner.html#a25cb61a85cb202b8dc010dd6881cf769',1,'deep_q_learning::DeepQLearner']]]
+  ['update_0',['update',['../classsrc_1_1rl_1_1dqn_1_1DQN.html#ace35e188f40d313ce5e6cebca2b8fc33',1,'src::rl::dqn::DQN']]]
 ];
