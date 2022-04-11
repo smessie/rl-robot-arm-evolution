@@ -52,10 +52,6 @@ class DeepQLearner():
     def _generate_actions(self, nr_of_modules):
         pass
 
-    # def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
-    #     discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
-    #     return discretized_pos
-
     def _calculate_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = goal - pos
         result = [0,0,0]
@@ -68,20 +64,7 @@ class DeepQLearner():
 
         return result
 
-    # def _get_workspace(self) -> Set[Tuple[float, float]]:
-    #     with open('../environment/robot_workspace.pkl', "rb") as file:
-    #         workspace = pickle.load(file)
-    #     workspace = {tuple(self._discretize_position(np.array(pos)))
-    #                  for pos in workspace}
-    #     return workspace
-
     def _generate_goal(self) -> np.ndarray:
-        # if len(self.goal_samples) == 0:
-        #     self.goal_samples = self.workspace.copy()
-        #
-        # goal = random.sample(self.goal_samples, k=1)[0]
-        # self.goal_samples.remove(goal)
-
         goal = []
         for axis_range in [self.x_range, self.y_range, self.z_range]:
             range_size = axis_range[1] - axis_range[0]
@@ -96,7 +79,6 @@ class DeepQLearner():
         # [EEPOS, GOAL_y, GOAL_z]
         ee_pos = self._get_end_effector_position(observations)
 
-        #ee_pos = self._discretize_position(ee_pos)
         goal_direction = self._calculate_direction(ee_pos, goal)
 
         return np.array([ee_pos[0], ee_pos[1], ee_pos[2], goal_direction[0], goal_direction[1], goal_direction[2]], dtype=float)
@@ -132,9 +114,7 @@ class DeepQLearner():
 
             goal = self._generate_goal()
             self.env.set_goal(goal)
-            # print(goal)
-            # print(observations[13:15])
-
+           
             state = self._calculate_state(observations, goal)
             prev_pos = self._get_end_effector_position(observations)
 
