@@ -37,11 +37,12 @@ class DeepQLearner():
         self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
 
         # todo: get this dynamically through robot env
-        self.amount_of_modules = 3
+        # 7 because a tilt and a rotate are each an ArticulationBody, and thus count for the observations
+        self.amount_of_modules = 7
         # todo: dont hard code workspace
         self.x_range = [-10, 10]
-        self.y_range = [-10, 10]
-        self.z_range = [2, 10]
+        self.y_range = [2, 10]
+        self.z_range = [-10, 10]
 
         # state_size is 6: 3 coords for the goal direction, 3 coords for the end effector position
         self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
@@ -90,12 +91,12 @@ class DeepQLearner():
         new_distance_from_goal = np.linalg.norm(new_pos - goal)
 
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
-            return 10, True
+            return 1000, True
 
         return prev_distance_from_goal - new_distance_from_goal, False
 
     def step(self, state):
-        action_index = self.predict(state, stochastic=(self.training))
+        action_index = self.predict(state, stochastic=self.training)
         actions = np.array(self.ACTIONS[action_index])
 
         # Execute the action in the environment
@@ -113,9 +114,9 @@ class DeepQLearner():
             goal = self._generate_goal()
             self.env.set_goal(tuple(goal))
 
+
             state = self._calculate_state(observations, goal)
             prev_pos = self._get_end_effector_position(observations)
-
             episode_step = 0
             finished = False
             while not finished and episode_step < steps_per_episode:
@@ -147,6 +148,8 @@ class DeepQLearner():
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.ACTIONS))
+        # if random.random() < 0.01:
+        #     print(self.dqn.eps)
         return self.dqn.lookup(state)
 
 if __name__ == "__main__":
@@ -157,6 +160,6 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         model = DeepQLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
     else:
-        model = DeepQLearner(ENV_PATH, URDF_PATH, True)
+        model = DeepQLearner(ENV_PATH, URDF_PATH, False)
 
     model.learn()

@@ -12,9 +12,9 @@ class Logger:
         final_distance = np.linalg.norm(final_state[:3] - goal)
 
         wandb.log({
-            'Episode/final_distance': final_distance,
-            "Episode/timesteps": timesteps,
-            "Episode/finished": total_finished/(episode+1)
+            'Distance away from the goal through time': final_distance,
+            "Amount of timesteps throug time": timesteps,
+            "Percentage of times the goal was reached through time": total_finished/(episode+1)
         }, step=episode)
 
         #with open('output_testing', 'a') as file:
