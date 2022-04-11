@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['qlearner_0',['QLearner',['../classsrc_1_1rl_1_1q__learning_1_1QLearner.html',1,'src::rl::q_learning']]],
-  ['qtable_1',['QTable',['../classsrc_1_1rl_1_1q__table_1_1QTable.html',1,'src::rl::q_table']]]
+  ['readme_0',['Readme',['../classReadme.html',1,'']]],
+  ['readmeeditor_1',['ReadmeEditor',['../classReadmeEditor.html',1,'']]],
+  ['robotspecification_2',['RobotSpecification',['../classDefaultNamespace_1_1RobotSpecification.html',1,'DefaultNamespace']]],
+  ['rotationspec_3',['RotationSpec',['../classDefaultNamespace_1_1RotationSpec.html',1,'DefaultNamespace']]]
 ];
