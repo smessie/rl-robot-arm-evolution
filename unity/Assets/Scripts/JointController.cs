@@ -29,4 +29,14 @@ public class JointController : MonoBehaviour
             articulationBody.xDrive = xDrive;
         }
     }
+
+    public void RandomizeJoints()
+    {
+        foreach (var articulationBody in ArticulationBodies)
+        {
+            var xDrive = articulationBody.xDrive;
+            xDrive.target = Random.Range(xDrive.lowerLimit, xDrive.upperLimit);
+            articulationBody.xDrive = xDrive;
+        }
+    }
 }
