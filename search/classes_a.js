@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['qlearner_0',['QLearner',['../classsrc_1_1rl_1_1q__learning_1_1QLearner.html',1,'src::rl::q_learning']]],
-  ['qtable_1',['QTable',['../classsrc_1_1rl_1_1q__table_1_1QTable.html',1,'src::rl::q_table']]]
+  ['packageentry_0',['PackageEntry',['../classStarterAssets_1_1PackageChecker_1_1PackageEntry.html',1,'StarterAssets::PackageChecker']]],
+  ['parameters_1',['Parameters',['../classsrc_1_1morphevo_1_1parameters_1_1Parameters.html',1,'src::morphevo::parameters']]]
 ];
