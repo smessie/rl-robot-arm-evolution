@@ -41,7 +41,7 @@ class DeepQLearner():
         # todo: dont hard code workspace
         self.x_range = [-10, 10]
         self.y_range = [-10, 10]
-        self.z_range = [0, 10]
+        self.z_range = [2, 10]
 
         # state_size is 6: 3 coords for the goal direction, 3 coords for the end effector position
         self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
@@ -54,13 +54,11 @@ class DeepQLearner():
 
     def _calculate_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = goal - pos
+
         result = [0,0,0]
-        if direction[0] != 0:
-            result[0] = direction[0] / np.abs(direction[0])
-        if direction[1] != 0:
-            result[1] = direction[1] / np.abs(direction[1])
-        if direction[2] != 0:
-            result[2] = direction[2] / np.abs(direction[2])
+        for i, axis_direction in enumerate(direction):
+            if axis_direction != 0:
+                result[i] = axis_direction / np.abs(axis_direction)
 
         return result
 
@@ -113,7 +111,7 @@ class DeepQLearner():
             observations = self.env.reset()
 
             goal = self._generate_goal()
-            self.env.set_goal(goal)
+            self.env.set_goal(tuple(goal))
 
             state = self._calculate_state(observations, goal)
             prev_pos = self._get_end_effector_position(observations)
