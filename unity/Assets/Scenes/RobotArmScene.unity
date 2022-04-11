@@ -284,6 +284,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4135013735270702856, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
   m_PrefabInstance: {fileID: 1800905977}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &633987594 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1511764344851415718, guid: 81d0b9afabc25b8fc96b92c97c9bb6b9, type: 3}
+  m_PrefabInstance: {fileID: 961180960}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: MoveSpeed
-      value: 8
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: JumpHeight
@@ -553,7 +558,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: SprintSpeed
-      value: 8
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: RotationSpeed
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_Name
@@ -603,7 +612,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5393215578589016640, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+    - {fileID: 5393215578589016655, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
 --- !u!1 &1829601646
 GameObject:
@@ -684,7 +695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29919200b4b864581b8b7a14bee84549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: {fileID: 1511764344851415718, guid: 81d0b9afabc25b8fc96b92c97c9bb6b9, type: 3}
+  goal: {fileID: 633987594}
   anchor: {fileID: 1922935799}
 --- !u!1 &1922935799
 GameObject:
