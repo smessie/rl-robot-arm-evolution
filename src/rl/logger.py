@@ -9,7 +9,7 @@ class Logger:
     def log_episode(self, episode: int, final_state: np.ndarray,
                     goal: np.ndarray, timesteps: int, total_finished: int):
 
-        final_distance = np.linalg.norm(final_state[:2] - goal)
+        final_distance = np.linalg.norm(final_state[:3] - goal)
 
         wandb.log({
             'Episode/final_distance': final_distance,

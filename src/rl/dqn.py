@@ -6,9 +6,9 @@ import random
 from collections import deque
 
 class RobotNetwork(torch.nn.Module):
-    def __init__(self, hidden_nodes, number_of_actions):
+    def __init__(self, hidden_nodes, number_of_actions, state_size):
         super(RobotNetwork, self).__init__()
-        self.linear1 = torch.nn.Linear(4, hidden_nodes)
+        self.linear1 = torch.nn.Linear(state_size, hidden_nodes)
         self.linear2 = torch.nn.Linear(hidden_nodes, hidden_nodes)
         self.linear3 = torch.nn.Linear(hidden_nodes, number_of_actions)
     
@@ -18,7 +18,7 @@ class RobotNetwork(torch.nn.Module):
         return self.linear3(x)
 
 class DQN:
-    def __init__(self, n_actions: int, network_path = ""):
+    def __init__(self, n_actions: int, state_size, network_path = ""):
         self.eps = 0.5
         self.GAMMA = 0.99
         self.EPS_END = 0.05
@@ -30,7 +30,7 @@ class DQN:
             self.network = torch.load(network_path)
             self.network.eval()
         else:
-            self.network = RobotNetwork(64, n_actions)
+            self.network = RobotNetwork(64, n_actions, state_size)
 
         self.optimizer = torch.optim.Adam(self.network.parameters(), lr=1e-4)
         self.memory = deque(maxlen=self.MEM_SIZE)

@@ -29,15 +29,22 @@ class DeepQLearner():
     ]
 
     WORKSPACE_DISCRETIZATION = 0.2
+    GOAL_BAL_DIAMETER = 0.6
 
     def __init__(self, env_path: str, urdf_path: str,
                  use_graphics: bool = False, network_path = "") -> None:
         urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
         self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
-        self.workspace = set(self._get_workspace())
-        self.goal_samples = self.workspace.copy()
 
-        self.dqn = DQN(len(self.ACTIONS), network_path)
+        # todo: get this dynamically through robot env
+        self.amount_of_modules = 3
+        # todo: dont hard code workspace
+        self.x_range = [-10, 10]
+        self.y_range = [-10, 10]
+        self.z_range = [0, 10]
+
+        # state_size is 6: 3 coords for the goal direction, 3 coords for the end effector position
+        self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
         self.training = not network_path
 
         self.logger = Logger()
@@ -45,34 +52,40 @@ class DeepQLearner():
     def _generate_actions(self, nr_of_modules):
         pass
 
-    def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
-        discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
-        return discretized_pos
+    # def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
+    #     discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
+    #     return discretized_pos
 
-    def _discretize_direction(self, pos: np.ndarray, goal: np.ndarray):
+    def _calculate_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = goal - pos
-        result = [0,0]
+        result = [0,0,0]
         if direction[0] != 0:
             result[0] = direction[0] / np.abs(direction[0])
         if direction[1] != 0:
             result[1] = direction[1] / np.abs(direction[1])
+        if direction[2] != 0:
+            result[2] = direction[2] / np.abs(direction[2])
 
         return result
 
-    def _get_workspace(self) -> Set[Tuple[float, float]]:
-        with open('../environment/robot_workspace.pkl', "rb") as file:
-            workspace = pickle.load(file)
-
-        workspace = {tuple(self._discretize_position(np.array(pos)))
-                     for pos in workspace}
-        return workspace
+    # def _get_workspace(self) -> Set[Tuple[float, float]]:
+    #     with open('../environment/robot_workspace.pkl', "rb") as file:
+    #         workspace = pickle.load(file)
+    #     workspace = {tuple(self._discretize_position(np.array(pos)))
+    #                  for pos in workspace}
+    #     return workspace
 
     def _generate_goal(self) -> np.ndarray:
-        if len(self.goal_samples) == 0:
-            self.goal_samples = self.workspace.copy()
+        # if len(self.goal_samples) == 0:
+        #     self.goal_samples = self.workspace.copy()
+        #
+        # goal = random.sample(self.goal_samples, k=1)[0]
+        # self.goal_samples.remove(goal)
 
-        goal = random.sample(self.goal_samples, k=1)[0]
-        self.goal_samples.remove(goal)
+        goal = []
+        for axis_range in [self.x_range, self.y_range, self.z_range]:
+            range_size = axis_range[1] - axis_range[0]
+            goal.append(random.random()*range_size + axis_range[0])
 
         return np.array(goal)
 
@@ -81,19 +94,22 @@ class DeepQLearner():
         # [j0, j0x, j0y, j0z, j1, j1x, j1y, j1z,
         #  j2, j2x, j2y, j2z, ee_x, ee_y, ee_z]
         # [EEPOS, GOAL_y, GOAL_z]
-        ee_pos = observations[13:15]
+        ee_pos = self._get_end_effector_position(observations)
 
-        ee_pos = self._discretize_position(ee_pos)
-        goal = self._discretize_direction(ee_pos, goal)
+        #ee_pos = self._discretize_position(ee_pos)
+        goal_direction = self._calculate_direction(ee_pos, goal)
 
-        return np.array([ee_pos[0], ee_pos[1], goal[0], goal[1]], dtype=float)
+        return np.array([ee_pos[0], ee_pos[1], ee_pos[2], goal_direction[0], goal_direction[1], goal_direction[2]], dtype=float)
 
-    def _calculate_reward(self, prev_absolute_pos: np.ndarray, new_absolute_pos: np.ndarray,
+    def _get_end_effector_position(self, observations: np.ndarray):
+        return observations[self.amount_of_modules * 4:self.amount_of_modules * 4 + 3]
+
+    def _calculate_reward(self, prev_pos: np.ndarray, new_pos: np.ndarray,
                           goal: np.ndarray) -> Tuple[float, bool]:
-        prev_distance_from_goal = np.linalg.norm(prev_absolute_pos - goal)
-        new_distance_from_goal = np.linalg.norm(new_absolute_pos - goal)
+        prev_distance_from_goal = np.linalg.norm(prev_pos - goal)
+        new_distance_from_goal = np.linalg.norm(new_pos - goal)
 
-        if new_distance_from_goal <= 2*self.WORKSPACE_DISCRETIZATION:
+        if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
             return 10, True
 
         return prev_distance_from_goal - new_distance_from_goal, False
@@ -104,7 +120,7 @@ class DeepQLearner():
 
         # Execute the action in the environment
         observations = self.env.step(actions)
-        return action_index,observations
+        return action_index, observations
 
     def learn(self, num_episodes: int = 10000,
               steps_per_episode: int = 500) -> None:
@@ -115,12 +131,12 @@ class DeepQLearner():
             observations = self.env.reset()
 
             goal = self._generate_goal()
-            self.env.set_goal((0,goal[0],goal[1]))
+            self.env.set_goal(goal)
             # print(goal)
             # print(observations[13:15])
 
             state = self._calculate_state(observations, goal)
-            prev_absolute_pos = self._discretize_position(observations[13:15])
+            prev_pos = self._get_end_effector_position(observations)
 
             episode_step = 0
             finished = False
@@ -131,10 +147,10 @@ class DeepQLearner():
                 new_state = self._calculate_state(observations, goal)
 
                 # Calculate reward
-                new_absolute_pos = self._discretize_position(observations[13:15])
+                new_pos = self._get_end_effector_position(observations)
                 reward, finished = self._calculate_reward(
-                    prev_absolute_pos, new_absolute_pos, goal)
-                prev_absolute_pos = new_absolute_pos  # this is not in the state, but is useful for reward calculation
+                    prev_pos, new_pos, goal)
+                prev_pos = new_pos  # this is not in the state, but is useful for reward calculation
 
                 if finished:
                     total_finished += 1
