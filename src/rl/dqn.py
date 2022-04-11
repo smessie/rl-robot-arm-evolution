@@ -1,30 +1,31 @@
-import torch
 import random
-import numpy as np
-import random
-
 from collections import deque
+
+import numpy as np
+import torch
+
 
 class RobotNetwork(torch.nn.Module):
     def __init__(self, hidden_nodes, number_of_actions, state_size):
-        super(RobotNetwork, self).__init__()
+        super().__init__()
         self.linear1 = torch.nn.Linear(state_size, hidden_nodes)
         self.linear2 = torch.nn.Linear(hidden_nodes, hidden_nodes)
         self.linear3 = torch.nn.Linear(hidden_nodes, number_of_actions)
-    
+
     def forward(self, x):
         x = torch.nn.functional.relu(self.linear1(x))
         x = torch.nn.functional.relu(self.linear2(x))
         return self.linear3(x)
 
 class DQN:
+    GAMMA = 0.99
+    EPS_END = 0.05
+    EPS_DECAY = 0.9999
+    BATCH_SIZE = 64
+    MEM_SIZE = 1000
+
     def __init__(self, n_actions: int, state_size, network_path = ""):
         self.eps = 0.5
-        self.GAMMA = 0.99
-        self.EPS_END = 0.05
-        self.EPS_DECAY = 0.9999
-        self.BATCH_SIZE = 64 
-        self.MEM_SIZE = 1000
 
         if network_path:
             self.network = torch.load(network_path)
@@ -39,7 +40,7 @@ class DQN:
     def update(self, _state, new_state, action, reward, finished):
         '''
         Method for updating the network
-        Parameters: 
+        Parameters:
             _state: [int]
         '''
         state = torch.tensor([_state], dtype=torch.float)
@@ -60,25 +61,25 @@ class DQN:
             reward_batch = torch.tensor(rewards)
             n_states = torch.cat(n_states)
             dones = torch.tensor(dones)
-            
+
             # EXPERIENCE REPLAY
-            
+
             # Bereken de Q-values voor de gegeven toestanden
             curr_Q = self.network(state_batch.float()).gather(1, action_batch.unsqueeze(1))
             curr_Q = curr_Q.squeeze(1)
-                        
+
             # Bereken de Q-values voor de volgende toestanden (n_states)
             max_next_Q = (1-dones) * self.network(n_states.float()).max(1)[0].detach()
 
             # Gebruik deze Q-values om targets te berekenen
             targets = reward_batch + (self.GAMMA*max_next_Q)
-            
+
             # Bereken de loss
             loss_fn = torch.nn.MSELoss()
             loss = loss_fn(curr_Q, targets.float())
             self.optimizer.zero_grad()
             loss.backward()
-            
+
             # Voer een optimalisatiestap uit
             self.optimizer.step()
 

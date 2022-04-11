@@ -1,14 +1,14 @@
-import pickle
 import random
 import sys
 import xml.etree.ElementTree as ET
-from typing import Set, Tuple
+from typing import Tuple
 
 import numpy as np
+from tqdm import tqdm
+
 from src.environment.environment import SimEnv
 from src.rl.dqn import DQN
 from src.rl.logger import Logger
-from tqdm import tqdm
 
 
 class DeepQLearner():
@@ -81,7 +81,7 @@ class DeepQLearner():
 
         goal_direction = self._calculate_direction(ee_pos, goal)
 
-        return np.array([ee_pos[0], ee_pos[1], ee_pos[2], goal_direction[0], goal_direction[1], goal_direction[2]], dtype=float)
+        return np.array([*ee_pos, *goal_direction], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
         return observations[self.amount_of_modules * 4:self.amount_of_modules * 4 + 3]
@@ -114,7 +114,7 @@ class DeepQLearner():
 
             goal = self._generate_goal()
             self.env.set_goal(goal)
-           
+
             state = self._calculate_state(observations, goal)
             prev_pos = self._get_end_effector_position(observations)
 
