@@ -6,10 +6,11 @@ import xml.etree.ElementTree as ET
 from typing import Set, Tuple
 
 import numpy as np
+from tqdm import tqdm
+
 from src.environment.environment import SimEnv
 from src.rl.logger import Logger
 from src.rl.q_table import QTable
-from tqdm import tqdm
 
 
 class QLearner:

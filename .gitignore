@@ -6,6 +6,7 @@ simenv_BurstDebugInformation_DoNotShip
 UnityPlayer.so
 
 *timers.json
+*timers.json.meta
 pyrightconfig.json
 
 # Byte-compiled / optimized / DLL files
