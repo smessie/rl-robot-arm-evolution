@@ -48,7 +48,7 @@ class DeepQLearner():
         return result
 
     def _get_workspace(self) -> Set[Tuple[float, float]]:
-        with open('src/environment/robot_workspace.pkl', "rb") as file:
+        with open('../environment/robot_workspace.pkl', "rb") as file:
             workspace = pickle.load(file)
 
         workspace = {tuple(self._discretize_position(np.array(pos)))
@@ -142,12 +142,12 @@ class DeepQLearner():
 
 if __name__ == "__main__":
 
-    ENV_PATH = "src/environment/unity_environment_tutorial/simenv.x86_64"
-    URDF_PATH = "src/environment/robot_tutorial.urdf"
+    ENV_PATH =  "../../build/simenv.x86_64"
+    URDF_PATH = "../environment/robot.urdf"
 
     if len(sys.argv) == 2:
         model = DeepQLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
     else:
-        model = DeepQLearner(ENV_PATH, URDF_PATH, False)
+        model = DeepQLearner(ENV_PATH, URDF_PATH, True)
 
     model.learn()
