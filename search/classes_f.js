@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['visualspec_0',['VisualSpec',['../classDefaultNamespace_1_1VisualSpec.html',1,'DefaultNamespace']]]
+  ['workspace_0',['Workspace',['../classsrc_1_1morphevo_1_1workspace_1_1Workspace.html',1,'src::morphevo::workspace']]]
 ];
