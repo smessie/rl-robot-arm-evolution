@@ -9,9 +9,8 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
-
-from src.environment.sidechannels.creation_sc import CreationSC
-from src.environment.sidechannels.goal_sc import GoalSC
+from sidechannels.creation_sc import CreationSC
+from sidechannels.goal_sc import GoalSC
 
 
 class SimEnv(gym.Env):
@@ -99,7 +98,7 @@ def test_environment():
     # make absolute paths to avoid file-not-found errors
     here = os.path.dirname(os.path.abspath(__file__))
     urdf_filename = os.path.join(here, 'robot.urdf')
-    unity_executable_path = os.path.join(here, '../simenv.x86_64')
+    unity_executable_path = os.path.join(here, '../../build/simenv.x86_64')
 
     urdf = ET.tostring(ET.parse(urdf_filename).getroot(), encoding='unicode')
 
@@ -108,7 +107,7 @@ def test_environment():
                  use_graphics=True)
 
     _ = env.reset()
-    env.set_goal((3.0, 2.0, 4.0))
+    env.set_goal((3.0, 6.5, 4.0))
     # (Comments not including 'anchor module')
     # Rotate second module 90 degrees
     for _ in range(9):
