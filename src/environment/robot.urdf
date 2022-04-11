@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<robot name="robot">
+    <link name="anchor">
+        <visual>
+            <geometry>
+                <anchor_module length="0.5" />
+            </geometry>
+        </visual>
+        <rotation lower_bound="0" upper_bound="360" />
+    </link>
+    <link name="MODULE_1">
+        <visual>
+            <geometry>
+                <base_module length="2.0"/>
+            </geometry>
+        </visual>
+        <rotation lower_bound="0" upper_bound="180" />
+    </link>
+    <link name="MODULE_2">
+        <visual>
+            <geometry>
+                <base_module length="1.5"/>
+            </geometry>
+        </visual>
+        <rotation lower_bound="0" upper_bound="180" />
+    </link>
+    <link name="MODULE_3">
+        <visual>
+            <geometry>
+                <base_module length="1.0"/>
+            </geometry>
+        </visual>
+        <rotation lower_bound="0" upper_bound="180" />
+    </link>
+
+    <joint name="MODULE_1_JOINT" type="revolute">
+        <parent link="anchor"/>
+        <child link="MODULE_1"/>
+        <angle lower_bound="0" upper_bound="90" />
+    </joint>
+
+    <joint name="MODULE_2_JOINT" type="revolute">
+        <parent link="MODULE_1"/>
+        <child link="MODULE_2"/>
+        <angle lower_bound="0" upper_bound="90" />
+    </joint>
+
+    <joint name="MODULE_3_JOINT" type="revolute">
+        <parent link="MODULE_2"/>
+        <child link="MODULE_3"/>
+        <angle lower_bound="0" upper_bound="90" />
+    </joint>
+</robot>
