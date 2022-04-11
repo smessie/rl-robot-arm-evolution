@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['deepqlearner_0',['DeepQLearner',['../classdeep__q__learning_1_1DeepQLearner.html',1,'deep_q_learning']]],
-  ['dqn_1',['DQN',['../classsrc_1_1rl_1_1dqn_1_1DQN.html',1,'src::rl::dqn']]]
+  ['agentbrain_0',['AgentBrain',['../classAgentBrain.html',1,'']]],
+  ['anchormodule_1',['AnchorModule',['../classDefaultNamespace_1_1AnchorModule.html',1,'DefaultNamespace']]],
+  ['anglespec_2',['AngleSpec',['../classDefaultNamespace_1_1AngleSpec.html',1,'DefaultNamespace']]]
 ];

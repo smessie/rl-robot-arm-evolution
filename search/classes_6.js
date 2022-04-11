@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['robotnetwork_0',['RobotNetwork',['../classsrc_1_1rl_1_1dqn_1_1RobotNetwork.html',1,'src::rl::dqn']]]
+  ['jointcontroller_0',['JointController',['../classJointController.html',1,'']]],
+  ['jointlink_1',['JointLink',['../classDefaultNamespace_1_1JointLink.html',1,'DefaultNamespace']]],
+  ['jointspec_2',['JointSpec',['../classDefaultNamespace_1_1JointSpec.html',1,'DefaultNamespace']]]
 ];

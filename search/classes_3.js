@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logger_0',['Logger',['../classsrc_1_1morphevo_1_1logger_1_1Logger.html',1,'src.morphevo.logger.Logger'],['../classsrc_1_1rl_1_1logger_1_1Logger.html',1,'src.rl.logger.Logger']]]
+  ['evaluator_0',['Evaluator',['../classsrc_1_1morphevo_1_1evaluator_1_1Evaluator.html',1,'src::morphevo::evaluator']]]
 ];
