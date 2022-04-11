@@ -13,10 +13,19 @@ from tqdm import tqdm
 
 class DeepQLearner():
     ACTIONS = [
-        [0, 1, 0],
-        [0, -1, 0],
-        [0, 0, 1],
-        [0, 0, -1]
+        [1, 0, 0, 0, 0, 0],     # rotate anchor
+        [0, 1, 0, 0, 0, 0],     # tilt module 1
+        # [0, 0, 1, 0, 0, 0],     # rotate module 1
+        [0, 0, 0, 1, 0, 0],     # tilt module 2
+        # [0, 0, 0, 0, 1, 0],     # rotate module 2
+        [0, 0, 0, 0, 0, 1],     # tilt module 3
+
+        [-1, 0, 0, 0, 0, 0],    # rotate anchor
+        [0, -1, 0, 0, 0, 0],    # tilt module 1
+        # [0, 0, -1, 0, 0, 0],    # rotate module 1
+        [0, 0, 0, -1, 0, 0],    # tilt module 2
+        # [0, 0, 0, 0, -1, 0],    # rotate module 2
+        [0, 0, 0, 0, 0, -1]     # tilt module 3
     ]
 
     WORKSPACE_DISCRETIZATION = 0.2
@@ -32,6 +41,9 @@ class DeepQLearner():
         self.training = not network_path
 
         self.logger = Logger()
+
+    def _generate_actions(self, nr_of_modules):
+        pass
 
     def _discretize_position(self, pos: np.ndarray) -> np.ndarray:
         discretized_pos = (pos / self.WORKSPACE_DISCRETIZATION).astype(int)
@@ -103,6 +115,9 @@ class DeepQLearner():
             observations = self.env.reset()
 
             goal = self._generate_goal()
+            self.env.set_goal((0,goal[0],goal[1]))
+            # print(goal)
+            # print(observations[13:15])
 
             state = self._calculate_state(observations, goal)
             prev_absolute_pos = self._discretize_position(observations[13:15])
