@@ -33,6 +33,7 @@ class SimEnv(gym.Env):
         self.urdf = urdf
         self.use_graphics = use_graphics
         self.worker_id = worker_id
+        self.joint_amount = 0  # set after _initialize_unity_env
 
         self.creation_sc, self.goal_sc, self.u_env = self._initialize_unity_env()
         self.behavior_name = 'ManipulatorBehavior?team=0'
@@ -57,6 +58,7 @@ class SimEnv(gym.Env):
         env.reset()
         while not creation_sc.creation_done:
             pass
+        self.joint_amount = creation_sc.get_joint_amount()
         return creation_sc, goal_sc, env
 
     def _get_unity_observations(self) -> np.ndarray:
@@ -90,7 +92,7 @@ class SimEnv(gym.Env):
 
     def pause(self, steps=200) -> None:
         for _ in range(steps):
-            actions = [0, 0, 0, 0, 0, 0, 0]
+            actions = [0] * self.joint_amount
             _ = self.step(np.array(actions))
 
     def close(self) -> None:
