@@ -201,6 +201,10 @@ public class Builder : MonoBehaviour
         _articulationBodies.Add(moduleBody.GetComponent<ArticulationBody>());
     }
 
+    public int getJointAmount() {
+        return _articulationBodies.Count;
+    }
+
     // This function is called every time before we'll do a physics update. Before all forces and positions are calculated again in the scene, this function is called.
     // All physics related updates, you perform in the FixedUpdate method.
     private void FixedUpdate()
