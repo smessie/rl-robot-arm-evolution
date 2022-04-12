@@ -88,10 +88,14 @@ class SimEnv(gym.Env):
         observations = self._get_unity_observations()
         return observations
 
+    def pause(self, steps=200) -> None:
+        for _ in range(steps):
+            actions = [0, 0, 0, 0, 0, 0, 0]
+            _ = self.step(np.array(actions))
+
     def close(self) -> None:
         del self.creation_sc
         self.u_env.close()
-
 
 def test_environment():
 
@@ -108,35 +112,9 @@ def test_environment():
 
     _ = env.reset()
     env.set_goal((3.0, 6.5, 4.0))
-    # (Comments not including 'anchor module')
-    # Rotate second module 90 degrees
-    for _ in range(9):
-        actions = [0, 0, 0, 0, 1, 0, 0]
-        _ = env.step(np.array(actions))
-    # Rotate first module 45 degrees
-    for _ in range(9):
-        actions = [0, 0, 0.5, 0, 0, 0, 0]
-        _ = env.step(np.array(actions))
-    # Tilt first module 45 degrees
-    for _ in range(9):
-        actions = [0, 0.5, 0, 0, 0, 0, 0]
-        _ = env.step(np.array(actions))
-    # Tilt second module 45 degrees
-    for _ in range(9):
-        actions = [0, 0, 0, 0.5, 0, 0, 0]
-        _ = env.step(np.array(actions))
-    # Tilt third module 90 degrees
-    for _ in range(9):
-        actions = [0, 0, 0, 0, 0, 1, 0]
-        _ = env.step(np.array(actions))
-    # Turn around the base running
-    for _ in range(360):
-        actions = [0.1, 0, 0, 0, 0, 0, 0]
-        _ = env.step(np.array(actions))
-    # Keep simulation running
-    for _ in range(2000):
-        actions = [0, 0, 0, 0, 0, 0, 0]
-        _ = env.step(np.array(actions))
+    env.pause(400)
+    _ = env.reset()
+    env.pause(400)
 
     env.close()
 

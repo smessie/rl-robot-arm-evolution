@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,12 @@ public class JointController : MonoBehaviour
     public int stepSize = 10;
 
     public List<ArticulationBody> ArticulationBodies { get; set; }
+
+    private void Awake() {
+        int seed;
+        bool seedProvided = Int32.TryParse(Environment.GetEnvironmentVariable("SEED"), out seed);
+        UnityEngine.Random.InitState(seedProvided ? seed : DateTime.Now.Millisecond);
+    }
 
     public void ActuateJoint(int jointIndex, float step)
     {
@@ -26,6 +33,16 @@ public class JointController : MonoBehaviour
         {
             var xDrive = articulationBody.xDrive;
             xDrive.target = 0f;
+            articulationBody.xDrive = xDrive;
+        }
+    }
+
+    public void RandomizeJoints()
+    {
+        foreach (var articulationBody in ArticulationBodies)
+        {
+            var xDrive = articulationBody.xDrive;
+            xDrive.target = UnityEngine.Random.Range(xDrive.lowerLimit, xDrive.upperLimit);
             articulationBody.xDrive = xDrive;
         }
     }
