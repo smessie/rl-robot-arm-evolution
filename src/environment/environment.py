@@ -9,9 +9,8 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
-
-from src.environment.sidechannels.creation_sc import CreationSC
-from src.environment.sidechannels.goal_sc import GoalSC
+from sidechannels.creation_sc import CreationSC
+from sidechannels.goal_sc import GoalSC
 
 
 class SimEnv(gym.Env):
@@ -34,6 +33,7 @@ class SimEnv(gym.Env):
         self.urdf = urdf
         self.use_graphics = use_graphics
         self.worker_id = worker_id
+        self.joint_amount = 0  # set after _initialize_unity_env
 
         self.creation_sc, self.goal_sc, self.u_env = self._initialize_unity_env()
         self.behavior_name = 'ManipulatorBehavior?team=0'
@@ -58,6 +58,7 @@ class SimEnv(gym.Env):
         env.reset()
         while not creation_sc.creation_done:
             pass
+        self.joint_amount = creation_sc.get_joint_amount()
         return creation_sc, goal_sc, env
 
     def _get_unity_observations(self) -> np.ndarray:
@@ -89,17 +90,21 @@ class SimEnv(gym.Env):
         observations = self._get_unity_observations()
         return observations
 
+    def pause(self, steps=200) -> None:
+        for _ in range(steps):
+            actions = [0] * self.joint_amount
+            _ = self.step(np.array(actions))
+
     def close(self) -> None:
         del self.creation_sc
         self.u_env.close()
-
 
 def test_environment():
 
     # make absolute paths to avoid file-not-found errors
     here = os.path.dirname(os.path.abspath(__file__))
     urdf_filename = os.path.join(here, 'robot.urdf')
-    unity_executable_path = os.path.join(here, '../simenv.x86_64')
+    unity_executable_path = os.path.join(here, '../../build/simenv.x86_64')
 
     urdf = ET.tostring(ET.parse(urdf_filename).getroot(), encoding='unicode')
 
@@ -108,36 +113,10 @@ def test_environment():
                  use_graphics=True)
 
     _ = env.reset()
-    env.set_goal((3.0, 2.0, 4.0))
-    # (Comments not including 'anchor module')
-    # Rotate second module 90 degrees
-    for _ in range(9):
-        actions = [0, 0, 0, 0, 1, 0, 0]
-        _ = env.step(np.array(actions))
-    # Rotate first module 45 degrees
-    for _ in range(9):
-        actions = [0, 0, 0.5, 0, 0, 0, 0]
-        _ = env.step(np.array(actions))
-    # Tilt first module 45 degrees
-    for _ in range(9):
-        actions = [0, 0.5, 0, 0, 0, 0, 0]
-        _ = env.step(np.array(actions))
-    # Tilt second module 45 degrees
-    for _ in range(9):
-        actions = [0, 0, 0, 0.5, 0, 0, 0]
-        _ = env.step(np.array(actions))
-    # Tilt third module 90 degrees
-    for _ in range(9):
-        actions = [0, 0, 0, 0, 0, 1, 0]
-        _ = env.step(np.array(actions))
-    # Turn around the base running
-    for _ in range(360):
-        actions = [0.1, 0, 0, 0, 0, 0, 0]
-        _ = env.step(np.array(actions))
-    # Keep simulation running
-    for _ in range(2000):
-        actions = [0, 0, 0, 0, 0, 0, 0]
-        _ = env.step(np.array(actions))
+    env.set_goal((3.0, 6.5, 4.0))
+    env.pause(400)
+    _ = env.reset()
+    env.pause(400)
 
     env.close()
 
