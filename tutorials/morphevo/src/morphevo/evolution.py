@@ -30,7 +30,7 @@ def evolution(parameters: Parameter, workspace_type: str = 'normalized_cube',
     parents = []
     children = [Genome(next(genome_indexer), workspace_type=workspace_type, workspace_cube_offset=workspace_cube_offset,
                        workspace_side_length=workspace_side_length)
-                for _ in range(evolution_parameters.LAMBDA)]
+                for _ in range(parameters.LAMBDA)]
 
     for generation in tqdm(range(parameters.generations), desc='Generation'):
         # Evaluate children
