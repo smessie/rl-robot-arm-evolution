@@ -15,10 +15,7 @@ from configs.env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
-
 from morphevo.utils import alternate, normalize
-from ray.util import ActorPool
-from tqdm import tqdm
 
 
 def evolution(parameters: Parameter, workspace_type: str = 'normalized_cube',
