@@ -12,7 +12,7 @@
 
 - Open `Scenes/` in the Project File Explorer and double click RobotArmScene
 
-- Go to Edit > Build Settings...
+- Go to File > Build Settings...
   + Click "Add open scenes"
   + Click "Build". Build the project with name 'simenv' in a directory `build/` in the repository root.
 

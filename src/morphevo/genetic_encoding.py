@@ -4,6 +4,7 @@ import random
 from typing import Optional
 
 import numpy as np
+
 from morphevo.urdf_generator import URDFGenerator
 from morphevo.workspace import Workspace
 
@@ -11,8 +12,8 @@ from morphevo.workspace import Workspace
 class Genome:
     LENGTH_LOWER_BOUND = 1
     LENGTH_UPPER_BOUND = 4
-    MIN_AMOUNT_OF_MODULES = 3
-    MAX_AMOUNT_OF_MODULES = 3
+    MIN_AMOUNT_OF_MODULES = 2
+    MAX_AMOUNT_OF_MODULES = 4
 
     def __init__(self, genome_id: int, parent_genome: Optional[Genome] = None, workspace_type: str = 'normalized_cube',
                  workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13) -> None:
