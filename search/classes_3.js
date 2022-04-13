@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['geometryspec_0',['GeometrySpec',['../classDefaultNamespace_1_1GeometrySpec.html',1,'DefaultNamespace']]],
-  ['goalsc_1',['GoalSC',['../classGoalSC.html',1,'']]]
+  ['logger_0',['Logger',['../classmorphevo_1_1logger_1_1Logger.html',1,'morphevo.logger.Logger'],['../classrl_1_1logger_1_1Logger.html',1,'rl.logger.Logger']]]
 ];

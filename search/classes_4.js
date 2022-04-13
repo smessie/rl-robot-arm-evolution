@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['jointcontroller_0',['JointController',['../classJointController.html',1,'']]],
-  ['jointlink_1',['JointLink',['../classDefaultNamespace_1_1JointLink.html',1,'DefaultNamespace']]],
-  ['jointspec_2',['JointSpec',['../classDefaultNamespace_1_1JointSpec.html',1,'DefaultNamespace']]]
+  ['parameters_0',['Parameters',['../classmorphevo_1_1parameters_1_1Parameters.html',1,'morphevo::parameters']]]
 ];
