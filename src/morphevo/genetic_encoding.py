@@ -4,6 +4,7 @@ import random
 from typing import Optional
 
 import numpy as np
+
 from morphevo.urdf_generator import URDFGenerator
 from morphevo.workspace import Workspace
 

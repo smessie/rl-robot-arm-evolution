@@ -5,19 +5,20 @@ from itertools import count
 from xml.dom import minidom
 
 import numpy as np
+from ray.util import ActorPool
+from tqdm import tqdm
+
 from configs.env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
-from ray.util import ActorPool
-from tqdm import tqdm
 
 
 def evolution(evolution_parameters: Parameter):
     genome_indexer = count(0)
 
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
-                  for _ in range(1)]
+                  for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 
     logger = Logger()

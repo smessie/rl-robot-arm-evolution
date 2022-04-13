@@ -3,10 +3,10 @@ from typing import Callable, Tuple
 import numpy as np
 import ray
 from mlagents_envs.exception import UnityWorkerInUseException
-from morphevo.genetic_encoding import Genome
-from morphevo.workspace import Workspace
 
 from environment.environment import SimEnv
+from morphevo.genetic_encoding import Genome
+from morphevo.workspace import Workspace
 
 
 @ray.remote(num_cpus=1)
