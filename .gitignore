@@ -1,3 +1,7 @@
+
+tutorials/morphevo/src/environment/unity_environment/simenv.x86_64
+tutorials/morphevo/src/environment/unity_environment/
+
 wandb
 .DS_Store
 .idea

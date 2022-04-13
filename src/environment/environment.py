@@ -9,8 +9,8 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
-from sidechannels.creation_sc import CreationSC
-from sidechannels.goal_sc import GoalSC
+from environment.sidechannels.creation_sc import CreationSC
+from environment.sidechannels.goal_sc import GoalSC
 
 
 class SimEnv(gym.Env):
@@ -98,6 +98,9 @@ class SimEnv(gym.Env):
     def close(self) -> None:
         del self.creation_sc
         self.u_env.close()
+
+    def get_current_state(self) -> np.ndarray:
+        return self._get_unity_observations()
 
 def test_environment():
 
