@@ -4,5 +4,5 @@ var searchData=
   ['uivirtualbutton_1',['UIVirtualButton',['../classUIVirtualButton.html',1,'']]],
   ['uivirtualjoystick_2',['UIVirtualJoystick',['../classUIVirtualJoystick.html',1,'']]],
   ['uivirtualtouchzone_3',['UIVirtualTouchZone',['../classUIVirtualTouchZone.html',1,'']]],
-  ['urdfgenerator_4',['URDFGenerator',['../classsrc_1_1morphevo_1_1urdf__generator_1_1URDFGenerator.html',1,'src::morphevo::urdf_generator']]]
+  ['urdfgenerator_4',['URDFGenerator',['../classmorphevo_1_1urdf__generator_1_1URDFGenerator.html',1,'morphevo::urdf_generator']]]
 ];
