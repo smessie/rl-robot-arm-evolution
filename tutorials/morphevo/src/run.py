@@ -14,5 +14,5 @@ if __name__ == '__main__':
         print(f"Configfile '{sys.argv[1]}' does not exist.")
         sys.exit()
     evolution_parameters = Parameters(sys.argv[1])
-    ray.init(log_to_driver=False, logging_level=logging.WARNING)
+    ray.init(log_to_driver=True, logging_level=logging.WARNING)
     evolution(evolution_parameters)

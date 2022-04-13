@@ -12,7 +12,7 @@ class Genome:
     LENGTH_LOWER_BOUND = 1
     LENGTH_UPPER_BOUND = 4
     MIN_AMOUNT_OF_MODULES = 2
-    MAX_AMOUNT_OF_MODULES = 5
+    MAX_AMOUNT_OF_MODULES = 4
 
     def __init__(self, genome_id: int, parent_genome: Optional[Genome] = None) -> None:
         self.genome_id = genome_id

@@ -17,7 +17,7 @@ def evolution(evolution_parameters: Parameter):
     genome_indexer = count(0)
 
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
-                  for _ in range(NUM_CORES)]
+                  for _ in range(1)]
     pool = ActorPool(evaluators)
 
     logger = Logger()

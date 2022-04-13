@@ -10,7 +10,7 @@ class CreationSC(SideChannel):
 
     def __init__(self) -> None:
         # Make sure this is the same UUID as in unity!
-        super().__init__(uuid.UUID("14630201-7c67-41b5-aab7-f4d87aa496a5"))
+        super().__init__(uuid.UUID("2c137891-46b7-4284-94ff-3dc14a7ab993"))
         # super().__init__(uuid.UUID("2c137891-46b7-4284-94ff-3dc14a7ab993"))
         self.creation_done = False
 
