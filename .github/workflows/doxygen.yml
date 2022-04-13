@@ -2,7 +2,6 @@ name: Doxygen Action
 
 on: [ push ]
 
-  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -14,19 +13,34 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-        
-    - name: Doxygen Action
+
+    - name: Doxygen Action Unity
       uses: mattnotmitt/doxygen-action@v1.1.0
       with:
         # Path to Doxyfile
-        doxyfile-path: "./Doxyfile" # default is ./Doxyfile
+        doxyfile-path: "./unity/Doxyfile" # default is ./Doxyfile
         # Working directory
         working-directory: "." # default is .
-    
+
+    - run: mkdir -p docs-html/unity
+    - run: cp -r html/* docs-html/unity
+
+    - name: Doxygen Action Python
+      uses: mattnotmitt/doxygen-action@v1.1.0
+      with:
+        # Path to Doxyfile
+        doxyfile-path: "./src/Doxyfile" # default is ./Doxyfile
+        # Working directory
+        working-directory: "." # default is .
+
+    - run: mkdir -p docs-html/python
+    - run: cp -r html/* docs-html/python
+
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         # Default Doxyfile build documentation to html directory. 
         # Change the directory if changes in Doxyfile
-        publish_dir: ./html
+        publish_dir: ./docs-html/
+
