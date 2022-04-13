@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mobiledisableautoswitchcontrols_0',['MobileDisableAutoSwitchControls',['../classMobileDisableAutoSwitchControls.html',1,'']]]
+  ['visualspec_0',['VisualSpec',['../classDefaultNamespace_1_1VisualSpec.html',1,'DefaultNamespace']]]
 ];

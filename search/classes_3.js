@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['evaluator_0',['Evaluator',['../classmorphevo_1_1evaluator_1_1Evaluator.html',1,'morphevo::evaluator']]]
+  ['geometryspec_0',['GeometrySpec',['../classDefaultNamespace_1_1GeometrySpec.html',1,'DefaultNamespace']]],
+  ['goalsc_1',['GoalSC',['../classGoalSC.html',1,'']]]
 ];

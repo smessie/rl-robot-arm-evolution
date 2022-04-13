@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['firstpersoncontroller_0',['FirstPersonController',['../classStarterAssets_1_1FirstPersonController.html',1,'StarterAssets']]]
+  ['linkspec_0',['LinkSpec',['../classDefaultNamespace_1_1LinkSpec.html',1,'DefaultNamespace']]]
 ];
