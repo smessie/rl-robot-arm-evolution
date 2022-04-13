@@ -1,8 +1,8 @@
 from typing import List
 
 import numpy as np
-
 import wandb
+
 from morphevo.genetic_encoding import Genome
 
 
