@@ -17,7 +17,8 @@ from ray.util import ActorPool
 from tqdm import tqdm
 
 
-def evolution(parameters: Parameter):
+def evolution(parameters: Parameter, workspace_type: str = 'normalized_cube',
+              workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13):
     genome_indexer = count(0)
 
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
@@ -27,7 +28,9 @@ def evolution(parameters: Parameter):
     logger = Logger()
 
     parents = []
-    children = [Genome(next(genome_indexer)) for _ in range(parameters.LAMBDA)]
+    children = [Genome(next(genome_indexer), workspace_type=workspace_type, workspace_cube_offset=workspace_cube_offset,
+                       workspace_side_length=workspace_side_length)
+                for _ in range(parameters.LAMBDA)]
 
     for generation in tqdm(range(parameters.generations), desc='Generation'):
         # Evaluate children
@@ -42,7 +45,8 @@ def evolution(parameters: Parameter):
 
         # create new children from selected parents
         children = [
-            Genome(next(genome_indexer), parent)
+            Genome(next(genome_indexer), parent_genome=parent, workspace_type=workspace_type,
+                   workspace_cube_offset=workspace_cube_offset, workspace_side_length=workspace_side_length)
             for parent in alternate(what=parents, times=parameters.LAMBDA - parameters.crossover_children)
         ]
         children += create_crossover_children(parents, parameters.crossover_children, genome_indexer)
@@ -118,7 +122,7 @@ def create_crossover_children(parents: List[Genome], amount: int, genome_indexer
 
 def save_best_genome(best_genome, generation, evolution_parameters):
     filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
-        f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
+                f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
 
     xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
