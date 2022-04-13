@@ -17,6 +17,7 @@ from morphevo.logger import Logger
 def evolution(evolution_parameters: Parameter):
     genome_indexer = count(0)
 
+    #pylint: disable=no-member
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
