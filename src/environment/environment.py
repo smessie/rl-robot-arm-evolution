@@ -118,13 +118,8 @@ def test_environment():
 
     _ = env.reset()
     env.set_goal((3.0, 6.5, 4.0))
-    env.pause(400)
+    env.pause(10000)
     _ = env.reset()
     env.pause(400)
 
     env.close()
-
-
-if __name__ == '__main__':
-
-    test_environment()
