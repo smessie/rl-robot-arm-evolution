@@ -15,16 +15,16 @@ class DeepQLearner():
     ACTIONS = [
         [1, 0, 0, 0, 0, 0],     # rotate anchor
         [0, 1, 0, 0, 0, 0],     # tilt module 1
-        # [0, 0, 1, 0, 0, 0],     # rotate module 1
+        [0, 0, 1, 0, 0, 0],     # rotate module 1
         [0, 0, 0, 1, 0, 0],     # tilt module 2
-        # [0, 0, 0, 0, 1, 0],     # rotate module 2
+        [0, 0, 0, 0, 1, 0],     # rotate module 2
         [0, 0, 0, 0, 0, 1],     # tilt module 3
 
         [-1, 0, 0, 0, 0, 0],    # rotate anchor
         [0, -1, 0, 0, 0, 0],    # tilt module 1
-        # [0, 0, -1, 0, 0, 0],    # rotate module 1
+        [0, 0, -1, 0, 0, 0],    # rotate module 1
         [0, 0, 0, -1, 0, 0],    # tilt module 2
-        # [0, 0, 0, 0, -1, 0],    # rotate module 2
+        [0, 0, 0, 0, -1, 0],    # rotate module 2
         [0, 0, 0, 0, 0, -1]     # tilt module 3
     ]
 
@@ -40,9 +40,9 @@ class DeepQLearner():
         # 7 because a tilt and a rotate are each an ArticulationBody, and thus count for the observations
         self.amount_of_modules = 7
         # todo: dont hard code workspace
-        self.x_range = [-10, 10]
-        self.y_range = [2, 10]
-        self.z_range = [-10, 10]
+        self.x_range = [5, 7]
+        self.y_range = [5, 7]
+        self.z_range = [5, 7]
 
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
         self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
@@ -158,6 +158,6 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         model = DeepQLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
     else:
-        model = DeepQLearner(ENV_PATH, URDF_PATH, False)
+        model = DeepQLearner(ENV_PATH, URDF_PATH, True)
 
     model.learn(steps_per_episode=100)
