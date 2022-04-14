@@ -19,13 +19,13 @@ class RobotNetwork(torch.nn.Module):
 
 class DQN:
     GAMMA = 0.99
-    EPS_END = 0.05
-    EPS_DECAY = 0.9999
+    EPS_END = 0.1
+    EPS_DECAY = 0.999995
     BATCH_SIZE = 64
     MEM_SIZE = 1000
 
     def __init__(self, n_actions: int, state_size, network_path = ""):
-        self.eps = 0.5
+        self.eps = 0.7
 
         if network_path:
             self.network = torch.load(network_path)
