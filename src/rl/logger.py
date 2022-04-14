@@ -7,14 +7,15 @@ class Logger:
         wandb.init(project='sel3-rl-tutorial')
 
     def log_episode(self, episode: int, final_state: np.ndarray,
-                    goal: np.ndarray, timesteps: int, total_finished: int):
+                    goal: np.ndarray, timesteps: int, total_finished: int, reward: float):
 
         final_distance = np.linalg.norm(final_state[:3] - goal)
 
         wandb.log({
             'Distance away from the goal through time': final_distance,
             "Amount of timesteps throug time": timesteps,
-            "Percentage of times the goal was reached through time": total_finished/(episode+1)
+            "Percentage of times the goal was reached through time": total_finished/(episode+1),
+            "Rewards through time": reward
         }, step=episode)
 
         #with open('output_testing', 'a') as file:
