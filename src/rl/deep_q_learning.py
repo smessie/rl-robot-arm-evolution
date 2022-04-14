@@ -44,7 +44,7 @@ class DeepQLearner():
         self.y_range = [2, 10]
         self.z_range = [-10, 10]
 
-        # state_size is 6: 3 coords for the goal direction, 3 coords for the end effector position
+        # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
         self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
         self.training = not network_path
 
@@ -78,9 +78,7 @@ class DeepQLearner():
         # [EEPOS, GOAL_y, GOAL_z]
         ee_pos = self._get_end_effector_position(observations)
 
-        goal_direction = self._calculate_direction(ee_pos, goal)
-
-        return np.array([*ee_pos, *goal_direction], dtype=float)
+        return np.array([*ee_pos, *goal], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
         return observations[self.amount_of_modules * 4:self.amount_of_modules * 4 + 3]
@@ -91,9 +89,9 @@ class DeepQLearner():
         new_distance_from_goal = np.linalg.norm(new_pos - goal)
 
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
-            return 1000, True
+            return 5000, True
 
-        return prev_distance_from_goal - new_distance_from_goal, False
+        return (10 + (10 * (prev_distance_from_goal - new_distance_from_goal)))**3, False
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
@@ -141,15 +139,15 @@ class DeepQLearner():
                 episode_step += 1
                 state = new_state
 
-            self.logger.log_episode(episode, state, goal, episode_step, total_finished)
+            self.logger.log_episode(episode, state, goal, episode_step, total_finished, reward)
 
         self.env.close()
 
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.ACTIONS))
-        # if random.random() < 0.01:
-        #     print(self.dqn.eps)
+        if random.random() < 0.01:
+            print(self.dqn.eps)
         return self.dqn.lookup(state)
 
 if __name__ == "__main__":
@@ -162,4 +160,4 @@ if __name__ == "__main__":
     else:
         model = DeepQLearner(ENV_PATH, URDF_PATH, False)
 
-    model.learn()
+    model.learn(steps_per_episode=100)
