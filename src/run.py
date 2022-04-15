@@ -4,9 +4,9 @@ from os.path import exists
 
 import ray
 
+from environment import environment
 from morphevo.evolution import evolution
 from morphevo.parameters import Parameters
-from environment import environment
 
 
 def start_morphevo():
