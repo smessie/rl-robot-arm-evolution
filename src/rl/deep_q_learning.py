@@ -41,9 +41,9 @@ class DeepQLearner:
         # 7 because a tilt and a rotate are each an ArticulationBody, and thus count for the observations
         self.amount_of_modules = 7
         # todo: dont hard code workspace
-        self.x_range = [5, 7]
-        self.y_range = [5, 7]
-        self.z_range = [5, 7]
+        self.x_range = [3, 5]
+        self.y_range = [1, 3]
+        self.z_range = [3, 5]
 
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
         self.dqn = DQN(len(self.ACTIONS), state_size=6 + self.amount_of_modules * 4, network_path=network_path)
@@ -160,9 +160,7 @@ class DeepQLearner:
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.ACTIONS))
-        a =  self.dqn.lookup(state)
-        #print(a)
-        return a
+        return self.dqn.lookup(state)
 
 if __name__ == "__main__":
 
