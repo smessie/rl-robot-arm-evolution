@@ -96,10 +96,7 @@ class DeepQLearner:
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
             return 10, True
 
-        d = prev_distance_from_goal - new_distance_from_goal
-        if abs(d) < 0.01:
-            return -10, False
-        return d, False
+        return prev_distance_from_goal - new_distance_from_goal, False
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
