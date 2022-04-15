@@ -22,7 +22,7 @@ def evolution(parameters: Parameter, workspace_type: str = 'normalized_cube',
               workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13):
     genome_indexer = count(0)
 
-    #pylint: disable=no-member
+    # pylint: disable=no-member
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
@@ -65,6 +65,7 @@ def selection_fitness(current_population: List[Genome], evolution_parameters) ->
 
     return parents
 
+
 def selection_fitness_diversity(current_population: List[Genome], evolution_parameters) -> List[Genome]:
     current_parents = []
     for _ in range(evolution_parameters.MU):
@@ -73,6 +74,7 @@ def selection_fitness_diversity(current_population: List[Genome], evolution_para
         current_parents.append(next_parent)
 
     return current_parents
+
 
 def select_next_parent(population: List[Genome], parents: List[Genome]) -> Genome:
 
@@ -84,11 +86,12 @@ def select_next_parent(population: List[Genome], parents: List[Genome]) -> Genom
     next_parent_index = np.argsort(selection_scores)[0]
     next_parent = population[next_parent_index]
 
-
     return next_parent
+
 
 def calculate_fitness(genome: Genome) -> float:
     return genome.workspace.calculate_coverage()
+
 
 def calculate_diversity(genome: Genome, others: List[Genome]) -> float:
     if not others:
@@ -97,6 +100,7 @@ def calculate_diversity(genome: Genome, others: List[Genome]) -> float:
     average_diversity = sum(diversity_from_others)/len(diversity_from_others)
 
     return average_diversity
+
 
 def calculate_selection_scores(population_fitnesses: List[float], population_diversities: List[float]) -> List[float]:
     fitnesses_normalized = normalize(population_fitnesses)
@@ -108,6 +112,7 @@ def calculate_selection_scores(population_fitnesses: List[float], population_div
     ]
 
     return selection_scores
+
 
 def create_crossover_children(parents: List[Genome], amount: int, genome_indexer):
     if len(parents) < 1:
@@ -121,6 +126,7 @@ def create_crossover_children(parents: List[Genome], amount: int, genome_indexer
 
         children.append(parent1.crossover(parent2, next(genome_indexer)))
     return children
+
 
 def save_best_genome(best_genome, generation, evolution_parameters):
     filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +

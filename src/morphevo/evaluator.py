@@ -63,15 +63,16 @@ class Evaluator:
                 )
         t_values[current_angle] *= -1
 
-    def _create_observation_parser(self, genome: Genome):
+    def _create_observation_parser(self):
 
         def parse_observation(observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray, List]:
             # [j0angel, j0x, j0y, j0z, ..., eex, eey, eez]
-            joint_angles = observations[[i * 4 for i in range(genome.amount_of_modules)]]
-            ee_pos = observations[-3:]
+            last_joint_index = self.env.joint_amount * 4
+            joint_angles = observations[[i * 4 for i in range(self.env.joint_amount)]]
+            ee_pos = observations[last_joint_index:last_joint_index + 3]
             joint_positions = []
             i = 1
-            while i < len(observations) - 3:
+            while i < last_joint_index:
                 joint_positions.append(tuple(observations[i:i + 3]))
                 i += 3
 
@@ -116,8 +117,8 @@ class Evaluator:
         self.env = self._initialize_environment(genome.get_urdf(), genome.genome_id)
         self.env.reset()
 
-        joint_angles = self._generate_joint_angles(genome.amount_of_modules)
-        observation_parser = self._create_observation_parser(genome)
+        joint_angles = self._generate_joint_angles(self.env.joint_amount)
+        observation_parser = self._create_observation_parser()
 
         for target_angles in joint_angles:
             self._step_until_target_angles(target_angles, genome.workspace, observation_parser)
