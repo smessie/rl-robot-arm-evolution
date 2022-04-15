@@ -14,19 +14,15 @@ from src.rl.logger import Logger
 
 class DeepQLearner:
     ACTIONS = [
-        [1, 0, 0, 0, 0, 0],     # rotate anchor
-        [0, 1, 0, 0, 0, 0],     # tilt module 1
-        [0, 0, 1, 0, 0, 0],     # rotate module 1
-        [0, 0, 0, 1, 0, 0],     # tilt module 2
-        [0, 0, 0, 0, 1, 0],     # rotate module 2
-        [0, 0, 0, 0, 0, 1],     # tilt module 3
+        [1, 0, 0, 0],     # rotate anchor
+        [0, 1, 0, 0],     # tilt module 1
+        [0, 0, 1, 0],     # tilt module 2
+        [0, 0, 0, 1],     # tilt module 3
 
-        [-1, 0, 0, 0, 0, 0],    # rotate anchor
-        [0, -1, 0, 0, 0, 0],    # tilt module 1
-        [0, 0, -1, 0, 0, 0],    # rotate module 1
-        [0, 0, 0, -1, 0, 0],    # tilt module 2
-        [0, 0, 0, 0, -1, 0],    # rotate module 2
-        [0, 0, 0, 0, 0, -1]     # tilt module 3
+        [-1, 0, 0, 0],    # rotate anchor
+        [0, -1, 0, 0],    # tilt module 1
+        [0, 0, -1, 0],    # tilt module 2
+        [0, 0, 0, -1]     # tilt module 3
     ]
 
     WORKSPACE_DISCRETIZATION = 0.2
@@ -37,9 +33,7 @@ class DeepQLearner:
         urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
         self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
 
-        # todo: get this dynamically through robot env
-        # 7 because a tilt and a rotate are each an ArticulationBody, and thus count for the observations
-        self.amount_of_modules = 7
+        self.amount_of_modules = self.env.joint_amount
         # todo: dont hard code workspace
         self.x_range = [3, 5]
         self.y_range = [1, 3]
@@ -103,7 +97,7 @@ class DeepQLearner:
             return 10, True
 
         d = prev_distance_from_goal - new_distance_from_goal
-        if d < 0.01:
+        if abs(d) < 0.01:
             return -10, False
         return d, False
 

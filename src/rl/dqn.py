@@ -20,7 +20,7 @@ class RobotNetwork(torch.nn.Module):
 class DQN:
     GAMMA = 0.99
     EPS_END = 0.1
-    EPS_DECAY = 0.999997
+    EPS_DECAY = 0.999999
     BATCH_SIZE = 64
     MEM_SIZE = 1000
 
