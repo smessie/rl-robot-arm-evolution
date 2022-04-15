@@ -1,4 +1,9 @@
 
+## Docs
+
+- [Python Docs](https://smessie.github.io/SELab3-2022-01/python/)
+- [Unity Project Docs](https://smessie.github.io/SELab3-2022-01/unity/)
+
 ## Building unity
 
 - Open the `unity/` folder in Unity 2020.3.30f1
