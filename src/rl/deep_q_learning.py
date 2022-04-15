@@ -5,6 +5,7 @@ from typing import Tuple
 
 import numpy as np
 from tqdm import tqdm
+import signal
 
 from src.environment.environment import SimEnv
 from src.rl.dqn import DQN
@@ -49,6 +50,16 @@ class DeepQLearner():
         self.training = not network_path
 
         self.logger = Logger()
+
+    def handler(self, *_):
+        if self.training:
+            res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
+            if res == 'y':
+                self.save()
+                sys.exit(1)
+
+    def save(self):
+        self.dqn.save("./networks/most_recently_saved_network.pkl")
 
     def _generate_actions(self, nr_of_modules):
         pass
@@ -112,7 +123,6 @@ class DeepQLearner():
             goal = self._generate_goal()
             self.env.set_goal(tuple(goal))
 
-
             state = self._calculate_state(observations, goal)
             prev_pos = self._get_end_effector_position(observations)
             episode_step = 0
@@ -139,15 +149,15 @@ class DeepQLearner():
                 episode_step += 1
                 state = new_state
 
-            self.logger.log_episode(episode, state, goal, episode_step, total_finished, reward)
+            self.logger.log_episode(episode, state, goal, episode_step, total_finished, reward, self.dqn.eps)
 
+        self.save()
         self.env.close()
 
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.ACTIONS))
-        if random.random() < 0.01:
-            print(self.dqn.eps)
+
         return self.dqn.lookup(state)
 
 if __name__ == "__main__":
@@ -158,6 +168,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         model = DeepQLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
     else:
-        model = DeepQLearner(ENV_PATH, URDF_PATH, True)
+        model = DeepQLearner(ENV_PATH, URDF_PATH, False)
 
-    model.learn(steps_per_episode=100)
+    signal.signal(signal.SIGINT, model.handler)
+    model.learn(steps_per_episode=500)

@@ -9,8 +9,8 @@ class RobotNetwork(torch.nn.Module):
     def __init__(self, hidden_nodes, number_of_actions, state_size):
         super().__init__()
         self.linear1 = torch.nn.Linear(state_size, hidden_nodes)
-        self.linear2 = torch.nn.Linear(hidden_nodes, hidden_nodes)
-        self.linear3 = torch.nn.Linear(hidden_nodes, number_of_actions)
+        self.linear2 = torch.nn.Linear(hidden_nodes, 32)
+        self.linear3 = torch.nn.Linear(32, number_of_actions)
 
     def forward(self, x):
         x = torch.nn.functional.relu(self.linear1(x))
@@ -25,7 +25,7 @@ class DQN:
     MEM_SIZE = 1000
 
     def __init__(self, n_actions: int, state_size, network_path = ""):
-        self.eps = 0.7
+        self.eps = 1
 
         if network_path:
             self.network = torch.load(network_path)
@@ -98,3 +98,6 @@ class DQN:
                     #return action.item()
 
 #                return self.network(state).argmax().item()
+
+    def save(self, path: str):
+        torch.save(self.network, path)
