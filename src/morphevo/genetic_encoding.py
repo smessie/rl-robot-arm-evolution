@@ -46,35 +46,35 @@ class Genome:
         return urdf_generator.get_urdf()
 
     def calculate_diversity_from(self, other_genome: Genome):
-        module_lenght_diversity = []
+        module_length_diversity = []
 
         for module_number in range(max(self.amount_of_modules, other_genome.amount_of_modules)):
             if module_number < self.amount_of_modules and module_number < other_genome.amount_of_modules:
-                module_lenght_diversity.append(abs(self.module_lengths[module_number]))
+                module_length_diversity.append(abs(self.module_lengths[module_number]))
             elif module_number < self.amount_of_modules:
-                module_lenght_diversity += self.module_lengths[module_number:]
+                module_length_diversity += self.module_lengths[module_number:]
             else:
-                module_lenght_diversity += other_genome.module_lengths[module_number:]
-        return sum(module_lenght_diversity)/len(module_lenght_diversity)
+                module_length_diversity += other_genome.module_lengths[module_number:]
+        return sum(module_length_diversity)/len(module_length_diversity)
 
     def crossover(self, other_genome: Genome, crossover_genome_id: int) -> Genome:
         genome = Genome(crossover_genome_id)
 
         # make combination of the modules
-        module_lenghts = []
+        module_lengths = []
         for module1, module2 in zip(self.module_lengths, other_genome.module_lengths):
             if random.randint(0,1):
-                module_lenghts.append(module1)
+                module_lengths.append(module1)
             else:
-                module_lenghts.append(module2)
+                module_lengths.append(module2)
 
         # maybe add leftover modules of longest arm
-        if random.randint(0,1) and len(module_lenghts) < max(self.amount_of_modules, other_genome.amount_of_modules):
+        if random.randint(0,1) and len(module_lengths) < max(self.amount_of_modules, other_genome.amount_of_modules):
             if self.amount_of_modules > other_genome.amount_of_modules:
-                module_lenghts += self.module_lengths[len(module_lenghts):self.amount_of_modules]
+                module_lengths += self.module_lengths[len(module_lengths):self.amount_of_modules]
             else:
-                module_lenghts += self.module_lengths[len(module_lenghts):other_genome.amount_of_modules]
+                module_lengths += self.module_lengths[len(module_lengths):other_genome.amount_of_modules]
 
-        genome.module_lengths = np.array(module_lenghts)
+        genome.module_lengths = np.array(module_lengths)
         genome.amount_of_modules = len(genome.module_lengths)
         return genome
