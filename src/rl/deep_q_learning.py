@@ -12,7 +12,7 @@ from src.rl.dqn import DQN
 from src.rl.logger import Logger
 
 
-class DeepQLearner():
+class DeepQLearner:
     ACTIONS = [
         [1, 0, 0, 0, 0, 0],     # rotate anchor
         [0, 1, 0, 0, 0, 0],     # tilt module 1
@@ -46,7 +46,7 @@ class DeepQLearner():
         self.z_range = [5, 7]
 
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
-        self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
+        self.dqn = DQN(len(self.ACTIONS), state_size=6 + self.amount_of_modules * 4, network_path=network_path)
         self.training = not network_path
 
         self.logger = Logger()
@@ -89,7 +89,7 @@ class DeepQLearner():
         # [EEPOS, GOAL_y, GOAL_z]
         ee_pos = self._get_end_effector_position(observations)
 
-        return np.array([*ee_pos, *goal], dtype=float)
+        return np.array([*ee_pos, *observations[:self.amount_of_modules * 4], *goal], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
         return observations[self.amount_of_modules * 4:self.amount_of_modules * 4 + 3]
@@ -100,9 +100,12 @@ class DeepQLearner():
         new_distance_from_goal = np.linalg.norm(new_pos - goal)
 
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
-            return 5000, True
+            return 10, True
 
-        return (10 + (10 * (prev_distance_from_goal - new_distance_from_goal)))**3, False
+        d = prev_distance_from_goal - new_distance_from_goal
+        if d < 0.01:
+            return -10, False
+        return d, False
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
@@ -157,8 +160,9 @@ class DeepQLearner():
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.ACTIONS))
-
-        return self.dqn.lookup(state)
+        a =  self.dqn.lookup(state)
+        #print(a)
+        return a
 
 if __name__ == "__main__":
 
@@ -166,7 +170,7 @@ if __name__ == "__main__":
     URDF_PATH = "../environment/robot.urdf"
 
     if len(sys.argv) == 2:
-        model = DeepQLearner(ENV_PATH, URDF_PATH, False, sys.argv[1])
+        model = DeepQLearner(ENV_PATH, URDF_PATH, True, sys.argv[1])
     else:
         model = DeepQLearner(ENV_PATH, URDF_PATH, False)
 

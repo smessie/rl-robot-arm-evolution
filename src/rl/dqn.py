@@ -9,8 +9,8 @@ class RobotNetwork(torch.nn.Module):
     def __init__(self, hidden_nodes, number_of_actions, state_size):
         super().__init__()
         self.linear1 = torch.nn.Linear(state_size, hidden_nodes)
-        self.linear2 = torch.nn.Linear(hidden_nodes, 32)
-        self.linear3 = torch.nn.Linear(32, number_of_actions)
+        self.linear2 = torch.nn.Linear(hidden_nodes, hidden_nodes)
+        self.linear3 = torch.nn.Linear(hidden_nodes, number_of_actions)
 
     def forward(self, x):
         x = torch.nn.functional.relu(self.linear1(x))
@@ -20,7 +20,7 @@ class RobotNetwork(torch.nn.Module):
 class DQN:
     GAMMA = 0.99
     EPS_END = 0.1
-    EPS_DECAY = 0.999995
+    EPS_DECAY = 0.999997
     BATCH_SIZE = 64
     MEM_SIZE = 1000
 
