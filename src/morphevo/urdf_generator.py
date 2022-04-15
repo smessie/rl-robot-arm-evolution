@@ -1,4 +1,6 @@
+import sys
 import xml.etree.ElementTree as ET
+from typing import Tuple
 
 
 class URDFGenerator:
@@ -9,27 +11,47 @@ class URDFGenerator:
         self.anchor_added = False
         self.module_index = 0
 
-    def add_anchor(self, length: float, rotation_lower_bound: float = 0, rotation_upper_bound: float = 180,) -> None:
+    def add_anchor(self, length: float = 0.5, can_rotate: bool = False,
+                   rotation_bounds: Tuple[float] = (0, 180)) -> None:
         link = ET.SubElement(self.urdf, 'link', {'name': 'anchor'})
         visual = ET.SubElement(link, 'visual')
-        ET.SubElement(link, 'rotation', {'lower_bound': f'{rotation_lower_bound}',
-                                         'upper_bound': f'{rotation_upper_bound}'})
+        if can_rotate:
+            ET.SubElement(link, 'rotation', {'lower_bound': f'{rotation_bounds[0]}',
+                                             'upper_bound': f'{rotation_bounds[1]}'})
         geometry = ET.SubElement(visual, 'geometry')
         ET.SubElement(geometry, 'anchor_module', {'length': str(length)})
         self.anchor_added = True
 
-    def add_module(self, length: float, rotation_lower_bound: float = 0, rotation_upper_bound: float = 180,
-                   angle_lower_bound: float = 0, angle_upper_bound: float = 90) -> None:
+    def _get_module_name(self, can_tilt: bool, can_rotate: bool):
+        if can_tilt:
+            if can_rotate:
+                return 'complex_module'
+            return 'tilting_module'
+        if can_rotate:
+            return 'rotating_module'
+        print("Module should either rotate or tilt")
+        sys.exit(0)
+
+    def add_module(self, length: float, can_tilt: bool = True, can_rotate: bool = False,
+                   tilt_bounds: Tuple[float] = (0, 90),
+                   rotation_bounds: Tuple[float] = (0, 180)) -> None:
         if not self.anchor_added:
             raise Exception("Anchor has to be added first")
 
         link = ET.SubElement(self.urdf, 'link', {
                              'name': f'module_{self.module_index}'})
         visual = ET.SubElement(link, 'visual')
-        ET.SubElement(link, 'rotation', {'lower_bound': f'{rotation_lower_bound}',
-                                         'upper_bound': f'{rotation_upper_bound}'})
         geometry = ET.SubElement(visual, 'geometry')
-        ET.SubElement(geometry, 'base_module', {'length': str(length)})
+        module_name = self._get_module_name(can_tilt, can_rotate)
+        ET.SubElement(geometry, module_name, {'length': str(length)})
+
+        if can_tilt:
+            ET.SubElement(link, 'tilt', {'lower_bound': f'{tilt_bounds[0]}',
+                                        'upper_bound': f'{tilt_bounds[1]}'})
+        if can_rotate:
+            ET.SubElement(link, 'rotation', {'lower_bound': f'{rotation_bounds[0]}',
+                                             'upper_bound': f'{rotation_bounds[1]}'})
+
 
         joint = ET.SubElement(self.urdf, 'joint', {'name': f'module_{self.module_index}_joint',
                                                    'type': 'revolute'})
@@ -38,9 +60,6 @@ class URDFGenerator:
 
         ET.SubElement(joint, 'parent', {'link': parent_link})
         ET.SubElement(joint, 'child', {'link': f'module_{self.module_index}'})
-        ET.SubElement(joint, 'angle', {'lower_bound': f'{angle_lower_bound}',
-                                       'upper_bound': f'{angle_upper_bound}'})
-
         self.module_index += 1
 
     def get_urdf(self) -> str:
