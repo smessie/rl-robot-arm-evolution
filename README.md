@@ -1,4 +1,9 @@
 
+## Docs
+
+- [Python Docs](https://smessie.github.io/SELab3-2022-01/python/)
+- [Unity Project Docs](https://smessie.github.io/SELab3-2022-01/unity/)
+
 ## Building unity
 
 - Open the `unity/` folder in Unity 2020.3.30f1
@@ -12,7 +17,7 @@
 
 - Open `Scenes/` in the Project File Explorer and double click RobotArmScene
 
-- Go to Edit > Build Settings...
+- Go to File > Build Settings...
   + Click "Add open scenes"
   + Click "Build". Build the project with name 'simenv' in a directory `build/` in the repository root.
 

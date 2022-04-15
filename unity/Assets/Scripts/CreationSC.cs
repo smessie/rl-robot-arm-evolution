@@ -25,10 +25,10 @@ public class CreationSC : SideChannel
     {
         string urdf = msg.ReadString();
 
-        _manipulatorBuilder.BuildAgent(urdf);
+        bool success = _manipulatorBuilder.BuildAgent(urdf);
 
         RobotInfo robotInfo = new RobotInfo();
-        robotInfo.Status = "success";
+        robotInfo.Status = success ? "success" : "failed";
         robotInfo.JointAmount = _manipulatorBuilder.getJointAmount();
 
         string stringToSend = JsonUtility.ToJson(robotInfo);

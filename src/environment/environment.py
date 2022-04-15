@@ -9,8 +9,11 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
+
+from src.configs.env import PATH_TO_UNITY_EXECUTABLE
 from src.environment.sidechannels.creation_sc import CreationSC
 from src.environment.sidechannels.goal_sc import GoalSC
+
 
 
 class SimEnv(gym.Env):
@@ -99,12 +102,15 @@ class SimEnv(gym.Env):
         del self.creation_sc
         self.u_env.close()
 
-def test_environment():
+    def get_current_state(self) -> np.ndarray:
+        return self._get_unity_observations()
 
+
+def test_environment():
     # make absolute paths to avoid file-not-found errors
     here = os.path.dirname(os.path.abspath(__file__))
     urdf_filename = os.path.join(here, 'robot.urdf')
-    unity_executable_path = os.path.join(here, '../../build/simenv.x86_64')
+    unity_executable_path = PATH_TO_UNITY_EXECUTABLE
 
     urdf = ET.tostring(ET.parse(urdf_filename).getroot(), encoding='unicode')
 
@@ -114,13 +120,8 @@ def test_environment():
 
     _ = env.reset()
     env.set_goal((3.0, 6.5, 4.0))
-    env.pause(400)
+    env.pause(10000)
     _ = env.reset()
     env.pause(400)
 
     env.close()
-
-
-if __name__ == '__main__':
-
-    test_environment()

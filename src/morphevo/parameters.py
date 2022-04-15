@@ -9,3 +9,4 @@ class Parameters:
         self.MU = evolution_config['mu']
         # pylint: disable=invalid-name
         self.LAMBDA = evolution_config['lambda']
+        self.crossover_children = evolution_config['crossover_children']
