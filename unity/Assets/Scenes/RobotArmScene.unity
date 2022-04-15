@@ -662,12 +662,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 489adb94399954c8ca0c09772873d1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moduleLengths:
-  - 2
-  - 3
-  - 1.1
   moduleBodyPrefab: {fileID: 3818137502223671744, guid: b1eb2a476bbef426f96fd5c5fdee994d, type: 3}
+  rotatingModuleBodyPrefab: {fileID: 3818137502223671744, guid: eb06e197bfc6a51f0981169a9c34cfd3, type: 3}
   moduleConnectorPrefab: {fileID: 8720989970880835204, guid: 073745e11e72b49c385364ecef4b2baf, type: 3}
+  tiltingModuleConnectorPrefab: {fileID: 8720989970880835204, guid: 38cdefef5bed59526b552cb4c8f82614, type: 3}
   manipulatorAgentPrefab: {fileID: 5634903959120303645, guid: 128f3195749754a0684b04029921d463, type: 3}
   anchor: {fileID: 1922935799}
 --- !u!114 &1829601649

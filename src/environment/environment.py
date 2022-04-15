@@ -12,6 +12,7 @@ from mlagents_envs.side_channel.engine_configuration_channel import \
 
 from environment.sidechannels.creation_sc import CreationSC
 from environment.sidechannels.goal_sc import GoalSC
+from configs.env import PATH_TO_UNITY_EXECUTABLE
 
 
 class SimEnv(gym.Env):
@@ -103,12 +104,12 @@ class SimEnv(gym.Env):
     def get_current_state(self) -> np.ndarray:
         return self._get_unity_observations()
 
-def test_environment():
 
+def test_environment():
     # make absolute paths to avoid file-not-found errors
     here = os.path.dirname(os.path.abspath(__file__))
     urdf_filename = os.path.join(here, 'robot.urdf')
-    unity_executable_path = os.path.join(here, '../../build/simenv.x86_64')
+    unity_executable_path = PATH_TO_UNITY_EXECUTABLE
 
     urdf = ET.tostring(ET.parse(urdf_filename).getroot(), encoding='unicode')
 
