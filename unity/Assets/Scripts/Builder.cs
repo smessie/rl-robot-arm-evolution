@@ -119,7 +119,7 @@ public class Builder : MonoBehaviour
         GameObject module = new GameObject(anchorLink.Name);
 
         float length = anchorLink.VisualSpec.Geometry.AnchorModule.Length;
-        float yPos = endEffector.transform.position.y + 0.5f + length;
+        float yPos = endEffector.transform.position.y + 0.5f;
 
         GameObject moduleBody = Instantiate(
             anchorLink.RotationSpec == null ? moduleBodyPrefab : rotatingModuleBodyPrefab, // type GameObject we want to make
@@ -127,12 +127,12 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
-        moduleBody.transform.localScale = new Vector3(1f, length, 1f);
+        moduleBody.transform.localScale = new Vector3(1f, length*2, 1f); // Multiply by 2 because we only show half of module
 
         // Change mass according to length.
         moduleBody.GetComponent<ArticulationBody>().mass = length;
 
-        yPos += length;
+        yPos += length*2;
         GameObject moduleHead = Instantiate(
             moduleConnectorPrefab, // type GameObject we want to make
             new Vector3(0f, yPos, 0f), // Position on where we want to instantiate it
@@ -146,7 +146,6 @@ public class Builder : MonoBehaviour
         if (anchorLink.RotationSpec != null) {
             ConfigureRotatingJoint(moduleBody, anchorLink.RotationSpec);
         }
-
         endEffector = moduleHead;
     }
 
