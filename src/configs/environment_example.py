@@ -4,3 +4,5 @@ import psutil
 PATH_TO_UNITY_EXECUTABLE = '../build/simenv.x86_64'
 USE_GRAPHICS = False
 NUM_CORES = psutil.cpu_count()
+MODULES_MAY_ROTATE = True
+MODULES_MAY_TILT = True
