@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+from enum import Enum
 from typing import Optional
 
 import numpy as np
@@ -20,14 +21,24 @@ class Genome:
                  workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13) -> None:
         self.genome_id = genome_id
 
+        self.module_choices = []
+        if MODULES_MAY_ROTATE:
+            self.module_choices.append(ModuleType.ROTATING)
+            if MODULES_MAY_TILT:
+                self.module_choices.append(ModuleType.TILTING_AND_ROTATING)
+        if MODULES_MAY_TILT:
+            self.module_choices.append(ModuleType.TILTING)
+
         if parent_genome is not None:
             self.amount_of_modules = parent_genome.amount_of_modules
             self.module_lengths = parent_genome.module_lengths.copy()
+            self.module_types = parent_genome.module_types.copy()
             self.mutate()
         else:
             self.amount_of_modules = random.randint(self.MIN_AMOUNT_OF_MODULES, self.MAX_AMOUNT_OF_MODULES)
             self.module_lengths = np.random.rand(
                 self.amount_of_modules) * (self.LENGTH_UPPER_BOUND - self.LENGTH_LOWER_BOUND) + self.LENGTH_LOWER_BOUND
+            self.module_types = np.random.choice(self.module_choices, self.amount_of_modules)
 
         self.workspace = Workspace(side_length=workspace_side_length, workspace=workspace_type,
                                    cube_offset=workspace_cube_offset)
@@ -39,22 +50,17 @@ class Genome:
         self.module_lengths = np.clip(
             self.module_lengths, self.LENGTH_LOWER_BOUND, self.LENGTH_UPPER_BOUND)
 
+        chance_of_not_inheriting_type_correctly = 0.15
+        self.module_types[np.random.rand(*self.module_types.shape) < chance_of_not_inheriting_type_correctly] \
+            = np.random.choice(self.module_choices)
+
     def get_urdf(self) -> str:
         urdf_generator = URDFGenerator(self.genome_id)
         urdf_generator.add_anchor(length=1, can_rotate=True)
-        for module_length in self.module_lengths:
-            if MODULES_MAY_ROTATE and MODULES_MAY_TILT:
-                chance = random.random()
-                if chance < 0.25:
-                    urdf_generator.add_module(module_length, can_tilt=False, can_rotate=True)
-                elif chance < 0.5:
-                    urdf_generator.add_module(module_length, can_tilt=True, can_rotate=False)
-                else:
-                    urdf_generator.add_module(module_length, can_tilt=True, can_rotate=True)
-            elif MODULES_MAY_ROTATE:
-                urdf_generator.add_module(module_length, can_tilt=False, can_rotate=True)
-            else:
-                urdf_generator.add_module(module_length, can_tilt=True, can_rotate=False)
+        for module_length, module_type in zip(self.module_lengths, self.module_types):
+            urdf_generator.add_module(module_length,
+                                      can_tilt=module_type in (ModuleType.TILTING, ModuleType.TILTING_AND_ROTATING),
+                                      can_rotate=module_type in (ModuleType.ROTATING, ModuleType.TILTING_AND_ROTATING))
         return urdf_generator.get_urdf()
 
     def calculate_diversity_from(self, other_genome: Genome):
@@ -74,19 +80,32 @@ class Genome:
 
         # make combination of the modules
         module_lengths = []
-        for module1, module2 in zip(self.module_lengths, other_genome.module_lengths):
+        module_types = []
+        for module_length_1, module_type_1, module_length_2, module_type_2 in \
+                zip(self.module_lengths, self.module_types, other_genome.module_lengths, other_genome.module_types):
             if random.randint(0, 1):
-                module_lengths.append(module1)
+                module_lengths.append(module_length_1)
+                module_types.append(module_type_1)
             else:
-                module_lengths.append(module2)
+                module_lengths.append(module_length_2)
+                module_types.append(module_type_2)
 
         # maybe add leftover modules of the longest arm
         if random.randint(0, 1) and len(module_lengths) < max(self.amount_of_modules, other_genome.amount_of_modules):
             if self.amount_of_modules > other_genome.amount_of_modules:
                 module_lengths += self.module_lengths[len(module_lengths):self.amount_of_modules]
+                module_types += self.module_types[len(module_types):self.amount_of_modules]
             else:
                 module_lengths += self.module_lengths[len(module_lengths):other_genome.amount_of_modules]
+                module_types += self.module_types[len(module_types):other_genome.amount_of_modules]
 
         genome.module_lengths = np.array(module_lengths)
+        genome.module_types = np.array(module_types)
         genome.amount_of_modules = len(genome.module_lengths)
         return genome
+
+
+class ModuleType(Enum):
+    TILTING = 1
+    ROTATING = 2
+    TILTING_AND_ROTATING = 3
