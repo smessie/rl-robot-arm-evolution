@@ -14,15 +14,15 @@ from src.rl.logger import Logger
 
 class DeepQLearner:
     ACTIONS = [
-        [1, 0, 0, 0],     # rotate anchor
-        [0, 1, 0, 0],     # tilt module 1
-        [0, 0, 1, 0],     # tilt module 2
-        [0, 0, 0, 1],     # tilt module 3
+        [1, 0, 0],     # rotate anchor
+        [0, 1, 0],     # tilt module 1
+        [0, 0, 1],     # tilt module 2
+       # [0, 0, 0, 1],     # tilt module 3
 
-        [-1, 0, 0, 0],    # rotate anchor
-        [0, -1, 0, 0],    # tilt module 1
-        [0, 0, -1, 0],    # tilt module 2
-        [0, 0, 0, -1]     # tilt module 3
+        [-1, 0, 0],    # rotate anchor
+        [0, -1, 0],    # tilt module 1
+        [0, 0, -1],    # tilt module 2
+        #[0, 0, 0, -1]     # tilt module 3
     ]
 
     WORKSPACE_DISCRETIZATION = 0.2
@@ -35,12 +35,14 @@ class DeepQLearner:
 
         self.amount_of_modules = self.env.joint_amount
         # todo: dont hard code workspace
-        self.x_range = [3, 5]
-        self.y_range = [1, 3]
-        self.z_range = [3, 5]
+        self.x_range = [0,0]
+        self.y_range = [3,6]
+        self.z_range = [6,9]
 
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
-        self.dqn = DQN(len(self.ACTIONS), state_size=6 + self.amount_of_modules * 4, network_path=network_path)
+        # self.dqn = DQN(len(self.ACTIONS), state_size=6 + self.amount_of_modules * 4, network_path=network_path)
+        self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
+
         self.training = not network_path
 
         self.logger = Logger()
@@ -73,7 +75,6 @@ class DeepQLearner:
         for axis_range in [self.x_range, self.y_range, self.z_range]:
             range_size = axis_range[1] - axis_range[0]
             goal.append(random.random()*range_size + axis_range[0])
-
         return np.array(goal)
 
     def _calculate_state(self, observations: np.ndarray,
@@ -83,7 +84,8 @@ class DeepQLearner:
         # [EEPOS, GOAL_y, GOAL_z]
         ee_pos = self._get_end_effector_position(observations)
 
-        return np.array([*ee_pos, *observations[:self.amount_of_modules * 4], *goal], dtype=float)
+        # return np.array([*ee_pos, *observations[:self.amount_of_modules * 4], *goal], dtype=float)
+        return np.array([*ee_pos, *goal], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
         return observations[self.amount_of_modules * 4:self.amount_of_modules * 4 + 3]
