@@ -6,7 +6,7 @@ import ray
 
 from environment import environment
 from morphevo.evolution import evolution
-from morphevo.parameters import Parameters
+from morphevo.config import Config
 
 
 def start_morphevo():
@@ -16,7 +16,8 @@ def start_morphevo():
     if not exists(sys.argv[2]):
         print(f"Configfile '{sys.argv[2]}' does not exist.")
         sys.exit()
-    evolution_parameters = Parameters(sys.argv[2])
+    evolution_parameters = Config(sys.argv[2])
+
     ray.init(log_to_driver=False, logging_level=logging.WARNING)
     evolution(evolution_parameters, workspace_type="moved_cube", workspace_cube_offset=(10, 0, 10),
               workspace_side_length=10)
