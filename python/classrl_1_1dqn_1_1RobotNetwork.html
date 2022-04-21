@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SELAB3 Python Code: rl.logger.Logger Class Reference</title>
+<title>SELAB3 Python Code: rl.dqn.RobotNetwork Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,31 +62,47 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>rl</b></li><li class="navelem"><b>logger</b></li><li class="navelem"><a class="el" href="classrl_1_1logger_1_1Logger.html">Logger</a></li>  </ul>
+<li class="navelem"><b>rl</b></li><li class="navelem"><b>dqn</b></li><li class="navelem"><a class="el" href="classrl_1_1dqn_1_1RobotNetwork.html">RobotNetwork</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classrl_1_1logger_1_1Logger-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">rl.logger.Logger Class Reference</div></div>
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="classrl_1_1dqn_1_1RobotNetwork-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">rl.dqn.RobotNetwork Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Inheritance diagram for rl.dqn.RobotNetwork:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classrl_1_1dqn_1_1RobotNetwork.png" alt=""/>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a758f0fd6ee7d6d28f0fe9325ecf687bb"><td class="memItemLeft" align="right" valign="top"><a id="a758f0fd6ee7d6d28f0fe9325ecf687bb" name="a758f0fd6ee7d6d28f0fe9325ecf687bb"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</td></tr>
-<tr class="separator:a758f0fd6ee7d6d28f0fe9325ecf687bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab91ed6d5b7295c86968d5a7e9c84908f"><td class="memItemLeft" align="right" valign="top"><a id="ab91ed6d5b7295c86968d5a7e9c84908f" name="ab91ed6d5b7295c86968d5a7e9c84908f"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>log_episode</b> (self, int episode, np.ndarray final_state, np.ndarray goal, int timesteps, int total_finished, float reward, float eps)</td></tr>
-<tr class="separator:ab91ed6d5b7295c86968d5a7e9c84908f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4eead52c542d946e6b31bf281939755"><td class="memItemLeft" align="right" valign="top"><a id="aa4eead52c542d946e6b31bf281939755" name="aa4eead52c542d946e6b31bf281939755"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>log_test</b> (self, int episode_steps, current_position, np.ndarray goal, int goal_number)</td></tr>
-<tr class="separator:aa4eead52c542d946e6b31bf281939755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c3cedd3b60c4609f2a3ee1a765debf6"><td class="memItemLeft" align="right" valign="top"><a id="a1c3cedd3b60c4609f2a3ee1a765debf6" name="a1c3cedd3b60c4609f2a3ee1a765debf6"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, hidden_nodes, number_of_actions, state_size)</td></tr>
+<tr class="separator:a1c3cedd3b60c4609f2a3ee1a765debf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae28229da7c18568b2103b8647d494603"><td class="memItemLeft" align="right" valign="top"><a id="ae28229da7c18568b2103b8647d494603" name="ae28229da7c18568b2103b8647d494603"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>forward</b> (self, x)</td></tr>
+<tr class="separator:ae28229da7c18568b2103b8647d494603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a2c20eaed08eb92d16de808fdbcc7573d"><td class="memItemLeft" align="right" valign="top"><a id="a2c20eaed08eb92d16de808fdbcc7573d" name="a2c20eaed08eb92d16de808fdbcc7573d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>linear1</b></td></tr>
+<tr class="separator:a2c20eaed08eb92d16de808fdbcc7573d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0f94659a51838fc9b6b8cbe4043d53a"><td class="memItemLeft" align="right" valign="top"><a id="af0f94659a51838fc9b6b8cbe4043d53a" name="af0f94659a51838fc9b6b8cbe4043d53a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>linear2</b></td></tr>
+<tr class="separator:af0f94659a51838fc9b6b8cbe4043d53a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63e3ed2e4ccbef0e3dc28b46bd6d4902"><td class="memItemLeft" align="right" valign="top"><a id="a63e3ed2e4ccbef0e3dc28b46bd6d4902" name="a63e3ed2e4ccbef0e3dc28b46bd6d4902"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>linear3</b></td></tr>
+<tr class="separator:a63e3ed2e4ccbef0e3dc28b46bd6d4902"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/rl/logger.py</li>
+<li>src/rl/dqn.py</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
