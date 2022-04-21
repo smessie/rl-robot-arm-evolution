@@ -7,6 +7,7 @@ import ray
 from environment import environment
 from morphevo.evolution import evolution
 from morphevo.parameters import Parameters
+from rl.deep_q_learning import start_rl
 
 
 def start_morphevo():
@@ -28,12 +29,14 @@ def start_test_env():
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print("Please specify a command ('start_test_env', 'morphevo')")
+        print("Please specify a command ('start_test_env', 'morphevo', 'rl')")
         sys.exit()
     if sys.argv[1] == "start_test_env":
         start_test_env()
     elif sys.argv[1] == "morphevo":
         start_morphevo()
+    elif sys.argv[1] == "rl":
+        start_rl()
     else:
-        print("Please specify a valid command ('start_test_env', 'morphevo')")
+        print("Please specify a valid command ('start_test_env', 'morphevo', 'rl')")
         sys.exit()

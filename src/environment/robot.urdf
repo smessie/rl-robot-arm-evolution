@@ -24,7 +24,7 @@
     <link name="MODULE_1">
         <visual>
             <geometry>
-                <tilting_module length="1"/>
+                <tilting_module length="1.5"/>
             </geometry>
         </visual>
         <tilt lower_bound="0" upper_bound="90" />
