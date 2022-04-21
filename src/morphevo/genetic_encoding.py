@@ -66,14 +66,21 @@ class Genome:
     def calculate_diversity_from(self, other_genome: Genome):
         module_length_diversity = []
 
+        different_types_count = 0
         for module_number in range(max(self.amount_of_modules, other_genome.amount_of_modules)):
             if module_number < self.amount_of_modules and module_number < other_genome.amount_of_modules:
-                module_length_diversity.append(abs(self.module_lengths[module_number]))
+                module_length_diversity.append(
+                    abs(self.module_lengths[module_number] - other_genome.module_lengths[module_number]))
+                if self.module_types[module_number] != other_genome.module_types[module_number]:
+                    different_types_count += 1
             elif module_number < self.amount_of_modules:
-                module_length_diversity += self.module_lengths[module_number:]
+                module_length_diversity.append(self.module_lengths[module_number])
+                different_types_count += 1
             else:
-                module_length_diversity += other_genome.module_lengths[module_number:]
-        return sum(module_length_diversity) / len(module_length_diversity)
+                module_length_diversity.append(other_genome.module_lengths[module_number])
+                different_types_count += 1
+        return (sum(module_length_diversity) / len(module_length_diversity)) * \
+               (1 + different_types_count / len(module_length_diversity))
 
     def crossover(self, other_genome: Genome, crossover_genome_id: int) -> Genome:
         genome = Genome(crossover_genome_id)
