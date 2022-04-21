@@ -10,7 +10,7 @@ class Workspace:
         """
         side_length:            the length of each side in case the workspace is a normalized or moved cube
         discretization_step:    step size for discretization
-        workspace:              type of workspace: normalized_cube, moved_cube or tube
+        workspace:              type of workspace: normalized_cube or moved_cube
         cube_offset:            tuple containing the offset of the moved cube
         cube_open_side:         which side of the moved_cube is open: top, bottom, left, right, front or back
         """
@@ -26,8 +26,6 @@ class Workspace:
     def add_ee_position(self, ee_pos: np.ndarray, joint_angles: np.ndarray, joint_positions: List = None) -> None:
         if self.workspace == 'normalized_cube':
             return self._add_ee_position_normalized_cube(ee_pos, joint_angles)
-        if self.workspace == 'tube':
-            return self._add_ee_position_tube(ee_pos, joint_angles)
         if self.workspace == 'moved_cube':
             return self._add_ee_position_moved_cube(ee_pos, joint_angles, joint_positions)
         raise WorkspaceNotFoundError
@@ -42,9 +40,6 @@ class Workspace:
         z_index = int(z // self.discretization_step)
 
         self.grid[(x_index, y_index, z_index)].add(tuple(joint_angles))
-
-    def _add_ee_position_tube(self, ee_pos: np.ndarray, joint_angles: np.ndarray) -> None:
-        raise NotImplementedError
 
     def _add_ee_position_moved_cube(self, ee_pos: np.ndarray, joint_angles: np.ndarray, joint_positions: List) -> None:
         x, y, z = ee_pos
@@ -103,43 +98,9 @@ class Workspace:
                 offset_y <= y <= offset_y + self.side_length)
 
     def calculate_coverage(self) -> float:
-        if self.workspace == 'normalized_cube':
-            return self._calculate_coverage_normalized_cube()
-        if self.workspace == 'tube':
-            return self._calculate_coverage_tube()
-        if self.workspace == 'moved_cube':
-            return self._calculate_coverage_moved_cube()
-        raise WorkspaceNotFoundError
-
-    def _calculate_coverage_normalized_cube(self) -> float:
-        return len(self.grid) / self.n_grid_cells
-
-    def _calculate_coverage_tube(self) -> float:
-        raise NotImplementedError
-
-    def _calculate_coverage_moved_cube(self) -> float:
         return len(self.grid) / self.n_grid_cells
 
     def calculate_average_redundancy(self) -> float:
-        if self.workspace == 'normalized_cube':
-            return self._calculate_average_redundancy_normalized_cube()
-        if self.workspace == 'tube':
-            return self._calculate_average_redundancy_tube()
-        if self.workspace == 'moved_cube':
-            return self._calculate_average_redundancy_moved_cube()
-        raise WorkspaceNotFoundError
-
-    def _calculate_average_redundancy_normalized_cube(self) -> float:
-        visit_counts = 0
-        for v in self.grid.values():
-            visit_counts += len(v)
-
-        return visit_counts / self.n_grid_cells
-
-    def _calculate_average_redundancy_tube(self) -> float:
-        raise NotImplementedError
-
-    def _calculate_average_redundancy_moved_cube(self) -> float:
         visit_counts = 0
         for v in self.grid.values():
             visit_counts += len(v)
