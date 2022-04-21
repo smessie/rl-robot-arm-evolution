@@ -7,6 +7,7 @@ from typing import Tuple
 import numpy as np
 from tqdm import tqdm
 
+from configs.env import PATH_TO_UNITY_EXECUTABLE
 from environment.environment import SimEnv
 from rl.dqn import DQN
 from rl.logger import Logger
@@ -34,7 +35,7 @@ class DeepQLearner:
 
         self.amount_of_modules = self.env.joint_amount
 
-        self.x_range = [0,0]
+        self.x_range = [-1.5,1.5]
         self.y_range = [3,6]
         self.z_range = [6,9]
 
@@ -156,7 +157,7 @@ class DeepQLearner:
 
 
 def start_rl():
-    env_path =  "../build/simenv.x86_64"
+    env_path = PATH_TO_UNITY_EXECUTABLE
     urdf_path = "environment/robot.urdf"
 
     if len(sys.argv) == 3:
