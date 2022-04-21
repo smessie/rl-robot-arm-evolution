@@ -36,7 +36,7 @@ class DQN:
         self.optimizer = torch.optim.Adam(self.network.parameters(), lr=1e-4)
         self.memory = deque(maxlen=self.MEM_SIZE)
 
-
+    # pylint: disable-msg=too-many-locals
     def update(self, _state, new_state, action, reward, finished):
         '''
         Method for updating the network
@@ -65,10 +65,12 @@ class DQN:
             # EXPERIENCE REPLAY
 
             # Bereken de Q-values voor de gegeven toestanden
+            # pylint: disable-msg=invalid-name
             curr_Q = self.network(state_batch.float()).gather(1, action_batch.unsqueeze(1))
             curr_Q = curr_Q.squeeze(1)
 
             # Bereken de Q-values voor de volgende toestanden (n_states)
+            # pylint: disable-msg=invalid-name
             max_next_Q = (1-dones) * self.network(n_states.float()).max(1)[0].detach()
 
             # Gebruik deze Q-values om targets te berekenen
@@ -90,7 +92,7 @@ class DQN:
     def lookup(self, state: np.ndarray) -> int:
         with torch.no_grad():
             x = self.network(torch.tensor([state], dtype=torch.float))
-            probs, indices = torch.topk(x, 1)
+            _, indices = torch.topk(x, 1)
             return indices[0].item()
             #for action in indices[0]:
                 #move = self.action_to_move(self.output_to_action(action.item()), self.possible_moves)

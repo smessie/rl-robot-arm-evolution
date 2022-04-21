@@ -24,4 +24,3 @@ class GoalSC(SideChannel):
 
     def on_message_received(self, _: IncomingMessage) -> None:
         self.goal_received = True
-        # TODO: parse incoming message to set robot information

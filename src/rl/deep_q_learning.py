@@ -34,7 +34,7 @@ class DeepQLearner:
         self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
 
         self.amount_of_modules = self.env.joint_amount
-        # todo: dont hard code workspace
+
         self.x_range = [0,0]
         self.y_range = [3,6]
         self.z_range = [6,9]
