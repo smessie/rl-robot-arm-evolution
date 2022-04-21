@@ -119,8 +119,9 @@ def test_environment():
 
     _ = env.reset()
     env.set_goal((3.0, 6.5, 4.0))
-    env.pause(10000)
-    _ = env.reset()
-    env.pause(400)
+    env.pause(150)
+    for _ in range(0, 800):
+        env.step(np.array([0.1, 0, 0, 0]))
+    env.pause(1000)
 
     env.close()

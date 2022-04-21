@@ -50,7 +50,7 @@ class Evaluator:
     def _generate_extra_angle(self, joint_angles, angle_options, joint_options_others,
                               t_values, angle_amount, current_angle):
         for joint_option in angle_options[::t_values[current_angle]]:
-            if current_angle == angle_amount - 1:
+            if current_angle >= angle_amount - 1:
                 joint_angles.append(joint_options_others[:] + [joint_option])
             else:
                 self._generate_extra_angle(

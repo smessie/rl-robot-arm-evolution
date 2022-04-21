@@ -23,7 +23,11 @@ public class JointController : MonoBehaviour
 
         var xDrive = articulationBody.xDrive;
         var newTarget = xDrive.target + stepSize * step;
-        xDrive.target = Mathf.Clamp(newTarget, xDrive.lowerLimit, xDrive.upperLimit);
+        if (xDrive.lowerLimit < 0.0001 && xDrive.upperLimit > 359.9999) {
+            xDrive.target = newTarget;
+        } else {
+            xDrive.target = Mathf.Clamp(newTarget, xDrive.lowerLimit, xDrive.upperLimit);
+        }
         articulationBody.xDrive = xDrive;
     }
 
@@ -42,7 +46,7 @@ public class JointController : MonoBehaviour
         foreach (var articulationBody in ArticulationBodies)
         {
             var xDrive = articulationBody.xDrive;
-            xDrive.target = UnityEngine.Random.Range(xDrive.lowerLimit, xDrive.upperLimit);
+            xDrive.target = UnityEngine.Random.Range(Mathf.Max(0, xDrive.lowerLimit), Mathf.Min(360, xDrive.upperLimit));
             articulationBody.xDrive = xDrive;
         }
     }
