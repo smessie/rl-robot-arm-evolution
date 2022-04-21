@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['workspace_0',['Workspace',['../classmorphevo_1_1workspace_1_1Workspace.html',1,'morphevo::workspace']]],
-  ['workspacenotfounderror_1',['WorkspaceNotFoundError',['../classmorphevo_1_1workspace_1_1WorkspaceNotFoundError.html',1,'morphevo::workspace']]]
+  ['urdfgenerator_0',['URDFGenerator',['../classmorphevo_1_1urdf__generator_1_1URDFGenerator.html',1,'morphevo::urdf_generator']]]
 ];
