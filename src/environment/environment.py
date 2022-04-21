@@ -10,9 +10,9 @@ from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 
-from src.configs.env import PATH_TO_UNITY_EXECUTABLE
-from src.environment.sidechannels.creation_sc import CreationSC
-from src.environment.sidechannels.goal_sc import GoalSC
+from configs.env import PATH_TO_UNITY_EXECUTABLE
+from environment.sidechannels.creation_sc import CreationSC
+from environment.sidechannels.goal_sc import GoalSC
 
 
 class SimEnv(gym.Env):

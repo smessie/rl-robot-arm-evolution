@@ -7,9 +7,9 @@ from typing import Tuple
 import numpy as np
 from tqdm import tqdm
 
-from src.environment.environment import SimEnv
-from src.rl.dqn import DQN
-from src.rl.logger import Logger
+from environment.environment import SimEnv
+from rl.dqn import DQN
+from rl.logger import Logger
 
 
 class DeepQLearner:
@@ -155,15 +155,15 @@ class DeepQLearner:
             return np.random.randint(len(self.ACTIONS))
         return self.dqn.lookup(state)
 
-if __name__ == "__main__":
 
-    ENV_PATH =  "../../build/simenv.x86_64"
-    URDF_PATH = "../environment/robot.urdf"
+def start_rl():
+    env_path =  "build/simenv.x86_64"
+    urdf_path = "src/environment/robot.urdf"
 
-    if len(sys.argv) == 2:
-        model = DeepQLearner(ENV_PATH, URDF_PATH, True, sys.argv[1])
+    if len(sys.argv) == 3:
+        model = DeepQLearner(env_path, urdf_path, True, sys.argv[2])
     else:
-        model = DeepQLearner(ENV_PATH, URDF_PATH, False)
+        model = DeepQLearner(env_path, urdf_path, False)
 
     signal.signal(signal.SIGINT, model.handler)
     model.learn(steps_per_episode=500)
