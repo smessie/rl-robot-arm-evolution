@@ -1,11 +1,11 @@
 import random
+import signal
 import sys
 import xml.etree.ElementTree as ET
 from typing import Tuple
 
 import numpy as np
 from tqdm import tqdm
-import signal
 
 from src.environment.environment import SimEnv
 from src.rl.dqn import DQN

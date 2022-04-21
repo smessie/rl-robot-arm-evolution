@@ -15,7 +15,6 @@ from src.environment.sidechannels.creation_sc import CreationSC
 from src.environment.sidechannels.goal_sc import GoalSC
 
 
-
 class SimEnv(gym.Env):
     """Custom Environment that follows gym interface"""
     metadata = {'render.modes': ['human']}
