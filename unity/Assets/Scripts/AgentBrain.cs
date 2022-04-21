@@ -38,7 +38,9 @@ public class AgentBrain : Agent
         // Foreach joint -> current angle, position (3d)
         foreach (var articulationBody in _jointController.ArticulationBodies)
         {
-            sensor.AddObservation(articulationBody.xDrive.target);
+            // For joints that rotate further
+            float target = articulationBody.xDrive.target % 360;
+            sensor.AddObservation(target > 0 ? target : target + 360);
 
             sensor.AddObservation(articulationBody.transform.position - _anchor.transform.position);
         }

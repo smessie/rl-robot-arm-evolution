@@ -229,8 +229,16 @@ public class Builder : MonoBehaviour
         articulationBody.twistLock = ArticulationDofLock.LimitedMotion;
 
         ArticulationDrive xDrive = articulationBody.xDrive;
-        xDrive.lowerLimit = rotationSpec.LowerBound;
-        xDrive.upperLimit = rotationSpec.UpperBound;
+
+        if (rotationSpec.LowerBound < 0.0001 && rotationSpec.UpperBound > 359.9999) {
+            xDrive.lowerLimit = -360*100;
+            xDrive.upperLimit = 360*100;
+            xDrive.target = 0;
+        } else {
+            xDrive.lowerLimit = rotationSpec.LowerBound;
+            xDrive.upperLimit = rotationSpec.UpperBound;
+        }
+
         xDrive.stiffness = 100000;
         xDrive.damping = 10000;
         articulationBody.xDrive = xDrive;
