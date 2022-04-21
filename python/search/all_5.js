@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['qlearner_0',['QLearner',['../classrl_1_1q__learning_1_1QLearner.html',1,'rl::q_learning']]],
-  ['qtable_1',['QTable',['../classrl_1_1q__table_1_1QTable.html',1,'rl::q_table']]]
+  ['logger_0',['Logger',['../classmorphevo_1_1logger_1_1Logger.html',1,'morphevo.logger.Logger'],['../classrl_1_1logger_1_1Logger.html',1,'rl.logger.Logger']]]
 ];

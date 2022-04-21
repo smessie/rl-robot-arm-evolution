@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['urdfgenerator_0',['URDFGenerator',['../classmorphevo_1_1urdf__generator_1_1URDFGenerator.html',1,'morphevo::urdf_generator']]]
+  ['parameters_0',['Parameters',['../classmorphevo_1_1parameters_1_1Parameters.html',1,'morphevo::parameters']]]
 ];
