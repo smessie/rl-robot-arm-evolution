@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['parameters_0',['Parameters',['../classmorphevo_1_1parameters_1_1Parameters.html',1,'morphevo::parameters']]]
+  ['qlearner_0',['QLearner',['../classrl_1_1q__learning_1_1QLearner.html',1,'rl::q_learning']]],
+  ['qtable_1',['QTable',['../classrl_1_1q__table_1_1QTable.html',1,'rl::q_table']]]
 ];
