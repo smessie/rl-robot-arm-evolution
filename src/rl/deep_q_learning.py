@@ -14,15 +14,12 @@ from rl.logger import Logger
 
 class DeepQLearner:
     ACTIONS = [
-        [1, 0, 0],     # rotate anchor
-        [0, 1, 0],     # tilt module 1
-        [0, 0, 1],     # tilt module 2
-       # [0, 0, 0, 1],     # tilt module 3
-
-        [-1, 0, 0],    # rotate anchor
-        [0, -1, 0],    # tilt module 1
-        [0, 0, -1],    # tilt module 2
-        #[0, 0, 0, -1]     # tilt module 3
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+        [-1, 0, 0],
+        [0, -1, 0],
+        [0, 0, -1],
     ]
 
     WORKSPACE_DISCRETIZATION = 0.2
