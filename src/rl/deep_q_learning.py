@@ -15,16 +15,6 @@ from rl.logger import Logger
 
 
 class DeepQLearner:
-    ACTIONS = [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1],
-        [-1, 0, 0, 0],
-        [0, -1, 0, 0],
-        [0, 0, -1, 0],
-        [0, 0, 0, -1],
-    ]
 
     WORKSPACE_DISCRETIZATION = 0.2
     GOAL_BAL_DIAMETER = 0.6
@@ -57,7 +47,7 @@ class DeepQLearner:
 
     def handler(self, *_):
         if self.training:
-            res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
+            res = input("Ctrl-c was pressed. Do you want to save the DQN? (y/n) ")
             if res == 'y':
                 self.save()
                 sys.exit(1)
@@ -157,9 +147,12 @@ class DeepQLearner:
                 episode_step += 1
                 state = new_state
 
-            self.logger.log_episode(episode, state, goal, episode_step, total_finished, reward, self.dqn.eps)
+            if logging:
+                self.logger.log_episode(episode, state, goal, episode_step, total_finished, reward, self.dqn.eps)
 
-        self.save()
+        if save:
+            self.save()
+
         self.env.close()
         return total_finished/num_episodes
 
@@ -168,15 +161,25 @@ class DeepQLearner:
             return np.random.randint(len(self.actions))
         return self.dqn.lookup(state)
 
+    def get_score(self, number_of_joints: int, workspace: Workspace):
+        self.x_range = workspace.get_x_range()
+        self.y_range = workspace.get_y_range()
+        self.z_range = workspace.get_z_range()
+
+        self.set_action_space(number_of_joints)
+        return self.learn(num_episodes=200, logging=True, save=False)
+
+
+
 
 def start_rl():
     env_path = PATH_TO_UNITY_EXECUTABLE
     urdf_path = "environment/robot.urdf"
 
     if len(sys.argv) == 3:
-        model = DeepQLearner(env_path, urdf_path, True, sys.argv[2])
+        model = DeepQLearner(env_path, urdf_path=urdf_path, use_graphics=True, network_path=sys.argv[2])
     else:
-        model = DeepQLearner(env_path, urdf_path, False)
+        model = DeepQLearner(env_path, urdf_path=urdf_path)
 
     signal.signal(signal.SIGINT, model.handler)
     model.learn(steps_per_episode=1000)
