@@ -14,8 +14,8 @@ from morphevo.workspace import Workspace
 class Genome:
     LENGTH_LOWER_BOUND = 1
     LENGTH_UPPER_BOUND = 4
-    MIN_AMOUNT_OF_MODULES = 3
-    MAX_AMOUNT_OF_MODULES = 3
+    MIN_AMOUNT_OF_MODULES = 2
+    MAX_AMOUNT_OF_MODULES = 4
 
     def __init__(self, genome_id: int, parent_genome: Optional[Genome] = None, workspace_type: str = 'normalized_cube',
                  workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13) -> None:
@@ -30,11 +30,13 @@ class Genome:
             self.module_choices.append(ModuleType.TILTING)
 
         if parent_genome is not None:
+            self.anchor_can_rotate = parent_genome.anchor_can_rotate
             self.amount_of_modules = parent_genome.amount_of_modules
             self.module_lengths = parent_genome.module_lengths.copy()
             self.module_types = parent_genome.module_types.copy()
             self.mutate()
         else:
+            self.anchor_can_rotate = True
             self.amount_of_modules = random.randint(self.MIN_AMOUNT_OF_MODULES, self.MAX_AMOUNT_OF_MODULES)
             self.module_lengths = np.random.rand(
                 self.amount_of_modules) * (self.LENGTH_UPPER_BOUND - self.LENGTH_LOWER_BOUND) + self.LENGTH_LOWER_BOUND
@@ -56,7 +58,7 @@ class Genome:
 
     def get_urdf(self) -> str:
         urdf_generator = URDFGenerator(self.genome_id)
-        urdf_generator.add_anchor(length=1, can_rotate=True)
+        urdf_generator.add_anchor(length=1, can_rotate=self.anchor_can_rotate)
         for module_length, module_type in zip(self.module_lengths, self.module_types):
             urdf_generator.add_module(module_length,
                                       can_tilt=module_type in (ModuleType.TILTING, ModuleType.TILTING_AND_ROTATING),
@@ -110,6 +112,17 @@ class Genome:
         genome.module_types = np.array(module_types)
         genome.amount_of_modules = len(genome.module_lengths)
         return genome
+
+    def get_amount_of_joints(self):
+        joints_amount = 0
+        for module in self.module_types:
+            if module == ModuleType.TILTING_AND_ROTATING:
+                joints_amount += 2
+            else:
+                joints_amount += 1
+        if self.anchor_can_rotate:
+            joints_amount += 1
+        return joints_amount
 
 
 class ModuleType(Enum):

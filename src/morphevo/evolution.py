@@ -16,6 +16,7 @@ from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
 from morphevo.utils import alternate, normalize
+from rl.deep_q_learning import DeepQLearner
 
 
 def evolution(parameters: Parameter, workspace_type: str = 'normalized_cube',
@@ -41,7 +42,7 @@ def evolution(parameters: Parameter, workspace_type: str = 'normalized_cube',
 
         population = children + parents
 
-        parents = selection_fitness(population, parameters)
+        parents = selection_fitness(population, parameters, generation)
 
         save_best_genome(parents[0], generation, parameters)
 
@@ -56,13 +57,27 @@ def evolution(parameters: Parameter, workspace_type: str = 'normalized_cube',
         logger.log(generation, parents)
 
 
-def selection_fitness(current_population: List[Genome], evolution_parameters) -> List[Genome]:
-
+def selection_fitness(current_population: List[Genome], evolution_parameters, generation=0) -> List[Genome]:
     population_fitnesses = [calculate_fitness(genome) for genome in current_population]
 
     parent_indices = np.argsort(population_fitnesses)[-evolution_parameters.MU:]
     parents = [current_population[i] for i in parent_indices]
 
+    use_rl_fitness_every_x_generations = 10
+    avg_coverage = np.sum([genome.workspace.calculate_coverage() for genome in current_population]) / len(
+        current_population)
+    if avg_coverage > 0:
+        if generation % use_rl_fitness_every_x_generations == 0:
+            parents = rl_selection_fitness(parents, evolution_parameters)
+
+    return parents
+
+
+def rl_selection_fitness(current_population: List[Genome], evolution_parameters) -> List[Genome]:
+    population_fitnesses = [calculate_rl_fitness(genome) for genome in current_population]
+
+    parent_indices = np.argsort(population_fitnesses)[-evolution_parameters.MU // 2:]
+    parents = [current_population[i] for i in parent_indices]
     return parents
 
 
@@ -77,7 +92,6 @@ def selection_fitness_diversity(current_population: List[Genome], evolution_para
 
 
 def select_next_parent(population: List[Genome], parents: List[Genome]) -> Genome:
-
     population_fitnesses = [calculate_fitness(genome) for genome in population]
     population_diversities = [calculate_diversity(genome, parents) for genome in population]
 
@@ -93,11 +107,16 @@ def calculate_fitness(genome: Genome) -> float:
     return genome.workspace.calculate_coverage()
 
 
+def calculate_rl_fitness(genome: Genome) -> float:
+    model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE, urdf=genome.get_urdf())
+    return model.get_score(genome.get_amount_of_joints(), genome.workspace)
+
+
 def calculate_diversity(genome: Genome, others: List[Genome]) -> float:
     if not others:
         return 0
     diversity_from_others = [genome.calculate_diversity_from(other) for other in others]
-    average_diversity = sum(diversity_from_others)/len(diversity_from_others)
+    average_diversity = sum(diversity_from_others) / len(diversity_from_others)
 
     return average_diversity
 
@@ -107,8 +126,8 @@ def calculate_selection_scores(population_fitnesses: List[float], population_div
     diversities_normalized = normalize(population_diversities)
 
     selection_scores = [
-        sqrt((1 - fitness)**2 + (1 - diversity)**2)
-                        for fitness, diversity in zip(fitnesses_normalized, diversities_normalized)
+        sqrt((1 - fitness) ** 2 + (1 - diversity) ** 2)
+        for fitness, diversity in zip(fitnesses_normalized, diversities_normalized)
     ]
 
     return selection_scores

@@ -107,6 +107,18 @@ class Workspace:
 
         return visit_counts / self.n_grid_cells
 
+    def get_x_range(self) -> List[float]:
+        offset_x = self.cube_offset[0]
+        return [offset_x - self.side_length / 2, offset_x + self.side_length / 2]
+
+    def get_y_range(self) -> List[float]:
+        offset_y = self.cube_offset[1]
+        return [offset_y, offset_y + self.side_length]
+
+    def get_z_range(self) -> List[float]:
+        offset_z = self.cube_offset[2]
+        return [offset_z - self.side_length / 2, offset_z + self.side_length / 2]
+
 
 class WorkspaceNotFoundError(Exception):
     pass

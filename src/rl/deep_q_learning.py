@@ -9,6 +9,7 @@ from tqdm import tqdm
 
 from configs.env import PATH_TO_UNITY_EXECUTABLE
 from environment.environment import SimEnv
+from morphevo.workspace import Workspace
 from rl.dqn import DQN
 from rl.logger import Logger
 
@@ -28,20 +29,27 @@ class DeepQLearner:
     WORKSPACE_DISCRETIZATION = 0.2
     GOAL_BAL_DIAMETER = 0.6
 
-    def __init__(self, env_path: str, urdf_path: str,
-                 use_graphics: bool = False, network_path = "") -> None:
-        urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
-        self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
+    def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
+                 use_graphics: bool = False, network_path="") -> None:
+        if urdf_path:
+            urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
+        assert urdf is not None, "Error: No urdf given."
 
+        self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
+        # todo: niet amount_of_joints
         self.amount_of_modules = self.env.joint_amount
 
-        self.x_range = [-1.5,1.5]
-        self.y_range = [3,6]
-        self.z_range = [6,9]
+        self.x_range = [-1.5, 1.5]
+        self.y_range = [3, 6]
+        self.z_range = [6, 9]
+
+        self.actions = []
+        # todo:: dit moet eig met amount_of_joints maar dat geeft maar 1?
+        self.set_action_space(4)
 
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
-        # self.dqn = DQN(len(self.ACTIONS), state_size=6 + self.amount_of_modules * 4, network_path=network_path)
-        self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
+        # self.dqn = DQN(len(self.actions), state_size=6 + self.amount_of_modules * 4, network_path=network_path)
+        self.dqn = DQN(len(self.actions), state_size=6, network_path=network_path)
 
         self.training = not network_path
 
@@ -63,7 +71,7 @@ class DeepQLearner:
     def _calculate_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = goal - pos
 
-        result = [0,0,0]
+        result = [0, 0, 0]
         for i, axis_direction in enumerate(direction):
             if axis_direction != 0:
                 result[i] = axis_direction / np.abs(axis_direction)
@@ -74,7 +82,7 @@ class DeepQLearner:
         goal = []
         for axis_range in [self.x_range, self.y_range, self.z_range]:
             range_size = axis_range[1] - axis_range[0]
-            goal.append(random.random()*range_size + axis_range[0])
+            goal.append(random.random() * range_size + axis_range[0])
         return np.array(goal)
 
     def _calculate_state(self, observations: np.ndarray,
@@ -100,16 +108,20 @@ class DeepQLearner:
 
         return 10*(prev_distance_from_goal - new_distance_from_goal), False
 
+    def set_action_space(self, number_of_joints):
+        actions = np.identity(number_of_joints)
+        self.actions = np.concatenate([actions, (-1)*actions])
+
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
-        actions = np.array(self.ACTIONS[action_index])
+        actions = np.array(self.actions[action_index])
 
         # Execute the action in the environment
         observations = self.env.step(actions)
         return action_index, observations
 
     def learn(self, num_episodes: int = 10000,
-              steps_per_episode: int = 500) -> None:
+              steps_per_episode: int = 500, logging: bool = True, save: bool = True) -> float:
 
         total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
@@ -140,7 +152,7 @@ class DeepQLearner:
 
                 # network update
                 if self.training:
-                    self.dqn.update(state, new_state,action_index, reward, finished)
+                    self.dqn.update(state, new_state, action_index, reward, finished)
 
                 episode_step += 1
                 state = new_state
@@ -149,10 +161,11 @@ class DeepQLearner:
 
         self.save()
         self.env.close()
+        return total_finished/num_episodes
 
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
-            return np.random.randint(len(self.ACTIONS))
+            return np.random.randint(len(self.actions))
         return self.dqn.lookup(state)
 
 

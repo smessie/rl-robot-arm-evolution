@@ -17,6 +17,7 @@ class RobotNetwork(torch.nn.Module):
         x = torch.nn.functional.relu(self.linear2(x))
         return self.linear3(x)
 
+
 class DQN:
     GAMMA = 0.99
     EPS_END = 0.1
@@ -24,7 +25,7 @@ class DQN:
     BATCH_SIZE = 64
     MEM_SIZE = 1000
 
-    def __init__(self, n_actions: int, state_size, network_path = ""):
+    def __init__(self, n_actions: int, state_size, network_path=""):
         self.eps = 1
 
         if network_path:
@@ -56,7 +57,7 @@ class DQN:
         if len(self.memory) >= self.BATCH_SIZE:
             batch = random.sample(self.memory, self.BATCH_SIZE)
             states, actions, rewards, n_states, dones = zip(*batch)
-            state_batch = torch.cat(states,0)
+            state_batch = torch.cat(states, 0)
             action_batch = torch.tensor(actions)
             reward_batch = torch.tensor(rewards)
             n_states = torch.cat(n_states)
@@ -71,10 +72,10 @@ class DQN:
 
             # Bereken de Q-values voor de volgende toestanden (n_states)
             # pylint: disable-msg=invalid-name
-            max_next_Q = (1-dones) * self.network(n_states.float()).max(1)[0].detach()
+            max_next_Q = (1 - dones) * self.network(n_states.float()).max(1)[0].detach()
 
             # Gebruik deze Q-values om targets te berekenen
-            targets = reward_batch + (self.GAMMA*max_next_Q)
+            targets = reward_batch + (self.GAMMA * max_next_Q)
 
             # Bereken de loss
             loss_fn = torch.nn.MSELoss()
@@ -94,12 +95,12 @@ class DQN:
             x = self.network(torch.tensor([state], dtype=torch.float))
             _, indices = torch.topk(x, 1)
             return indices[0].item()
-            #for action in indices[0]:
-                #move = self.action_to_move(self.output_to_action(action.item()), self.possible_moves)
-                #if not move is None:
-                    #return action.item()
+            # for action in indices[0]:
+            # move = self.action_to_move(self.output_to_action(action.item()), self.possible_moves)
+            # if not move is None:
+            # return action.item()
 
-#                return self.network(state).argmax().item()
+    #                return self.network(state).argmax().item()
 
     def save(self, path: str):
         torch.save(self.network, path)
