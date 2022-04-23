@@ -77,21 +77,24 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a54bc7d5325cccc5c21cff91ffcf209b5"><td class="memItemLeft" align="right" valign="top"><a id="a54bc7d5325cccc5c21cff91ffcf209b5" name="a54bc7d5325cccc5c21cff91ffcf209b5"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, str env_path, str urdf_path, bool use_graphics=False, network_path=&quot;&quot;)</td></tr>
-<tr class="separator:a54bc7d5325cccc5c21cff91ffcf209b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e14039279e46da61436a27f9728e3e6"><td class="memItemLeft" align="right" valign="top"><a id="a0e14039279e46da61436a27f9728e3e6" name="a0e14039279e46da61436a27f9728e3e6"></a>
+None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, str env_path, str urdf_path=None, str urdf=None, bool use_graphics=False, network_path=&quot;&quot;)</td></tr>
+<tr class="separator:a0e14039279e46da61436a27f9728e3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75849a28ed4bdc0e4167c8132786428f"><td class="memItemLeft" align="right" valign="top"><a id="a75849a28ed4bdc0e4167c8132786428f" name="a75849a28ed4bdc0e4167c8132786428f"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>handler</b> (self, *_)</td></tr>
 <tr class="separator:a75849a28ed4bdc0e4167c8132786428f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae826258dbe029be63d009c24622309a8"><td class="memItemLeft" align="right" valign="top"><a id="ae826258dbe029be63d009c24622309a8" name="ae826258dbe029be63d009c24622309a8"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> (self)</td></tr>
 <tr class="separator:ae826258dbe029be63d009c24622309a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d7dd88249b16a8480a50b5a5e2e4b5a"><td class="memItemLeft" align="right" valign="top"><a id="a6d7dd88249b16a8480a50b5a5e2e4b5a" name="a6d7dd88249b16a8480a50b5a5e2e4b5a"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>set_action_space</b> (self, number_of_joints)</td></tr>
+<tr class="separator:a6d7dd88249b16a8480a50b5a5e2e4b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5af58205681d9592aef790433e490625"><td class="memItemLeft" align="right" valign="top"><a id="a5af58205681d9592aef790433e490625" name="a5af58205681d9592aef790433e490625"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>step</b> (self, state)</td></tr>
 <tr class="separator:a5af58205681d9592aef790433e490625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cd1d11fd740af7c410166b64669b310"><td class="memItemLeft" align="right" valign="top"><a id="a9cd1d11fd740af7c410166b64669b310" name="a9cd1d11fd740af7c410166b64669b310"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>learn</b> (self, int num_episodes=10000, int steps_per_episode=500)</td></tr>
-<tr class="separator:a9cd1d11fd740af7c410166b64669b310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a4f2f78f87ebccca4dee574073064c6"><td class="memItemLeft" align="right" valign="top"><a id="a5a4f2f78f87ebccca4dee574073064c6" name="a5a4f2f78f87ebccca4dee574073064c6"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>learn</b> (self, int num_episodes=10000, int steps_per_episode=500, bool logging=True, bool save=True)</td></tr>
+<tr class="separator:a5a4f2f78f87ebccca4dee574073064c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae216d9e4f48759447c7b80d523b254ce"><td class="memItemLeft" align="right" valign="top"><a id="ae216d9e4f48759447c7b80d523b254ce" name="ae216d9e4f48759447c7b80d523b254ce"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>predict</b> (self, np.ndarray state, bool stochastic=False)</td></tr>
 <tr class="separator:ae216d9e4f48759447c7b80d523b254ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,6 +116,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ab5d597ed6575b6a5ff1619c09866f3e7"><td class="memItemLeft" align="right" valign="top"><a id="ab5d597ed6575b6a5ff1619c09866f3e7" name="ab5d597ed6575b6a5ff1619c09866f3e7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>z_range</b></td></tr>
 <tr class="separator:ab5d597ed6575b6a5ff1619c09866f3e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10440a96e29d12757bcab3108a0f47e6"><td class="memItemLeft" align="right" valign="top"><a id="a10440a96e29d12757bcab3108a0f47e6" name="a10440a96e29d12757bcab3108a0f47e6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>actions</b></td></tr>
+<tr class="separator:a10440a96e29d12757bcab3108a0f47e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4e7f0ba700ff1371ddabaf658cb069d"><td class="memItemLeft" align="right" valign="top"><a id="aa4e7f0ba700ff1371ddabaf658cb069d" name="aa4e7f0ba700ff1371ddabaf658cb069d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>dqn</b></td></tr>
 <tr class="separator:aa4e7f0ba700ff1371ddabaf658cb069d"><td class="memSeparator" colspan="2">&#160;</td></tr>
