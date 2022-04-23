@@ -7,6 +7,7 @@ from typing import Tuple
 import numpy as np
 from tqdm import tqdm
 
+from configs.env import PATH_TO_UNITY_EXECUTABLE
 from environment.environment import SimEnv
 from rl.dqn import DQN
 from rl.logger import Logger
@@ -14,12 +15,14 @@ from rl.logger import Logger
 
 class DeepQLearner:
     ACTIONS = [
-        [1, 0, 0],
-        [0, 1, 0],
-        [0, 0, 1],
-        [-1, 0, 0],
-        [0, -1, 0],
-        [0, 0, -1],
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1],
+        [-1, 0, 0, 0],
+        [0, -1, 0, 0],
+        [0, 0, -1, 0],
+        [0, 0, 0, -1],
     ]
 
     WORKSPACE_DISCRETIZATION = 0.2
@@ -32,7 +35,7 @@ class DeepQLearner:
 
         self.amount_of_modules = self.env.joint_amount
 
-        self.x_range = [0,0]
+        self.x_range = [-1.5,1.5]
         self.y_range = [3,6]
         self.z_range = [6,9]
 
@@ -93,9 +96,9 @@ class DeepQLearner:
         new_distance_from_goal = np.linalg.norm(new_pos - goal)
 
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
-            return 10, True
+            return 20, True
 
-        return prev_distance_from_goal - new_distance_from_goal, False
+        return 10*(prev_distance_from_goal - new_distance_from_goal), False
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
@@ -154,8 +157,8 @@ class DeepQLearner:
 
 
 def start_rl():
-    env_path =  "build/simenv.x86_64"
-    urdf_path = "src/environment/robot.urdf"
+    env_path = PATH_TO_UNITY_EXECUTABLE
+    urdf_path = "environment/robot.urdf"
 
     if len(sys.argv) == 3:
         model = DeepQLearner(env_path, urdf_path, True, sys.argv[2])
@@ -163,4 +166,4 @@ def start_rl():
         model = DeepQLearner(env_path, urdf_path, False)
 
     signal.signal(signal.SIGINT, model.handler)
-    model.learn(steps_per_episode=500)
+    model.learn(steps_per_episode=1000)
