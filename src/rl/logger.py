@@ -4,7 +4,7 @@ import wandb
 
 class Logger:
     def __init__(self):
-        wandb.init(project='sel3-rl-morph')
+        wandb.init(project='sel3-rl')
 
     # pylint: disable-msg=too-many-arguments
     def log_episode(self, episode: int, final_state: np.ndarray,

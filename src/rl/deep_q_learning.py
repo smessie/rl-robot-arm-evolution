@@ -27,7 +27,7 @@ class DeepQLearner:
 
         self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
         # todo: niet amount_of_joints
-        self.amount_of_modules = self.env.joint_amount
+        self.joint_amount = self.env.joint_amount
 
         self.x_range = [-1.5, 1.5]
         self.y_range = [3, 6]
@@ -36,10 +36,7 @@ class DeepQLearner:
         self.actions = []
         # todo:: dit moet eig met amount_of_joints maar dat geeft maar 1?
         self.set_action_space(4)
-
-        # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
-        # self.dqn = DQN(len(self.actions), state_size=6 + self.amount_of_modules * 4, network_path=network_path)
-        self.dqn = DQN(len(self.actions), state_size=6, network_path=network_path)
+        self.dqn = self.make_dqn(network_path)
 
         self.training = not network_path
 
@@ -82,11 +79,11 @@ class DeepQLearner:
         # [EEPOS, GOAL_y, GOAL_z]
         ee_pos = self._get_end_effector_position(observations)
 
-        # return np.array([*ee_pos, *observations[:self.amount_of_modules * 4], *goal], dtype=float)
+        # return np.array([*ee_pos, *observations[:self.joint_amount * 4], *goal], dtype=float)
         return np.array([*ee_pos, *goal], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
-        return observations[self.amount_of_modules * 4:self.amount_of_modules * 4 + 3]
+        return observations[self.joint_amount * 4:self.joint_amount * 4 + 3]
 
     def _calculate_reward(self, prev_pos: np.ndarray, new_pos: np.ndarray,
                           goal: np.ndarray) -> Tuple[float, bool]:
@@ -97,6 +94,11 @@ class DeepQLearner:
             return 20, True
 
         return 10*(prev_distance_from_goal - new_distance_from_goal), False
+
+    def make_dqn(self, network_path=""):
+        # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
+        # self.dqn = DQN(len(self.actions), state_size=6 + self.joint_amount * 4, network_path=network_path)
+        return DQN(len(self.actions), state_size=6, network_path=network_path)
 
     def set_action_space(self, number_of_joints):
         actions = np.identity(number_of_joints)
@@ -111,7 +113,7 @@ class DeepQLearner:
         return action_index, observations
 
     def learn(self, num_episodes: int = 10000,
-              steps_per_episode: int = 500, logging: bool = True, save: bool = True) -> float:
+              steps_per_episode: int = 1000, logging: bool = True, save: bool = True) -> float:
 
         total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
@@ -167,10 +169,8 @@ class DeepQLearner:
         self.z_range = workspace.get_z_range()
 
         self.set_action_space(number_of_joints)
-        return self.learn(num_episodes=200, logging=True, save=False)
-
-
-
+        self.dqn = self.make_dqn()
+        return self.learn(num_episodes=200, logging=False, save=False)
 
 def start_rl():
     env_path = PATH_TO_UNITY_EXECUTABLE
@@ -182,4 +182,4 @@ def start_rl():
         model = DeepQLearner(env_path, urdf_path=urdf_path)
 
     signal.signal(signal.SIGINT, model.handler)
-    model.learn(steps_per_episode=1000)
+    model.learn()
