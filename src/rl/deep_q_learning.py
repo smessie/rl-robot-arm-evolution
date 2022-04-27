@@ -15,12 +15,24 @@ from rl.logger import Logger
 
 
 class DeepQLearner:
+    """! The Deep Q learner class.
+    Defines the class that will learn based on a Deep-Q Network.
+    """
 
     WORKSPACE_DISCRETIZATION = 0.2
     GOAL_BAL_DIAMETER = 0.6
 
     def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
                  use_graphics: bool = False, network_path="") -> None:
+        """! The DeepQLearner class initializer.
+        @param env_path Path of the environment executable.
+        @param urdf_path [Default = ""] Path to the robot urdf file.
+        @param urdf [Default = ""] Instance that represents the robot urdf.
+        @param use_graphics [Default = False] Boolean that turns graphics on or off.
+        @param network_path [Default = ""] Path to the Deep-Q network that should be used.
+        @return  An instance of the DeepQLearner class.
+        """
+
         if urdf_path:
             urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
         assert urdf is not None, "Error: No urdf given."
