@@ -1,6 +1,5 @@
 import locale
 import time
-from inspect import Parameter
 from itertools import count
 from math import sqrt
 from random import randint
@@ -19,7 +18,7 @@ from morphevo.utils import alternate, normalize
 from rl.deep_q_learning import DeepQLearner
 
 
-def evolution(parameters: Parameter, workspace_type: str = 'normalized_cube',
+def evolution(parameters, workspace_type: str = 'normalized_cube',
               workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13):
     genome_indexer = count(0)
 
