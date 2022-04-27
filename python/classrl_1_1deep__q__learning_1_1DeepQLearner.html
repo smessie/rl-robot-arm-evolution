@@ -74,11 +74,14 @@ $(function() {
   <div class="headertitle"><div class="title">rl.deep_q_learning.DeepQLearner Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>The Deep Q learner class.  
+ <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0e14039279e46da61436a27f9728e3e6"><td class="memItemLeft" align="right" valign="top"><a id="a0e14039279e46da61436a27f9728e3e6" name="a0e14039279e46da61436a27f9728e3e6"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, str env_path, str urdf_path=None, str urdf=None, bool use_graphics=False, network_path=&quot;&quot;)</td></tr>
+<tr class="memitem:a0e14039279e46da61436a27f9728e3e6"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a0e14039279e46da61436a27f9728e3e6">__init__</a> (self, str env_path, str urdf_path=None, str urdf=None, bool use_graphics=False, network_path=&quot;&quot;)</td></tr>
+<tr class="memdesc:a0e14039279e46da61436a27f9728e3e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html" title="The Deep Q learner class.">DeepQLearner</a> class initializer.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a0e14039279e46da61436a27f9728e3e6">More...</a><br /></td></tr>
 <tr class="separator:a0e14039279e46da61436a27f9728e3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75849a28ed4bdc0e4167c8132786428f"><td class="memItemLeft" align="right" valign="top"><a id="a75849a28ed4bdc0e4167c8132786428f" name="a75849a28ed4bdc0e4167c8132786428f"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>handler</b> (self, *_)</td></tr>
@@ -144,6 +147,75 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>WORKSPACE_DISCRETIZA
 float&#160;</td><td class="memItemRight" valign="bottom"><b>GOAL_BAL_DIAMETER</b> = 0.6</td></tr>
 <tr class="separator:adbe1fe00179226c701b55c2ba9539e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >The Deep Q learner class. </p>
+<p >Defines the class that will learn based on a Deep-Q Network. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0e14039279e46da61436a27f9728e3e6" name="a0e14039279e46da61436a27f9728e3e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e14039279e46da61436a27f9728e3e6">&#9670;&nbsp;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None rl.deep_q_learning.DeepQLearner.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>env_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>urdf_path</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>urdf</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>use_graphics</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>network_path</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The <a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html" title="The Deep Q learner class.">DeepQLearner</a> class initializer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">env_path</td><td>Path of the environment executable. </td></tr>
+    <tr><td class="paramname">urdf_path</td><td>[Default = ""] Path to the robot urdf file. </td></tr>
+    <tr><td class="paramname">urdf</td><td>[Default = ""] Instance that represents the robot urdf. </td></tr>
+    <tr><td class="paramname">use_graphics</td><td>[Default = False] Boolean that turns graphics on or off. </td></tr>
+    <tr><td class="paramname">network_path</td><td>[Default = ""] Path to the Deep-Q network that should be used. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of the <a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html" title="The Deep Q learner class.">DeepQLearner</a> class. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/rl/deep_q_learning.py</li>
 </ul>
