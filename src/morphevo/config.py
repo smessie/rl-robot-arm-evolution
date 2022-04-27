@@ -2,6 +2,7 @@ import yaml
 
 
 class Config:
+    # pylint: disable=invalid-name
     class __Config:
         def __init__(self, config_file_name: str) -> None:
             with open(config_file_name, 'r', encoding='utf8') as stream:
@@ -15,6 +16,5 @@ class Config:
     instance = None
     def __new__(cls, *args, **kwargs):
         if not Config.instance:
-            Config.instance = Config.__Config(*args, **kwargs) 
+            Config.instance = Config.__Config(*args, **kwargs)
         return Config.instance
-

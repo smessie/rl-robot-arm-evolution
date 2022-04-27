@@ -5,8 +5,8 @@ from os.path import exists
 import ray
 
 from environment import environment
-from morphevo.evolution import evolution
 from morphevo.config import Config
+from morphevo.evolution import evolution
 from rl.deep_q_learning import start_rl
 
 
