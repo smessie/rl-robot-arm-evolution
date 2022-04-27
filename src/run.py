@@ -4,6 +4,7 @@ from os.path import exists
 
 import ray
 
+from coevolution import start_coevolution
 from environment import environment
 from morphevo.evolution import evolution
 from morphevo.parameters import Parameters
@@ -37,6 +38,8 @@ if __name__ == '__main__':
         start_morphevo()
     elif sys.argv[1] == "rl":
         start_rl()
+    elif sys.argv[1] == "coevolution":
+        start_coevolution()
     else:
         print("Please specify a valid command ('start_test_env', 'morphevo', 'rl')")
         sys.exit()
