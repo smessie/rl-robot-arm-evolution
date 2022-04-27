@@ -86,36 +86,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a75849a28ed4bdc0e4167c8132786428f"><td class="memItemLeft" align="right" valign="top"><a id="a75849a28ed4bdc0e4167c8132786428f" name="a75849a28ed4bdc0e4167c8132786428f"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>handler</b> (self, *_)</td></tr>
 <tr class="separator:a75849a28ed4bdc0e4167c8132786428f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae826258dbe029be63d009c24622309a8"><td class="memItemLeft" align="right" valign="top"><a id="ae826258dbe029be63d009c24622309a8" name="ae826258dbe029be63d009c24622309a8"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> (self)</td></tr>
-<tr class="separator:ae826258dbe029be63d009c24622309a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81fb286fd966cb41dc597dd943b64560"><td class="memItemLeft" align="right" valign="top"><a id="a81fb286fd966cb41dc597dd943b64560" name="a81fb286fd966cb41dc597dd943b64560"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> (self, file_name=&quot;./networks/most_recently_saved_network.pkl&quot;)</td></tr>
+<tr class="separator:a81fb286fd966cb41dc597dd943b64560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd7a33a433480e7b4daaae0a68492230"><td class="memItemLeft" align="right" valign="top"><a id="abd7a33a433480e7b4daaae0a68492230" name="abd7a33a433480e7b4daaae0a68492230"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_action_space</b> (self, number_of_joints)</td></tr>
+<tr class="separator:abd7a33a433480e7b4daaae0a68492230"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61c324e3e2921a5cf602c5bd1e4e2ace"><td class="memItemLeft" align="right" valign="top"><a id="a61c324e3e2921a5cf602c5bd1e4e2ace" name="a61c324e3e2921a5cf602c5bd1e4e2ace"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>make_dqn</b> (self, network_path=&quot;&quot;)</td></tr>
 <tr class="separator:a61c324e3e2921a5cf602c5bd1e4e2ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d7dd88249b16a8480a50b5a5e2e4b5a"><td class="memItemLeft" align="right" valign="top"><a id="a6d7dd88249b16a8480a50b5a5e2e4b5a" name="a6d7dd88249b16a8480a50b5a5e2e4b5a"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>set_action_space</b> (self, number_of_joints)</td></tr>
-<tr class="separator:a6d7dd88249b16a8480a50b5a5e2e4b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5af58205681d9592aef790433e490625"><td class="memItemLeft" align="right" valign="top"><a id="a5af58205681d9592aef790433e490625" name="a5af58205681d9592aef790433e490625"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>step</b> (self, state)</td></tr>
 <tr class="separator:a5af58205681d9592aef790433e490625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adac864367418be6b55a4e72847b6b718"><td class="memItemLeft" align="right" valign="top"><a id="adac864367418be6b55a4e72847b6b718" name="adac864367418be6b55a4e72847b6b718"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>learn</b> (self, int num_episodes=10000, int steps_per_episode=1000, bool logging=True, bool save=True)</td></tr>
-<tr class="separator:adac864367418be6b55a4e72847b6b718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3269afbe1871f7b4b26e34087c495a5"><td class="memItemLeft" align="right" valign="top"><a id="ac3269afbe1871f7b4b26e34087c495a5" name="ac3269afbe1871f7b4b26e34087c495a5"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>learn</b> (self, int num_episodes=10000, int steps_per_episode=1000, bool logging=False)</td></tr>
+<tr class="separator:ac3269afbe1871f7b4b26e34087c495a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae216d9e4f48759447c7b80d523b254ce"><td class="memItemLeft" align="right" valign="top"><a id="ae216d9e4f48759447c7b80d523b254ce" name="ae216d9e4f48759447c7b80d523b254ce"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>predict</b> (self, np.ndarray state, bool stochastic=False)</td></tr>
 <tr class="separator:ae216d9e4f48759447c7b80d523b254ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2ac20869300f8cfe99f90e012795523"><td class="memItemLeft" align="right" valign="top"><a id="af2ac20869300f8cfe99f90e012795523" name="af2ac20869300f8cfe99f90e012795523"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>get_score</b> (self, int number_of_joints, <a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html">Workspace</a> workspace)</td></tr>
-<tr class="separator:af2ac20869300f8cfe99f90e012795523"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ced99887e36d0915bb08f1f71157bd4"><td class="memItemLeft" align="right" valign="top"><a id="a3ced99887e36d0915bb08f1f71157bd4" name="a3ced99887e36d0915bb08f1f71157bd4"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_score</b> (self, int number_of_joints, <a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html">Workspace</a> workspace, int episodes=200)</td></tr>
+<tr class="separator:a3ced99887e36d0915bb08f1f71157bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:acc4a435929cb8aaf16b46c7acb897622"><td class="memItemLeft" align="right" valign="top"><a id="acc4a435929cb8aaf16b46c7acb897622" name="acc4a435929cb8aaf16b46c7acb897622"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>env</b></td></tr>
 <tr class="separator:acc4a435929cb8aaf16b46c7acb897622"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7bb0fdebd8e7d03a8285fcc45b5008f"><td class="memItemLeft" align="right" valign="top"><a id="ac7bb0fdebd8e7d03a8285fcc45b5008f" name="ac7bb0fdebd8e7d03a8285fcc45b5008f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>joint_amount</b></td></tr>
-<tr class="separator:ac7bb0fdebd8e7d03a8285fcc45b5008f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0d16527a7a91628f85412c79a56926"><td class="memItemLeft" align="right" valign="top"><a id="afe0d16527a7a91628f85412c79a56926" name="afe0d16527a7a91628f85412c79a56926"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>x_range</b></td></tr>
 <tr class="separator:afe0d16527a7a91628f85412c79a56926"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,10 +202,10 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>GOAL_BAL_DIAMETER</b
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">env_path</td><td>Path of the environment executable. </td></tr>
-    <tr><td class="paramname">urdf_path</td><td>[Default = ""] Path to the robot urdf file. </td></tr>
-    <tr><td class="paramname">urdf</td><td>[Default = ""] Instance that represents the robot urdf. </td></tr>
-    <tr><td class="paramname">use_graphics</td><td>[Default = False] Boolean that turns graphics on or off. </td></tr>
-    <tr><td class="paramname">network_path</td><td>[Default = ""] Path to the Deep-Q network that should be used. </td></tr>
+    <tr><td class="paramname">urdf_path</td><td>Path to the robot urdf file. </td></tr>
+    <tr><td class="paramname">urdf</td><td>Instance that represents the robot urdf. </td></tr>
+    <tr><td class="paramname">use_graphics</td><td>Boolean that turns graphics on or off. </td></tr>
+    <tr><td class="paramname">network_path</td><td>Path to the Deep-Q network that should be used. </td></tr>
   </table>
   </dd>
 </dl>
