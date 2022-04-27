@@ -57,7 +57,7 @@ class DeepQLearner:
                 self.save()
             sys.exit(1)
 
-    def save(self, file_name = "./networks/most_recently_saved_network.pkl"):
+    def save(self, file_name = "./rl/networks/most_recently_saved_network.pkl"):
         self.dqn.save(file_name)
 
     def get_action_space(self, number_of_joints):

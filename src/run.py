@@ -4,9 +4,10 @@ from os.path import exists
 
 import ray
 
+from coevolution import start_coevolution
 from environment import environment
+from morphevo.config import Config
 from morphevo.evolution import evolution
-from morphevo.parameters import Parameters
 from rl.deep_q_learning import start_rl
 
 
@@ -17,7 +18,8 @@ def start_morphevo():
     if not exists(sys.argv[2]):
         print(f"Configfile '{sys.argv[2]}' does not exist.")
         sys.exit()
-    evolution_parameters = Parameters(sys.argv[2])
+    evolution_parameters = Config(sys.argv[2])
+
     ray.init(log_to_driver=False, logging_level=logging.WARNING)
     evolution(evolution_parameters, workspace_type="moved_cube", workspace_cube_offset=(10, 0, 10),
               workspace_side_length=10)
@@ -37,6 +39,8 @@ if __name__ == '__main__':
         start_morphevo()
     elif sys.argv[1] == "rl":
         start_rl()
+    elif sys.argv[1] == "coevolution":
+        start_coevolution()
     else:
         print("Please specify a valid command ('start_test_env', 'morphevo', 'rl')")
         sys.exit()
