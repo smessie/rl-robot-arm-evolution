@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 76fd019348f1da32c93a384e3fd73d78
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - moduleBodyPrefab: {instanceID: 0}
+  - rotatingModuleBodyPrefab: {instanceID: 0}
+  - moduleConnectorPrefab: {instanceID: 0}
+  - tiltingModuleConnectorPrefab: {instanceID: 0}
+  - manipulatorAgentPrefab: {instanceID: 0}
+  - anchor: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
