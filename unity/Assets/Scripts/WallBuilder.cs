@@ -7,13 +7,23 @@ public class WallBuilder : MonoBehaviour
 {
     public GameObject wallTilePrefab;
 
-    private Vector3 startCoordinate = new Vector3(-4.5f, 1f, 6f);
+    private Vector3 startCoordinate = new Vector3(-6.5f, 1f, 10f);
     private float scaleX = 1f;
     private float scaleY = 1f;
     private float scaleZ = 0.3f;
 
+    private List<GameObject> _wallTiles = new List<GameObject>();
+
+    public void RemoveWall()
+    {
+        foreach (var tile in _wallTiles) {
+            Destroy(tile);
+        }
+    }
+
     public void BuildWall(bool[,] wall)
     {
+        RemoveWall();
         Vector3 pos = startCoordinate;
         for (int r = wall.GetLength(0)-1; r >= 0; r--) {
             for (int c = 0; c < wall.GetLength(1); c++) {
@@ -34,6 +44,7 @@ public class WallBuilder : MonoBehaviour
             pos, // Position on where we want to instantiate it
             Quaternion.identity // Turn/rotation
         );
+        _wallTiles.Add(wallTile);
         wallTile.transform.localScale = new Vector3(scaleX, scaleY, scaleZ); // Multiply by 2 because we only show half of module
     }
 }

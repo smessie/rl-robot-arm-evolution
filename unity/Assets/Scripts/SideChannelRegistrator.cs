@@ -12,14 +12,17 @@ public class SideChannelRegistrator : MonoBehaviour
 
     private CreationSC _creationSC;
     private GoalSC _goalSC;
+    private WallSC _wallSC;
 
     public void Awake()
     {
         _creationSC = new CreationSC(gameObject);
         _goalSC = new GoalSC(goal, anchor);
+        _wallSC = new WallSC(gameObject);
 
         SideChannelManager.RegisterSideChannel(_creationSC);
         SideChannelManager.RegisterSideChannel(_goalSC);
+        SideChannelManager.RegisterSideChannel(_wallSC);
     }
 
     public void OnDestroy()
@@ -28,6 +31,7 @@ public class SideChannelRegistrator : MonoBehaviour
         {
             SideChannelManager.UnregisterSideChannel(_creationSC);
             SideChannelManager.UnregisterSideChannel(_goalSC);
+            SideChannelManager.UnregisterSideChannel(_wallSC);
         }
     }
 }

@@ -33,16 +33,6 @@ public class Builder : MonoBehaviour
         Complex
     }
 
-    private void Start() {
-        bool[,] wall = new bool[9,9];
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                wall[r,c] = c != 3 && c!= 4 && c!=5;
-            }
-        }
-        GetComponentInParent<WallBuilder>().BuildWall(wall);
-    }
-
     private ModuleType TypeOfLink(LinkSpec link)
     {
         GeometrySpec geometry = link.VisualSpec.Geometry;
