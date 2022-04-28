@@ -5,8 +5,8 @@ import numpy as np
 
 
 class Workspace:
-    def __init__(self, side_length: float = 13, discretization_step: float = 1.0, workspace: str = 'normalized_cube',
-                 cube_offset: tuple = (0, 0, 0), cube_open_side: str = 'top'):
+    def __init__(self, workspace: str = 'normalized_cube', cube_offset: tuple = (0, 0, 0), side_length: float = 13,
+                 discretization_step: float = 1.0, cube_open_side: str = 'top'):
         """
         side_length:            the length of each side in case the workspace is a normalized or moved cube
         discretization_step:    step size for discretization

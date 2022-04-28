@@ -5,3 +5,6 @@ lambda: 5
 crossover_children: 3
 # mu = # parents
 # lambda = # children
+workspace_type: "moved_cube"
+workspace_cube_offset: [10,0,10]
+workspace_side_length: 10

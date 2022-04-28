@@ -1,5 +1,15 @@
-
+from morphevo.config import get_config
+from morphevo.evolution import evolution
 
 def start_coevolution():
-    print("start")
+    # evolution
+    evolution(get_config())
+
+    # rl
+
+    # evaluation
+
+    # selection
+
+    # mutation 
     

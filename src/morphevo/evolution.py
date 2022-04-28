@@ -18,8 +18,7 @@ from morphevo.utils import alternate, normalize
 from rl.deep_q_learning import DeepQLearner
 
 
-def evolution(parameters, workspace_type: str = 'normalized_cube',
-              workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13):
+def evolution(parameters): 
     genome_indexer = count(0)
 
     # pylint: disable=no-member
@@ -30,9 +29,7 @@ def evolution(parameters, workspace_type: str = 'normalized_cube',
     logger = Logger()
 
     parents = []
-    children = [Genome(next(genome_indexer), workspace_type=workspace_type, workspace_cube_offset=workspace_cube_offset,
-                       workspace_side_length=workspace_side_length)
-                for _ in range(parameters.LAMBDA)]
+    children = [Genome(next(genome_indexer)) for _ in range(parameters.LAMBDA)]
 
     for generation in tqdm(range(parameters.generations), desc='Generation'):
         # Evaluate children
@@ -47,8 +44,7 @@ def evolution(parameters, workspace_type: str = 'normalized_cube',
 
         # create new children from selected parents
         children = [
-            Genome(next(genome_indexer), parent_genome=parent, workspace_type=workspace_type,
-                   workspace_cube_offset=workspace_cube_offset, workspace_side_length=workspace_side_length)
+            Genome(next(genome_indexer), parent_genome=parent)
             for parent in alternate(what=parents, times=parameters.LAMBDA - parameters.crossover_children)
         ]
         children += create_crossover_children(parents, parameters.crossover_children, genome_indexer)
