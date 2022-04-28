@@ -1,7 +1,7 @@
 import json
 import sys
-from typing import List
 import uuid
+from typing import List
 
 from mlagents_envs.side_channel import IncomingMessage
 from mlagents_envs.side_channel.side_channel import (OutgoingMessage,

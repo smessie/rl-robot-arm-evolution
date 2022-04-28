@@ -1,7 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Tuple
+from typing import List, Tuple
 
 import gym
 import numpy as np
@@ -11,6 +11,7 @@ from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 
 from configs.env import PATH_TO_UNITY_EXECUTABLE
+from configs.walls import WALL_9x9_GAP_3x3, WALL_9x9_GAP_9x3
 from environment.sidechannels.creation_sc import CreationSC
 from environment.sidechannels.goal_sc import GoalSC
 from environment.sidechannels.wall_sc import WallSC
@@ -81,8 +82,8 @@ class SimEnv(gym.Env):
     def set_goal(self, goal: tuple) -> None:
         self.goal_sc.send_goal_position(goal)
 
-    def build_wall(self) -> None:
-        self.wall_sc.send_build_command([[1, 1], [0, 1]])
+    def build_wall(self, wall: List[List[bool]]) -> None:
+        self.wall_sc.send_build_command(wall)
 
     def step(self, action: np.ndarray) -> np.ndarray:
         self._set_unity_actions(action)
@@ -127,8 +128,12 @@ def test_environment():
     # env.pause(150)
     # for _ in range(0, 800):
     #     env.step(np.array([0.1, 0, 0, 0]))
-    env.pause(50)
-    env.build_wall()
-    env.pause(50)
+    env.pause(200)
+    env.build_wall(WALL_9x9_GAP_9x3)
+    env.pause(150)
+    env.build_wall(WALL_9x9_GAP_3x3)
+    env.pause(150)
+    env.build_wall([[]])
+    env.pause(1000)
 
     env.close()
