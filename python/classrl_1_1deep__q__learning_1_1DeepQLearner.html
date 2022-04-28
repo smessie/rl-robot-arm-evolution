@@ -74,36 +74,45 @@ $(function() {
   <div class="headertitle"><div class="title">rl.deep_q_learning.DeepQLearner Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>The Deep Q learner class.  
+ <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a54bc7d5325cccc5c21cff91ffcf209b5"><td class="memItemLeft" align="right" valign="top"><a id="a54bc7d5325cccc5c21cff91ffcf209b5" name="a54bc7d5325cccc5c21cff91ffcf209b5"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, str env_path, str urdf_path, bool use_graphics=False, network_path=&quot;&quot;)</td></tr>
-<tr class="separator:a54bc7d5325cccc5c21cff91ffcf209b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e14039279e46da61436a27f9728e3e6"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a0e14039279e46da61436a27f9728e3e6">__init__</a> (self, str env_path, str urdf_path=None, str urdf=None, bool use_graphics=False, network_path=&quot;&quot;)</td></tr>
+<tr class="memdesc:a0e14039279e46da61436a27f9728e3e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html" title="The Deep Q learner class.">DeepQLearner</a> class initializer.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a0e14039279e46da61436a27f9728e3e6">More...</a><br /></td></tr>
+<tr class="separator:a0e14039279e46da61436a27f9728e3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75849a28ed4bdc0e4167c8132786428f"><td class="memItemLeft" align="right" valign="top"><a id="a75849a28ed4bdc0e4167c8132786428f" name="a75849a28ed4bdc0e4167c8132786428f"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>handler</b> (self, *_)</td></tr>
 <tr class="separator:a75849a28ed4bdc0e4167c8132786428f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae826258dbe029be63d009c24622309a8"><td class="memItemLeft" align="right" valign="top"><a id="ae826258dbe029be63d009c24622309a8" name="ae826258dbe029be63d009c24622309a8"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> (self)</td></tr>
-<tr class="separator:ae826258dbe029be63d009c24622309a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6285af0864fe05bf0929b84bc9468de"><td class="memItemLeft" align="right" valign="top"><a id="ae6285af0864fe05bf0929b84bc9468de" name="ae6285af0864fe05bf0929b84bc9468de"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> (self, file_name=&quot;./rl/networks/most_recently_saved_network.pkl&quot;)</td></tr>
+<tr class="separator:ae6285af0864fe05bf0929b84bc9468de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd7a33a433480e7b4daaae0a68492230"><td class="memItemLeft" align="right" valign="top"><a id="abd7a33a433480e7b4daaae0a68492230" name="abd7a33a433480e7b4daaae0a68492230"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_action_space</b> (self, number_of_joints)</td></tr>
+<tr class="separator:abd7a33a433480e7b4daaae0a68492230"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c324e3e2921a5cf602c5bd1e4e2ace"><td class="memItemLeft" align="right" valign="top"><a id="a61c324e3e2921a5cf602c5bd1e4e2ace" name="a61c324e3e2921a5cf602c5bd1e4e2ace"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>make_dqn</b> (self, network_path=&quot;&quot;)</td></tr>
+<tr class="separator:a61c324e3e2921a5cf602c5bd1e4e2ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5af58205681d9592aef790433e490625"><td class="memItemLeft" align="right" valign="top"><a id="a5af58205681d9592aef790433e490625" name="a5af58205681d9592aef790433e490625"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>step</b> (self, state)</td></tr>
 <tr class="separator:a5af58205681d9592aef790433e490625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cd1d11fd740af7c410166b64669b310"><td class="memItemLeft" align="right" valign="top"><a id="a9cd1d11fd740af7c410166b64669b310" name="a9cd1d11fd740af7c410166b64669b310"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>learn</b> (self, int num_episodes=10000, int steps_per_episode=500)</td></tr>
-<tr class="separator:a9cd1d11fd740af7c410166b64669b310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3269afbe1871f7b4b26e34087c495a5"><td class="memItemLeft" align="right" valign="top"><a id="ac3269afbe1871f7b4b26e34087c495a5" name="ac3269afbe1871f7b4b26e34087c495a5"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>learn</b> (self, int num_episodes=10000, int steps_per_episode=1000, bool logging=False)</td></tr>
+<tr class="separator:ac3269afbe1871f7b4b26e34087c495a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae216d9e4f48759447c7b80d523b254ce"><td class="memItemLeft" align="right" valign="top"><a id="ae216d9e4f48759447c7b80d523b254ce" name="ae216d9e4f48759447c7b80d523b254ce"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>predict</b> (self, np.ndarray state, bool stochastic=False)</td></tr>
 <tr class="separator:ae216d9e4f48759447c7b80d523b254ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ced99887e36d0915bb08f1f71157bd4"><td class="memItemLeft" align="right" valign="top"><a id="a3ced99887e36d0915bb08f1f71157bd4" name="a3ced99887e36d0915bb08f1f71157bd4"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_score</b> (self, int number_of_joints, <a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html">Workspace</a> workspace, int episodes=200)</td></tr>
+<tr class="separator:a3ced99887e36d0915bb08f1f71157bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:acc4a435929cb8aaf16b46c7acb897622"><td class="memItemLeft" align="right" valign="top"><a id="acc4a435929cb8aaf16b46c7acb897622" name="acc4a435929cb8aaf16b46c7acb897622"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>env</b></td></tr>
 <tr class="separator:acc4a435929cb8aaf16b46c7acb897622"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa02850d91a9020d6e20374d69ec6e51f"><td class="memItemLeft" align="right" valign="top"><a id="aa02850d91a9020d6e20374d69ec6e51f" name="aa02850d91a9020d6e20374d69ec6e51f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>amount_of_modules</b></td></tr>
-<tr class="separator:aa02850d91a9020d6e20374d69ec6e51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0d16527a7a91628f85412c79a56926"><td class="memItemLeft" align="right" valign="top"><a id="afe0d16527a7a91628f85412c79a56926" name="afe0d16527a7a91628f85412c79a56926"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>x_range</b></td></tr>
 <tr class="separator:afe0d16527a7a91628f85412c79a56926"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,6 +122,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ab5d597ed6575b6a5ff1619c09866f3e7"><td class="memItemLeft" align="right" valign="top"><a id="ab5d597ed6575b6a5ff1619c09866f3e7" name="ab5d597ed6575b6a5ff1619c09866f3e7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>z_range</b></td></tr>
 <tr class="separator:ab5d597ed6575b6a5ff1619c09866f3e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10440a96e29d12757bcab3108a0f47e6"><td class="memItemLeft" align="right" valign="top"><a id="a10440a96e29d12757bcab3108a0f47e6" name="a10440a96e29d12757bcab3108a0f47e6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>actions</b></td></tr>
+<tr class="separator:a10440a96e29d12757bcab3108a0f47e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4e7f0ba700ff1371ddabaf658cb069d"><td class="memItemLeft" align="right" valign="top"><a id="aa4e7f0ba700ff1371ddabaf658cb069d" name="aa4e7f0ba700ff1371ddabaf658cb069d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>dqn</b></td></tr>
 <tr class="separator:aa4e7f0ba700ff1371ddabaf658cb069d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,8 +137,6 @@ Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a839e0047e2c2daa504472e9280a7cf6b"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a839e0047e2c2daa504472e9280a7cf6b">ACTIONS</a></td></tr>
-<tr class="separator:a839e0047e2c2daa504472e9280a7cf6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f6244e6ad4ca1173ccbb821ed6f0c00"><td class="memItemLeft" align="right" valign="top"><a id="a8f6244e6ad4ca1173ccbb821ed6f0c00" name="a8f6244e6ad4ca1173ccbb821ed6f0c00"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>WORKSPACE_DISCRETIZATION</b> = 0.2</td></tr>
 <tr class="separator:a8f6244e6ad4ca1173ccbb821ed6f0c00"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,37 +144,73 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>WORKSPACE_DISCRETIZA
 float&#160;</td><td class="memItemRight" valign="bottom"><b>GOAL_BAL_DIAMETER</b> = 0.6</td></tr>
 <tr class="separator:adbe1fe00179226c701b55c2ba9539e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a839e0047e2c2daa504472e9280a7cf6b" name="a839e0047e2c2daa504472e9280a7cf6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a839e0047e2c2daa504472e9280a7cf6b">&#9670;&nbsp;</a></span>ACTIONS</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >The Deep Q learner class. </p>
+<p >Defines the class that will learn based on a Deep-Q Network. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0e14039279e46da61436a27f9728e3e6" name="a0e14039279e46da61436a27f9728e3e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e14039279e46da61436a27f9728e3e6">&#9670;&nbsp;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">list rl.deep_q_learning.DeepQLearner.ACTIONS</td>
+          <td class="memname"> None rl.deep_q_learning.DeepQLearner.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>env_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>urdf_path</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>urdf</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>use_graphics</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>network_path</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=  [</div>
-<div class="line">        [1, 0, 0, 0],</div>
-<div class="line">        [0, 1, 0, 0],</div>
-<div class="line">        [0, 0, 1, 0],</div>
-<div class="line">        [0, 0, 0, 1],</div>
-<div class="line">        [-1, 0, 0, 0],</div>
-<div class="line">        [0, -1, 0, 0],</div>
-<div class="line">        [0, 0, -1, 0],</div>
-<div class="line">        [0, 0, 0, -1],</div>
-<div class="line">    ]</div>
-</div><!-- fragment -->
+
+<p>The <a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html" title="The Deep Q learner class.">DeepQLearner</a> class initializer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">env_path</td><td>Path of the environment executable. </td></tr>
+    <tr><td class="paramname">urdf_path</td><td>Path to the robot urdf file. </td></tr>
+    <tr><td class="paramname">urdf</td><td>Instance that represents the robot urdf. </td></tr>
+    <tr><td class="paramname">use_graphics</td><td>Boolean that turns graphics on or off. </td></tr>
+    <tr><td class="paramname">network_path</td><td>Path to the Deep-Q network that should be used. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of the <a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html" title="The Deep Q learner class.">DeepQLearner</a> class. </dd></dl>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
