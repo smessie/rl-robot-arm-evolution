@@ -11,6 +11,7 @@ from ray.util import ActorPool
 from tqdm import tqdm
 
 from configs.env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
+from morphevo.config import get_config
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
@@ -18,7 +19,8 @@ from morphevo.utils import alternate, normalize
 from rl.deep_q_learning import DeepQLearner
 
 
-def evolution(parameters): 
+def evolution(): 
+    parameters = get_config()
     genome_indexer = count(0)
 
     # pylint: disable=no-member
@@ -52,10 +54,10 @@ def evolution(parameters):
         logger.log(generation, parents)
 
 
-def selection_fitness(current_population: List[Genome], evolution_parameters, generation=0) -> List[Genome]:
+def selection_fitness(current_population: List[Genome], generation=0) -> List[Genome]:
     population_fitnesses = [calculate_fitness(genome) for genome in current_population]
 
-    parent_indices = np.argsort(population_fitnesses)[-evolution_parameters.MU:]
+    parent_indices = np.argsort(population_fitnesses)[-get_config().MU:]
     parents = [current_population[i] for i in parent_indices]
 
     use_rl_fitness_every_x_generations = 10
@@ -63,22 +65,22 @@ def selection_fitness(current_population: List[Genome], evolution_parameters, ge
         current_population)
     if avg_coverage > 0:
         if generation % use_rl_fitness_every_x_generations == 0:
-            parents = rl_selection_fitness(parents, evolution_parameters)
+            parents = rl_selection_fitness(parents)
 
     return parents
 
 
-def rl_selection_fitness(current_population: List[Genome], evolution_parameters) -> List[Genome]:
+def rl_selection_fitness(current_population: List[Genome]) -> List[Genome]:
     population_fitnesses = [calculate_rl_fitness(genome) for genome in current_population]
 
-    parent_indices = np.argsort(population_fitnesses)[-evolution_parameters.MU // 2:]
+    parent_indices = np.argsort(population_fitnesses)[-get_config().MU // 2:]
     parents = [current_population[i] for i in parent_indices]
     return parents
 
 
-def selection_fitness_diversity(current_population: List[Genome], evolution_parameters) -> List[Genome]:
+def selection_fitness_diversity(current_population: List[Genome]) -> List[Genome]:
     current_parents = []
-    for _ in range(evolution_parameters.MU):
+    for _ in range(get_config().MU):
         next_parent = select_next_parent(current_population, current_parents)
         current_population.remove(next_parent)
         current_parents.append(next_parent)
