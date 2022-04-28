@@ -82,7 +82,7 @@ class SimEnv(gym.Env):
         self.goal_sc.send_goal_position(goal)
 
     def build_wall(self) -> None:
-        self.wall_sc.send_build_command([[]])
+        self.wall_sc.send_build_command([[1, 1], [0, 1]])
 
     def step(self, action: np.ndarray) -> np.ndarray:
         self._set_unity_actions(action)
@@ -129,6 +129,6 @@ def test_environment():
     #     env.step(np.array([0.1, 0, 0, 0]))
     env.pause(50)
     env.build_wall()
-    env.pause(1000)
+    env.pause(50)
 
     env.close()

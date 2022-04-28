@@ -19,7 +19,7 @@ class WallSC(SideChannel):
         # Add the string to an OutgoingMessage
         msg = OutgoingMessage()
         msg.write_string(json.dumps({
-            "wall": wall
+            "wall": [{"row": row} for row in wall]
         }))
 
         # We call this method to queue the data we want to send

@@ -21,13 +21,13 @@ public class WallBuilder : MonoBehaviour
         }
     }
 
-    public void BuildWall(bool[,] wall)
+    public void BuildWall(List<List<bool>> wall)
     {
         RemoveWall();
         Vector3 pos = startCoordinate;
-        for (int r = wall.GetLength(0)-1; r >= 0; r--) {
-            for (int c = 0; c < wall.GetLength(1); c++) {
-                if (wall[r,c]) {
+        for (int r = wall.Count-1; r >= 0; r--) {
+            for (int c = 0; c < wall[0].Count; c++) {
+                if (wall[r][c]) {
                     AddWallTile(pos + new Vector3(scaleX/2, scaleY/2, 0f));
                 }
                 pos.x += scaleX;
