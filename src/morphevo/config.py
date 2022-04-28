@@ -1,3 +1,4 @@
+from ray._private.ray_logging import configure_log_file
 import yaml
 
 
@@ -18,3 +19,10 @@ class Config:
         if not Config.instance:
             Config.instance = Config.__Config(*args, **kwargs)
         return Config.instance
+
+def set_config(config_file_name: str):
+    return Config(config_file_name)
+
+def get_config():
+    return Config()
+
