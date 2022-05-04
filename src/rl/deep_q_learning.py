@@ -8,6 +8,7 @@ import numpy as np
 from tqdm import tqdm
 
 from configs.env import PATH_TO_UNITY_EXECUTABLE
+from configs.walls import WALL_9x9_GAP_3x3, WALL_9x9_GAP_9x3
 from environment.environment import SimEnv
 from rl.dqn import DQN
 from rl.logger import Logger
@@ -15,14 +16,18 @@ from rl.logger import Logger
 
 class DeepQLearner:
     ACTIONS = [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1],
-        [-1, 0, 0, 0],
-        [0, -1, 0, 0],
-        [0, 0, -1, 0],
-        [0, 0, 0, -1],
+        [1, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 1],
+        [-1, 0, 0, 0, 0, 0],
+        [0, -1, 0, 0, 0, 0],
+        [0, 0, -1, 0, 0, 0],
+        [0, 0, 0, -1, 0, 0],
+        [0, 0, 0, 0, -1, 0],
+        [0, 0, 0, 0, 0, -1],
     ]
 
     WORKSPACE_DISCRETIZATION = 0.2
@@ -35,9 +40,9 @@ class DeepQLearner:
 
         self.amount_of_modules = self.env.joint_amount
 
-        self.x_range = [-1.5,1.5]
+        self.x_range = [-8,8]
         self.y_range = [3,6]
-        self.z_range = [6,9]
+        self.z_range = [15,18]
 
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
         # self.dqn = DQN(len(self.ACTIONS), state_size=6 + self.amount_of_modules * 4, network_path=network_path)
@@ -161,9 +166,10 @@ def start_rl():
     urdf_path = "environment/robot.urdf"
 
     if len(sys.argv) == 3:
-        model = DeepQLearner(env_path, urdf_path, True, sys.argv[2])
+        model = DeepQLearner(env_path, urdf_path, use_graphics=True, network_path=sys.argv[2])
     else:
-        model = DeepQLearner(env_path, urdf_path, False)
+        model = DeepQLearner(env_path, urdf_path, use_graphics=True)
 
+    model.env.build_wall(WALL_9x9_GAP_9x3)
     signal.signal(signal.SIGINT, model.handler)
     model.learn(steps_per_episode=1000)
