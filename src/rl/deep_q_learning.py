@@ -1,4 +1,5 @@
 import random
+from shutil import move
 import signal
 import sys
 import xml.etree.ElementTree as ET
@@ -49,6 +50,7 @@ class DeepQLearner:
         self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
 
         self.training = not network_path
+        self.penalty = 0
 
         self.logger = Logger()
 
@@ -102,8 +104,15 @@ class DeepQLearner:
 
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
             return 20, True
+        
+        moved_distance = prev_distance_from_goal - new_distance_from_goal
 
-        return 10*(prev_distance_from_goal - new_distance_from_goal), False
+        if moved_distance < 0.2:
+            self.penalty = min(self.penalty + 0.2, 5)
+        else:
+            self.penalty = max(self.penalty - 0.2, 0)
+
+        return 10*(moved_distance) - self.penalty, False
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
@@ -118,6 +127,7 @@ class DeepQLearner:
 
         total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
+            self.penalty = 0
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
 
