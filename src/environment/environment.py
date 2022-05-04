@@ -1,7 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Tuple
+from typing import List, Tuple
 
 import gym
 import numpy as np
@@ -11,8 +11,10 @@ from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 
 from configs.env import PATH_TO_UNITY_EXECUTABLE
+from configs.walls import WALL_9x9_GAP_3x3, WALL_9x9_GAP_9x3
 from environment.sidechannels.creation_sc import CreationSC
 from environment.sidechannels.goal_sc import GoalSC
+from environment.sidechannels.wall_sc import WallSC
 
 
 class SimEnv(gym.Env):
@@ -37,17 +39,18 @@ class SimEnv(gym.Env):
         self.worker_id = worker_id
         self.joint_amount = 0  # set after _initialize_unity_env
 
-        self.creation_sc, self.goal_sc, self.u_env = self._initialize_unity_env()
+        self.creation_sc, self.goal_sc, self.wall_sc, self.u_env = self._initialize_unity_env()
         self.behavior_name = 'ManipulatorBehavior?team=0'
         self.behavior_spec = self.u_env.behavior_specs[self.behavior_name]
 
     def _initialize_unity_env(self) -> Tuple[CreationSC, GoalSC, UnityEnvironment]:
         creation_sc = CreationSC()
         goal_sc = GoalSC()
+        wall_sc = WallSC()
         conf_channel = EngineConfigurationChannel()
 
         env = UnityEnvironment(file_name=self.env_path,
-                               side_channels=[conf_channel, creation_sc, goal_sc],
+                               side_channels=[conf_channel, creation_sc, goal_sc, wall_sc],
                                worker_id=self.worker_id,
                                no_graphics=not self.use_graphics)
         if self.use_graphics:
@@ -61,7 +64,7 @@ class SimEnv(gym.Env):
         while not creation_sc.creation_done:
             pass
         self.joint_amount = creation_sc.get_joint_amount()
-        return creation_sc, goal_sc, env
+        return creation_sc, goal_sc, wall_sc, env
 
     def _get_unity_observations(self) -> np.ndarray:
         decision_steps, _ = self.u_env.get_steps(
@@ -78,6 +81,9 @@ class SimEnv(gym.Env):
 
     def set_goal(self, goal: tuple) -> None:
         self.goal_sc.send_goal_position(goal)
+
+    def build_wall(self, wall: List[List[bool]]) -> None:
+        self.wall_sc.send_build_command(wall)
 
     def step(self, action: np.ndarray) -> np.ndarray:
         self._set_unity_actions(action)
@@ -118,10 +124,16 @@ def test_environment():
                  use_graphics=True)
 
     _ = env.reset()
-    env.set_goal((3.0, 6.5, 4.0))
+    env.set_goal((0, 5.5, 12.0))
+    # env.pause(150)
+    # for _ in range(0, 800):
+    #     env.step(np.array([0.1, 0, 0, 0]))
+    env.pause(200)
+    env.build_wall(WALL_9x9_GAP_9x3)
     env.pause(150)
-    for _ in range(0, 800):
-        env.step(np.array([0.1, 0, 0, 0]))
+    env.build_wall(WALL_9x9_GAP_3x3)
+    env.pause(150)
+    env.build_wall([[]])
     env.pause(1000)
 
     env.close()

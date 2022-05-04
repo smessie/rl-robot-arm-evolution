@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -28,7 +30,7 @@ public class AgentBrain : Agent
     // Here: all joint angles back to zero.
     public override void OnEpisodeBegin()
     {
-        _jointController.RandomizeJoints();
+        _jointController.ResetJoints();
     }
 
     // Observations are collected that we want to send back to the Python side
