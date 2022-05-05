@@ -125,7 +125,6 @@ class Genome:
             joints_amount += 1
         return joints_amount
 
-    
     def __hash__(self):
         return hash((
             self.anchor_can_rotate,
@@ -135,7 +134,6 @@ class Genome:
             time.ctime(),
         ))
   
-
 class ModuleType(Enum):
     TILTING = 1
     ROTATING = 2

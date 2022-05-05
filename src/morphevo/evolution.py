@@ -1,23 +1,21 @@
 import locale
 import time
-from itertools import count
 from math import sqrt
 from random import randint
-from typing import List
+from typing import Callable, List
 from xml.dom import minidom
 
 import numpy as np
 from ray.util import ActorPool
 from tqdm import tqdm
 
-from configs.env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, MORPHEVO_USE_GRAPHICS
+from configs.env import (MORPHEVO_USE_GRAPHICS, NUM_CORES,
+                         PATH_TO_UNITY_EXECUTABLE)
 from morphevo.evaluator import Evaluator
-from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
 from morphevo.utils import alternate, normalize
-from rl.deep_q_learning import DeepQLearner
-from util.config import get_config
 from util.arm import Arm
+from util.config import get_config
 
 
 def evolution():
@@ -40,9 +38,9 @@ def evolution():
 
         population = children + parents
 
-        parents = selection_fitness(population, generation)
+        parents = selection_fitness(population)
 
-        save_best_genome(parents[0], generation, parameters)
+        save_best_genome(parents[0], generation)
 
         # create new children from selected parents
         children = [
@@ -52,11 +50,11 @@ def evolution():
         children += create_crossover_children(parents, parameters.crossover_children)
 
         logger.log(generation, parents)
-    
+
     return parents
 
 
-def selection(selection_function: function, population: List[Arm]) -> List[Arm]:
+def selection(selection_function: Callable, population: List[Arm]) -> List[Arm]:
     return selection_function(population)
 
 def selection_fitness(population: List[Arm]) -> List[Arm]:
