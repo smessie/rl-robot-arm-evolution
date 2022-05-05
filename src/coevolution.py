@@ -1,14 +1,23 @@
 from morphevo.evolution import evolution
 
+generations = 10
 
 def start_coevolution():
-    # evolution
-    evolution()
+    exit()
+    # parents = []
+    # children = generate_children(amount)
+    # for generation in generations: 
+    #     # evolve 32 arms and return
+    #     evolution_arms = evolution(children)
 
-    # rl
+    #     # rl train 16 best arms 
+    #     rl_arms = train(evolution_arms[0:16])
 
-    # evaluation
+    #     # evaluate rl_arms
+    #     best_arms = evaluate(rl_arms)
 
-    # selection
+    #     # select best 8 arms form best_arms (8) and previos_parents (8) as new parents
+    #     parents = selection(best_arms + parents) 
 
-    # mutation
+    #     # mutate 8 parents to get 32 new children 
+    #     children = mutate(parents)
