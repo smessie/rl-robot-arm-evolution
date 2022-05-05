@@ -7,7 +7,8 @@ from typing import Tuple
 import numpy as np
 from tqdm import tqdm
 
-from configs.env import PATH_TO_ROBOT_URDF, PATH_TO_UNITY_EXECUTABLE, RL_USE_GRAPHICS_TESTING, RL_USE_GRAPHICS_TRAINING
+from configs.env import (PATH_TO_ROBOT_URDF, PATH_TO_UNITY_EXECUTABLE,
+                         RL_USE_GRAPHICS_TESTING, RL_USE_GRAPHICS_TRAINING)
 from environment.environment import SimEnv
 from morphevo.workspace import Workspace
 from rl.dqn import DQN

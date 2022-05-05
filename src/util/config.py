@@ -1,5 +1,5 @@
-from ray._private.ray_logging import configure_log_file
 import yaml
+from ray._private.ray_logging import configure_log_file
 
 from morphevo.workspace_parameters import WorkspaceParameters
 

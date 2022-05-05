@@ -7,9 +7,9 @@ from typing import Optional
 import numpy as np
 
 from configs.env import MODULES_MAY_ROTATE, MODULES_MAY_TILT
-from util.config import get_config
 from morphevo.urdf_generator import URDFGenerator
 from morphevo.workspace import Workspace
+from util.config import get_config
 
 
 class Genome:

@@ -1,9 +1,10 @@
 import random
 from collections import deque
-from util.config import get_config
 
 import numpy as np
 import torch
+
+from util.config import get_config
 
 
 class RobotNetwork(torch.nn.Module):

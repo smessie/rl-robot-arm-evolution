@@ -5,5 +5,5 @@ class WorkspaceParameters:
         self.workspace_cube_offset = workspace_cube_offset
         self.workspace_side_length = workspace_side_length
 
-    def __iter__(self): 
+    def __iter__(self):
         return iter((self.workspace_type, self.workspace_cube_offset, self.workspace_side_length))

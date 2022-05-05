@@ -6,9 +6,9 @@ import ray
 
 from coevolution import start_coevolution
 from environment import environment
-from util.config import set_config
 from morphevo.evolution import evolution
 from rl.deep_q_learning import rl
+from util.config import set_config
 
 
 def start_morphevo():
