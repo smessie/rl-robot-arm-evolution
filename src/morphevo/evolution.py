@@ -17,11 +17,11 @@ from morphevo.logger import Logger
 from morphevo.utils import alternate, normalize
 from rl.deep_q_learning import DeepQLearner
 from util.config import get_config
+from util.arm import Arm
 
 
 def evolution():
     parameters = get_config()
-    genome_indexer = count(0)
 
     # pylint: disable=no-member
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=MORPHEVO_USE_GRAPHICS)
@@ -31,7 +31,7 @@ def evolution():
     logger = Logger()
 
     parents = []
-    children = [Genome(next(genome_indexer)) for _ in range(parameters.LAMBDA)]
+    children = [Genome() for _ in range(parameters.LAMBDA)]
 
     for generation in tqdm(range(parameters.generations), desc='Generation'):
         # Evaluate children
@@ -46,10 +46,10 @@ def evolution():
 
         # create new children from selected parents
         children = [
-            Genome(next(genome_indexer), parent_genome=parent)
+            Genome()
             for parent in alternate(what=parents, times=parameters.LAMBDA - parameters.crossover_children)
         ]
-        children += create_crossover_children(parents, parameters.crossover_children, genome_indexer)
+        children += create_crossover_children(parents, parameters.crossover_children)
 
         logger.log(generation, parents)
     
@@ -132,7 +132,7 @@ def calculate_selection_scores(population_fitnesses: List[float], population_div
     return selection_scores
 
 
-def create_crossover_children(parents: List[Genome], amount: int, genome_indexer):
+def create_crossover_children(parents: List[Genome], amount: int):
     if len(parents) < 1:
         return []
     children = []
@@ -142,7 +142,7 @@ def create_crossover_children(parents: List[Genome], amount: int, genome_indexer
         while parent1 is parent2:
             parent2 = parents[randint(0, len(parents) - 1)]
 
-        children.append(parent1.crossover(parent2, next(genome_indexer)))
+        children.append(parent1.crossover(parent2))
     return children
 
 

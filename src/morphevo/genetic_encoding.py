@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+import time
 from enum import Enum
 from typing import Optional
 
@@ -18,9 +19,7 @@ class Genome:
     MIN_AMOUNT_OF_MODULES = 2
     MAX_AMOUNT_OF_MODULES = 4
 
-    def __init__(self, genome_id: int, parent_genome: Optional[Genome] = None) -> None:
-        self.genome_id = genome_id
-
+    def __init__(self, parent_genome: Optional[Genome] = None) -> None:
         self.module_choices = []
         if MODULES_MAY_ROTATE:
             self.module_choices.append(ModuleType.ROTATING)
@@ -44,6 +43,8 @@ class Genome:
 
         workspace_parameters = get_config().workspace_parameters
         self.workspace = Workspace(*workspace_parameters)
+
+        self.genome_id = hash(self)
 
     def mutate(self) -> None:
         mu, sigma = 0, 0.1
@@ -84,8 +85,8 @@ class Genome:
         return (sum(module_length_diversity) / len(module_length_diversity)) * \
                (1 + different_types_count / len(module_length_diversity))
 
-    def crossover(self, other_genome: Genome, crossover_genome_id: int) -> Genome:
-        genome = Genome(crossover_genome_id)
+    def crossover(self, other_genome: Genome) -> Genome:
+        genome = Genome()
 
         # make combination of the modules
         module_lengths = []
@@ -124,6 +125,16 @@ class Genome:
             joints_amount += 1
         return joints_amount
 
+    
+    def __hash__(self):
+        return hash((
+            self.anchor_can_rotate,
+            self.amount_of_modules,
+            self.module_lengths,
+            self.module_types,
+            time.ctime(),
+        ))
+  
 
 class ModuleType(Enum):
     TILTING = 1
