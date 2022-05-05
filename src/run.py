@@ -21,7 +21,7 @@ def start_morphevo():
     set_config(sys.argv[2])
 
     ray.init(log_to_driver=True, logging_level=logging.WARNING)
-    evolution(get_config())
+    evolution()
 
 
 def start_test_env():
