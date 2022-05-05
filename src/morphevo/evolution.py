@@ -10,7 +10,7 @@ import numpy as np
 from ray.util import ActorPool
 from tqdm import tqdm
 
-from configs.env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
+from configs.env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, MORPHEVO_USE_GRAPHICS
 from morphevo.evaluator import Evaluator
 from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
@@ -24,7 +24,7 @@ def evolution():
     genome_indexer = count(0)
 
     # pylint: disable=no-member
-    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
+    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=MORPHEVO_USE_GRAPHICS)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 
