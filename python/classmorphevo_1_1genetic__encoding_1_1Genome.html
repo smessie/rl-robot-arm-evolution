@@ -77,9 +77,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a635ec3a76b0fdd12db37edc7e795393b"><td class="memItemLeft" align="right" valign="top"><a id="a635ec3a76b0fdd12db37edc7e795393b" name="a635ec3a76b0fdd12db37edc7e795393b"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, int genome_id, Optional[<a class="el" href="classmorphevo_1_1genetic__encoding_1_1Genome.html">Genome</a>] parent_genome=None)</td></tr>
-<tr class="separator:a635ec3a76b0fdd12db37edc7e795393b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dbb79ed6598d6e485bfa3aeff3a9c3b"><td class="memItemLeft" align="right" valign="top"><a id="a5dbb79ed6598d6e485bfa3aeff3a9c3b" name="a5dbb79ed6598d6e485bfa3aeff3a9c3b"></a>
+None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, int genome_id, Optional[<a class="el" href="classmorphevo_1_1genetic__encoding_1_1Genome.html">Genome</a>] parent_genome=None, str workspace_type='normalized_cube', tuple workspace_cube_offset=(0, 0, 0), float workspace_side_length=13)</td></tr>
+<tr class="separator:a5dbb79ed6598d6e485bfa3aeff3a9c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedb55f050e420e1d206202aef9ace905"><td class="memItemLeft" align="right" valign="top"><a id="aedb55f050e420e1d206202aef9ace905" name="aedb55f050e420e1d206202aef9ace905"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>mutate</b> (self)</td></tr>
 <tr class="separator:aedb55f050e420e1d206202aef9ace905"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -92,9 +92,6 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>calculate_diversity_fr
 <tr class="memitem:a5bcff65bf551385a0e83ec2cbd050876"><td class="memItemLeft" align="right" valign="top"><a id="a5bcff65bf551385a0e83ec2cbd050876" name="a5bcff65bf551385a0e83ec2cbd050876"></a>
 <a class="el" href="classmorphevo_1_1genetic__encoding_1_1Genome.html">Genome</a>&#160;</td><td class="memItemRight" valign="bottom"><b>crossover</b> (self, <a class="el" href="classmorphevo_1_1genetic__encoding_1_1Genome.html">Genome</a> other_genome, int crossover_genome_id)</td></tr>
 <tr class="separator:a5bcff65bf551385a0e83ec2cbd050876"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a220e94c4890b345ac8b9079eeb79ed3f"><td class="memItemLeft" align="right" valign="top"><a id="a220e94c4890b345ac8b9079eeb79ed3f" name="a220e94c4890b345ac8b9079eeb79ed3f"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>get_amount_of_joints</b> (self)</td></tr>
-<tr class="separator:a220e94c4890b345ac8b9079eeb79ed3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -104,9 +101,6 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a030f85c5f555fd69ad5224e8a41b6238"><td class="memItemLeft" align="right" valign="top"><a id="a030f85c5f555fd69ad5224e8a41b6238" name="a030f85c5f555fd69ad5224e8a41b6238"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>module_choices</b></td></tr>
 <tr class="separator:a030f85c5f555fd69ad5224e8a41b6238"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af89d6e39097133f2ba1632ebfd867e66"><td class="memItemLeft" align="right" valign="top"><a id="af89d6e39097133f2ba1632ebfd867e66" name="af89d6e39097133f2ba1632ebfd867e66"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>anchor_can_rotate</b></td></tr>
-<tr class="separator:af89d6e39097133f2ba1632ebfd867e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71989839e0f7e71e74f5d8f0b0d6d14f"><td class="memItemLeft" align="right" valign="top"><a id="a71989839e0f7e71e74f5d8f0b0d6d14f" name="a71989839e0f7e71e74f5d8f0b0d6d14f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>amount_of_modules</b></td></tr>
 <tr class="separator:a71989839e0f7e71e74f5d8f0b0d6d14f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,10 +123,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>LENGTH_LOWER_BOUND</b>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>LENGTH_UPPER_BOUND</b> = 4</td></tr>
 <tr class="separator:a205228131cd953679644dc9b8dd72f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62703a2416b6a5513efed7c530a0ff71"><td class="memItemLeft" align="right" valign="top"><a id="a62703a2416b6a5513efed7c530a0ff71" name="a62703a2416b6a5513efed7c530a0ff71"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>MIN_AMOUNT_OF_MODULES</b> = 2</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>MIN_AMOUNT_OF_MODULES</b> = 3</td></tr>
 <tr class="separator:a62703a2416b6a5513efed7c530a0ff71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49c3882ff2c139c16e58bd9bdc4394ef"><td class="memItemLeft" align="right" valign="top"><a id="a49c3882ff2c139c16e58bd9bdc4394ef" name="a49c3882ff2c139c16e58bd9bdc4394ef"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_AMOUNT_OF_MODULES</b> = 4</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_AMOUNT_OF_MODULES</b> = 3</td></tr>
 <tr class="separator:a49c3882ff2c139c16e58bd9bdc4394ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
