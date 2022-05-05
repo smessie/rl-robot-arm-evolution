@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['config_0',['Config',['../classutil_1_1config_1_1Config.html',1,'util::config']]],
-  ['creationsc_1',['CreationSC',['../classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html',1,'environment::sidechannels::creation_sc']]]
+  ['arm_0',['Arm',['../classutil_1_1arm_1_1Arm.html',1,'util::arm']]]
 ];
