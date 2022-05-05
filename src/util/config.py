@@ -10,29 +10,32 @@ class Config:
             with open(config_file_name, 'r', encoding='utf8') as stream:
                 config = yaml.load(stream, yaml.FullLoader)
 
-            # morphevo parameters
-            self.evolution_generations = config['evolution_generations']
-            self.evolution_parents = config['evolution_parents']
-            self.evolution_children = config['evolution_children']
-            self.crossover_children = config['crossover_children']
-            self.workspace_parameters = self.parse_workspace_parameters(config)
+            if 'coevolution' in config:
+                coevolution = config['coevolution']
+                self.coevolution_generations = coevolution['coevolution_generations']
+                self.coevolution_parents = coevolution['coevolution_parents']
+                self.coevolution_rl_amount = coevolution['coevolution_rl_amount']
 
-            # rl parameters
-            self.gamma = config['gamma']
-            self.eps_end = config['eps_end']
-            self.eps_decay = config['eps_decay']
-            self.batch_size = config['batch_size']
-            self.mem_size = config['mem_size']
-            self.eps_start = config['eps_start']
-            self.hidden_nodes = config['hidden_nodes']
+            if 'morphevo' in config:
+                morphevo = config['morphevo']
+                self.evolution_generations = morphevo['evolution_generations']
+                self.evolution_parents = morphevo['evolution_parents']
+                self.evolution_children = morphevo['evolution_children']
+                self.crossover_children = morphevo['crossover_children']
+                self.workspace_parameters = self.parse_workspace_parameters(config)
 
-            self.workspace_discretization = config['workspace_discretization']
-            self.goal_bal_diameter = config['goal_bal_diameter']
+            if 'rl' in config:
+                rl = config['rl']
+                self.gamma = rl['gamma']
+                self.eps_end = rl['eps_end']
+                self.eps_decay = rl['eps_decay']
+                self.batch_size = rl['batch_size']
+                self.mem_size = rl['mem_size']
+                self.eps_start = rl['eps_start']
+                self.hidden_nodes = rl['hidden_nodes']
 
-            # coevolution parameters
-            self.coevolution_generations = config['coevolution_generations']
-            self.coevolution_parents = config['coevolution_parents']
-            self.coevolution_rl_amount = config['coevolution_rl_amount']
+                self.workspace_discretization = config['workspace_discretization']
+                self.goal_bal_diameter = config['goal_bal_diameter']
 
         def parse_workspace_parameters(self, config) -> WorkspaceParameters:
             if ('workspace_type' in config

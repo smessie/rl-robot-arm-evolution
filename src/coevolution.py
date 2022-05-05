@@ -8,7 +8,7 @@ from util.util import generate_arms
 def start_coevolution():
     config = get_config()
     parents = []
-    children = generate_arms(amount=config.LAMBDA)
+    children = generate_arms(amount=config.evolution_children)
 
     for _ in config.coevolution_generations:
         evolved_arms = evolution(children)
