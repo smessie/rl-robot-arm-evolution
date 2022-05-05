@@ -30,6 +30,9 @@ class Config:
             self.workspace_discretization = config['workspace_discretization']
             self.goal_bal_diameter = config['goal_bal_diameter']
 
+            # coevolution parameters
+            self.coevolution_generations = config['coevolution_generations']
+
         def parse_workspace_parameters(self, config) -> WorkspaceParameters:
             if ('workspace_type' in config
                 and 'workspace_cube_offset' in config
