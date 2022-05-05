@@ -4,6 +4,8 @@ from collections import deque
 import numpy as np
 import torch
 
+from util.config import get_config
+
 
 class RobotNetwork(torch.nn.Module):
     def __init__(self, hidden_nodes, number_of_actions, state_size):
@@ -15,26 +17,35 @@ class RobotNetwork(torch.nn.Module):
     def forward(self, x):
         x = torch.nn.functional.relu(self.linear1(x))
         x = torch.nn.functional.relu(self.linear2(x))
-        return self.linear3(x)
+        x = torch.nn.functional.relu(self.linear3(x))
+        return x
 
 
 class DQN:
     GAMMA = 0.99
     EPS_END = 0.1
-    EPS_DECAY = 0.999995
+    EPS_DECAY = 0.999992
     BATCH_SIZE = 64
     MEM_SIZE = 1000
+    HIDDEN_NODES = 32
 
     def __init__(self, n_actions: int, state_size, network_path=""):
-        self.eps = 1
+        parameters = get_config()
+        self.eps = parameters.eps_start
+        DQN.GAMMA = parameters.gamma
+        DQN.EPS_END = parameters.eps_end
+        DQN.EPS_DECAY = parameters.eps_decay
+        DQN.BATCH_SIZE = parameters.batch_size
+        DQN.MEM_SIZE = parameters.mem_size
+        DQN.HIDDEN_NODES = parameters.hidden_nodes
 
         if network_path:
             self.network = torch.load(network_path)
             self.network.eval()
         else:
-            self.network = RobotNetwork(64, n_actions, state_size)
+            self.network = RobotNetwork(self.HIDDEN_NODES, n_actions, state_size)
 
-        self.optimizer = torch.optim.Adam(self.network.parameters(), lr=1e-4)
+        self.optimizer = torch.optim.Adam(self.network.parameters(), lr=0.0001)
         self.memory = deque(maxlen=self.MEM_SIZE)
 
     # pylint: disable-msg=too-many-locals
@@ -95,12 +106,6 @@ class DQN:
             x = self.network(torch.tensor([state], dtype=torch.float))
             _, indices = torch.topk(x, 1)
             return indices[0].item()
-            # for action in indices[0]:
-            # move = self.action_to_move(self.output_to_action(action.item()), self.possible_moves)
-            # if not move is None:
-            # return action.item()
-
-    #                return self.network(state).argmax().item()
 
     def save(self, path: str):
         torch.save(self.network, path)

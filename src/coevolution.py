@@ -1,10 +1,8 @@
-from morphevo.config import get_config
 from morphevo.evolution import evolution
 
 generations = 10
 
 def start_coevolution():
-
     exit()
     # parents = []
     # children = generate_children(amount)
@@ -23,5 +21,3 @@ def start_coevolution():
 
     #     # mutate 8 parents to get 32 new children 
     #     children = mutate(parents)
-
-        

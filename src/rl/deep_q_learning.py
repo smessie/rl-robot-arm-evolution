@@ -7,11 +7,13 @@ from typing import Tuple
 import numpy as np
 from tqdm import tqdm
 
-from configs.env import PATH_TO_ROBOT_URDF, PATH_TO_UNITY_EXECUTABLE
+from configs.env import (PATH_TO_ROBOT_URDF, PATH_TO_UNITY_EXECUTABLE,
+                         RL_USE_GRAPHICS_TESTING, RL_USE_GRAPHICS_TRAINING)
 from environment.environment import SimEnv
 from morphevo.workspace import Workspace
 from rl.dqn import DQN
 from rl.logger import Logger
+from util.config import get_config
 
 
 class DeepQLearner:
@@ -36,6 +38,10 @@ class DeepQLearner:
         if urdf_path:
             urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
         assert urdf is not None, "Error: No urdf given."
+
+        parameters = get_config()
+        DeepQLearner.WORKSPACE_DISCRETIZATION = parameters.workspace_discretization
+        DeepQLearner.GOAL_BAL_DIAMETER = parameters.goal_bal_diameter
 
         self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
 
@@ -177,16 +183,16 @@ class DeepQLearner:
         self.dqn = self.make_dqn()
         return self.learn(num_episodes=episodes)
 
-def start_rl():
-    if len(sys.argv) == 3:
+def rl(network_path=""):
+    if network_path:
         model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE,
                             urdf_path=PATH_TO_ROBOT_URDF,
-                            use_graphics=True,
-                            network_path=sys.argv[2])
+                            use_graphics=RL_USE_GRAPHICS_TESTING,
+                            network_path=network_path)
     else:
         model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE,
                             urdf_path=PATH_TO_ROBOT_URDF,
-                            use_graphics=False)
+                            use_graphics=RL_USE_GRAPHICS_TRAINING)
 
     signal.signal(signal.SIGINT, model.handler)
     model.learn(logging=True)
