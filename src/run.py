@@ -40,7 +40,7 @@ def init_coevolution():
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print("Please specify a command ('start_test_env', 'morphevo', 'rl')")
+        print("Please specify a command ('start_test_env', 'morphevo', 'rl', 'coevolution')")
         sys.exit()
     if sys.argv[1] == "start_test_env":
         start_test_env()
