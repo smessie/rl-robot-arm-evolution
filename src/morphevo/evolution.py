@@ -31,12 +31,12 @@ def evolution():
     logger = Logger()
 
     parents = []
-    children = [Genome() for _ in range(parameters.LAMBDA)]
+    children = [Arm() for _ in range(parameters.LAMBDA)]
 
     for generation in tqdm(range(parameters.generations), desc='Generation'):
         # Evaluate children
         children = list(pool.map_unordered(
-            lambda evaluator, genome: evaluator.eval_genome.remote(genome), children))
+            lambda evaluator, arm: evaluator.eval_genome.remote(arm.genome), children))
 
         population = children + parents
 
@@ -46,7 +46,7 @@ def evolution():
 
         # create new children from selected parents
         children = [
-            Genome()
+            Arm(parent.genome)
             for parent in alternate(what=parents, times=parameters.LAMBDA - parameters.crossover_children)
         ]
         children += create_crossover_children(parents, parameters.crossover_children)
@@ -56,43 +56,30 @@ def evolution():
     return parents
 
 
-def selection_fitness(current_population: List[Genome], generation=0) -> List[Genome]:
-    population_fitnesses = [calculate_fitness(genome) for genome in current_population]
+def selection(selection_function: function, population: List[Arm]) -> List[Arm]:
+    return selection_function(population)
+
+def selection_fitness(population: List[Arm]) -> List[Arm]:
+    population_fitnesses = [calculate_fitness(arm) for arm in population]
 
     parent_indices = np.argsort(population_fitnesses)[-get_config().MU:]
-    parents = [current_population[i] for i in parent_indices]
-
-    use_rl_fitness_every_x_generations = 10
-    avg_coverage = np.sum([genome.workspace.calculate_coverage() for genome in current_population]) / len(
-        current_population)
-    if avg_coverage > 0:
-        if generation % use_rl_fitness_every_x_generations == 0:
-            parents = rl_selection_fitness(parents)
+    parents = [population[i] for i in parent_indices]
 
     return parents
 
-
-def rl_selection_fitness(current_population: List[Genome]) -> List[Genome]:
-    population_fitnesses = [calculate_rl_fitness(genome) for genome in current_population]
-
-    parent_indices = np.argsort(population_fitnesses)[-get_config().MU // 2:]
-    parents = [current_population[i] for i in parent_indices]
-    return parents
-
-
-def selection_fitness_diversity(current_population: List[Genome]) -> List[Genome]:
+def selection_fitness_diversity(population: List[Arm]) -> List[Arm]:
     current_parents = []
     for _ in range(get_config().MU):
-        next_parent = select_next_parent(current_population, current_parents)
-        current_population.remove(next_parent)
+        next_parent = select_next_parent(population, current_parents)
+        population.remove(next_parent)
         current_parents.append(next_parent)
 
     return current_parents
 
 
-def select_next_parent(population: List[Genome], parents: List[Genome]) -> Genome:
-    population_fitnesses = [calculate_fitness(genome) for genome in population]
-    population_diversities = [calculate_diversity(genome, parents) for genome in population]
+def select_next_parent(population: List[Arm], parents: List[Arm]) -> Arm:
+    population_fitnesses = [calculate_fitness(arm) for arm in population]
+    population_diversities = [calculate_diversity(arm, parents) for arm in population]
 
     selection_scores = calculate_selection_scores(population_fitnesses, population_diversities)
 
@@ -102,19 +89,13 @@ def select_next_parent(population: List[Genome], parents: List[Genome]) -> Genom
     return next_parent
 
 
-def calculate_fitness(genome: Genome) -> float:
-    return genome.workspace.calculate_coverage()
+def calculate_fitness(arm: Arm) -> float:
+    return arm.genome.workspace.calculate_coverage()
 
-
-def calculate_rl_fitness(genome: Genome) -> float:
-    model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE, urdf=genome.get_urdf())
-    return model.get_score(genome.get_amount_of_joints(), genome.workspace)
-
-
-def calculate_diversity(genome: Genome, others: List[Genome]) -> float:
+def calculate_diversity(arm: Arm, others: List[Arm]) -> float:
     if not others:
         return 0
-    diversity_from_others = [genome.calculate_diversity_from(other) for other in others]
+    diversity_from_others = [arm.genome.calculate_diversity_from(other.genome) for other in others]
     average_diversity = sum(diversity_from_others) / len(diversity_from_others)
 
     return average_diversity
@@ -132,7 +113,7 @@ def calculate_selection_scores(population_fitnesses: List[float], population_div
     return selection_scores
 
 
-def create_crossover_children(parents: List[Genome], amount: int):
+def create_crossover_children(parents: List[Arm], amount: int):
     if len(parents) < 1:
         return []
     children = []
@@ -142,14 +123,15 @@ def create_crossover_children(parents: List[Genome], amount: int):
         while parent1 is parent2:
             parent2 = parents[randint(0, len(parents) - 1)]
 
-        children.append(parent1.crossover(parent2))
+        children.append(parent1.genome.crossover(parent2.genome))
     return children
 
 
-def save_best_genome(best_genome, generation, evolution_parameters):
-    filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
-                f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
+def save_best_genome(arm: Arm, generation: int):
+    filename = (f'output/{int(time.time())}-mu_{get_config().MU}' +
+                f'-lambda_{get_config().LAMBDA}-generation_{generation}.xml')
 
-    xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
+    xml_str = minidom.parseString(arm.urdf).toprettyxml(indent="    ")
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
         f.write(xml_str)
+    arm.urdf_path = filename
