@@ -2,7 +2,7 @@ import locale
 import time
 from math import sqrt
 from random import randint
-from typing import Callable, List
+from typing import Callable, List, Optional
 from xml.dom import minidom
 
 import numpy as np
@@ -13,12 +13,12 @@ from configs.env import (MORPHEVO_USE_GRAPHICS, NUM_CORES,
                          PATH_TO_UNITY_EXECUTABLE)
 from morphevo.evaluator import Evaluator
 from morphevo.logger import Logger
-from morphevo.utils import alternate, normalize
 from util.arm import Arm
 from util.config import get_config
+from util.util import alternate, generate_arms, normalize
 
 
-def evolution():
+def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
     parameters = get_config()
 
     # pylint: disable=no-member
@@ -29,7 +29,8 @@ def evolution():
     logger = Logger()
 
     parents = []
-    children = [Arm() for _ in range(parameters.LAMBDA)]
+    if not children:
+        children = generate_arms(amount=parameters.LAMBDA)
 
     for generation in tqdm(range(parameters.generations), desc='Generation'):
         # Evaluate children

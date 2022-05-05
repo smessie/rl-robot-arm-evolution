@@ -133,7 +133,7 @@ class Genome:
             self.module_types,
             time.ctime(),
         ))
-  
+
 class ModuleType(Enum):
     TILTING = 1
     ROTATING = 2
