@@ -1,10 +1,9 @@
 from morphevo.evolution import evolution
-from util.config import get_config
 
 
 def start_coevolution():
     # evolution
-    evolution(get_config())
+    evolution()
 
     # rl
 
@@ -12,5 +11,4 @@ def start_coevolution():
 
     # selection
 
-    # mutation 
-    
+    # mutation

@@ -19,7 +19,7 @@ from rl.deep_q_learning import DeepQLearner
 from util.config import get_config
 
 
-def evolution(): 
+def evolution():
     parameters = get_config()
     genome_indexer = count(0)
 
@@ -40,7 +40,7 @@ def evolution():
 
         population = children + parents
 
-        parents = selection_fitness(population, parameters, generation)
+        parents = selection_fitness(population, generation)
 
         save_best_genome(parents[0], generation, parameters)
 

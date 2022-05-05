@@ -1,11 +1,11 @@
 import yaml
-from ray._private.ray_logging import configure_log_file
 
 from morphevo.workspace_parameters import WorkspaceParameters
 
 
 class Config:
     # pylint: disable=invalid-name
+    # pylint: disable=no-member
     class __Config:
         def __init__(self, config_file_name: str) -> None:
             with open(config_file_name, 'r', encoding='utf8') as stream:
@@ -39,8 +39,7 @@ class Config:
                 return WorkspaceParameters(evolution_config['workspace_type'],
                                            tuple(evolution_config['workspace_cube_offset']),
                                            evolution_config['workspace_side_length'])
-            else:
-                return WorkspaceParameters()
+            return WorkspaceParameters()
 
     instance = None
     def __new__(cls, *args, **kwargs):
@@ -53,4 +52,3 @@ def set_config(config_file_name: str):
 
 def get_config():
     return Config()
-
