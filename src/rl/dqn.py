@@ -15,13 +15,14 @@ class RobotNetwork(torch.nn.Module):
     def forward(self, x):
         x = torch.nn.functional.relu(self.linear1(x))
         x = torch.nn.functional.relu(self.linear2(x))
-        return self.linear3(x)
+        x = torch.nn.functional.relu(self.linear3(x))
+        return x
 
 
 class DQN:
     GAMMA = 0.99
     EPS_END = 0.1
-    EPS_DECAY = 0.999995
+    EPS_DECAY = 0.999992
     BATCH_SIZE = 64
     MEM_SIZE = 1000
 
@@ -32,9 +33,9 @@ class DQN:
             self.network = torch.load(network_path)
             self.network.eval()
         else:
-            self.network = RobotNetwork(64, n_actions, state_size)
+            self.network = RobotNetwork(32, n_actions, state_size)
 
-        self.optimizer = torch.optim.Adam(self.network.parameters(), lr=1e-4)
+        self.optimizer = torch.optim.Adam(self.network.parameters(), lr=0.0001)
         self.memory = deque(maxlen=self.MEM_SIZE)
 
     # pylint: disable-msg=too-many-locals
@@ -95,12 +96,6 @@ class DQN:
             x = self.network(torch.tensor([state], dtype=torch.float))
             _, indices = torch.topk(x, 1)
             return indices[0].item()
-            # for action in indices[0]:
-            # move = self.action_to_move(self.output_to_action(action.item()), self.possible_moves)
-            # if not move is None:
-            # return action.item()
-
-    #                return self.network(state).argmax().item()
 
     def save(self, path: str):
         torch.save(self.network, path)
