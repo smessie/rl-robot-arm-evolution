@@ -25,3 +25,5 @@ goal_bal_diameter: 0.6
 
 # coevolution
 coevolution_generations: 10
+coevolution_parents: 8
+coevolution_rl_amount: 16

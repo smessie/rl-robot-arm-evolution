@@ -1,4 +1,6 @@
-from morphevo.evolution import evolution
+from morphevo.evolution import (evolution, mutate, mutate_with_crossover,
+                                selection, selection_succes_rate)
+from rl.deep_q_learning import evaluate, train
 from util.config import get_config
 from util.util import generate_arms
 
@@ -9,20 +11,13 @@ def start_coevolution():
     children = generate_arms(amount=config.LAMBDA)
 
     for _ in config.coevolution_generations:
-        # evolve 32 arms and return
         evolved_arms = evolution(children)
 
-        # temporary for pylint
-        return evolved_arms, parents
+        trained_arms = train(evolved_arms)
 
-    #     # rl train 16 best arms
-    #     rl_arms = train(evolution_arms[0:16])
+        evaluated_arms = evaluate(trained_arms)
 
-    #     # evaluate rl_arms
-    #     best_arms = evaluate(rl_arms)
+        parents = selection(selection_succes_rate, evaluated_arms + parents)
 
-    #     # select best 8 arms form best_arms (8) and previos_parents (8) as new parents
-    #     parents = selection(best_arms + parents)
-
-    #     # mutate 8 parents to get 32 new children
-    #     children = mutate(parents)
+        # mutate 8 parents to get 32 new children
+        children = mutate(mutate_with_crossover, parents)

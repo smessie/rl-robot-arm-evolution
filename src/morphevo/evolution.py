@@ -43,20 +43,19 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
 
         save_best_genome(parents[0], generation)
 
-        # create new children from selected parents
-        children = [
-            Arm(parent.genome)
-            for parent in alternate(what=parents, times=parameters.LAMBDA - parameters.crossover_children)
-        ]
-        children += create_crossover_children(parents, parameters.crossover_children)
+        children = mutate_with_crossover(parents)
 
         logger.log(generation, parents)
 
     return parents
 
 
+#TODOo try to make selection something with a calculate_fitness function (maybe difficult bcs select_fit_div function)
 def selection(selection_function: Callable, population: List[Arm]) -> List[Arm]:
     return selection_function(population)
+
+def mutate(mutation_function: Callable, parents: List[Arm]) -> List[Arm]:
+    return mutation_function(parents)
 
 def selection_fitness(population: List[Arm]) -> List[Arm]:
     population_fitnesses = [calculate_fitness(arm) for arm in population]
@@ -74,6 +73,15 @@ def selection_fitness_diversity(population: List[Arm]) -> List[Arm]:
         current_parents.append(next_parent)
 
     return current_parents
+
+
+def selection_succes_rate(population: List[Arm]) -> List[Arm]:
+    population_fitnesses = [arm.success_rate for arm in population]
+
+    parent_indices = np.argsort(population_fitnesses)[-get_config().coevolution_parents:]
+    parents = [population[i] for i in parent_indices]
+
+    return parents
 
 
 def select_next_parent(population: List[Arm], parents: List[Arm]) -> Arm:
@@ -111,6 +119,16 @@ def calculate_selection_scores(population_fitnesses: List[float], population_div
 
     return selection_scores
 
+def mutate_with_crossover(parents: List[Arm]) -> List[Arm]:
+    config = get_config()
+
+    children = [
+        Arm(parent.genome)
+        for parent in alternate(what=parents, times=config.LAMBDA - config.crossover_children)
+    ]
+    children += create_crossover_children(parents, config.crossover_children)
+
+    return children
 
 def create_crossover_children(parents: List[Arm], amount: int):
     if len(parents) < 1:

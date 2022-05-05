@@ -2,7 +2,7 @@ import random
 import signal
 import sys
 import xml.etree.ElementTree as ET
-from typing import Tuple
+from typing import List, Tuple
 
 import numpy as np
 from tqdm import tqdm
@@ -13,6 +13,7 @@ from environment.environment import SimEnv
 from morphevo.workspace import Workspace
 from rl.dqn import DQN
 from rl.logger import Logger
+from util.arm import Arm
 from util.config import get_config
 
 
@@ -196,3 +197,11 @@ def rl(network_path=""):
 
     signal.signal(signal.SIGINT, model.handler)
     model.learn(logging=True)
+
+def train(arms: List[Arm]) -> List[Arm]:
+    # TODOo train arms and return
+    return arms
+
+def evaluate(arms: List[Arm]) -> List[Arm]:
+    # TODOo evaluate arms and return
+    return arms

@@ -32,6 +32,8 @@ class Config:
 
             # coevolution parameters
             self.coevolution_generations = config['coevolution_generations']
+            self.coevolution_parents = config['coevolution_parents']
+            self.coevolution_rl_amount = config['coevolution_rl_amount']
 
         def parse_workspace_parameters(self, config) -> WorkspaceParameters:
             if ('workspace_type' in config
