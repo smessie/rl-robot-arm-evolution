@@ -3,8 +3,7 @@ from rl.dqn import DQN
 
 
 class Arm:
-    def __init__(self):
-        self.urdf_path: str = ""
-        self.genome: Genome = None
-        self.rl_model: DQN
-        self.success_rate: float = None
+    urdf_path: str = ""
+    genome: Genome = None
+    rl_model: DQN = None
+    success_rate: float = None
