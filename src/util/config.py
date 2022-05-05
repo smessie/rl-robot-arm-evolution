@@ -5,7 +5,6 @@ from morphevo.workspace_parameters import WorkspaceParameters
 
 class Config:
     # pylint: disable=invalid-name
-    # pylint: disable=no-member
     class __Config:
         def __init__(self, config_file_name: str) -> None:
             with open(config_file_name, 'r', encoding='utf8') as stream:
