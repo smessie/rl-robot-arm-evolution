@@ -1,5 +1,6 @@
 import random
 from collections import deque
+from util.config import get_config
 
 import numpy as np
 import torch
@@ -25,15 +26,23 @@ class DQN:
     EPS_DECAY = 0.999992
     BATCH_SIZE = 64
     MEM_SIZE = 1000
+    HIDDEN_NODES = 32
 
     def __init__(self, n_actions: int, state_size, network_path=""):
-        self.eps = 1
+        parameters = get_config()
+        self.eps = parameters.eps_start
+        DQN.GAMMA = parameters.gamma
+        DQN.EPS_END = parameters.eps_end
+        DQN.EPS_DECAY = parameters.eps_decay
+        DQN.BATCH_SIZE = parameters.batch_size
+        DQN.MEM_SIZE = parameters.mem_size
+        DQN.HIDDEN_NODES = parameters.hidden_nodes
 
         if network_path:
             self.network = torch.load(network_path)
             self.network.eval()
         else:
-            self.network = RobotNetwork(32, n_actions, state_size)
+            self.network = RobotNetwork(self.HIDDEN_NODES, n_actions, state_size)
 
         self.optimizer = torch.optim.Adam(self.network.parameters(), lr=0.0001)
         self.memory = deque(maxlen=self.MEM_SIZE)

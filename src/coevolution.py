@@ -1,4 +1,4 @@
-from morphevo.config import get_config
+from util.config import get_config
 from morphevo.evolution import evolution
 
 def start_coevolution():
