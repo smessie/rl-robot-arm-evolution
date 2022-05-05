@@ -11,10 +11,9 @@ class Config:
                 config = yaml.load(stream, yaml.FullLoader)
 
             # morphevo parameters
-            self.generations = config['generations']
-            self.MU = config['mu']
-            # pylint: disable=invalid-name
-            self.LAMBDA = config['lambda']
+            self.evolution_generations = config['evolution_generations']
+            self.evolution_parents = config['evolution_parents']
+            self.evolution_children = config['evolution_children']
             self.crossover_children = config['crossover_children']
             self.workspace_parameters = self.parse_workspace_parameters(config)
 

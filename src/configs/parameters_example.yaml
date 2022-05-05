@@ -1,12 +1,15 @@
 description: "Example config"
 
+# coevolution
+coevolution_generations: 10
+coevolution_parents: 8
+coevolution_rl_amount: 16
+
 # morphevo
-generations: 75
-mu: 8
-lambda: 5
+evolution_generations: 75
+evolution_parents: 8
+evolution_children: 5
 crossover_children: 3
-# mu = # parents
-# lambda = # children
 workspace_type: "moved_cube"
 workspace_cube_offset: [10,0,10]
 workspace_side_length: 10
@@ -22,8 +25,3 @@ hidden_nodes: 32
 
 workspace_discretization: 0.2
 goal_bal_diameter: 0.6
-
-# coevolution
-coevolution_generations: 10
-coevolution_parents: 8
-coevolution_rl_amount: 16

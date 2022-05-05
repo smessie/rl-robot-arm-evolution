@@ -30,7 +30,7 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
 
     parents = []
     if not children:
-        children = generate_arms(amount=parameters.LAMBDA)
+        children = generate_arms(amount=parameters.evolution_children)
 
     for generation in tqdm(range(parameters.generations), desc='Generation'):
         # Evaluate children
@@ -60,14 +60,14 @@ def mutate(mutation_function: Callable, parents: List[Arm]) -> List[Arm]:
 def selection_fitness(population: List[Arm]) -> List[Arm]:
     population_fitnesses = [calculate_fitness(arm) for arm in population]
 
-    parent_indices = np.argsort(population_fitnesses)[-get_config().MU:]
+    parent_indices = np.argsort(population_fitnesses)[-get_config().evolution_parents:]
     parents = [population[i] for i in parent_indices]
 
     return parents
 
 def selection_fitness_diversity(population: List[Arm]) -> List[Arm]:
     current_parents = []
-    for _ in range(get_config().MU):
+    for _ in range(get_config().evolution_parents):
         next_parent = select_next_parent(population, current_parents)
         population.remove(next_parent)
         current_parents.append(next_parent)
@@ -124,7 +124,7 @@ def mutate_with_crossover(parents: List[Arm]) -> List[Arm]:
 
     children = [
         Arm(parent.genome)
-        for parent in alternate(what=parents, times=config.LAMBDA - config.crossover_children)
+        for parent in alternate(what=parents, times=config.evolution_children - config.crossover_children)
     ]
     children += create_crossover_children(parents, config.crossover_children)
 
@@ -145,8 +145,8 @@ def create_crossover_children(parents: List[Arm], amount: int):
 
 
 def save_best_genome(arm: Arm, generation: int):
-    filename = (f'output/{int(time.time())}-mu_{get_config().MU}' +
-                f'-lambda_{get_config().LAMBDA}-generation_{generation}.xml')
+    filename = (f'output/{int(time.time())}-mu_{get_config().evolution_parents}' +
+                f'-lambda_{get_config().evolution_children}-generation_{generation}.xml')
 
     xml_str = minidom.parseString(arm.urdf).toprettyxml(indent="    ")
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
