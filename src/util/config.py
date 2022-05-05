@@ -8,36 +8,36 @@ class Config:
     class __Config:
         def __init__(self, config_file_name: str) -> None:
             with open(config_file_name, 'r', encoding='utf8') as stream:
-                evolution_config = yaml.load(stream, yaml.FullLoader)
+                config = yaml.load(stream, yaml.FullLoader)
 
             # morphevo parameters
-            self.generations = evolution_config['generations']
-            self.MU = evolution_config['mu']
+            self.generations = config['generations']
+            self.MU = config['mu']
             # pylint: disable=invalid-name
-            self.LAMBDA = evolution_config['lambda']
-            self.crossover_children = evolution_config['crossover_children']
-            self.workspace_parameters = self.parse_workspace_parameters(evolution_config)
+            self.LAMBDA = config['lambda']
+            self.crossover_children = config['crossover_children']
+            self.workspace_parameters = self.parse_workspace_parameters(config)
 
             # rl parameters
-            self.gamma = evolution_config['gamma']
-            self.eps_end = evolution_config['eps_end']
-            self.eps_decay = evolution_config['eps_decay']
-            self.batch_size = evolution_config['batch_size']
-            self.mem_size = evolution_config['mem_size']
-            self.eps_start = evolution_config['eps_start']
-            self.hidden_nodes = evolution_config['hidden_nodes']
+            self.gamma = config['gamma']
+            self.eps_end = config['eps_end']
+            self.eps_decay = config['eps_decay']
+            self.batch_size = config['batch_size']
+            self.mem_size = config['mem_size']
+            self.eps_start = config['eps_start']
+            self.hidden_nodes = config['hidden_nodes']
 
-            self.workspace_discretization = evolution_config['workspace_discretization']
-            self.goal_bal_diameter = evolution_config['goal_bal_diameter']
+            self.workspace_discretization = config['workspace_discretization']
+            self.goal_bal_diameter = config['goal_bal_diameter']
 
-        def parse_workspace_parameters(self, evolution_config) -> WorkspaceParameters:
-            if ('workspace_type' in evolution_config
-                and 'workspace_cube_offset' in evolution_config
-                and 'workspace_side_length' in evolution_config):
+        def parse_workspace_parameters(self, config) -> WorkspaceParameters:
+            if ('workspace_type' in config
+                and 'workspace_cube_offset' in config
+                and 'workspace_side_length' in config):
 
-                return WorkspaceParameters(evolution_config['workspace_type'],
-                                           tuple(evolution_config['workspace_cube_offset']),
-                                           evolution_config['workspace_side_length'])
+                return WorkspaceParameters(config['workspace_type'],
+                                           tuple(config['workspace_cube_offset']),
+                                           config['workspace_side_length'])
             return WorkspaceParameters()
 
     instance = None
