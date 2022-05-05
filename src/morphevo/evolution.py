@@ -52,6 +52,8 @@ def evolution():
         children += create_crossover_children(parents, parameters.crossover_children, genome_indexer)
 
         logger.log(generation, parents)
+    
+    return parents
 
 
 def selection_fitness(current_population: List[Genome], generation=0) -> List[Genome]:
