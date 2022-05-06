@@ -211,7 +211,7 @@ public class Builder : MonoBehaviour
         ArticulationDrive xDrive = articulationBody.xDrive;
         xDrive.lowerLimit = tiltingSpec.LowerBound;
         xDrive.upperLimit = tiltingSpec.UpperBound;
-        xDrive.stiffness = 100000;
+        xDrive.stiffness = 80000;
         xDrive.damping = 10000;
         articulationBody.xDrive = xDrive;
 
@@ -239,7 +239,7 @@ public class Builder : MonoBehaviour
             xDrive.upperLimit = rotationSpec.UpperBound;
         }
 
-        xDrive.stiffness = 100000;
+        xDrive.stiffness = 80000;
         xDrive.damping = 10000;
         articulationBody.xDrive = xDrive;
 

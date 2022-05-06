@@ -10,7 +10,7 @@ public class WallBuilder : MonoBehaviour
     private Vector3 startCoordinate = new Vector3(-9f, 1f, 10f);
     private float scaleX = 2f;
     private float scaleY = 2f;
-    private float scaleZ = 0.5f;
+    private float scaleZ = 1f;
 
     private List<GameObject> _wallTiles = new List<GameObject>();
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class JointController : MonoBehaviour
@@ -31,11 +32,17 @@ public class JointController : MonoBehaviour
         articulationBody.xDrive = xDrive;
     }
 
+    public void RebuildRobot() {
+
+    }
+
     public void ResetJoints()
     {
+        RebuildRobot();
         foreach (var articulationBody in ArticulationBodies)
         {
             var xDrive = articulationBody.xDrive;
+            float previousLimit = xDrive.upperLimit;
             xDrive.target = 0f;
             articulationBody.xDrive = xDrive;
         }
@@ -43,6 +50,7 @@ public class JointController : MonoBehaviour
 
     public void RandomizeJoints()
     {
+        RebuildRobot();
         foreach (var articulationBody in ArticulationBodies)
         {
             var xDrive = articulationBody.xDrive;
