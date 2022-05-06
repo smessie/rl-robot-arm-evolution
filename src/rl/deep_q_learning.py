@@ -46,9 +46,10 @@ class DeepQLearner:
 
         self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
 
-        self.x_range = [-1.5, 1.5]
-        self.y_range = [3, 6]
-        self.z_range = [6, 9]
+        workspace = Workspace(*parameters.workspace_parameters)
+        self.x_range = workspace.get_x_range()
+        self.y_range = workspace.get_y_range()
+        self.z_range = workspace.get_z_range()
 
         self.actions = self.get_action_space(self.env.joint_amount)
         self.dqn = self.make_dqn(network_path)
