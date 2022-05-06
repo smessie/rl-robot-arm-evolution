@@ -63,7 +63,7 @@ if __name__ == '__main__':
     elif sys.argv[1] == "rl":
         start_rl()
     elif sys.argv[1] == "coevolution":
-        start_coevolution()
+        init_coevolution()
     else:
         print("Please specify a valid command ('start_test_env', 'morphevo', 'rl', 'coevolution')")
         sys.exit()
