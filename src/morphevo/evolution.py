@@ -32,7 +32,7 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
     if not children:
         children = generate_arms(amount=parameters.evolution_children)
 
-    for generation in tqdm(range(parameters.generations), desc='Generation'):
+    for generation in tqdm(range(parameters.coevolution_generations), desc='Generation'):
         # Evaluate children
         children = list(pool.map_unordered(
             lambda evaluator, arm: evaluator.eval_genome.remote(arm.genome), children))

@@ -129,8 +129,8 @@ class Genome:
         return hash((
             self.anchor_can_rotate,
             self.amount_of_modules,
-            self.module_lengths,
-            self.module_types,
+            tuple(self.module_lengths),
+            tuple(self.module_types),
             time.ctime(),
         ))
 

@@ -10,7 +10,7 @@ def start_coevolution():
     parents = []
     children = generate_arms(amount=config.evolution_children)
 
-    for _ in config.coevolution_generations:
+    for _ in range(config.coevolution_generations):
         evolved_arms = evolution(children)
 
         trained_arms = train(evolved_arms)
