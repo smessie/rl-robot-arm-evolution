@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['deepqlearner_0',['DeepQLearner',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html',1,'rl::deep_q_learning']]],
-  ['dqn_1',['DQN',['../classrl_1_1dqn_1_1DQN.html',1,'rl::dqn']]]
+  ['config_0',['Config',['../classutil_1_1config_1_1Config.html',1,'util::config']]],
+  ['creationsc_1',['CreationSC',['../classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html',1,'environment::sidechannels::creation_sc']]]
 ];
