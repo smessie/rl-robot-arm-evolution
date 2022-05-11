@@ -5,8 +5,8 @@ import ray
 from mlagents_envs.exception import UnityWorkerInUseException
 
 from environment.environment import SimEnv
-from morphevo.genetic_encoding import Genome
 from morphevo.workspace import Workspace
+from util.arm import Arm
 
 
 @ray.remote(num_cpus=1)
@@ -27,8 +27,8 @@ class Evaluator:
                              use_graphics=self.use_graphics,
                              worker_id=worker_id)
                 env_created = True
-            except UnityWorkerInUseException:
-                worker_id = np.random.randint(low=1000, high=9000) + worker_id
+            except (UnityWorkerInUseException, OverflowError) as _ :
+                worker_id = (np.random.randint(low=1000, high=9000) + worker_id) % 65535
 
         return env
 
@@ -113,15 +113,15 @@ class Evaluator:
 
             prev_angles = current_angles
 
-    def eval_genome(self, genome: Genome) -> Genome:
-        self.env = self._initialize_environment(genome.get_urdf(), genome.genome_id)
+    def eval_arm(self, arm: Arm) -> Arm:
+        self.env = self._initialize_environment(arm.genome.get_urdf(), arm.genome.genome_id)
         self.env.reset()
 
         joint_angles = self._generate_joint_angles(self.env.joint_amount)
         observation_parser = self._create_observation_parser()
 
         for target_angles in joint_angles:
-            self._step_until_target_angles(target_angles, genome.workspace, observation_parser)
+            self._step_until_target_angles(target_angles, arm.genome.workspace, observation_parser)
 
         self.env.close()
-        return genome
+        return arm

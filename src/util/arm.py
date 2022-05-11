@@ -5,9 +5,9 @@ from rl.dqn import DQN
 
 
 class Arm:
-    def __init__(self, parent_genome: Optional[Genome] = None) -> None:
+    def __init__(self, genome: Optional[Genome] = None) -> None:
         self.urdf_path: str = ""
-        self.genome: Genome = parent_genome if parent_genome else Genome()
+        self.genome: Genome = genome if genome else Genome()
         self.rl_model: DQN = None
         self.success_rate: float = None
 

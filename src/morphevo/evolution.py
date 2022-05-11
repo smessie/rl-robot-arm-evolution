@@ -35,7 +35,7 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
     for generation in tqdm(range(parameters.coevolution_generations), desc='Generation'):
         # Evaluate children
         children = list(pool.map_unordered(
-            lambda evaluator, arm: evaluator.eval_genome.remote(arm.genome), children))
+            lambda evaluator, arm: evaluator.eval_arm.remote(arm), children))
 
         population = children + parents
 
@@ -140,7 +140,8 @@ def create_crossover_children(parents: List[Arm], amount: int):
         while parent1 is parent2:
             parent2 = parents[randint(0, len(parents) - 1)]
 
-        children.append(parent1.genome.crossover(parent2.genome))
+        children.append(Arm(parent1.genome.crossover(parent2.genome)))
+
     return children
 
 

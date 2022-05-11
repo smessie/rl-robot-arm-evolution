@@ -16,8 +16,8 @@ from util.config import get_config
 class Genome:
     LENGTH_LOWER_BOUND = 1
     LENGTH_UPPER_BOUND = 4
-    MIN_AMOUNT_OF_MODULES = 2
-    MAX_AMOUNT_OF_MODULES = 4
+    MIN_AMOUNT_OF_MODULES = 1
+    MAX_AMOUNT_OF_MODULES = 1
 
     def __init__(self, parent_genome: Optional[Genome] = None) -> None:
         self.module_choices = []
