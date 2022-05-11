@@ -1,53 +1,59 @@
 import random
-from shutil import move
 import signal
 import sys
 import xml.etree.ElementTree as ET
-from typing import Tuple
+from typing import List, Tuple
 
 import numpy as np
 from tqdm import tqdm
 
-from configs.env import PATH_TO_UNITY_EXECUTABLE
-from configs.walls import WALL_9x9_GAP_3x3, WALL_9x9_GAP_9x3
+from configs.env import (PATH_TO_ROBOT_URDF, PATH_TO_UNITY_EXECUTABLE,
+                         RL_USE_GRAPHICS_TESTING, RL_USE_GRAPHICS_TRAINING)
+from configs.walls import WALL_9x9_GAP_9x3
 from environment.environment import SimEnv
+from morphevo.workspace import Workspace
 from rl.dqn import DQN
 from rl.logger import Logger
+from util.arm import Arm
+from util.config import get_config
 
 
 class DeepQLearner:
-    ACTIONS = [
-        [1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 0, 1],
-        [-1, 0, 0, 0, 0, 0],
-        [0, -1, 0, 0, 0, 0],
-        [0, 0, -1, 0, 0, 0],
-        [0, 0, 0, -1, 0, 0],
-        [0, 0, 0, 0, -1, 0],
-        [0, 0, 0, 0, 0, -1],
-    ]
+    """! The Deep Q learner class.
+    Defines the class that will learn based on a Deep-Q Network.
+    """
 
     WORKSPACE_DISCRETIZATION = 0.2
     GOAL_BAL_DIAMETER = 0.6
 
-    def __init__(self, env_path: str, urdf_path: str,
-                 use_graphics: bool = False, network_path = "") -> None:
-        urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
-        self.env = SimEnv(env_path, urdf, use_graphics=use_graphics)
+    def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
+                 use_graphics: bool = False, network_path="") -> None:
+        """! The DeepQLearner class initializer.
+        @param env_path Path of the environment executable.
+        @param urdf_path Path to the robot urdf file.
+        @param urdf Instance that represents the robot urdf.
+        @param use_graphics Boolean that turns graphics on or off.
+        @param network_path Path to the Deep-Q network that should be used.
+        @return  An instance of the DeepQLearner class.
+        """
 
-        self.amount_of_modules = self.env.joint_amount
+        if urdf_path:
+            urdf = ET.tostring(ET.parse(urdf_path).getroot(), encoding='unicode')
+        assert urdf is not None, "Error: No urdf given."
 
-        self.x_range = [-8,8]
-        self.y_range = [3,6]
-        self.z_range = [15,18]
+        parameters = get_config()
+        DeepQLearner.WORKSPACE_DISCRETIZATION = parameters.workspace_discretization
+        DeepQLearner.GOAL_BAL_DIAMETER = parameters.goal_bal_diameter
 
-        # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
-        # self.dqn = DQN(len(self.ACTIONS), state_size=6 + self.amount_of_modules * 4, network_path=network_path)
-        self.dqn = DQN(len(self.ACTIONS), state_size=6, network_path=network_path)
+        self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
+
+        workspace = Workspace(*parameters.workspace_parameters)
+        self.x_range = workspace.get_x_range()
+        self.y_range = workspace.get_y_range()
+        self.z_range = workspace.get_z_range()
+
+        self.actions = self.get_action_space(self.env.joint_amount)
+        self.dqn = self.make_dqn(network_path)
 
         self.training = not network_path
         self.penalty = 0
@@ -56,21 +62,27 @@ class DeepQLearner:
 
     def handler(self, *_):
         if self.training:
-            res = input("Ctrl-c was pressed. Do you want to save the QTable? (y/n) ")
+            res = input("Ctrl-c was pressed. Do you want to save the DQN? (y/n) ")
             if res == 'y':
                 self.save()
-                sys.exit(1)
+            sys.exit(1)
 
-    def save(self):
-        self.dqn.save("./networks/most_recently_saved_network.pkl")
+    def save(self, file_name = "./rl/networks/most_recently_saved_network.pkl"):
+        self.dqn.save(file_name)
 
-    def _generate_actions(self, nr_of_modules):
-        pass
+    def get_action_space(self, number_of_joints):
+        actions = np.identity(number_of_joints)
+        return np.concatenate([actions, (-1)*actions])
+
+    def make_dqn(self, network_path=""):
+        # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
+        # self.dqn = DQN(len(self.actions), state_size=6 + self.joint_amount * 4, network_path=network_path)
+        return DQN(len(self.actions), state_size=6, network_path=network_path)
 
     def _calculate_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = goal - pos
 
-        result = [0,0,0]
+        result = [0, 0, 0]
         for i, axis_direction in enumerate(direction):
             if axis_direction != 0:
                 result[i] = axis_direction / np.abs(axis_direction)
@@ -81,7 +93,7 @@ class DeepQLearner:
         goal = []
         for axis_range in [self.x_range, self.y_range, self.z_range]:
             range_size = axis_range[1] - axis_range[0]
-            goal.append(random.random()*range_size + axis_range[0])
+            goal.append(random.random() * range_size + axis_range[0])
         return np.array(goal)
 
     def _calculate_state(self, observations: np.ndarray,
@@ -91,11 +103,11 @@ class DeepQLearner:
         # [EEPOS, GOAL_y, GOAL_z]
         ee_pos = self._get_end_effector_position(observations)
 
-        # return np.array([*ee_pos, *observations[:self.amount_of_modules * 4], *goal], dtype=float)
+        # return np.array([*ee_pos, *observations[:self.joint_amount * 4], *goal], dtype=float)
         return np.array([*ee_pos, *goal], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
-        return observations[self.amount_of_modules * 4:self.amount_of_modules * 4 + 3]
+        return observations[self.env.joint_amount * 4:self.env.joint_amount * 4 + 3]
 
     def _calculate_reward(self, prev_pos: np.ndarray, new_pos: np.ndarray,
                           goal: np.ndarray) -> Tuple[float, bool]:
@@ -104,9 +116,7 @@ class DeepQLearner:
 
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
             return 20, True
-        
         moved_distance = prev_distance_from_goal - new_distance_from_goal
-
         if moved_distance < 0.2:
             self.penalty = min(self.penalty + 0.2, 5)
         else:
@@ -116,14 +126,14 @@ class DeepQLearner:
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
-        actions = np.array(self.ACTIONS[action_index])
+        actions = np.array(self.actions[action_index])
 
         # Execute the action in the environment
         observations = self.env.step(actions)
         return action_index, observations
 
     def learn(self, num_episodes: int = 10000,
-              steps_per_episode: int = 500) -> None:
+              steps_per_episode: int = 1000, logging: bool = False) -> float:
 
         total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
@@ -155,31 +165,53 @@ class DeepQLearner:
 
                 # network update
                 if self.training:
-                    self.dqn.update(state, new_state,action_index, reward, finished)
+                    self.dqn.update(state, new_state, action_index, reward, finished)
 
                 episode_step += 1
                 state = new_state
 
-            self.logger.log_episode(episode, state, goal, episode_step, total_finished, reward, self.dqn.eps)
+            if logging:
+                self.logger.log_episode(episode, state, goal, episode_step, total_finished, reward, self.dqn.eps)
 
-        self.save()
+        if self.training:
+            self.save()
+
         self.env.close()
+        return total_finished/num_episodes
 
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
-            return np.random.randint(len(self.ACTIONS))
+            return np.random.randint(len(self.actions))
         return self.dqn.lookup(state)
 
+    def get_score(self, number_of_joints: int, workspace: Workspace, episodes: int = 200):
+        self.x_range = workspace.get_x_range()
+        self.y_range = workspace.get_y_range()
+        self.z_range = workspace.get_z_range()
 
-def start_rl():
-    env_path = PATH_TO_UNITY_EXECUTABLE
-    urdf_path = "environment/robot.urdf"
+        self.actions = self.get_action_space(number_of_joints)
+        self.dqn = self.make_dqn()
+        return self.learn(num_episodes=episodes)
 
-    if len(sys.argv) == 3:
-        model = DeepQLearner(env_path, urdf_path, use_graphics=True, network_path=sys.argv[2])
+def rl(network_path=""):
+    if network_path:
+        model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE,
+                            urdf_path=PATH_TO_ROBOT_URDF,
+                            use_graphics=RL_USE_GRAPHICS_TESTING,
+                            network_path=network_path)
     else:
-        model = DeepQLearner(env_path, urdf_path, use_graphics=True)
+        model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE,
+                            urdf_path=PATH_TO_ROBOT_URDF,
+                            use_graphics=RL_USE_GRAPHICS_TRAINING)
 
     model.env.build_wall(WALL_9x9_GAP_9x3)
     signal.signal(signal.SIGINT, model.handler)
-    model.learn(steps_per_episode=1000)
+    model.learn(logging=True)
+
+def train(arms: List[Arm], num_episodes: int = 50, steps_per_episode: int = 1000) -> List[Arm]:
+    for arm in arms:
+        model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE, urdf=arm.urdf, use_graphics=RL_USE_GRAPHICS_TRAINING)
+        arm.success_rate = model.learn(num_episodes=num_episodes, steps_per_episode=steps_per_episode, logging=True)
+        arm.rl_model = model.dqn
+
+    return arms

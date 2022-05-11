@@ -5,8 +5,8 @@ import numpy as np
 
 
 class Workspace:
-    def __init__(self, side_length: float = 13, discretization_step: float = 1.0, workspace: str = 'normalized_cube',
-                 cube_offset: tuple = (0, 0, 0), cube_open_side: str = 'top'):
+    def __init__(self, workspace: str = 'normalized_cube', cube_offset: tuple = (0, 0, 0), side_length: float = 13,
+                 discretization_step: float = 1.0, cube_open_side: str = 'top'):
         """
         side_length:            the length of each side in case the workspace is a normalized or moved cube
         discretization_step:    step size for discretization
@@ -106,6 +106,18 @@ class Workspace:
             visit_counts += len(v)
 
         return visit_counts / self.n_grid_cells
+
+    def get_x_range(self) -> List[float]:
+        offset_x = self.cube_offset[0]
+        return [offset_x - self.side_length / 2, offset_x + self.side_length / 2]
+
+    def get_y_range(self) -> List[float]:
+        offset_y = self.cube_offset[1]
+        return [offset_y, offset_y + self.side_length]
+
+    def get_z_range(self) -> List[float]:
+        offset_z = self.cube_offset[2]
+        return [offset_z - self.side_length / 2, offset_z + self.side_length / 2]
 
 
 class WorkspaceNotFoundError(Exception):

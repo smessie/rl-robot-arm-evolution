@@ -1,84 +1,95 @@
 import locale
 import time
-from itertools import count
 from math import sqrt
 from random import randint
-from typing import List
+from typing import Callable, List, Optional
 from xml.dom import minidom
 
 import numpy as np
 from ray.util import ActorPool
 from tqdm import tqdm
 
-from configs.env import NUM_CORES, PATH_TO_UNITY_EXECUTABLE, USE_GRAPHICS
+from configs.env import (MORPHEVO_USE_GRAPHICS, NUM_CORES,
+                         PATH_TO_UNITY_EXECUTABLE)
 from morphevo.evaluator import Evaluator
-from morphevo.genetic_encoding import Genome
 from morphevo.logger import Logger
-from morphevo.utils import alternate, normalize
+from util.arm import Arm
+from util.config import get_config
+from util.util import alternate, generate_arms, normalize
 
 
-def evolution(parameters, workspace_type: str = 'normalized_cube',
-              workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13):
-    genome_indexer = count(0)
+def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
+    parameters = get_config()
 
     # pylint: disable=no-member
-    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=USE_GRAPHICS)
+    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=MORPHEVO_USE_GRAPHICS)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 
     logger = Logger()
 
     parents = []
-    children = [Genome(next(genome_indexer), workspace_type=workspace_type, workspace_cube_offset=workspace_cube_offset,
-                       workspace_side_length=workspace_side_length)
-                for _ in range(parameters.LAMBDA)]
+    if not children:
+        children = generate_arms(amount=parameters.evolution_children)
 
-    for generation in tqdm(range(parameters.generations), desc='Generation'):
+    for generation in tqdm(range(parameters.coevolution_generations), desc='Generation'):
         # Evaluate children
         children = list(pool.map_unordered(
-            lambda evaluator, genome: evaluator.eval_genome.remote(genome), children))
+            lambda evaluator, arm: evaluator.eval_arm.remote(arm), children))
 
         population = children + parents
 
-        parents = selection_fitness(population, parameters)
+        parents = selection_fitness(population)
 
-        save_best_genome(parents[0], generation, parameters)
+        save_best_genome(parents[0], generation)
 
-        # create new children from selected parents
-        children = [
-            Genome(next(genome_indexer), parent_genome=parent, workspace_type=workspace_type,
-                   workspace_cube_offset=workspace_cube_offset, workspace_side_length=workspace_side_length)
-            for parent in alternate(what=parents, times=parameters.LAMBDA - parameters.crossover_children)
-        ]
-        children += create_crossover_children(parents, parameters.crossover_children, genome_indexer)
+        children = mutate_with_crossover(parents)
 
         logger.log(generation, parents)
-
-
-def selection_fitness(current_population: List[Genome], evolution_parameters) -> List[Genome]:
-
-    population_fitnesses = [calculate_fitness(genome) for genome in current_population]
-
-    parent_indices = np.argsort(population_fitnesses)[-evolution_parameters.MU:]
-    parents = [current_population[i] for i in parent_indices]
 
     return parents
 
 
-def selection_fitness_diversity(current_population: List[Genome], evolution_parameters) -> List[Genome]:
+# TODOo try to make selection something with a calculate_fitness function (maybe difficult bcs select_fit_div function)
+def selection(selection_function: Callable, population: List[Arm]) -> List[Arm]:
+    return selection_function(population)
+
+
+def mutate(mutation_function: Callable, parents: List[Arm]) -> List[Arm]:
+    return mutation_function(parents)
+
+
+def selection_fitness(population: List[Arm]) -> List[Arm]:
+    population_fitnesses = [calculate_fitness(arm) for arm in population]
+
+    parent_indices = np.argsort(population_fitnesses)[-get_config().evolution_parents:]
+    parents = [population[i] for i in parent_indices]
+
+    return parents
+
+
+def selection_fitness_diversity(population: List[Arm]) -> List[Arm]:
     current_parents = []
-    for _ in range(evolution_parameters.MU):
-        next_parent = select_next_parent(current_population, current_parents)
-        current_population.remove(next_parent)
+    for _ in range(get_config().evolution_parents):
+        next_parent = select_next_parent(population, current_parents)
+        population.remove(next_parent)
         current_parents.append(next_parent)
 
     return current_parents
 
 
-def select_next_parent(population: List[Genome], parents: List[Genome]) -> Genome:
+def selection_succes_rate(population: List[Arm]) -> List[Arm]:
+    population_fitnesses = [arm.success_rate for arm in population]
 
-    population_fitnesses = [calculate_fitness(genome) for genome in population]
-    population_diversities = [calculate_diversity(genome, parents) for genome in population]
+    parent_indices = np.argsort(population_fitnesses)[-get_config().coevolution_parents:]
+    parents = [population[i] for i in parent_indices]
+
+    return parents
+
+
+def select_next_parent(population: List[Arm], parents: List[Arm]) -> Arm:
+    population_fitnesses = [calculate_fitness(arm) for arm in population]
+    population_diversities = [calculate_diversity(arm, parents) for arm in population]
 
     selection_scores = calculate_selection_scores(population_fitnesses, population_diversities)
 
@@ -88,15 +99,15 @@ def select_next_parent(population: List[Genome], parents: List[Genome]) -> Genom
     return next_parent
 
 
-def calculate_fitness(genome: Genome) -> float:
-    return genome.workspace.calculate_coverage()
+def calculate_fitness(arm: Arm) -> float:
+    return arm.genome.workspace.calculate_coverage()
 
 
-def calculate_diversity(genome: Genome, others: List[Genome]) -> float:
+def calculate_diversity(arm: Arm, others: List[Arm]) -> float:
     if not others:
         return 0
-    diversity_from_others = [genome.calculate_diversity_from(other) for other in others]
-    average_diversity = sum(diversity_from_others)/len(diversity_from_others)
+    diversity_from_others = [arm.genome.calculate_diversity_from(other.genome) for other in others]
+    average_diversity = sum(diversity_from_others) / len(diversity_from_others)
 
     return average_diversity
 
@@ -106,14 +117,26 @@ def calculate_selection_scores(population_fitnesses: List[float], population_div
     diversities_normalized = normalize(population_diversities)
 
     selection_scores = [
-        sqrt((1 - fitness)**2 + (1 - diversity)**2)
-                        for fitness, diversity in zip(fitnesses_normalized, diversities_normalized)
+        sqrt((1 - fitness) ** 2 + (1 - diversity) ** 2)
+        for fitness, diversity in zip(fitnesses_normalized, diversities_normalized)
     ]
 
     return selection_scores
 
 
-def create_crossover_children(parents: List[Genome], amount: int, genome_indexer):
+def mutate_with_crossover(parents: List[Arm]) -> List[Arm]:
+    config = get_config()
+
+    children = [
+        Arm(parent.genome)
+        for parent in alternate(what=parents, times=config.evolution_children - config.crossover_children)
+    ]
+    children += create_crossover_children(parents, config.crossover_children)
+
+    return children
+
+
+def create_crossover_children(parents: List[Arm], amount: int):
     if len(parents) < 1:
         return []
     children = []
@@ -123,14 +146,16 @@ def create_crossover_children(parents: List[Genome], amount: int, genome_indexer
         while parent1 is parent2:
             parent2 = parents[randint(0, len(parents) - 1)]
 
-        children.append(parent1.crossover(parent2, next(genome_indexer)))
+        children.append(Arm(parent1.genome.crossover(parent2.genome)))
+
     return children
 
 
-def save_best_genome(best_genome, generation, evolution_parameters):
-    filename = (f'output/{int(time.time())}-mu_{evolution_parameters.MU}' +
-                f'-lambda_{evolution_parameters.LAMBDA}-generation_{generation}.xml')
+def save_best_genome(arm: Arm, generation: int):
+    filename = (f'output/{int(time.time())}-mu_{get_config().evolution_parents}' +
+                f'-lambda_{get_config().evolution_children}-generation_{generation}.xml')
 
-    xml_str = minidom.parseString(best_genome.get_urdf()).toprettyxml(indent="    ")
+    xml_str = minidom.parseString(arm.urdf).toprettyxml(indent="    ")
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
         f.write(xml_str)
+    arm.urdf_path = filename

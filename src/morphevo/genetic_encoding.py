@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+import time
 from enum import Enum
 from typing import Optional
 
@@ -9,18 +10,16 @@ import numpy as np
 from configs.env import MODULES_MAY_ROTATE, MODULES_MAY_TILT
 from morphevo.urdf_generator import URDFGenerator
 from morphevo.workspace import Workspace
+from util.config import get_config
 
 
 class Genome:
     LENGTH_LOWER_BOUND = 1
     LENGTH_UPPER_BOUND = 4
-    MIN_AMOUNT_OF_MODULES = 3
-    MAX_AMOUNT_OF_MODULES = 3
+    MIN_AMOUNT_OF_MODULES = 2
+    MAX_AMOUNT_OF_MODULES = 4
 
-    def __init__(self, genome_id: int, parent_genome: Optional[Genome] = None, workspace_type: str = 'normalized_cube',
-                 workspace_cube_offset: tuple = (0, 0, 0), workspace_side_length: float = 13) -> None:
-        self.genome_id = genome_id
-
+    def __init__(self, parent_genome: Optional[Genome] = None) -> None:
         self.module_choices = []
         if MODULES_MAY_ROTATE:
             self.module_choices.append(ModuleType.ROTATING)
@@ -30,18 +29,22 @@ class Genome:
             self.module_choices.append(ModuleType.TILTING)
 
         if parent_genome is not None:
+            self.anchor_can_rotate = parent_genome.anchor_can_rotate
             self.amount_of_modules = parent_genome.amount_of_modules
             self.module_lengths = parent_genome.module_lengths.copy()
             self.module_types = parent_genome.module_types.copy()
             self.mutate()
         else:
+            self.anchor_can_rotate = True
             self.amount_of_modules = random.randint(self.MIN_AMOUNT_OF_MODULES, self.MAX_AMOUNT_OF_MODULES)
             self.module_lengths = np.random.rand(
                 self.amount_of_modules) * (self.LENGTH_UPPER_BOUND - self.LENGTH_LOWER_BOUND) + self.LENGTH_LOWER_BOUND
             self.module_types = np.random.choice(self.module_choices, self.amount_of_modules)
 
-        self.workspace = Workspace(side_length=workspace_side_length, workspace=workspace_type,
-                                   cube_offset=workspace_cube_offset)
+        workspace_parameters = get_config().workspace_parameters
+        self.workspace = Workspace(*workspace_parameters)
+
+        self.genome_id = hash(self)
 
     def mutate(self) -> None:
         mu, sigma = 0, 0.1
@@ -56,7 +59,7 @@ class Genome:
 
     def get_urdf(self) -> str:
         urdf_generator = URDFGenerator(self.genome_id)
-        urdf_generator.add_anchor(length=1, can_rotate=True)
+        urdf_generator.add_anchor(length=1, can_rotate=self.anchor_can_rotate)
         for module_length, module_type in zip(self.module_lengths, self.module_types):
             urdf_generator.add_module(module_length,
                                       can_tilt=module_type in (ModuleType.TILTING, ModuleType.TILTING_AND_ROTATING),
@@ -82,8 +85,8 @@ class Genome:
         return (sum(module_length_diversity) / len(module_length_diversity)) * \
                (1 + different_types_count / len(module_length_diversity))
 
-    def crossover(self, other_genome: Genome, crossover_genome_id: int) -> Genome:
-        genome = Genome(crossover_genome_id)
+    def crossover(self, other_genome: Genome) -> Genome:
+        genome = Genome()
 
         # make combination of the modules
         module_lengths = []
@@ -110,6 +113,26 @@ class Genome:
         genome.module_types = np.array(module_types)
         genome.amount_of_modules = len(genome.module_lengths)
         return genome
+
+    def get_amount_of_joints(self):
+        joints_amount = 0
+        for module in self.module_types:
+            if module == ModuleType.TILTING_AND_ROTATING:
+                joints_amount += 2
+            else:
+                joints_amount += 1
+        if self.anchor_can_rotate:
+            joints_amount += 1
+        return joints_amount
+
+    def __hash__(self):
+        return hash((
+            self.anchor_can_rotate,
+            self.amount_of_modules,
+            tuple(self.module_lengths),
+            tuple(self.module_types),
+            time.ctime(),
+        ))
 
 
 class ModuleType(Enum):
