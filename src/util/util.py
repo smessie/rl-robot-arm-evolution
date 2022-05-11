@@ -1,3 +1,8 @@
+from util.arm import Arm
+
+
+def generate_arms(amount: int):
+    return [Arm() for _ in range(amount)]
 
 def alternate(what, times):
     alternations = []

@@ -1,0 +1,27 @@
+description: "Example config"
+
+coevolution:
+  coevolution_generations: 10
+  coevolution_parents: 8
+  coevolution_rl_amount: 16
+
+morphevo:
+  evolution_generations: 75
+  evolution_parents: 8
+  evolution_children: 5
+  crossover_children: 3
+  workspace_type: "moved_cube"
+  workspace_cube_offset: [10,0,10]
+  workspace_side_length: 10
+
+rl:
+  gamma: 0.99
+  eps_end: 0.1
+  eps_decay: 0.999992
+  batch_size: 64
+  mem_size: 1000
+  eps_start: 1
+  hidden_nodes: 32
+
+  workspace_discretization: 0.2
+  goal_bal_diameter: 0.6
