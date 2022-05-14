@@ -122,7 +122,7 @@ class DeepQLearner:
         else:
             self.penalty = max(self.penalty - 0.2, 0)
 
-        return 10*(moved_distance) - self.penalty, False
+        return 10*(moved_distance) - self.penalty - new_distance_from_goal, False
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
