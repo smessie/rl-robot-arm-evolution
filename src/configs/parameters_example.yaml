@@ -11,7 +11,7 @@ morphevo:
   evolution_children: 5
   crossover_children: 3
   workspace_type: "moved_cube"
-  workspace_cube_offset: [10,0,10]
+  workspace_cube_offset: [0,10,10] # same as center of gap
   workspace_side_length: 10
 
 rl:

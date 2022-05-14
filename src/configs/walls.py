@@ -10,6 +10,10 @@ WALL_9x9_GAP_9x3 = [
     [1, 1, 1, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 1, 1, 1]
 ]
+# bottom left coord = (-9, 1, 10) (x,y,z)
+# tile width = 2
+# tile amount = 9x9
+WALL_9x9_GAP_9x3_CENTER_COORD = (0, 10, 10) # (-9 + (9*2)/2, 1 + (9*2)/2, 10)
 
 WALL_9x9_GAP_3x3 = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1],
