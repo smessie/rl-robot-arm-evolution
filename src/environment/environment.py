@@ -11,7 +11,7 @@ from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 
 from configs.env import PATH_TO_UNITY_EXECUTABLE
-from configs.walls import WALL_9x9_GAP_3x3, WALL_9x9_GAP_9x3
+from configs.walls import WALL_13x19_GAP_13x5, WALL_9x9_GAP_3x3, WALL_9x9_GAP_9x3
 from environment.sidechannels.creation_sc import CreationSC
 from environment.sidechannels.goal_sc import GoalSC
 from environment.sidechannels.wall_sc import WallSC
@@ -128,11 +128,11 @@ def test_environment():
     # env.pause(150)
     # for _ in range(0, 800):
     #     env.step(np.array([0.1, 0, 0, 0]))
-    env.pause(200)
-    env.build_wall(WALL_9x9_GAP_9x3)
-    env.pause(150)
+    env.pause(400)
+    env.build_wall(WALL_13x19_GAP_13x5)
+    env.pause(250)
     env.build_wall(WALL_9x9_GAP_3x3)
-    env.pause(150)
+    env.pause(250)
     env.build_wall([[]])
     env.pause(1000)
 
