@@ -22,7 +22,7 @@ class Config:
                 self.evolution_parents = morphevo['evolution_parents']
                 self.evolution_children = morphevo['evolution_children']
                 self.crossover_children = morphevo['crossover_children']
-                self.workspace_parameters = self.parse_workspace_parameters(config)
+                self.workspace_parameters = self.parse_workspace_parameters(morphevo)
 
             if 'rl' in config:
                 rl = config['rl']

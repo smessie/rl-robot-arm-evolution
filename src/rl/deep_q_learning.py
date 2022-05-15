@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 from configs.env import (PATH_TO_ROBOT_URDF, PATH_TO_UNITY_EXECUTABLE,
                          RL_USE_GRAPHICS_TESTING, RL_USE_GRAPHICS_TRAINING)
-from configs.walls import WALL_9x9_GAP_9x3, WALL_9x9_GAP_9x3_CENTER_COORD
+from configs.walls import WALL_13x19_GAP_13x5, WALL_13x19_GAP_13x5_CENTER_COORD
 from environment.environment import SimEnv
 from morphevo.workspace import Workspace
 from rl.dqn import DQN
@@ -51,6 +51,11 @@ class DeepQLearner:
         self.x_range = workspace.get_x_range()
         self.y_range = workspace.get_y_range()
         self.z_range = workspace.get_z_range()
+        print(self.x_range)
+        print(self.y_range)
+        print(self.z_range)
+        print((*workspace.cube_offset, workspace.side_length))
+        self.env.set_workspace((*workspace.cube_offset, workspace.side_length))
 
         self.actions = self.get_action_space(self.env.joint_amount)
         self.dqn = self.make_dqn(network_path)
@@ -104,7 +109,7 @@ class DeepQLearner:
         ee_pos = self._get_end_effector_position(observations)
 
         # return np.array([*ee_pos, *observations[:self.joint_amount * 4], *goal], dtype=float)
-        distance_to_center_of_gap = np.linalg.norm(ee_pos - WALL_9x9_GAP_9x3_CENTER_COORD)
+        distance_to_center_of_gap = np.linalg.norm(ee_pos - WALL_13x19_GAP_13x5_CENTER_COORD)
         return np.array([*ee_pos, *goal, distance_to_center_of_gap], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
@@ -200,11 +205,13 @@ def rl(network_path=""):
                             use_graphics=RL_USE_GRAPHICS_TESTING,
                             network_path=network_path)
     else:
+        print(RL_USE_GRAPHICS_TRAINING)
+
         model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE,
                             urdf_path=PATH_TO_ROBOT_URDF,
                             use_graphics=RL_USE_GRAPHICS_TRAINING)
 
-    model.env.build_wall(WALL_9x9_GAP_9x3)
+    model.env.build_wall(WALL_13x19_GAP_13x5)
     signal.signal(signal.SIGINT, model.handler)
     model.learn(logging=True)
 
