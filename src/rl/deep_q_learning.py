@@ -118,13 +118,15 @@ class DeepQLearner:
         new_distance_from_goal = np.linalg.norm(new_pos - goal)
 
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
-            return 20, True
+            return 15, True
         moved_distance = prev_distance_from_goal - new_distance_from_goal
-        if moved_distance < 0.2:
-            self.penalty = min(self.penalty + 0.2, 5)
-        else:
-            self.penalty = max(self.penalty - 0.2, 0)
-        return 10*moved_distance - self.penalty - new_distance_from_goal/2, False
+       # if moved_distance < 0.2:
+           # self.penalty = min(self.penalty + 0.2, 5)
+       # else:
+           # self.penalty = max(self.penalty - 0.2, 0)
+
+        # return 10*moved_distance, False
+        return 2-new_distance_from_goal/2,  False
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
@@ -206,7 +208,7 @@ def rl(network_path=""):
                             urdf_path=PATH_TO_ROBOT_URDF,
                             use_graphics=RL_USE_GRAPHICS_TRAINING)
 
-    model.env.build_wall(WALL_13x19_GAP_13x5)
+    #model.env.build_wall(WALL_13x19_GAP_13x5)
     signal.signal(signal.SIGINT, model.handler)
     model.learn(logging=True)
 

@@ -57,7 +57,7 @@ class SimEnv(gym.Env):
                                worker_id=self.worker_id,
                                no_graphics=not self.use_graphics)
         if self.use_graphics:
-            timescale = 5.
+            timescale = 1.
         else:
             timescale = 40.
         conf_channel.set_configuration_parameters(time_scale=timescale)
