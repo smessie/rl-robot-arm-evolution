@@ -18,6 +18,8 @@ public class Builder : MonoBehaviour
 
     public GameObject anchor;
 
+    private RobotSpecification robotSpecification = null;
+    private List<GameObject> allRobotParts = new List<GameObject>();
     private GameObject endEffector;
 
     private List<ArticulationBody> _articulationBodies = new List<ArticulationBody>();
@@ -68,18 +70,46 @@ public class Builder : MonoBehaviour
     {
         // Parse URDF
         try {
-            endEffector = anchor;
+            robotSpecification = ParseURDF(urdf);
+            return BuildAgent(robotSpecification);
+        } catch {
+            return false;
+        }
+    }
 
-            RobotSpecification robotSpec = ParseURDF(urdf);
+    public bool BuildAgent(RobotSpecification robotSpec)
+    {
+        try {
+            File.AppendAllText("output.log", "rebuilding 1\n");
+            endEffector = anchor;
             bool success = AddModules(robotSpec);
+            File.AppendAllText("output.log", "rebuilding 2\n");
 
             GetComponent<JointController>().ArticulationBodies = _articulationBodies;
 
-            Instantiate(manipulatorAgentPrefab, Vector3.zero, Quaternion.identity, transform);
+            var agent = Instantiate(manipulatorAgentPrefab, Vector3.zero, Quaternion.identity, transform);
+            allRobotParts.Add(agent);
+            File.AppendAllText("output.log", "rebuilding 3\n");
             return success;
         } catch {
             return false;
         }
+    }
+
+    public void DestroyAgent() {
+        foreach (var part in allRobotParts) {
+            Destroy(part);
+        }
+        allRobotParts = new List<GameObject>();
+    }
+
+    public bool RebuildAgent() {
+        DestroyAgent();
+        File.AppendAllText("output.log", "rebuilding\n");
+        if (robotSpecification != null) {
+            BuildAgent(robotSpecification);
+        }
+        return true; //return BuildAgent(robotSpecification);
     }
 
     private RobotSpecification ParseURDF(string urdf)
@@ -127,6 +157,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleBody);
         moduleBody.transform.localScale = new Vector3(1f, length*2, 1f); // Multiply by 2 because we only show half of module
 
         // Change mass according to length.
@@ -139,6 +170,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleHead);
 
         moduleHead.transform.parent = moduleBody.transform;
         module.transform.parent = endEffector.transform;
@@ -163,6 +195,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleTail);
 
         yPos += length;
         GameObject moduleBody = Instantiate(
@@ -171,6 +204,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleBody);
         moduleBody.transform.localScale = new Vector3(1f, length, 1f);
 
         // Change mass according to length.
@@ -183,6 +217,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleHead);
 
         moduleBody.transform.parent = moduleTail.transform;
         moduleHead.transform.parent = moduleBody.transform;

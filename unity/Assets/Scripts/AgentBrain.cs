@@ -18,9 +18,12 @@ public class AgentBrain : Agent
     private bool _makeScreenshots = false;
     private int _screenshotCounter = 0;
 
+    private int resetCounter = 0;
+
     // Start function of Agent class, will be called before something else happens.
     private void Awake()
     {
+        File.AppendAllText("output.log", "awake\n");
         _jointController = GetComponentInParent<JointController>();
         _anchor = GetComponentInParent<Builder>().anchor;
         _endEffector = GetComponentInParent<Builder>().EndEffector;
@@ -30,6 +33,11 @@ public class AgentBrain : Agent
     // Here: all joint angles back to zero.
     public override void OnEpisodeBegin()
     {
+        File.AppendAllText("output.log", "begin\n");
+        if (resetCounter > 0) {
+            GetComponentInParent<Builder>().RebuildAgent();
+        }
+        resetCounter++;
         _jointController.ResetJoints();
     }
 
@@ -37,6 +45,7 @@ public class AgentBrain : Agent
     // Here: joint angles and joint positions in the space, and the position of the end effector (= last game object within manipulator).
     public override void CollectObservations(VectorSensor sensor)
     {
+        File.AppendAllText("output.log", _jointController.ArticulationBodies.Count.ToString() + "\n");
         // Foreach joint -> current angle, position (3d)
         foreach (var articulationBody in _jointController.ArticulationBodies)
         {
@@ -61,6 +70,7 @@ public class AgentBrain : Agent
     // We get an action (within action buffer), and we'll apply this action via joint controller on the joints.
     public override void OnActionReceived(ActionBuffers actions)
     {
+        File.AppendAllText("output.log", "action\n");
         for (int i = 0; i < _jointController.ArticulationBodies.Count; i++)
         {
             float angleStep = actions.ContinuousActions[i];

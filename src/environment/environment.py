@@ -72,6 +72,9 @@ class SimEnv(gym.Env):
     def _get_unity_observations(self) -> np.ndarray:
         decision_steps, _ = self.u_env.get_steps(
             self.behavior_name)
+        if not len(decision_steps.obs[0]):
+            print("No observations received")
+            return []
         return decision_steps.obs[0][0]
 
     def _set_unity_actions(self, actions: np.ndarray) -> None:
@@ -135,9 +138,10 @@ def test_environment():
     # for _ in range(0, 800):
     #     env.step(np.array([0.1, 0, 0, 0]))
     env.pause(400)
-    env.set_workspace((0, 5, 7.0, 5))
+    env.set_workspace((0, 10, 10.0, 13))
     env.build_wall(WALL_13x19_GAP_13x5)
     env.pause(250)
+    _ = env.reset()
     env.build_wall(WALL_9x9_GAP_3x3)
     env.pause(250)
     env.build_wall([[]])
