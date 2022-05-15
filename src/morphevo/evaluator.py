@@ -12,6 +12,8 @@ from util.arm import Arm
 @ray.remote(num_cpus=1)
 class Evaluator:
     JOINT_ANGLE_STEP = 10
+    EVALUATIONS_AMOUNT = 1000
+    STEPS_PER_EVALUATION = 20
 
     def __init__(self, env_path: str, use_graphics: bool = True) -> None:
         self.env_path = env_path
@@ -27,7 +29,7 @@ class Evaluator:
                              use_graphics=self.use_graphics,
                              worker_id=worker_id)
                 env_created = True
-            except (UnityWorkerInUseException, OverflowError) as _ :
+            except (UnityWorkerInUseException, OverflowError) as _:
                 worker_id = (np.random.randint(low=1000, high=9000) + worker_id) % 65535
 
         return env
@@ -80,48 +82,27 @@ class Evaluator:
 
         return parse_observation
 
-    def _step_until_target_angles(self, target_angles: np.ndarray, workspace: Workspace,
-                                  parse_observation: Callable[[np.ndarray], Tuple[np.ndarray, np.ndarray, List]]) \
-            -> None:
-
-        target_angles = (target_angles // self.JOINT_ANGLE_STEP) * self.JOINT_ANGLE_STEP
-
-        target_angles[0] = np.clip(target_angles[0], -180, 180)
-        target_angles[1:] = np.clip(target_angles[1:], 0, 100)
-
+    def _step_random_directions(self, joint_amount: int, workspace: Workspace,
+                                parse_observation: Callable[[np.ndarray], Tuple[np.ndarray, np.ndarray, List]]) -> None:
         observations = self.env.get_current_state()
-        prev_angles = np.ones(len(target_angles))
-        actions = np.zeros(len(target_angles))
 
-        done = False
-        while not done:
+        for _ in range(self.EVALUATIONS_AMOUNT):
+            self.env.reset()
+
+            for i in range(self.STEPS_PER_EVALUATION):
+                actions = np.random.choice([0, -5, 5], joint_amount)
+                observations = self.env.step(actions, return_observations=i + 1 == self.STEPS_PER_EVALUATION)
+
             current_angles, ee_pos, joint_positions = parse_observation(observations)
             workspace.add_ee_position(ee_pos, current_angles, joint_positions)
-
-            if abs(np.sum(current_angles - prev_angles)) < 0.01:
-                break
-
-            angle_diff = current_angles - target_angles
-            actions[abs(angle_diff) < 5] = 0
-            actions[angle_diff > 0] = -5
-            actions[angle_diff < 0] = 5
-
-            if np.count_nonzero(actions) == 0:
-                done = True
-            else:
-                observations = self.env.step(actions)
-
-            prev_angles = current_angles
 
     def eval_arm(self, arm: Arm) -> Arm:
         self.env = self._initialize_environment(arm.genome.get_urdf(), arm.genome.genome_id)
         self.env.reset()
 
-        joint_angles = self._generate_joint_angles(self.env.joint_amount)
         observation_parser = self._create_observation_parser()
 
-        for target_angles in joint_angles:
-            self._step_until_target_angles(target_angles, arm.genome.workspace, observation_parser)
+        self._step_random_directions(self.env.joint_amount, arm.genome.workspace, observation_parser)
 
         self.env.close()
         return arm

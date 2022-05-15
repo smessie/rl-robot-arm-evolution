@@ -89,28 +89,32 @@ class Genome:
         genome = Genome()
 
         # make combination of the modules
-        module_lengths = []
-        module_types = []
+        module_lengths = np.array([])
+        module_types = np.array([])
         for module_length_1, module_type_1, module_length_2, module_type_2 in \
                 zip(self.module_lengths, self.module_types, other_genome.module_lengths, other_genome.module_types):
             if random.randint(0, 1):
-                module_lengths.append(module_length_1)
-                module_types.append(module_type_1)
+                module_lengths = np.append(module_lengths, module_length_1)
+                module_types = np.append(module_types, module_type_1)
             else:
-                module_lengths.append(module_length_2)
-                module_types.append(module_type_2)
+                module_lengths = np.append(module_lengths, module_length_2)
+                module_types = np.append(module_types, module_type_2)
 
         # maybe add leftover modules of the longest arm
         if random.randint(0, 1) and len(module_lengths) < max(self.amount_of_modules, other_genome.amount_of_modules):
             if self.amount_of_modules > other_genome.amount_of_modules:
-                module_lengths += self.module_lengths[len(module_lengths):self.amount_of_modules]
-                module_types += self.module_types[len(module_types):self.amount_of_modules]
+                module_lengths = np.concatenate(
+                    (module_lengths, self.module_lengths[len(module_lengths):self.amount_of_modules]))
+                module_types = np.concatenate(
+                    (module_types, self.module_types[len(module_types):self.amount_of_modules]))
             else:
-                module_lengths += self.module_lengths[len(module_lengths):other_genome.amount_of_modules]
-                module_types += self.module_types[len(module_types):other_genome.amount_of_modules]
+                module_lengths = np.concatenate(
+                    (module_lengths, self.module_lengths[len(module_lengths):other_genome.amount_of_modules]))
+                module_types = np.concatenate(
+                    (module_types, self.module_types[len(module_types):other_genome.amount_of_modules]))
 
-        genome.module_lengths = np.array(module_lengths)
-        genome.module_types = np.array(module_types)
+        genome.module_lengths = module_lengths
+        genome.module_types = module_types
         genome.amount_of_modules = len(genome.module_lengths)
         return genome
 

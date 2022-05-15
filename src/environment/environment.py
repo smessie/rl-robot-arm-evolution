@@ -43,7 +43,7 @@ class SimEnv(gym.Env):
         self.behavior_name = 'ManipulatorBehavior?team=0'
         self.behavior_spec = self.u_env.behavior_specs[self.behavior_name]
 
-    def _initialize_unity_env(self) -> Tuple[CreationSC, GoalSC, UnityEnvironment]:
+    def _initialize_unity_env(self) -> Tuple[CreationSC, GoalSC, WallSC, UnityEnvironment]:
         creation_sc = CreationSC()
         goal_sc = GoalSC()
         wall_sc = WallSC()
@@ -85,11 +85,13 @@ class SimEnv(gym.Env):
     def build_wall(self, wall: List[List[bool]]) -> None:
         self.wall_sc.send_build_command(wall)
 
-    def step(self, action: np.ndarray) -> np.ndarray:
+    def step(self, action: np.ndarray, return_observations=True) -> np.ndarray:
         self._set_unity_actions(action)
         self.u_env.step()
 
-        observations = self._get_unity_observations()
+        observations = None
+        if return_observations:
+            observations = self._get_unity_observations()
 
         return observations
 
