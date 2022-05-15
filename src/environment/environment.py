@@ -11,7 +11,8 @@ from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 
 from configs.env import PATH_TO_UNITY_EXECUTABLE
-from configs.walls import WALL_13x19_GAP_13x5, WALL_9x9_GAP_3x3, WALL_9x9_GAP_9x3
+# from configs.walls import (WALL_9x9_GAP_3x3, WALL_9x9_GAP_9x3,
+#                            WALL_13x19_GAP_13x5)
 from environment.sidechannels.creation_sc import CreationSC
 from environment.sidechannels.goal_sc import GoalSC
 from environment.sidechannels.wall_sc import WallSC
@@ -72,9 +73,6 @@ class SimEnv(gym.Env):
     def _get_unity_observations(self) -> np.ndarray:
         decision_steps, _ = self.u_env.get_steps(
             self.behavior_name)
-        if not len(decision_steps.obs[0]):
-            print("No observations received")
-            return []
         return decision_steps.obs[0][0]
 
     def _set_unity_actions(self, actions: np.ndarray) -> None:
