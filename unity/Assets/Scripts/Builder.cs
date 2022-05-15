@@ -71,7 +71,10 @@ public class Builder : MonoBehaviour
         // Parse URDF
         try {
             robotSpecification = ParseURDF(urdf);
-            return BuildAgent(robotSpecification);
+            bool success = BuildAgent(robotSpecification);
+
+            Instantiate(manipulatorAgentPrefab, Vector3.zero, Quaternion.identity, transform);
+            return success;
         } catch {
             return false;
         }
@@ -80,16 +83,12 @@ public class Builder : MonoBehaviour
     public bool BuildAgent(RobotSpecification robotSpec)
     {
         try {
-            File.AppendAllText("output.log", "rebuilding 1\n");
             endEffector = anchor;
+            _articulationBodies = new List<ArticulationBody>();
             bool success = AddModules(robotSpec);
-            File.AppendAllText("output.log", "rebuilding 2\n");
 
             GetComponent<JointController>().ArticulationBodies = _articulationBodies;
 
-            var agent = Instantiate(manipulatorAgentPrefab, Vector3.zero, Quaternion.identity, transform);
-            allRobotParts.Add(agent);
-            File.AppendAllText("output.log", "rebuilding 3\n");
             return success;
         } catch {
             return false;
@@ -105,11 +104,10 @@ public class Builder : MonoBehaviour
 
     public bool RebuildAgent() {
         DestroyAgent();
-        File.AppendAllText("output.log", "rebuilding\n");
         if (robotSpecification != null) {
-            BuildAgent(robotSpecification);
+            return BuildAgent(robotSpecification);
         }
-        return true; //return BuildAgent(robotSpecification);
+        return false;
     }
 
     private RobotSpecification ParseURDF(string urdf)
@@ -128,10 +126,9 @@ public class Builder : MonoBehaviour
             return false;
         }
         AddAnchorModule(firstLink);
-        robotSpec.Links.RemoveAt(0);
 
         // Add modules
-        foreach (var link in robotSpec.Links)
+        foreach (var link in robotSpec.Links.GetRange(1, robotSpec.Links.Count-1))
         {
             ModuleType type = TypeOfLink(link);
             if (type != ModuleType.Invalid && type != ModuleType.Anchor) {
