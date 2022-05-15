@@ -32,13 +32,8 @@ public class JointController : MonoBehaviour
         articulationBody.xDrive = xDrive;
     }
 
-    public void RebuildRobot() {
-
-    }
-
     public void ResetJoints()
     {
-        RebuildRobot();
         foreach (var articulationBody in ArticulationBodies)
         {
             var xDrive = articulationBody.xDrive;
@@ -50,7 +45,6 @@ public class JointController : MonoBehaviour
 
     public void RandomizeJoints()
     {
-        RebuildRobot();
         foreach (var articulationBody in ArticulationBodies)
         {
             var xDrive = articulationBody.xDrive;

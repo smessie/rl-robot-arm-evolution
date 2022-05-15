@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -18,6 +16,8 @@ public class AgentBrain : Agent
     private bool _makeScreenshots = false;
     private int _screenshotCounter = 0;
 
+    private int resetCounter = 0;
+
     // Start function of Agent class, will be called before something else happens.
     private void Awake()
     {
@@ -30,13 +30,18 @@ public class AgentBrain : Agent
     // Here: all joint angles back to zero.
     public override void OnEpisodeBegin()
     {
-        _jointController.ResetJoints();
+        if (resetCounter >= 0) {
+            GetComponentInParent<Builder>().RebuildAgent();
+            _endEffector = GetComponentInParent<Builder>().EndEffector;
+        }
+        resetCounter++;
     }
 
     // Observations are collected that we want to send back to the Python side
     // Here: joint angles and joint positions in the space, and the position of the end effector (= last game object within manipulator).
     public override void CollectObservations(VectorSensor sensor)
     {
+
         // Foreach joint -> current angle, position (3d)
         foreach (var articulationBody in _jointController.ArticulationBodies)
         {
@@ -61,6 +66,7 @@ public class AgentBrain : Agent
     // We get an action (within action buffer), and we'll apply this action via joint controller on the joints.
     public override void OnActionReceived(ActionBuffers actions)
     {
+
         for (int i = 0; i < _jointController.ArticulationBodies.Count; i++)
         {
             float angleStep = actions.ContinuousActions[i];
