@@ -51,10 +51,7 @@ class DeepQLearner:
         self.x_range = workspace.get_x_range()
         self.y_range = workspace.get_y_range()
         self.z_range = workspace.get_z_range()
-        print(self.x_range)
-        print(self.y_range)
-        print(self.z_range)
-        print((*workspace.cube_offset, workspace.side_length))
+
         self.env.set_workspace((*workspace.cube_offset, workspace.side_length))
 
         self.actions = self.get_action_space(self.env.joint_amount)
@@ -205,8 +202,6 @@ def rl(network_path=""):
                             use_graphics=RL_USE_GRAPHICS_TESTING,
                             network_path=network_path)
     else:
-        print(RL_USE_GRAPHICS_TRAINING)
-
         model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE,
                             urdf_path=PATH_TO_ROBOT_URDF,
                             use_graphics=RL_USE_GRAPHICS_TRAINING)
