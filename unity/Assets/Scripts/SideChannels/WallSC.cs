@@ -27,16 +27,24 @@ public class WallSC : SideChannel
     protected override void OnMessageReceived(IncomingMessage msg)
     {
         string wallString = msg.ReadString();
-        WallSpec wallSpec = JsonUtility.FromJson<WallSpec>(wallString);
+        string stringToSend;
+        try {
+            WallSpec wallSpec = JsonUtility.FromJson<WallSpec>(wallString);
 
-        List<List<bool>> wall = new List<List<bool>>();
-        foreach (WallRow wallRow in wallSpec.wall) {
-            wall.Add(wallRow.row);
+            List<List<bool>> wall = new List<List<bool>>();
+            foreach (WallRow wallRow in wallSpec.wall) {
+                wall.Add(wallRow.row);
+            }
+
+            _wallBuilder.BuildWall(wall);
+
+            stringToSend = "Wall built";
+        } catch {
+            _wallBuilder.clearWalls();
+
+            stringToSend = "Walls cleared";
         }
 
-        _wallBuilder.BuildWall(wall);
-
-        string stringToSend = "Wall built";
         using (var msgOut = new OutgoingMessage())
         {
             msgOut.WriteString(stringToSend);
