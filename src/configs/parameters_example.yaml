@@ -11,19 +11,19 @@ morphevo:
   evolution_children: 5
   crossover_children: 3
   workspace_type: "moved_cube"
-  workspace_cube_offset: [0,10,10]
-  workspace_side_length: 10
+  #workspace_cube_offset: [0,10,15]
+  #workspace_side_length: 6 
   # small cube next to arm
-  # workspace_cube_offset: [0,3,7]
-  # workspace_side_length: 5
+  workspace_cube_offset: [0,5,9]
+  workspace_side_length: 4 
 
 rl:
-  gamma: 0.8
+  gamma: 0.99
   eps_end: 0.2
-  eps_decay: 0.999994
+  eps_decay: 0.999995
   batch_size: 64
   mem_size: 1000
-  eps_start: 1
+  eps_start: 1 
   hidden_nodes: 64
 
   workspace_discretization: 0.2

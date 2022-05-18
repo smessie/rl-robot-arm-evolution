@@ -137,6 +137,7 @@ def test_environment():
                  use_graphics=True)
 
     # _ = env.reset()
+
     # env.set_goal((0, 5.5, 12.0))
     env.pause(300)
     env.build_wall(WALL_13x19_GAP_13x5)
