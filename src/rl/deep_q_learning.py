@@ -118,14 +118,14 @@ class DeepQLearner:
         new_distance_from_goal = np.linalg.norm(new_pos - goal)
 
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
-            return 15, True
+            return 20, True
         moved_distance = prev_distance_from_goal - new_distance_from_goal
        # if moved_distance < 0.2:
            # self.penalty = min(self.penalty + 0.2, 5)
        # else:
            # self.penalty = max(self.penalty - 0.2, 0)
 
-        return 10*moved_distance, False
+        return 12*moved_distance, False
         return 2-new_distance_from_goal/2,  False
 
     def step(self, state):
