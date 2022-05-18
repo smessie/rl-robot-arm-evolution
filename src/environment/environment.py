@@ -11,8 +11,7 @@ from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 
 from configs.env import PATH_TO_UNITY_EXECUTABLE
-# from configs.walls import (WALL_9x9_GAP_3x3, WALL_9x9_GAP_9x3,
-#                            WALL_13x19_GAP_13x5)
+from configs.walls import (WALL_9x9_GAP_3x3, WALL_13x19_GAP_13x5)
 from environment.sidechannels.creation_sc import CreationSC
 from environment.sidechannels.goal_sc import GoalSC
 from environment.sidechannels.wall_sc import WallSC
@@ -58,7 +57,7 @@ class SimEnv(gym.Env):
                                worker_id=self.worker_id,
                                no_graphics=not self.use_graphics)
         if self.use_graphics:
-            timescale = 5.
+            timescale = 1.
         else:
             timescale = 40.
         conf_channel.set_configuration_parameters(time_scale=timescale)
@@ -91,6 +90,13 @@ class SimEnv(gym.Env):
 
     def build_wall(self, wall: List[List[bool]]) -> None:
         self.wall_sc.send_build_command(wall)
+
+    def remove_walls(self) -> None:
+        self.wall_sc.remove_walls()
+
+    def replace_walls(self, wall: List[List[bool]]) -> None:
+        self.remove_walls()
+        self.build_wall(wall)
 
     def step(self, action: np.ndarray) -> np.ndarray:
         self._set_unity_actions(action)
@@ -131,24 +137,13 @@ def test_environment():
                  use_graphics=True)
 
     # _ = env.reset()
-    env.set_goal((0, 5.5, 12.0))
-    env.pause(100)
-    for _ in range(0, 30):
-        env.step(np.array([0, 0.1, 0, 0, 0, 0]))
-    env.pause(100)
-    _ = env.reset()
-    env.pause(50)
-    for _ in range(0, 50):
-        env.step(np.array([0, 0.1, 0, 0, 0, 0]))
-    env.pause(400)
-    # env.set_workspace((0, 10, 10.0, 13))
-    # env.build_wall(WALL_13x19_GAP_13x5)
-    # env.pause(250)
-    # _ = env.reset()
-    # env.build_wall(WALL_9x9_GAP_3x3)
-    # env.pause(250)
-    # _ = env.reset()
-    # env.build_wall([[]])
-    # env.pause(1000)
+    # env.set_goal((0, 5.5, 12.0))
+    env.pause(300)
+    env.build_wall(WALL_13x19_GAP_13x5)
+    env.pause(300)
+    env.build_wall(WALL_9x9_GAP_3x3)
+    env.pause(500)
+    env.remove_walls()
+    env.pause(1000)
 
     env.close()

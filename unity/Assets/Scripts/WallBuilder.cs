@@ -13,9 +13,11 @@ public class WallBuilder : MonoBehaviour
     private static float scaleZ = 1f;
     private static Vector3 startCoordinate = new Vector3(0, 1f + scaleY / 2, 10f);
 
+    private float distanceBetweenWalls = 6;
+
     private List<GameObject> _wallTiles = new List<GameObject>();
 
-    public void RemoveWall()
+    public void clearWalls()
     {
         foreach (var tile in _wallTiles) {
             Destroy(tile);
@@ -25,7 +27,6 @@ public class WallBuilder : MonoBehaviour
 
     public void BuildWall(List<List<bool>> wall)
     {
-        RemoveWall();
         float startX = -scaleX * wall[0].Count / 2 + scaleX / 2;
         Vector3 pos = startCoordinate;
         for (int r = wall.Count-1; r >= 0; r--) {
@@ -38,6 +39,7 @@ public class WallBuilder : MonoBehaviour
             }
             pos.y += scaleY;
         }
+        startCoordinate.z += distanceBetweenWalls;
     }
 
     private void AddWallTile(Vector3 pos)
