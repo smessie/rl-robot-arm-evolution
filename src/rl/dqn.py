@@ -41,7 +41,7 @@ class DQN:
 
         if network_path:
             self.network = torch.load(network_path)
-            self.network.eval()
+            # self.network.eval()
         else:
             self.network = RobotNetwork(self.HIDDEN_NODES, n_actions, state_size)
 
