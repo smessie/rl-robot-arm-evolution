@@ -1,4 +1,4 @@
-from typing import Callable, List, Tuple
+from typing import Callable, Tuple
 
 import numpy as np
 import ray
@@ -67,23 +67,18 @@ class Evaluator:
 
     def _create_observation_parser(self):
 
-        def parse_observation(observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray, List]:
+        def parse_observation(observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
             # [j0angel, j0x, j0y, j0z, ..., eex, eey, eez]
             last_joint_index = self.env.joint_amount * 4
             joint_angles = observations[[i * 4 for i in range(self.env.joint_amount)]]
             ee_pos = observations[last_joint_index:last_joint_index + 3]
-            joint_positions = []
-            i = 1
-            while i < last_joint_index:
-                joint_positions.append(tuple(observations[i:i + 3]))
-                i += 3
 
-            return joint_angles, ee_pos, joint_positions
+            return joint_angles, ee_pos
 
         return parse_observation
 
     def _step_random_directions(self, joint_amount: int, workspace: Workspace,
-                                parse_observation: Callable[[np.ndarray], Tuple[np.ndarray, np.ndarray, List]]) -> None:
+                                parse_observation: Callable[[np.ndarray], Tuple[np.ndarray, np.ndarray]]) -> None:
         observations = self.env.get_current_state()
 
         for _ in range(self.EVALUATIONS_AMOUNT):
@@ -93,8 +88,8 @@ class Evaluator:
                 actions = np.random.choice([0, -5, 5], joint_amount)
                 observations = self.env.step(actions, return_observations=i + 1 == self.STEPS_PER_EVALUATION)
 
-            current_angles, ee_pos, joint_positions = parse_observation(observations)
-            workspace.add_ee_position(ee_pos, current_angles, joint_positions)
+            current_angles, ee_pos = parse_observation(observations)
+            workspace.add_ee_position(ee_pos, current_angles)
 
     def eval_arm(self, arm: Arm) -> Arm:
         self.env = self._initialize_environment(arm.genome.get_urdf(), arm.genome.genome_id)
