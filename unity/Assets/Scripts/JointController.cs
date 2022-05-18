@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class JointController : MonoBehaviour
@@ -48,7 +47,7 @@ public class JointController : MonoBehaviour
         foreach (var articulationBody in ArticulationBodies)
         {
             var xDrive = articulationBody.xDrive;
-            xDrive.target = UnityEngine.Random.Range(Mathf.Max(0, xDrive.lowerLimit), Mathf.Min(360, xDrive.upperLimit));
+            xDrive.target = UnityEngine.Random.Range(Mathf.Max(-20, xDrive.lowerLimit), Mathf.Min(20, xDrive.upperLimit));
             articulationBody.xDrive = xDrive;
         }
     }
