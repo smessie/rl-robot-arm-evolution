@@ -15,11 +15,12 @@ class Evaluator:
     EVALUATIONS_AMOUNT = 1000
     STEPS_PER_EVALUATION = 20
 
-    def __init__(self, env_path: str, use_graphics: bool = True) -> None:
+    def __init__(self, env_path: str, use_graphics: bool = True, sample_size: int = 100) -> None:
         self.env_path = env_path
         self.env = None
         self.joint_angles = None
         self.use_graphics = use_graphics
+        self.sample_size = sample_size
 
     def _initialize_environment(self, urdf: str, worker_id: int) -> np.ndarray:
         env_created = False
@@ -99,9 +100,9 @@ class Evaluator:
                 break
 
             angle_diff = current_angles - target_angles
-            actions[abs(angle_diff) < 5] = 0
-            actions[angle_diff > 0] = -5
-            actions[angle_diff < 0] = 5
+            actions[angle_diff > 0] = -1
+            actions[angle_diff < 0] = 1
+            actions[abs(angle_diff) <= 5] = 0
 
             if np.count_nonzero(actions) == 0:
                 done = True
@@ -128,18 +129,13 @@ class Evaluator:
         self.env = self._initialize_environment(arm.genome.get_urdf(), arm.genome.genome_id)
         self.env.reset()
 
-        print('here')
         joint_angles = self._generate_joint_angles(self.env.joint_amount)
-        print(len(joint_angles))
         observation_parser = self._create_observation_parser()
 
-        selected_joint_angles_indices = np.random.choice(joint_angles.shape[0], 100)
+        selected_joint_angles_indices = np.random.choice(joint_angles.shape[0], self.sample_size)
         selected_joint_angles = joint_angles[selected_joint_angles_indices, :]
-        print(len(selected_joint_angles))
-        print(selected_joint_angles)
 
         for target_angles in selected_joint_angles:
-            print(f'starting {target_angles}')
             self._step_until_target_angles(target_angles, arm.genome.workspace, observation_parser)
 
         # self._step_random_directions(self.env.joint_amount, arm.genome.workspace, observation_parser)

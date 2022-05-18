@@ -22,7 +22,8 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
     parameters = get_config()
 
     # pylint: disable=no-member
-    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=MORPHEVO_USE_GRAPHICS)
+    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=MORPHEVO_USE_GRAPHICS,
+                                   sample_size=parameters.sample_size)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 
@@ -47,6 +48,7 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
 
         logger.log(generation, parents)
 
+    save_best_genome(parents[0], parameters.evolution_generations)
     return parents
 
 
