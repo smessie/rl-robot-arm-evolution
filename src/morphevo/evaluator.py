@@ -77,6 +77,39 @@ class Evaluator:
 
         return parse_observation
 
+    def _step_until_target_angles(self, target_angles: np.ndarray, workspace: Workspace,
+                                  parse_observation: Callable[[np.ndarray], Tuple[np.ndarray, np.ndarray]]) \
+            -> None:
+
+        target_angles = (target_angles // self.JOINT_ANGLE_STEP) * self.JOINT_ANGLE_STEP
+
+        target_angles[0] = np.clip(target_angles[0], -180, 180)
+        target_angles[1:] = np.clip(target_angles[1:], 0, 100)
+
+        observations = self.env.get_current_state()
+        prev_angles = np.ones(len(target_angles))
+        actions = np.zeros(len(target_angles))
+
+        done = False
+        while not done:
+            current_angles, ee_pos = parse_observation(observations)
+            workspace.add_ee_position(ee_pos, current_angles)
+
+            if abs(np.sum(current_angles - prev_angles)) < 0.01:
+                break
+
+            angle_diff = current_angles - target_angles
+            actions[abs(angle_diff) < 5] = 0
+            actions[angle_diff > 0] = -5
+            actions[angle_diff < 0] = 5
+
+            if np.count_nonzero(actions) == 0:
+                done = True
+            else:
+                observations = self.env.step(actions)
+
+            prev_angles = current_angles
+
     def _step_random_directions(self, joint_amount: int, workspace: Workspace,
                                 parse_observation: Callable[[np.ndarray], Tuple[np.ndarray, np.ndarray]]) -> None:
         observations = self.env.get_current_state()
@@ -95,9 +128,21 @@ class Evaluator:
         self.env = self._initialize_environment(arm.genome.get_urdf(), arm.genome.genome_id)
         self.env.reset()
 
+        print('here')
+        joint_angles = self._generate_joint_angles(self.env.joint_amount)
+        print(len(joint_angles))
         observation_parser = self._create_observation_parser()
 
-        self._step_random_directions(self.env.joint_amount, arm.genome.workspace, observation_parser)
+        selected_joint_angles_indices = np.random.choice(joint_angles.shape[0], 100)
+        selected_joint_angles = joint_angles[selected_joint_angles_indices, :]
+        print(len(selected_joint_angles))
+        print(selected_joint_angles)
+
+        for target_angles in selected_joint_angles:
+            print(f'starting {target_angles}')
+            self._step_until_target_angles(target_angles, arm.genome.workspace, observation_parser)
+
+        # self._step_random_directions(self.env.joint_amount, arm.genome.workspace, observation_parser)
 
         self.env.close()
         return arm

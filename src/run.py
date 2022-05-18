@@ -22,7 +22,7 @@ def start_morphevo():
         sys.exit()
     set_config(sys.argv[2])
 
-    ray.init(log_to_driver=False, logging_level=logging.WARNING)
+    ray.init(log_to_driver=True, logging_level=logging.WARNING)
     best_genome = evolution()[0]
     write_morphevo_benchmarks(best_genome)
 
