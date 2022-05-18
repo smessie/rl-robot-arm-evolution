@@ -134,15 +134,16 @@ def test_environment():
 
     # _ = env.reset()
     env.set_goal((0, 5.5, 12.0))
-    env.pause(100)
-    for _ in range(0, 30):
-        env.step(np.array([0, 0.1, 0, 0, 0, 0]))
-    env.pause(100)
-    _ = env.reset()
-    env.pause(50)
-    for _ in range(0, 50):
-        env.step(np.array([0, 0.1, 0, 0, 0, 0]))
     env.pause(400)
+    # for _ in range(0, 30):
+    #     env.step(np.array([0, 0.1, 0, 0, 0, 0]))
+    # env.pause(200)
+    _ = env.reset()
+    env.pause(400)
+    # for _ in range(0, 50):
+    #     env.step(np.array([0, 0.1, 0, 0, 0, 0]))
+    _ = env.reset()
+    env.pause(600)
     # env.set_workspace((0, 10, 10.0, 13))
     # env.build_wall(WALL_13x19_GAP_13x5)
     # env.pause(250)

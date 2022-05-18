@@ -16,8 +16,6 @@ public class AgentBrain : Agent
     private bool _makeScreenshots = false;
     private int _screenshotCounter = 0;
 
-    private int resetCounter = 0;
-
     // Start function of Agent class, will be called before something else happens.
     private void Awake()
     {
@@ -30,11 +28,9 @@ public class AgentBrain : Agent
     // Here: all joint angles back to zero.
     public override void OnEpisodeBegin()
     {
-        if (resetCounter >= 0) {
-            GetComponentInParent<Builder>().RebuildAgent();
-            _endEffector = GetComponentInParent<Builder>().EndEffector;
-        }
-        resetCounter++;
+        GetComponentInParent<Builder>().RebuildAgent();
+        _endEffector = GetComponentInParent<Builder>().EndEffector;
+        _jointController.RandomizeJoints();
     }
 
     // Observations are collected that we want to send back to the Python side
