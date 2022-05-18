@@ -15,22 +15,24 @@ def start_coevolution():
     parents = []
     children = generate_arms(amount=config.evolution_children)
 
-    for _ in range(config.coevolution_generations):
+    for i in range(config.coevolution_generations):
         evolved_arms = evolution(children)
 
         trained_arms = train(evolved_arms)
 
         parents = selection(selection_succes_rate, trained_arms + parents)
 
+        save_best_genome(parents[0], f'coevolution_{i}')
+
         # mutate 8 parents to get 32 new children
         children = mutate(mutate_with_crossover, parents)
 
-    save_best_genome(parents[0])
+    save_best_genome(parents[0], 'final_rl_best')
 
 
-def save_best_genome(arm: Arm):
+def save_best_genome(arm: Arm, label: str):
     filename = (f'output/{int(time.time())}-mu_{get_config().evolution_parents}' +
-                f'-lambda_{get_config().evolution_children}-gamma_{get_config().gamma}-final_rl_best.xml')
+                f'-lambda_{get_config().evolution_children}-gamma_{get_config().gamma}-{label}.xml')
 
     xml_str = minidom.parseString(arm.urdf).toprettyxml(indent="    ")
     with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
