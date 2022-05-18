@@ -18,6 +18,8 @@ public class Builder : MonoBehaviour
 
     public GameObject anchor;
 
+    private RobotSpecification robotSpecification = null;
+    private List<GameObject> allRobotParts = new List<GameObject>();
     private GameObject endEffector;
 
     private List<ArticulationBody> _articulationBodies = new List<ArticulationBody>();
@@ -68,18 +70,44 @@ public class Builder : MonoBehaviour
     {
         // Parse URDF
         try {
-            endEffector = anchor;
-
-            RobotSpecification robotSpec = ParseURDF(urdf);
-            bool success = AddModules(robotSpec);
-
-            GetComponent<JointController>().ArticulationBodies = _articulationBodies;
+            robotSpecification = ParseURDF(urdf);
+            bool success = BuildAgent(robotSpecification);
 
             Instantiate(manipulatorAgentPrefab, Vector3.zero, Quaternion.identity, transform);
             return success;
         } catch {
             return false;
         }
+    }
+
+    public bool BuildAgent(RobotSpecification robotSpec)
+    {
+        try {
+            endEffector = anchor;
+            _articulationBodies = new List<ArticulationBody>();
+            bool success = AddModules(robotSpec);
+
+            GetComponent<JointController>().ArticulationBodies = _articulationBodies;
+
+            return success;
+        } catch {
+            return false;
+        }
+    }
+
+    public void DestroyAgent() {
+        foreach (var part in allRobotParts) {
+            Destroy(part);
+        }
+        allRobotParts = new List<GameObject>();
+    }
+
+    public bool RebuildAgent() {
+        DestroyAgent();
+        if (robotSpecification != null) {
+            return BuildAgent(robotSpecification);
+        }
+        return false;
     }
 
     private RobotSpecification ParseURDF(string urdf)
@@ -98,10 +126,9 @@ public class Builder : MonoBehaviour
             return false;
         }
         AddAnchorModule(firstLink);
-        robotSpec.Links.RemoveAt(0);
 
         // Add modules
-        foreach (var link in robotSpec.Links)
+        foreach (var link in robotSpec.Links.GetRange(1, robotSpec.Links.Count-1))
         {
             ModuleType type = TypeOfLink(link);
             if (type != ModuleType.Invalid && type != ModuleType.Anchor) {
@@ -127,6 +154,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleBody);
         moduleBody.transform.localScale = new Vector3(1f, length*2, 1f); // Multiply by 2 because we only show half of module
 
         // Change mass according to length.
@@ -139,6 +167,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleHead);
 
         moduleHead.transform.parent = moduleBody.transform;
         module.transform.parent = endEffector.transform;
@@ -163,6 +192,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleTail);
 
         yPos += length;
         GameObject moduleBody = Instantiate(
@@ -171,6 +201,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleBody);
         moduleBody.transform.localScale = new Vector3(1f, length, 1f);
 
         // Change mass according to length.
@@ -183,6 +214,7 @@ public class Builder : MonoBehaviour
             Quaternion.identity, // Turn/rotation
             module.transform
         );
+        allRobotParts.Add(moduleHead);
 
         moduleBody.transform.parent = moduleTail.transform;
         moduleHead.transform.parent = moduleBody.transform;
@@ -211,7 +243,7 @@ public class Builder : MonoBehaviour
         ArticulationDrive xDrive = articulationBody.xDrive;
         xDrive.lowerLimit = tiltingSpec.LowerBound;
         xDrive.upperLimit = tiltingSpec.UpperBound;
-        xDrive.stiffness = 100000;
+        xDrive.stiffness = 80000;
         xDrive.damping = 10000;
         articulationBody.xDrive = xDrive;
 
@@ -239,7 +271,7 @@ public class Builder : MonoBehaviour
             xDrive.upperLimit = rotationSpec.UpperBound;
         }
 
-        xDrive.stiffness = 100000;
+        xDrive.stiffness = 80000;
         xDrive.damping = 10000;
         articulationBody.xDrive = xDrive;
 

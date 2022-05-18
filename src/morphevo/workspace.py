@@ -113,7 +113,7 @@ class Workspace:
 
     def get_y_range(self) -> List[float]:
         offset_y = self.cube_offset[1]
-        return [offset_y, offset_y + self.side_length]
+        return [offset_y - self.side_length / 2, offset_y + self.side_length / 2]
 
     def get_z_range(self) -> List[float]:
         offset_z = self.cube_offset[2]

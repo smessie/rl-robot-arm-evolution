@@ -51,10 +51,13 @@ class DeepQLearner:
         self.y_range = workspace.get_y_range()
         self.z_range = workspace.get_z_range()
 
+        self.env.set_workspace((*workspace.cube_offset, workspace.side_length))
+
         self.actions = self.get_action_space(self.env.joint_amount)
         self.dqn = self.make_dqn(network_path)
 
         self.training = not network_path
+        self.penalty = 0
 
         self.logger = Logger()
 
@@ -114,15 +117,19 @@ class DeepQLearner:
 
         if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
             return 20, True
+        moved_distance = prev_distance_from_goal - new_distance_from_goal
+       # if moved_distance < 0.2:
+           # self.penalty = min(self.penalty + 0.2, 5)
+       # else:
+           # self.penalty = max(self.penalty - 0.2, 0)
 
-        return 10*(prev_distance_from_goal - new_distance_from_goal), False
+        return 12*moved_distance, False
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
-        actions = np.array(self.actions[action_index])
-
+        action = np.array(self.actions[action_index])
         # Execute the action in the environment
-        observations = self.env.step(actions)
+        observations = self.env.step(action)
         return action_index, observations
 
     def learn(self, num_episodes: int = 10000,
@@ -130,6 +137,7 @@ class DeepQLearner:
 
         total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
+            self.penalty = 0
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
 
@@ -174,7 +182,10 @@ class DeepQLearner:
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.actions))
-        return self.dqn.lookup(state)
+        if not self.training and np.random.rand() < 0.2:
+            return np.random.randint(len(self.actions))
+        action = self.dqn.lookup(state)
+        return action
 
     def get_score(self, number_of_joints: int, workspace: Workspace, episodes: int = 200):
         self.x_range = workspace.get_x_range()
@@ -196,6 +207,7 @@ def rl(network_path=""):
                             urdf_path=PATH_TO_ROBOT_URDF,
                             use_graphics=RL_USE_GRAPHICS_TRAINING)
 
+    #model.env.build_wall(WALL_13x19_GAP_13x5)
     signal.signal(signal.SIGINT, model.handler)
     model.learn(logging=True)
 

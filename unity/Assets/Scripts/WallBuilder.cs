@@ -1,40 +1,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class WallBuilder : MonoBehaviour
 {
     public GameObject wallTilePrefab;
 
-    private Vector3 startCoordinate = new Vector3(-9f, 1f, 10f);
-    private float scaleX = 2f;
-    private float scaleY = 2f;
-    private float scaleZ = 0.5f;
+    private static float scaleX = 2f;
+    private static float scaleY = 2f;
+    private static float scaleZ = 1f;
+    private static Vector3 startCoordinate = new Vector3(0, 1f + scaleY / 2, 10f);
+
+    private float distanceBetweenWalls = 6;
 
     private List<GameObject> _wallTiles = new List<GameObject>();
 
-    public void RemoveWall()
+    public void clearWalls()
     {
         foreach (var tile in _wallTiles) {
             Destroy(tile);
         }
+        _wallTiles = new List<GameObject>();
     }
 
     public void BuildWall(List<List<bool>> wall)
     {
-        RemoveWall();
+        float startX = -scaleX * wall[0].Count / 2 + scaleX / 2;
         Vector3 pos = startCoordinate;
         for (int r = wall.Count-1; r >= 0; r--) {
+            pos.x = startX;
             for (int c = 0; c < wall[0].Count; c++) {
                 if (wall[r][c]) {
-                    AddWallTile(pos + new Vector3(scaleX/2, scaleY/2, 0f));
+                    AddWallTile(pos);
                 }
                 pos.x += scaleX;
             }
-            pos.x = startCoordinate.x;
             pos.y += scaleY;
         }
+        startCoordinate.z += distanceBetweenWalls;
     }
 
     private void AddWallTile(Vector3 pos)

@@ -19,7 +19,7 @@ public class GoalSC : SideChannel
 
     protected override void OnMessageReceived(IncomingMessage msg)
     {
-        // Format of goalPosString is (x, y, z)
+        // Format of goalPos is (x, y, z)
         IList<float> goalPos = msg.ReadFloatList();
         if (goalPos == null || goalPos.Count != 3) return;
 
