@@ -79,7 +79,7 @@ class DeepQLearner:
     def make_dqn(self, network_path=""):
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
         # self.dqn = DQN(len(self.actions), state_size=6 + self.joint_amount * 4, network_path=network_path)
-        return DQN(len(self.actions), state_size=7, network_path=network_path)
+        return DQN(len(self.actions), state_size=6, network_path=network_path)
 
     def _calculate_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = goal - pos
@@ -107,7 +107,7 @@ class DeepQLearner:
 
         # return np.array([*ee_pos, *observations[:self.joint_amount * 4], *goal], dtype=float)
         distance_to_center_of_gap = np.linalg.norm(ee_pos - WALL_13x19_GAP_13x5_CENTER_COORD)
-        return np.array([*ee_pos, *goal, distance_to_center_of_gap], dtype=float)
+        return np.array([*ee_pos, *goal], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
         return observations[self.env.joint_amount * 4:self.env.joint_amount * 4 + 3]
@@ -125,15 +125,14 @@ class DeepQLearner:
        # else:
            # self.penalty = max(self.penalty - 0.2, 0)
 
-        # return 10*moved_distance, False
+        return 10*moved_distance, False
         return 2-new_distance_from_goal/2,  False
 
     def step(self, state):
         action_index = self.predict(state, stochastic=self.training)
-        actions = np.array(self.actions[action_index])
-
+        action = np.array(self.actions[action_index])
         # Execute the action in the environment
-        observations = self.env.step(actions)
+        observations = self.env.step(action)
         return action_index, observations
 
     def learn(self, num_episodes: int = 10000,
@@ -186,7 +185,10 @@ class DeepQLearner:
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.actions))
-        return self.dqn.lookup(state)
+        elif not self.training and np.random.rand() < 0.2:
+            return np.random.randint(len(self.actions))
+        action = self.dqn.lookup(state)
+        return action
 
     def get_score(self, number_of_joints: int, workspace: Workspace, episodes: int = 200):
         self.x_range = workspace.get_x_range()
