@@ -98,11 +98,13 @@ class SimEnv(gym.Env):
         self.remove_walls()
         self.build_wall(wall)
 
-    def step(self, action: np.ndarray) -> np.ndarray:
+    def step(self, action: np.ndarray, return_observations=True) -> np.ndarray:
         self._set_unity_actions(action)
         self.u_env.step()
 
-        observations = self._get_unity_observations()
+        observations = None
+        if return_observations:
+            observations = self._get_unity_observations()
 
         return observations
 
