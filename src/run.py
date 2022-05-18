@@ -1,3 +1,4 @@
+import locale
 import logging
 import sys
 from os.path import exists
@@ -8,6 +9,7 @@ from coevolution import start_coevolution
 from environment import environment
 from morphevo.evolution import evolution
 from rl.deep_q_learning import rl
+from util.arm import Arm
 from util.config import set_config
 
 
@@ -21,7 +23,15 @@ def start_morphevo():
     set_config(sys.argv[2])
 
     ray.init(log_to_driver=False, logging_level=logging.WARNING)
-    evolution()
+    best_genome = evolution()[0]
+    write_morphevo_benchmarks(best_genome)
+
+
+def write_morphevo_benchmarks(arm: Arm):
+    with open("morphevo-benchmarks.csv", 'a', encoding=locale.getpreferredencoding(False)) as file:
+        file.write(f'{arm.genome.workspace.side_length},{arm.genome.workspace.cube_offset},'
+                   f'{sum(arm.genome.module_lengths)},{arm.genome.amount_of_modules},'
+                   f'{arm.genome.workspace.calculate_coverage()}\n')
 
 def start_rl():
     if len(sys.argv) < 3:

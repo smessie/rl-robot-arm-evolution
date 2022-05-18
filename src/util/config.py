@@ -39,22 +39,24 @@ class Config:
 
         def parse_workspace_parameters(self, config) -> WorkspaceParameters:
             if ('workspace_type' in config
-                and 'workspace_cube_offset' in config
-                and 'workspace_side_length' in config):
-
+                    and 'workspace_cube_offset' in config
+                    and 'workspace_side_length' in config):
                 return WorkspaceParameters(config['workspace_type'],
                                            tuple(config['workspace_cube_offset']),
                                            config['workspace_side_length'])
             return WorkspaceParameters()
 
     instance = None
+
     def __new__(cls, *args, **kwargs):
         if not Config.instance:
             Config.instance = Config.__Config(*args, **kwargs)
         return Config.instance
 
+
 def set_config(config_file_name: str):
     return Config(config_file_name)
+
 
 def get_config():
     return Config()
