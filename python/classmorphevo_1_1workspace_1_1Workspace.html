@@ -76,11 +76,11 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6f72c3f29cee411a25336ce9d63031f3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html#a6f72c3f29cee411a25336ce9d63031f3">__init__</a> (self, str workspace='normalized_cube', tuple cube_offset=(0, 0, 0), float side_length=13, float discretization_step=1.0, str cube_open_side='top')</td></tr>
-<tr class="separator:a6f72c3f29cee411a25336ce9d63031f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accfe9f8d9639824d2913bc8a2f34f53d"><td class="memItemLeft" align="right" valign="top"><a id="accfe9f8d9639824d2913bc8a2f34f53d" name="accfe9f8d9639824d2913bc8a2f34f53d"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>add_ee_position</b> (self, np.ndarray ee_pos, np.ndarray joint_angles, List joint_positions=None)</td></tr>
-<tr class="separator:accfe9f8d9639824d2913bc8a2f34f53d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c82d323e62d335f1ac800dbbbb12cd3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html#a1c82d323e62d335f1ac800dbbbb12cd3">__init__</a> (self, str workspace='normalized_cube', tuple cube_offset=(0, 0, 0), float side_length=13, float discretization_step=1.0)</td></tr>
+<tr class="separator:a1c82d323e62d335f1ac800dbbbb12cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05776d0259a48e0eb520c524bea13896"><td class="memItemLeft" align="right" valign="top"><a id="a05776d0259a48e0eb520c524bea13896" name="a05776d0259a48e0eb520c524bea13896"></a>
+None&#160;</td><td class="memItemRight" valign="bottom"><b>add_ee_position</b> (self, np.ndarray ee_pos, np.ndarray joint_angles)</td></tr>
+<tr class="separator:a05776d0259a48e0eb520c524bea13896"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e3bcbb4140bf7c1df5991e0adda333f"><td class="memItemLeft" align="right" valign="top"><a id="a9e3bcbb4140bf7c1df5991e0adda333f" name="a9e3bcbb4140bf7c1df5991e0adda333f"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>calculate_coverage</b> (self)</td></tr>
 <tr class="separator:a9e3bcbb4140bf7c1df5991e0adda333f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -111,9 +111,6 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a6d7941831d434eb0f1777bc8d13f5b51"><td class="memItemLeft" align="right" valign="top"><a id="a6d7941831d434eb0f1777bc8d13f5b51" name="a6d7941831d434eb0f1777bc8d13f5b51"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>cube_offset</b></td></tr>
 <tr class="separator:a6d7941831d434eb0f1777bc8d13f5b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc43ec0bdd948616e28e9c56e979ca7d"><td class="memItemLeft" align="right" valign="top"><a id="acc43ec0bdd948616e28e9c56e979ca7d" name="acc43ec0bdd948616e28e9c56e979ca7d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>cube_open_side</b></td></tr>
-<tr class="separator:acc43ec0bdd948616e28e9c56e979ca7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2dc51f90175a18b49aab621688790e1"><td class="memItemLeft" align="right" valign="top"><a id="af2dc51f90175a18b49aab621688790e1" name="af2dc51f90175a18b49aab621688790e1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>n_grid_cells</b></td></tr>
 <tr class="separator:af2dc51f90175a18b49aab621688790e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -122,8 +119,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a41f836d76707fb5d634b3eb77a6c9605"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6f72c3f29cee411a25336ce9d63031f3" name="a6f72c3f29cee411a25336ce9d63031f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f72c3f29cee411a25336ce9d63031f3">&#9670;&nbsp;</a></span>__init__()</h2>
+<a id="a1c82d323e62d335f1ac800dbbbb12cd3" name="a1c82d323e62d335f1ac800dbbbb12cd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c82d323e62d335f1ac800dbbbb12cd3">&#9670;&nbsp;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -156,13 +153,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float &#160;</td>
-          <td class="paramname"><em>discretization_step</em> = <code>1.0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">str &#160;</td>
-          <td class="paramname"><em>cube_open_side</em> = <code>'top'</code>&#160;</td>
+          <td class="paramname"><em>discretization_step</em> = <code>1.0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -175,7 +166,6 @@ Public Attributes</h2></td></tr>
 discretization_step:    step size for discretization
 workspace:              type of workspace: normalized_cube or moved_cube
 cube_offset:            tuple containing the offset of the moved cube
-cube_open_side:         which side of the moved_cube is open: top, bottom, left, right, front or back
 </pre> 
 </div>
 </div>
