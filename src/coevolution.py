@@ -11,6 +11,7 @@ from util.util import generate_arms
 
 
 def start_coevolution():
+
     config = get_config()
     parents = []
     children = generate_arms(amount=config.coevolution_children)
@@ -23,8 +24,11 @@ def start_coevolution():
 
         parents = selection(selection_succes_rate, trained_arms + parents)
         
+        f = open("success_rate.txt", "a")
+        f.write(f"generation: {i}:\n")
         for parent in parents:
-            print(parent.success_rate)
+            f.write(f"{parent.success_rate}\n")
+        f.close()
 
         save_best_genome(parents[0], f'coevolution_{i}')
 

@@ -4,7 +4,7 @@ coevolution:
   coevolution_generations: 200
   coevolution_parents: 8
   coevolution_rl_amount: 8
-  coevolution_rl_episodes: 130 
+  coevolution_rl_episodes: 130
   coevolution_children: 6
 
 morphevo:
