@@ -12,7 +12,6 @@ from tqdm import tqdm
 from configs.env import (MORPHEVO_USE_GRAPHICS, NUM_CORES,
                          PATH_TO_UNITY_EXECUTABLE)
 from morphevo.evaluator import Evaluator
-from morphevo.logger import Logger
 from util.arm import Arm
 from util.config import get_config
 from util.util import alternate, generate_arms, normalize
@@ -26,8 +25,6 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
                                    sample_size=parameters.sample_size)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
-
-    logger = Logger()
 
     parents = []
     if not children:
@@ -45,8 +42,6 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
         save_best_genome(parents[0], generation)
 
         children = mutate_with_crossover(parents)
-
-        logger.log(generation, parents)
 
     save_best_genome(parents[0], parameters.evolution_generations)
     return parents
