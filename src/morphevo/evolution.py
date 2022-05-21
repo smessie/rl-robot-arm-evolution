@@ -42,13 +42,13 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
 
         parents = selection_fitness(population)
 
-        save_best_genome(parents[0], generation)
+        save_best_genome(parents[-1], generation)
 
         children = mutate_with_crossover(parents)
 
         logger.log(generation, parents)
 
-    save_best_genome(parents[0], parameters.evolution_generations)
+    save_best_genome(parents[-1], parameters.evolution_generations)
     return parents
 
 
