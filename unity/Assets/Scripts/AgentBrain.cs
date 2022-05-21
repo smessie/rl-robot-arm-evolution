@@ -13,7 +13,7 @@ public class AgentBrain : Agent
     private GameObject _anchor;
     private GameObject _endEffector;
 
-    private bool _makeScreenshots = false;
+    private bool _makeScreenshots = true;
     private int _screenshotCounter = 0;
 
     // Start function of Agent class, will be called before something else happens.
@@ -76,8 +76,8 @@ public class AgentBrain : Agent
     private void FixedUpdate()
     {
         _screenshotCounter++;
-        if (_makeScreenshots && _screenshotCounter % 100 == 0) {
-            ScreenCapture.CaptureScreenshot("screenshot-" + _screenshotCounter / 100 + ".png", 20);
+        if (_makeScreenshots && _screenshotCounter % 1000 == 0) {
+            ScreenCapture.CaptureScreenshot("screenshot-" + _screenshotCounter / 1000 + ".png", 15);
         }
     }
 }
