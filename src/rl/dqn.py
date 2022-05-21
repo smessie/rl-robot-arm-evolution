@@ -15,6 +15,7 @@ class RobotNetwork(torch.nn.Module):
         self.linear3 = torch.nn.Linear(hidden_nodes, number_of_actions)
 
     def forward(self, x):
+        return self.linear3(self.linear2(self.linear1(x)))
         x = torch.nn.functional.relu(self.linear1(x))
         x = torch.nn.functional.relu(self.linear2(x))
         x = torch.nn.functional.relu(self.linear3(x))

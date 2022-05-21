@@ -13,11 +13,11 @@ morphevo:
   sample_size: 100
   workspace_type: "moved_cube"
   #workspace_cube_offset: [0,10,15]
-  #workspace_side_length: 6 
+  #workspace_side_length: 6
 
   # small cube next to arm
   workspace_cube_offset: [0,5,9]
-  workspace_side_length: 4 
+  workspace_side_length: 4
 
   # cube over whole environment
   #workspace_cube_offset: [0,2,0]
@@ -25,12 +25,12 @@ morphevo:
 
 
 rl:
-  gamma: 0.99
-  eps_end: 0.2
-  eps_decay: 0.999995
-  batch_size: 64
-  mem_size: 1000
-  eps_start: 1 
+  gamma: 0.95
+  eps_end: 0
+  eps_decay: 0.99995
+  batch_size: 4
+  mem_size: 20
+  eps_start: 1
   hidden_nodes: 64
 
   workspace_discretization: 0.2
