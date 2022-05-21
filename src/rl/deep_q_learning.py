@@ -23,7 +23,7 @@ class DeepQLearner:
     """
 
     WORKSPACE_DISCRETIZATION = 0.2
-    GOAL_BAL_DIAMETER = 1.1 
+    GOAL_BAL_DIAMETER = 1.1
 
     def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
                  use_graphics: bool = False, network_path="") -> None:

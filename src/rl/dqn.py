@@ -17,7 +17,7 @@ class RobotNetwork(torch.nn.Module):
     def forward(self, x):
         x = torch.nn.functional.relu(self.linear1(x))
         x = torch.nn.functional.relu(self.linear2(x))
-        x = (self.linear3(x))
+        x = torch.nn.functional.relu(self.linear3(x))
         return x
 
 
