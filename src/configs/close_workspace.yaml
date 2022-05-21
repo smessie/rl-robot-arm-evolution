@@ -5,12 +5,12 @@ coevolution:
   coevolution_parents: 8
   coevolution_rl_amount: 8
   coevolution_rl_episodes: 150
-  coevolution_children: 6
+  coevolution_children: 8
 
 morphevo:
   evolution_generations: 75
   evolution_parents: 8
-  evolution_children: 4
+  evolution_children: 6
   crossover_children: 2
   sample_size: 100
   workspace_type: "moved_cube"
