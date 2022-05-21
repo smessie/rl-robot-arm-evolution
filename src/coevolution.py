@@ -13,14 +13,18 @@ from util.util import generate_arms
 def start_coevolution():
     config = get_config()
     parents = []
-    children = generate_arms(amount=config.evolution_children)
+    children = generate_arms(amount=config.coevolution_children)
 
     for i in range(config.coevolution_generations):
-        evolved_arms = evolution(children)
+        # disable for test
+        # evolved_arms = evolution(children)
 
-        trained_arms = train(evolved_arms)
+        trained_arms = train(children, num_episodes=config.coevolution_rl_episodes)
 
         parents = selection(selection_succes_rate, trained_arms + parents)
+        
+        for parent in parents:
+            print(parent.success_rate)
 
         save_best_genome(parents[0], f'coevolution_{i}')
 
@@ -29,7 +33,7 @@ def start_coevolution():
 
     save_best_genome(parents[0], 'final_rl_best')
 
-
+# ZET ERGENSANDERS DIT PAST HIER NIET BV ZET IN utils
 def save_best_genome(arm: Arm, label: str):
     filename = (f'output/{int(time.time())}-mu_{get_config().evolution_parents}' +
                 f'-lambda_{get_config().evolution_children}-gamma_{get_config().gamma}-{label}.xml')
