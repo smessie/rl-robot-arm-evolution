@@ -23,6 +23,7 @@ class Config:
                 self.evolution_children = morphevo['evolution_children']
                 self.crossover_children = morphevo['crossover_children']
                 self.sample_size = morphevo['sample_size']
+                self.chance_of_not_inheriting_type_correctly: 0.15 = morphevo['chance_of_not_inheriting_type_correctly']
                 self.workspace_parameters = self.parse_workspace_parameters(morphevo)
 
             if 'rl' in config:
