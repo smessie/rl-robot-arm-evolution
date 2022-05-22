@@ -133,7 +133,7 @@ class DeepQLearner:
         return action_index, observations
 
     def learn(self, num_episodes: int = 10000,
-              steps_per_episode: int = 1000, logging: bool = False) -> float:
+              steps_per_episode: int = 3000, logging: bool = False) -> float:
 
         episodes_finished = [False] * 50
         total_finished = 0
