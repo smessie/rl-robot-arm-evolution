@@ -14,7 +14,7 @@ from util.config import get_config
 
 
 class Genome:
-    LENGTH_LOWER_BOUND = 1
+    LENGTH_LOWER_BOUND = 0.7 
     LENGTH_UPPER_BOUND = 4
     MIN_AMOUNT_OF_MODULES = 2
     MAX_AMOUNT_OF_MODULES = 4

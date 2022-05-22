@@ -17,7 +17,7 @@ class Config:
                 self.coevolution_rl_amount = coevolution['coevolution_rl_amount']
                 self.coevolution_children = coevolution['coevolution_children']
                 self.coevolution_rl_episodes = coevolution['coevolution_rl_episodes']
-                self.coevolution_crossover_children = coevolution['crossover_children']
+                self.coevolution_crossover_children = coevolution['coevolution_crossover_children']
 
             if 'morphevo' in config:
                 morphevo = config['morphevo']

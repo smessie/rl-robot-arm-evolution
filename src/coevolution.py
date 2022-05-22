@@ -14,7 +14,7 @@ def start_coevolution():
 
     config = get_config()
     parents = []
-    children = generate_arms(amount=4*config.coevolution_children)
+    children = generate_arms(amount=3*config.coevolution_children)
 
     for i in range(config.coevolution_generations):
         # disable for test

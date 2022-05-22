@@ -3,14 +3,16 @@ description: "Example config"
 coevolution:
   coevolution_generations: 200
   coevolution_parents: 16
-  coevolution_rl_episodes: 50
+  coevolution_rl_amount: 8
+  coevolution_rl_episodes: 60
+  coevolution_crossover_children: 4 
   coevolution_children: 16
 
 morphevo:
   evolution_generations: 75
   evolution_parents: 16
   evolution_children: 16
-  crossover_children: 6
+  crossover_children: 2 
   sample_size: 100
   workspace_type: "moved_cube"
   #workspace_cube_offset: [0,10,15]
