@@ -16,10 +16,11 @@ class RobotNetwork(torch.nn.Module):
 
     def forward(self, x):
         return self.linear3(self.linear2(self.linear1(x)))
-        x = torch.nn.functional.relu(self.linear1(x))
-        x = torch.nn.functional.relu(self.linear2(x))
-        x = (self.linear3(x))
-        return x
+        # relu
+        # x = torch.nn.functional.relu(self.linear1(x))
+        # x = torch.nn.functional.relu(self.linear2(x))
+        # x = (self.linear3(x))
+        # return x
 
 
 class DQN:

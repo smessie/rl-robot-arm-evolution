@@ -122,7 +122,7 @@ class DeepQLearner:
            # self.penalty = min(self.penalty + 0.2, 5)
        # else:
            # self.penalty = max(self.penalty - 0.2, 0)
-        # return 15-new_distance_from_goal
+
         return 12*moved_distance, False
 
     def step(self, state):
@@ -173,7 +173,8 @@ class DeepQLearner:
             episodes_finished = episodes_finished[1:] + [finished]
 
             if logging:
-                self.logger.log_episode(episode, state, goal, episode_step, total_finished, episodes_finished, reward, self.dqn.eps)
+                self.logger.log_episode(episode, state, goal, episode_step, total_finished,
+                                        episodes_finished, reward, self.dqn.eps)
 
         if self.training:
             self.save()

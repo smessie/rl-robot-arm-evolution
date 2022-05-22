@@ -1,7 +1,8 @@
 from statistics import mean
+from typing import List
+
 import numpy as np
 import wandb
-from typing import List
 
 
 class Logger:
