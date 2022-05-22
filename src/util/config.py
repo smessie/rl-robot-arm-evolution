@@ -12,22 +12,27 @@ class Config:
 
             if 'coevolution' in config:
                 coevolution = config['coevolution']
-                self.coevolution_generations = coevolution['coevolution_generations']
-                self.coevolution_parents = coevolution['coevolution_parents']
-                self.coevolution_rl_amount = coevolution['coevolution_rl_amount']
+                self.coevolution_generations = coevolution['generations']
+                self.coevolution_parents = coevolution['parents']
+                self.coevolution_rl_amount = coevolution['rl_amount']
+                self.coevolution_children = coevolution['children']
+                self.coevolution_rl_episodes = coevolution['rl_episodes']
+                self.coevolution_crossover_children = coevolution['crossover_children']
 
             if 'morphevo' in config:
                 morphevo = config['morphevo']
-                self.evolution_generations = morphevo['evolution_generations']
-                self.evolution_parents = morphevo['evolution_parents']
-                self.evolution_children = morphevo['evolution_children']
-                self.crossover_children = morphevo['crossover_children']
+                self.evolution_generations = morphevo['generations']
+                self.evolution_parents = morphevo['parents']
+                self.evolution_children = morphevo['children']
+                self.evolution_crossover_children = morphevo['crossover_children']
                 self.sample_size = morphevo['sample_size']
-                self.chance_of_not_inheriting_type_correctly: 0.15 = morphevo['chance_of_not_inheriting_type_correctly']
+                self.chance_of_type_mutation: 0.15 = morphevo['chance_of_type_mutation']
                 self.workspace_parameters = self.parse_workspace_parameters(morphevo)
 
             if 'rl' in config:
                 rl = config['rl']
+                self.episodes = rl['episodes']
+                self.steps_per_episode = rl['steps_per_episode']
                 self.gamma = rl['gamma']
                 self.eps_end = rl['eps_end']
                 self.eps_decay = rl['eps_decay']
@@ -36,7 +41,6 @@ class Config:
                 self.eps_start = rl['eps_start']
                 self.hidden_nodes = rl['hidden_nodes']
 
-                self.workspace_discretization = rl['workspace_discretization']
                 self.goal_bal_diameter = rl['goal_bal_diameter']
 
         def parse_workspace_parameters(self, config) -> WorkspaceParameters:

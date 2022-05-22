@@ -51,7 +51,7 @@ class Genome:
             node.lengths = [np.clip(length + np.random.normal(mu, sigma), self.LENGTH_LOWER_BOUND,
                                     self.LENGTH_UPPER_BOUND) for length in node.lengths]
 
-        if np.random.rand() < get_config().chance_of_not_inheriting_type_correctly:
+        if np.random.rand() < get_config().chance_of_type_mutation:
             node.module_type = np.random.choice(self.module_choices)
 
     def get_urdf(self) -> str:

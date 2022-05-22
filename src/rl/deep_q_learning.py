@@ -22,7 +22,6 @@ class DeepQLearner:
     Defines the class that will learn based on a Deep-Q Network.
     """
 
-    WORKSPACE_DISCRETIZATION = 0.2
     GOAL_BAL_DIAMETER = 1.1
 
     def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
@@ -41,7 +40,6 @@ class DeepQLearner:
         assert urdf is not None, "Error: No urdf given."
 
         parameters = get_config()
-        DeepQLearner.WORKSPACE_DISCRETIZATION = parameters.workspace_discretization
         DeepQLearner.GOAL_BAL_DIAMETER = parameters.goal_bal_diameter
 
         self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
@@ -135,6 +133,7 @@ class DeepQLearner:
     def learn(self, num_episodes: int = 10000,
               steps_per_episode: int = 1000, logging: bool = False) -> float:
 
+        episodes_finished = [False] * 50
         total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
             self.penalty = 0
@@ -160,9 +159,6 @@ class DeepQLearner:
                     prev_pos, new_pos, goal)
                 prev_pos = new_pos  # this is not in the state, but is useful for reward calculation
 
-                if finished:
-                    total_finished += 1
-
                 # network update
                 if self.training:
                     self.dqn.update(state, new_state, action_index, reward, finished)
@@ -170,8 +166,13 @@ class DeepQLearner:
                 episode_step += 1
                 state = new_state
 
+            if finished:
+                total_finished += 1
+            episodes_finished = episodes_finished[1:] + [finished]
+
             if logging:
-                self.logger.log_episode(episode, state, goal, episode_step, total_finished, reward, self.dqn.eps)
+                self.logger.log_episode(episode, state, goal, episode_step, total_finished,
+                                        episodes_finished, reward, self.dqn.eps)
 
         if self.training:
             self.save()
@@ -211,10 +212,13 @@ def rl(network_path=""):
     signal.signal(signal.SIGINT, model.handler)
     model.learn(logging=True)
 
-def train(arms: List[Arm], num_episodes: int = 50, steps_per_episode: int = 1000) -> List[Arm]:
+def train(arms: List[Arm]) -> List[Arm]:
+    config = get_config()
     for arm in arms:
         model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE, urdf=arm.urdf, use_graphics=RL_USE_GRAPHICS_TRAINING)
-        arm.success_rate = model.learn(num_episodes=num_episodes, steps_per_episode=steps_per_episode, logging=True)
+        arm.success_rate = model.learn(
+            num_episodes=config.episodes, steps_per_episode=config.steps_per_episode, logging=False
+        )
         arm.rl_model = model.dqn
 
     return arms
