@@ -2,7 +2,7 @@ import locale
 import time
 from xml.dom import minidom
 
-from morphevo.evolution import (evolution, mutate, mutate_with_crossover,
+from morphevo.evolution import (evolution, mutate, mutate_with_crossover_coevolution,
                                 selection, selection_succes_rate)
 from rl.deep_q_learning import train
 from util.arm import Arm
@@ -33,7 +33,7 @@ def start_coevolution():
         save_best_genome(parents[-1], f'coevolution_{i}')
 
         # mutate 8 parents to get 32 new children
-        children = mutate(mutate_with_crossover, parents)
+        children = mutate(mutate_with_crossover_coevolution, parents)
 
     save_best_genome(parents[-1], 'final_rl_best')
 

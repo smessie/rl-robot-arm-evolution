@@ -17,13 +17,14 @@ class Config:
                 self.coevolution_rl_amount = coevolution['coevolution_rl_amount']
                 self.coevolution_children = coevolution['coevolution_children']
                 self.coevolution_rl_episodes = coevolution['coevolution_rl_episodes']
+                self.coevolution_crossover_children = coevolution['crossover_children']
 
             if 'morphevo' in config:
                 morphevo = config['morphevo']
                 self.evolution_generations = morphevo['evolution_generations']
                 self.evolution_parents = morphevo['evolution_parents']
                 self.evolution_children = morphevo['evolution_children']
-                self.crossover_children = morphevo['crossover_children']
+                self.evolution_crossover_children = morphevo['crossover_children']
                 self.sample_size = morphevo['sample_size']
                 self.workspace_parameters = self.parse_workspace_parameters(morphevo)
 
