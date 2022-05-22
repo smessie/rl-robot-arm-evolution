@@ -1,3 +1,6 @@
+from statistics import mean
+from typing import List
+
 import numpy as np
 import wandb
 
@@ -8,7 +11,8 @@ class Logger:
 
     # pylint: disable-msg=too-many-arguments
     def log_episode(self, episode: int, final_state: np.ndarray,
-                    goal: np.ndarray, timesteps: int, total_finished: int, reward: float, eps: float):
+                    goal: np.ndarray, timesteps: int, total_finished: int, episodes_finished: List[int],
+                    reward: float, eps: float):
 
         final_distance = np.linalg.norm(final_state[:3] - goal)
 
@@ -16,6 +20,7 @@ class Logger:
             'Distance away from the goal through time': final_distance,
             "Amount of timesteps throug time": timesteps,
             "Percentage of times the goal was reached through time": total_finished/(episode+1),
+            "Percentage of times the goal was reached in the last 50 episodes": mean(episodes_finished),
             "Rewards through time": reward,
             "EPS through time": eps
         }, step=episode)

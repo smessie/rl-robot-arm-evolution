@@ -135,6 +135,7 @@ class DeepQLearner:
     def learn(self, num_episodes: int = 10000,
               steps_per_episode: int = 1000, logging: bool = False) -> float:
 
+        episodes_finished = [False] * 50
         total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
             self.penalty = 0
@@ -160,9 +161,6 @@ class DeepQLearner:
                     prev_pos, new_pos, goal)
                 prev_pos = new_pos  # this is not in the state, but is useful for reward calculation
 
-                if finished:
-                    total_finished += 1
-
                 # network update
                 if self.training:
                     self.dqn.update(state, new_state, action_index, reward, finished)
@@ -170,8 +168,13 @@ class DeepQLearner:
                 episode_step += 1
                 state = new_state
 
+            if finished:
+                total_finished += 1
+            episodes_finished = episodes_finished[1:] + [finished]
+
             if logging:
-                self.logger.log_episode(episode, state, goal, episode_step, total_finished, reward, self.dqn.eps)
+                self.logger.log_episode(episode, state, goal, episode_step, total_finished,
+                                        episodes_finished, reward, self.dqn.eps)
 
         if self.training:
             self.save()
