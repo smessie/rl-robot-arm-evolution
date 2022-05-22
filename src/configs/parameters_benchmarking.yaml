@@ -24,5 +24,4 @@ rl:
   eps_start: 1
   hidden_nodes: 32
 
-  workspace_discretization: 0.2
   goal_bal_diameter: 0.6

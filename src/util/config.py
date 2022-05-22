@@ -40,7 +40,6 @@ class Config:
                 self.eps_start = rl['eps_start']
                 self.hidden_nodes = rl['hidden_nodes']
 
-                self.workspace_discretization = rl['workspace_discretization']
                 self.goal_bal_diameter = rl['goal_bal_diameter']
 
         def parse_workspace_parameters(self, config) -> WorkspaceParameters:

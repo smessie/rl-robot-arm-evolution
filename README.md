@@ -35,7 +35,6 @@
   - `mem_size`: size of the replay memory.
   - `eps_start`: the first value of epsilon, before there was any decay.
   - `hidden_nodes`: the size of the middle layers of the DQN model.
-  - `workspace_discretization`: 0
   - `goal_bal_diameter`: the diameter of the goal ball. This is essentially the distance from the goal center the end effector has to be at to be seen as "goal reached".
 
 

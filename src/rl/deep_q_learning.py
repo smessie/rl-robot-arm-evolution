@@ -22,7 +22,6 @@ class DeepQLearner:
     Defines the class that will learn based on a Deep-Q Network.
     """
 
-    WORKSPACE_DISCRETIZATION = 0.2
     GOAL_BAL_DIAMETER = 1.1
 
     def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
@@ -41,7 +40,6 @@ class DeepQLearner:
         assert urdf is not None, "Error: No urdf given."
 
         parameters = get_config()
-        DeepQLearner.WORKSPACE_DISCRETIZATION = parameters.workspace_discretization
         DeepQLearner.GOAL_BAL_DIAMETER = parameters.goal_bal_diameter
 
         self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
@@ -218,7 +216,9 @@ def train(arms: List[Arm]) -> List[Arm]:
     config = get_config()
     for arm in arms:
         model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE, urdf=arm.urdf, use_graphics=RL_USE_GRAPHICS_TRAINING)
-        arm.success_rate = model.learn(num_episodes=config.episodes, steps_per_episode=config.steps_per_episode, logging=False)
+        arm.success_rate = model.learn(
+            num_episodes=config.episodes, steps_per_episode=config.steps_per_episode, logging=False
+        )
         arm.rl_model = model.dqn
 
     return arms

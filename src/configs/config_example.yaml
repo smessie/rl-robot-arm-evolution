@@ -35,6 +35,4 @@ rl:
   mem_size: 1000
   eps_start: 1 
   hidden_nodes: 64
-
-  workspace_discretization: 0.2
   goal_bal_diameter: 0.6
