@@ -42,13 +42,13 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
 
         parents = selection_fitness(population)
 
-        save_best_genome(parents[0], generation)
+        save_best_genome(parents[-1], generation)
 
         children = mutate_with_crossover(parents)
 
         logger.log(generation, parents)
 
-    save_best_genome(parents[0], parameters.evolution_generations)
+    save_best_genome(parents[-1], parameters.evolution_generations)
     return parents
 
 
@@ -131,9 +131,20 @@ def mutate_with_crossover(parents: List[Arm]) -> List[Arm]:
 
     children = [
         Arm(parent.genome)
-        for parent in alternate(what=parents, times=config.evolution_children - config.crossover_children)
+        for parent in alternate(what=parents, times=config.evolution_children - config.evolution_crossover_children)
     ]
-    children += create_crossover_children(parents, config.crossover_children)
+    children += create_crossover_children(parents, config.evolution_crossover_children)
+
+    return children
+
+def mutate_with_crossover_coevolution(parents: List[Arm]) -> List[Arm]:
+    config = get_config()
+
+    children = [
+        Arm(parent.genome)
+        for parent in alternate(what=parents, times=config.coevolution_children - config.coevolution_crossover_children)
+    ]
+    children += create_crossover_children(parents, config.coevolution_crossover_children)
 
     return children
 

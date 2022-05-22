@@ -18,7 +18,7 @@ class RobotNetwork(torch.nn.Module):
         return self.linear3(self.linear2(self.linear1(x)))
         x = torch.nn.functional.relu(self.linear1(x))
         x = torch.nn.functional.relu(self.linear2(x))
-        x = torch.nn.functional.relu(self.linear3(x))
+        x = (self.linear3(x))
         return x
 
 
