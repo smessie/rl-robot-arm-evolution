@@ -214,7 +214,7 @@ def rl(network_path=""):
 def train(arms: List[Arm], num_episodes: int = 50, steps_per_episode: int = 1000) -> List[Arm]:
     for arm in arms:
         model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE, urdf=arm.urdf, use_graphics=RL_USE_GRAPHICS_TRAINING)
-        arm.success_rate = model.learn(num_episodes=num_episodes, steps_per_episode=steps_per_episode, logging=True)
+        arm.success_rate = model.learn(num_episodes=num_episodes, steps_per_episode=steps_per_episode, logging=False)
         arm.rl_model = model.dqn
 
     return arms
