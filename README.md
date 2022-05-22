@@ -28,15 +28,15 @@
   - `episodes`: amount of episodes you want to run rl
   - `steps_per_episode`: amount of steps you want to do every episode
   ##### @ FREYA IWIJN
-  - `gamma`: 0.99
-  - `eps_end`: 0.2
-  - `eps_decay`: 0.999995
-  - `batch_size`: 64
-  - `mem_size`: 1000
-  - `eps_start`: 1 
-  - `hidden_nodes`: 64
-  - `workspace_discretization`: 0.2
-  - `goal_bal_diameter`: 0.6
+  - `gamma`: how important do we find future rewards? Higher gamma = more important.
+  - `eps_end`: the lowest the epsilon value will go to. This is the value that will be reached when epsilon is fully decayed.
+  - `eps_decay`: how fast should epsilon decay. Higher = faster.
+  - `batch_size`: size of batch that is sampled from replay memory.
+  - `mem_size`: size of the replay memory.
+  - `eps_start`: the first value of epsilon, before there was any decay.
+  - `hidden_nodes`: the size of the middle layers of the DQN model.
+  - `workspace_discretization`: 0
+  - `goal_bal_diameter`: the diameter of the goal ball. This is essentially the distance from the goal center the end effector has to be at to be seen as "goal reached".
 
 
 ## Building unity
