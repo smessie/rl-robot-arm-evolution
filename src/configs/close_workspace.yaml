@@ -2,23 +2,22 @@ description: "Example config"
 
 coevolution:
   coevolution_generations: 200
-  coevolution_parents: 8
-  coevolution_rl_amount: 8
-  coevolution_rl_episodes: 150
-  coevolution_children: 8
+  coevolution_parents: 16
+  coevolution_rl_episodes: 50
+  coevolution_children: 16
 
 morphevo:
   evolution_generations: 75
-  evolution_parents: 8
-  evolution_children: 6
-  crossover_children: 2
+  evolution_parents: 16
+  evolution_children: 16
+  crossover_children: 6
   sample_size: 100
   workspace_type: "moved_cube"
   #workspace_cube_offset: [0,10,15]
-  #workspace_side_length: 6 
+  #workspace_side_length: 6
   # small cube next to arm
   workspace_cube_offset: [0,5,9]
-  workspace_side_length: 4 
+  workspace_side_length: 4
 
 rl:
   gamma: 0.99
@@ -26,7 +25,7 @@ rl:
   eps_decay: 0.999995
   batch_size: 64
   mem_size: 1000
-  eps_start: 1 
+  eps_start: 1
   hidden_nodes: 64
 
   workspace_discretization: 0.2
