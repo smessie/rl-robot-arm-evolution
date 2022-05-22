@@ -1,16 +1,16 @@
 description: "Example config"
 
 coevolution:
-  coevolution_generations: 200
-  coevolution_parents: 8
-  coevolution_rl_amount: 8
-  coevolution_rl_episodes: 130
-  coevolution_children: 6
+  generations: 200
+  parents: 8
+  rl_amount: 8
+  rl_episodes: 130
+  children: 6
 
 morphevo:
-  evolution_generations: 75
-  evolution_parents: 8
-  evolution_children: 4
+  generations: 75
+  parents: 8
+  children: 4
   crossover_children: 2
   sample_size: 100
   workspace_type: "moved_cube"

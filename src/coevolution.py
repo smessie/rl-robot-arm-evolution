@@ -20,7 +20,7 @@ def start_coevolution():
         # disable for test
         # evolved_arms = evolution(children)
 
-        trained_arms = train(children, num_episodes=config.coevolution_rl_episodes)
+        trained_arms = train(children)
 
         parents = selection(selection_succes_rate, trained_arms + parents)
 
