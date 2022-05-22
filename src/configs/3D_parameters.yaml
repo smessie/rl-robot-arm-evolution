@@ -20,6 +20,7 @@ morphevo:
   # small cube next to arm
   workspace_cube_offset: [0,5,9]
   workspace_side_length: 4
+  chance_of_type_mutation: 0.15
 
   # cube over whole environment
   #workspace_cube_offset: [0,2,0]
