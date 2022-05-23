@@ -99,8 +99,8 @@ class Evaluator:
         target_angles = self._generate_joint_angles_samples(self.env.joint_amount, self.sample_size)
         observation_parser = self._create_observation_parser()
 
-        for target_angles in selected_joint_angles:
-            self._step_until_target_angles(target_angles, arm.genome.workspace, observation_parser)
+        for target_angle in target_angles:
+            self._step_until_target_angles(target_angle, arm.genome.workspace, observation_parser)
 
         self.env.close()
         return arm
