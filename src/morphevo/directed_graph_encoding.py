@@ -17,7 +17,6 @@ Module = namedtuple('Module', 'module_type length')
 
 class Genome:
     def __init__(self, parent_genome: Optional[Genome] = None) -> None:
-
         if parent_genome:
             self.amount_of_modules = parent_genome.amount_of_modules
             self.genotype_graph = copy.deepcopy(parent_genome.genotype_graph)
@@ -129,7 +128,10 @@ class Graph:
         mutated_graph = Graph(self.anchor.lengths[0])
 
         drop_index = self.get_change_index(chance=config.chance_module_drop)
+        drop_index = drop_index if len(self) > config.minimum_amount_modules else None
+
         add_index = self.get_change_index(chance=config.chance_module_add)
+        add_index = add_index if len(self) < config.maximum_amount_modules else None
 
         for index, module in enumerate(self):
             if drop_index == index and add_index != index:
@@ -145,6 +147,7 @@ class Graph:
                 module.length + np.random.normal(0, config.standard_deviation_length),
                 config.length_lower_bound, config.length_upper_bound
             )
+            print(f"lenbefore {module.length} after {length}")
             mutated_graph.add_module(module_type, length)
 
         return mutated_graph
@@ -155,7 +158,7 @@ class Graph:
     def get_random_module(self):
         config = get_config()
         module_type = np.random.choice(get_config().module_choices)
-        length = np.random.rand() * (config.length_upper_bound - config.length_upper_bound) + config.length_lower_bound
+        length = np.random.rand() * (config.length_upper_bound - config.length_lower_bound) + config.length_lower_bound
         return Module(module_type, length)
 
     def __iter__(self):
