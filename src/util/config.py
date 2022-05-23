@@ -1,8 +1,15 @@
+from enum import Enum
+
 import yaml
 
-from morphevo.directed_graph_encoding import ModuleType
 from morphevo.workspace_parameters import WorkspaceParameters
 
+
+class ModuleType(Enum):
+    ANCHOR = 0
+    TILTING = 1
+    ROTATING = 2
+    TILTING_AND_ROTATING = 3
 
 class Config:
     # pylint: disable=invalid-name

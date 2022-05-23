@@ -4,7 +4,6 @@ import copy
 import random
 import time
 from collections import namedtuple
-from enum import Enum
 from itertools import zip_longest
 from typing import List, Optional
 
@@ -12,10 +11,9 @@ import numpy as np
 
 from morphevo.urdf_generator import URDFGenerator
 from morphevo.workspace import Workspace
-from util.config import get_config
-from util.util import run_chance
+from util.config import ModuleType, get_config
 
-Module = namedtuple('Module', 'module_type length') 
+Module = namedtuple('Module', 'module_type length')
 
 class Genome:
     def __init__(self, parent_genome: Optional[Genome] = None) -> None:
@@ -87,7 +85,7 @@ class Genome:
         genotype_graph = Graph()
         for _ in range(amount_of_modules):
             module_type = np.random.choice(get_config().module_choices)
-            length = np.random.rand() * (config.length_upper_bound - config.length_upper_bound) + config.length_lower_bound
+            length = np.random.rand()*(config.length_upper_bound-config.length_upper_bound) + config.length_lower_bound
             genotype_graph.add_module(module_type, length)
 
         self.amount_of_modules = amount_of_modules
@@ -99,13 +97,6 @@ class Genome:
             self.genotype_graph,
             time.ctime(),
         ))
-
-
-class ModuleType(Enum):
-    ANCHOR = 0
-    TILTING = 1
-    ROTATING = 2
-    TILTING_AND_ROTATING = 3
 
 class Node:
     def __init__(self, module_type: ModuleType, lengths: List[float]):
@@ -144,11 +135,17 @@ class Graph:
         for index, module in enumerate(self):
             if drop_index == index and add_index != index:
                 continue
-            elif add_index == index:
+            if add_index == index:
                 mutated_graph.add_module(*self.get_random_module())
 
-            module_type = np.random.choice(get_config().module_choices) if run_chance(config.chance_type_mutation) else module.module_type
-            length = np.clip(module.length + np.random.normal(0, config.standard_deviation_length), config.length_lower_bound, config.length_upper_bound)
+            if run_chance(config.chance_type_mutation):
+                module_type = np.random.choice(get_config().module_choices)
+            else:
+                module_type =module.module_type
+            length = np.clip(
+                module.length + np.random.normal(0, config.standard_deviation_length),
+                config.length_lower_bound, config.length_upper_bound
+            )
             mutated_graph.add_module(module_type, length)
 
         return mutated_graph
@@ -178,3 +175,6 @@ class Graph:
 
     def __len__(self):
         return len([None for _ in self])
+
+def run_chance(amount):
+    return random.uniform(0,1) < amount
