@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<robot name="robot_5424048949483421433">
+    <link name="anchor">
+        <visual>
+            <geometry>
+                <anchor_module length="1"/>
+            </geometry>
+        </visual>
+        <rotation lower_bound="0" upper_bound="180"/>
+    </link>
+    <link name="module_0">
+        <visual>
+            <geometry>
+                <rotating_module length="2.5268226149027804"/>
+            </geometry>
+        </visual>
+        <rotation lower_bound="0" upper_bound="180"/>
+    </link>
+    <joint name="module_0_joint" type="revolute">
+        <parent link="anchor"/>
+        <child link="module_0"/>
+    </joint>
+    <link name="module_1">
+        <visual>
+            <geometry>
+                <rotating_module length="1.4073168860077152"/>
+            </geometry>
+        </visual>
+        <rotation lower_bound="0" upper_bound="180"/>
+    </link>
+    <joint name="module_1_joint" type="revolute">
+        <parent link="anchor"/>
+        <child link="module_1"/>
+    </joint>
+</robot>

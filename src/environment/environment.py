@@ -11,7 +11,6 @@ from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 
 from configs.env import PATH_TO_UNITY_EXECUTABLE
-from configs.walls import WALL_9x9_GAP_3x3, WALL_13x19_GAP_13x5
 from environment.sidechannels.creation_sc import CreationSC
 from environment.sidechannels.goal_sc import GoalSC
 from environment.sidechannels.wall_sc import WallSC
@@ -129,7 +128,7 @@ class SimEnv(gym.Env):
 def test_environment():
     # make absolute paths to avoid file-not-found errors
     here = os.path.dirname(os.path.abspath(__file__))
-    urdf_filename = os.path.join(here, 'robot.urdf')
+    urdf_filename = os.path.join(here, 'roboteinde.urdf')
     unity_executable_path = PATH_TO_UNITY_EXECUTABLE
 
     urdf = ET.tostring(ET.parse(urdf_filename).getroot(), encoding='unicode')
@@ -141,11 +140,71 @@ def test_environment():
     # _ = env.reset()
 
     # env.set_goal((0, 5.5, 12.0))
-    env.pause(300)
-    env.build_wall(WALL_13x19_GAP_13x5)
-    env.pause(300)
-    env.build_wall(WALL_9x9_GAP_3x3)
-    env.pause(500)
+    # env.pause(300)
+
+    # env.step([1, 0, 0, 0, 0])
+    # env.step([1, 0, 0, 0, 0])
+    # env.step([1, 0, 0, 0, 0])
+
+    # env.step([0, 1, 0, 0, 0])
+    # env.step([0, 1, 0, 0, 0])
+    # env.step([0, 1, 0, 0, 0])
+    # env.step([0, 1, 0, 0, 0])
+
+    # env.step([0, 0, 1, 0, 0])
+    # env.step([0, 0, 1, 0, 0])
+    # env.step([0, 0, 1, 0, 0])
+    # env.step([0, 0, 1, 0, 0])
+    # env.step([0, 0, 1, 0, 0])
+    # env.step([0, 0, 0.5, 0, 0])
+
+    # env.step([0, 0, 0, 1, 0])
+    # env.step([0, 0, 0, 1, 0])
+    # env.step([0, 0, 0, 1, 0])
+    # env.step([0, 0, 0, 1, 0])
+
+    # env.step([0, 0, 0, 0, -1])
+    # env.step([0, 0, 0, 0, -1])
+    # env.step([0, 0, 0, 0, -1])
+
+    env.pause(100)
+
+    # env.build_wall(WALL_9x9_GAP_SCREENSHOT_2)
+    # env.build_wall(WALL_9x9_GAP_SCREENSHOT)
+
+    # env.set_workspace((0, 11.5, 19, 8))
+    # env.set_goal((1, 9.420, 19.5))
+
+    env.step([-1, 0, 0, 0, 0])
+    env.step([-1, 0, 0, 0, 0])
+    env.step([-1, 0, 0, 0, 0])
+    env.step([-1, 0, 0, 0, 0])
+
+    env.step([0, 1, 0, 0, 0])
+    env.step([0, 1, 0, 0, 0])
+    env.step([0, 1, 0, 0, 0])
+
+    env.step([0, 0, 1, 0, 0])
+    env.step([0, 0, 1, 0, 0])
+    env.step([0, 0, 1, 0, 0])
+    env.step([0, 0, 1, 0, 0])
+    env.step([0, 0, 1, 0, 0])
+    env.step([0, 0, 1, 0, 0])
+
+    env.step([0, 0, 0, 1, 0])
+    env.step([0, 0, 0, 1, 0])
+    env.step([0, 0, 0, 1, 0])
+    env.step([0, 0, 0, 1, 0])
+    env.step([0, 0, 0, 1, 0])
+
+    env.step([0, 0, 0, 0, 1])
+    env.step([0, 0, 0, 0, 1])
+    env.step([0, 0, 0, 0, 1])
+
+    env.set_workspace((0, 5, 9, 4))
+    # env.set_goal((1, 3.5, 5.5))
+
+    env.pause(10000)
     env.remove_walls()
     env.pause(1000)
 
