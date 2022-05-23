@@ -23,10 +23,10 @@ coevolution:
 
 morphevo:
   generations: 75
-  parents: 1
-  children: 1
+  parents: 8
+  children: 8 
   crossover_children: 0
-  sample_size: 10
+  sample_size: 100
   workspace_type: 'moved_cube'
 
   # small cube next to arm
