@@ -10,7 +10,6 @@ from typing import List, Optional
 
 import numpy as np
 
-from configs.env import MODULES_MAY_ROTATE, MODULES_MAY_TILT
 from morphevo.urdf_generator import URDFGenerator
 from morphevo.workspace import Workspace
 from util.config import get_config
@@ -24,13 +23,6 @@ class Genome:
     MAX_AMOUNT_OF_MODULES = 4
 
     def __init__(self, parent_genome: Optional[Genome] = None) -> None:
-        self.module_choices = []
-        if MODULES_MAY_ROTATE:
-            self.module_choices.append(ModuleType.ROTATING)
-            if MODULES_MAY_TILT:
-                self.module_choices.append(ModuleType.TILTING_AND_ROTATING)
-        if MODULES_MAY_TILT:
-            self.module_choices.append(ModuleType.TILTING)
 
         if parent_genome:
             self.amount_of_modules = parent_genome.amount_of_modules
@@ -53,7 +45,7 @@ class Genome:
                                     self.LENGTH_UPPER_BOUND) for length in node.lengths]
 
             if np.random.rand() < get_config().chance_of_type_mutation:
-                node.module_type = np.random.choice(self.module_choices)
+                node.module_type = np.random.choice(get_config().module_choices)
             node = node.next
 
     def get_urdf(self) -> str:
@@ -107,7 +99,7 @@ class Genome:
         genotype_graph = Graph()
         last_node = genotype_graph.anchor
         for _ in range(self.amount_of_modules):
-            module_type = np.random.choice(self.module_choices)
+            module_type = np.random.choice(get_config().module_choices)
             length = np.random.rand() * (self.LENGTH_UPPER_BOUND - self.LENGTH_LOWER_BOUND) + self.LENGTH_LOWER_BOUND
             if last_node.module_type == module_type:
                 last_node.lengths.append(length)
