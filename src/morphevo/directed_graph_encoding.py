@@ -151,10 +151,6 @@ class Node:
         self.lengths = lengths
         self.next = None
 
-    def __hash__(self):
-        return hash((self.module_type, tuple(self.lengths)))
-
-
 class Graph:
     def __init__(self, anchor: Optional[Node] = None):
         self.anchor = anchor
@@ -192,12 +188,3 @@ class Graph:
 
     def __len__(self):
         return len([None for _ in self])
-
-    def __hash__(self):
-        nodes = []
-        node = self.anchor
-        while node is not None:
-            nodes.append(node)
-            node = node.next
-
-        return hash(tuple(nodes)) 
