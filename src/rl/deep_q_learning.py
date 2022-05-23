@@ -96,7 +96,7 @@ class DeepQLearner:
     def make_dqn(self, network_path=""):
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
         # self.dqn = DQN(len(self.actions), state_size=6 + self.joint_amount * 4, network_path=network_path)
-        return DQN(len(self.actions), state_size=6, network_path=network_path)
+        return DQN(len(self.actions), state_size=9, network_path=network_path)
 
     def _calculate_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = goal - pos
@@ -123,7 +123,7 @@ class DeepQLearner:
         ee_pos = self._get_end_effector_position(observations)
 
         # return np.array([*ee_pos, *observations[:self.joint_amount * 4], *goal], dtype=float)
-        return np.array([*ee_pos, *goal], dtype=float)
+        return np.array([*ee_pos, *goal, *self.wall_centers[self.current_wall_index]], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
         return observations[self.env.joint_amount * 4:self.env.joint_amount * 4 + 3]
@@ -163,7 +163,6 @@ class DeepQLearner:
 
             goal = self._generate_goal()
             self.env.set_goal(tuple(goal))
-            #self.env.set_goal(self.wall_centers[self.current_wall_index])
 
             state = self._calculate_state(observations, goal)
             prev_pos = self._get_end_effector_position(observations)
