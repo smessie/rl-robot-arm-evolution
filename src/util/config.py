@@ -15,8 +15,8 @@ class Config:
                 arm = config['arm']
                 self.minimum_amount_modules = arm['minimum_amount_modules']
                 self.maximum_amount_modules = arm['maximum_amount_modules']
-                self.length_lowerbound = arm['length_lowerbound']
-                self.length_upperbound = arm['length_upperbound']
+                self.length_lower_bound = arm['length_lower_bound']
+                self.length_upper_bound = arm['length_upper_bound']
                 self.parse_module_choices(arm)
 
             if 'coevolution' in config:

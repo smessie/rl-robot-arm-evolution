@@ -29,12 +29,10 @@ class Genome:
             self.genotype_graph = copy.deepcopy(parent_genome.genotype_graph)
             self.mutate()
         else:
-            self.amount_of_modules = random.randint(self.MIN_AMOUNT_OF_MODULES, self.MAX_AMOUNT_OF_MODULES)
             self.genotype_graph = self._generate_genotype_graph()
 
         workspace_parameters = get_config().workspace_parameters
         self.workspace = Workspace(*workspace_parameters)
-
         self.genome_id = hash(self)
 
     def mutate(self) -> None:
@@ -89,24 +87,23 @@ class Genome:
         return genome
 
     def get_amount_of_joints(self):
-        joints_amount = 0
+        joint_amount = 0
         for module in self.genotype_graph.iterate_graph(ignore_anchor=False):
-            joints_amount += 2 if module.module_type == ModuleType.TILTING_AND_ROTATING else 1
+            joint_amount += 2 if module.module_type == ModuleType.TILTING_AND_ROTATING else 1
 
-        return joints_amount
+        return joint_amount
 
     def _generate_genotype_graph(self):
+        config = get_config()
+
+        amount_of_modules = random.randint(config.minimum_amount_modules, config.maximum_amount_modules)
         genotype_graph = Graph()
-        last_node = genotype_graph.anchor
-        for _ in range(self.amount_of_modules):
+        for _ in range(amount_of_modules):
             module_type = np.random.choice(get_config().module_choices)
-            length = np.random.rand() * (self.LENGTH_UPPER_BOUND - self.LENGTH_LOWER_BOUND) + self.LENGTH_LOWER_BOUND
-            if last_node.module_type == module_type:
-                last_node.lengths.append(length)
-            else:
-                new_node = Node(module_type, [length])
-                last_node.next = new_node
-                last_node = new_node
+            length = np.random.rand() * (config.length_upper_bound - config.length_upper_bound) + config.length_lower_bound
+            genotype_graph.add_module(module_type, length)
+
+        self.amount_of_modules = amount_of_modules
         return genotype_graph
 
     def __hash__(self):
