@@ -14,6 +14,7 @@
   - `movements`: possible movements a module can make: [`rotate`, `tilt`]
 
 #### mutation: parameters that will be used for mutation in coevolution and morphologic evolution
+  - `standard_deviation_length`: standard deviation used to mutate length of module
   - `chance_module_drop`: chance one of the modules gets dropped while mutating, maximum one module will be dropped
   - `chance_module_add`: chance one module gets added while mutating, maximum one module will added dropped
   - `chance_type_mutation`: chance the type of a module mutates, all modules can mutate, chance will be ran every time

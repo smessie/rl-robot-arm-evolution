@@ -21,6 +21,7 @@ class Config:
 
             if 'mutation' in config:
                 mutation = config['mutation']
+                self.standard_deviation_length = mutation['standard_deviation_length']
                 self.chance_module_drop = mutation['chance_module_drop']
                 self.chance_module_add = mutation['chance_module_add']
                 self.chance_type_mutation = mutation['chance_of_type_mutation']

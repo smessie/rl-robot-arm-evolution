@@ -8,8 +8,9 @@ arm:
   movements: ['rotate', 'tilt']
 
 mutation:
+  standard_deviation_length: 0.4
   chance_module_drop: 0.05
-  chance_module_add: 0.05
+  chance_module_add: 0.15
   chance_type_mutation: 0.05
 
 coevolution:
