@@ -2,7 +2,7 @@ description: "Example config"
 
 arm:
   minimum_amount_modules: 2
-  maximum_amount_modules: 5 
+  maximum_amount_modules: 4
   length_lower_bound: 1
   length_upper_bound: 4
   movements: ['rotate', 'tilt']
@@ -26,7 +26,7 @@ morphevo:
   parents: 8
   children: 8 
   crossover_children: 0
-  sample_size: 100
+  sample_size: 10
   workspace_type: 'moved_cube'
 
   # small cube next to arm

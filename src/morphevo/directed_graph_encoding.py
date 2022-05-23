@@ -147,7 +147,6 @@ class Graph:
                 module.length + np.random.normal(0, config.standard_deviation_length),
                 config.length_lower_bound, config.length_upper_bound
             )
-            print(f"lenbefore {module.length} after {length}")
             mutated_graph.add_module(module_type, length)
 
         return mutated_graph
