@@ -53,6 +53,7 @@ class Genome:
 
             if np.random.rand() < get_config().chance_of_type_mutation:
                 node.module_type = np.random.choice(self.module_choices)
+            node = node.next
 
     def get_urdf(self) -> str:
         urdf_generator = URDFGenerator(self.genome_id)
