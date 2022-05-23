@@ -3,8 +3,10 @@ from __future__ import annotations
 import copy
 import random
 import time
+from collections import namedtuple
 from enum import Enum
-from typing import Optional
+from itertools import zip_longest
+from typing import List, Optional
 
 import numpy as np
 
@@ -69,37 +71,19 @@ class Genome:
         return urdf_generator.get_urdf()
 
     def calculate_diversity_from(self, other_genome: Genome):
-        module_length_diversity = []
+        diversity = 0
+        amount_of_modules = max(self.amount_of_modules, other_genome.amount_of_modules)
 
-        self_node, self_node_lengths_index = self.genotype_graph.anchor.next, 0
-        other_node, other_node_lengths_index = other_genome.genotype_graph.anchor.next, 0
-
-        different_types_count = 0
-        for module_number in range(max(self.amount_of_modules, other_genome.amount_of_modules)):
-            if module_number < self.amount_of_modules and module_number < other_genome.amount_of_modules:
-                module_length_diversity.append(
-                    abs(self_node.lenghts[self_node_lengths_index] - other_node.lengths[other_node_lengths_index]))
-                if self_node.lenghts[self_node_lengths_index] != other_node.lengths[other_node_lengths_index]:
-                    different_types_count += 1
-            elif module_number < self.amount_of_modules:
-                module_length_diversity.append(self_node.lenghts[self_node_lengths_index])
-                different_types_count += 1
+        for own_node, other_node in zip_longest(self.genotype_graph, other_genome.genotype_graph):
+            if not own_node or not other_node:
+                diversity += 1/amount_of_modules
+            elif own_node.module_type != other_node.module_type:
+                diversity += 1/amount_of_modules
             else:
-                module_length_diversity.append(other_node.lengths[other_node_lengths_index])
-                different_types_count += 1
+                lenght_longest_module = max(own_node.length, other_node.length)
+                diversity += (abs(own_node.length - other_node.length)/lenght_longest_module)/amount_of_modules
 
-            if self_node is not None:
-                self_node_lengths_index += 1
-                if self_node_lengths_index >= len(self_node.lengths):
-                    self_node = self_node.next
-                    self_node_lengths_index = 0
-            if other_node is not None:
-                other_node_lengths_index += 1
-                if other_node_lengths_index >= len(other_node.lengths):
-                    other_node = other_node.next
-                    other_node_lengths_index = 0
-        return (sum(module_length_diversity) / len(module_length_diversity)) * \
-               (1 + different_types_count / len(module_length_diversity))
+        return diversity 
 
     # pylint: disable-msg=too-many-branches
     def crossover(self, other_genome: Genome) -> Genome:
@@ -209,7 +193,7 @@ class ModuleType(Enum):
 
 
 class Node:
-    def __init__(self, module_type: ModuleType, lengths: [int]):
+    def __init__(self, module_type: ModuleType, lengths: List[int]):
         self.module_type = module_type
         self.lengths = lengths
         self.next = None
@@ -222,10 +206,25 @@ class Graph:
     def __init__(self, anchor: Node):
         self.anchor = anchor
 
+    def __iter__(self):
+        NodeTuple = namedtuple('NodeTuple', 'module_type lenght') 
+
+        current_node = self.anchor
+        current_node_index = 0
+        while current_node:
+            yield NodeTuple(current_node.module_type, current_node.lengths[current_node_index])
+
+            current_node_index += 1
+            if current_node_index >= len(current_node.lengths):
+                current_node = current_node.next
+                current_node_index = 0
+ 
+
     def __hash__(self):
         nodes = []
         node = self.anchor
         while node is not None:
             nodes.append(node)
             node = node.next
-        return hash(tuple(nodes))
+
+        return hash(tuple(nodes)) 
