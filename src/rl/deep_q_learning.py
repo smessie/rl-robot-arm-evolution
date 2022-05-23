@@ -15,6 +15,8 @@ from rl.dqn import DQN
 from rl.logger import Logger
 from util.arm import Arm
 from util.config import get_config
+from configs.walls import WALL_9x9_GAP_3x3_TOP_LEFT, WALL_9x9_GAP_3x3_TOP_RIGHT, \
+    WALL_9x9_GAP_3x3_BOTTOM_LEFT, WALL_9x9_GAP_3x3_BOTTOM_RIGHT
 
 
 class DeepQLearner:
@@ -61,6 +63,10 @@ class DeepQLearner:
 
         self.logger = Logger()
 
+        self.walls = [  WALL_9x9_GAP_3x3_TOP_LEFT, WALL_9x9_GAP_3x3_TOP_RIGHT,
+                        WALL_9x9_GAP_3x3_BOTTOM_LEFT, WALL_9x9_GAP_3x3_BOTTOM_RIGHT]
+        self.wall_centers = []
+
     def handler(self, *_):
         if self.training:
             res = input("Ctrl-c was pressed. Do you want to save the DQN? (y/n) ")
@@ -74,6 +80,11 @@ class DeepQLearner:
     def get_action_space(self, number_of_joints):
         actions = np.identity(number_of_joints)
         return np.concatenate([actions, (-1)*actions])
+
+    def get_new_wall(self):
+        wall_index = random.randint(0, 4)
+        return self.walls[wall_index], self.wall_centers[wall_index]
+
 
     def make_dqn(self, network_path=""):
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
