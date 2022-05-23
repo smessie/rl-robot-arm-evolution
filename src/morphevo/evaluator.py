@@ -92,20 +92,6 @@ class Evaluator:
 
             prev_angles = current_angles
 
-    def _step_random_directions(self, joint_amount: int, workspace: Workspace,
-                                parse_observation: Callable[[np.ndarray], Tuple[np.ndarray, np.ndarray]]) -> None:
-        observations = self.env.get_current_state()
-
-        for _ in range(self.EVALUATIONS_AMOUNT):
-            self.env.reset()
-
-            for i in range(self.STEPS_PER_EVALUATION):
-                actions = np.random.choice([0, -5, 5], joint_amount)
-                observations = self.env.step(actions, return_observations=i + 1 == self.STEPS_PER_EVALUATION)
-
-            current_angles, ee_pos = parse_observation(observations)
-            workspace.add_ee_position(ee_pos, current_angles)
-
     def eval_arm(self, arm: Arm) -> Arm:
         self.env = self._initialize_environment(arm.genome.get_urdf(), arm.genome.genome_id)
         self.env.reset()
