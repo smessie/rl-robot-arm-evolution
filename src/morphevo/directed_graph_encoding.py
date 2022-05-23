@@ -15,6 +15,7 @@ from morphevo.urdf_generator import URDFGenerator
 from morphevo.workspace import Workspace
 from util.config import get_config
 
+Module = namedtuple('Module', 'module_type length') 
 
 class Genome:
     LENGTH_LOWER_BOUND = 1
@@ -32,12 +33,10 @@ class Genome:
             self.module_choices.append(ModuleType.TILTING)
 
         if parent_genome is not None:
-            self.anchor_can_rotate = parent_genome.anchor_can_rotate
             self.amount_of_modules = parent_genome.amount_of_modules
             self.genotype_graph = copy.deepcopy(parent_genome.genotype_graph)
             self.mutate()
         else:
-            self.anchor_can_rotate = True
             self.amount_of_modules = random.randint(self.MIN_AMOUNT_OF_MODULES, self.MAX_AMOUNT_OF_MODULES)
             self.genotype_graph = self._generate_genotype_graph()
 
@@ -58,17 +57,15 @@ class Genome:
             node = node.next
 
     def get_urdf(self) -> str:
-        urdf_generator = URDFGenerator(self.genome_id)
-        urdf_generator.add_anchor(length=1, can_rotate=self.anchor_can_rotate)
-        node = self.genotype_graph.anchor.next
-        while node is not None:
-            for length in node.lengths:
-                urdf_generator.add_module(length,
-                                          can_tilt=node.module_type in (ModuleType.TILTING,
-                                                                        ModuleType.TILTING_AND_ROTATING),
-                                          can_rotate=node.module_type in (ModuleType.ROTATING,
-                                                                          ModuleType.TILTING_AND_ROTATING))
-            node = node.next
+        urdf_generator = URDFGenerator(str(self.genome_id))
+        urdf_generator.add_anchor(length=self.genotype_graph.anchor.lengths[0], can_rotate=True)
+
+        for module in self.genotype_graph:
+            urdf_generator.add_module(module.length,
+                                      can_tilt=module.module_type in (ModuleType.TILTING,
+                                                                    ModuleType.TILTING_AND_ROTATING),
+                                      can_rotate=module.module_type in (ModuleType.ROTATING,
+                                                                      ModuleType.TILTING_AND_ROTATING))
         return urdf_generator.get_urdf()
 
     def calculate_diversity_from(self, other_genome: Genome):
@@ -111,12 +108,10 @@ class Genome:
             else:
                 joints_amount += 1 
 
-        if not self.anchor_can_rotate:
-            joints_amount -= 1
         return joints_amount
 
     def _generate_genotype_graph(self):
-        genotype_graph = Graph(Node(ModuleType.ANCHOR, [1]))
+        genotype_graph = Graph()
         last_node = genotype_graph.anchor
         for _ in range(self.amount_of_modules):
             module_type = np.random.choice(self.module_choices)
@@ -131,7 +126,6 @@ class Genome:
 
     def __hash__(self):
         return hash((
-            self.anchor_can_rotate,
             self.amount_of_modules,
             self.genotype_graph,
             time.ctime(),
@@ -144,18 +138,17 @@ class ModuleType(Enum):
     ROTATING = 2
     TILTING_AND_ROTATING = 3
 
-
 class Node:
-    def __init__(self, module_type: ModuleType, lengths: List[int]):
+    def __init__(self, module_type: ModuleType, lengths: List[float]):
         self.module_type = module_type
         self.lengths = lengths
         self.next = None
 
 class Graph:
-    def __init__(self, anchor: Optional[Node] = None):
-        self.anchor = anchor
+    def __init__(self, anchor_length: float = 1.):
+        self.anchor = Node(ModuleType.ANCHOR, [anchor_length])
 
-    def add_module(self, module_type: ModuleType, length: int):
+    def add_module(self, module_type: ModuleType, length: float):
         last_module = self.get_last_module()
 
         if last_module.module_type == module_type:
@@ -165,26 +158,25 @@ class Graph:
             last_module.next = new_module
 
     def get_last_module(self):
-        if not self.anchor.next:
-            return self.anchor
-
         current_module = self.anchor
         while current_module.next:
             current_module = current_module.next
+
         return current_module
 
     def __iter__(self):
-        NodeTuple = namedtuple('NodeTuple', 'module_type length') 
+        return self.iterate_graph(ignore_anchor=True)
 
-        current_node = self.anchor
-        current_node_index = 0
+    def iterate_graph(self, ignore_anchor=False):
+        current_node = self.anchor.next if ignore_anchor else self.anchor
+        current_module_index = 0
         while current_node:
-            yield NodeTuple(current_node.module_type, current_node.lengths[current_node_index])
+            yield Module(current_node.module_type, current_node.lengths[current_module_index])
 
-            current_node_index += 1
-            if current_node_index >= len(current_node.lengths):
+            current_module_index += 1
+            if current_module_index >= len(current_node.lengths):
                 current_node = current_node.next
-                current_node_index = 0
+                current_module_index = 0
 
     def __len__(self):
         return len([None for _ in self])
