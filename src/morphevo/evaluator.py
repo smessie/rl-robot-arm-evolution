@@ -36,7 +36,7 @@ class Evaluator:
         return env
 
     def _generate_joint_angles_samples(self, angle_amount, samples_amount) -> np.ndarray:
-        base_joint_angle_options = list(range(-180, 180, self.JOINT_ANGLE_STEP * 4))
+        base_joint_angle_options = list(range(0, 360, self.JOINT_ANGLE_STEP * 4))
         angle_options = list(range(0, 105, self.JOINT_ANGLE_STEP))
 
         samples = []
