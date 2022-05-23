@@ -1,13 +1,8 @@
-import locale
-import time
-from xml.dom import minidom
-
 from morphevo.evolution import (mutate, mutate_with_crossover_coevolution,
                                 selection, selection_succes_rate)
 from rl.deep_q_learning import train
-from util.arm import Arm
 from util.config import get_config
-from util.util import generate_arms
+from util.util import generate_arms, save_best_genome
 
 
 def start_coevolution():
@@ -40,13 +35,4 @@ def start_coevolution():
 
     #save_best_genome(parents[-1], 'final_rl_best')
     for index, parent in enumerate(parents):
-        save_best_genome(parent, f'coevolution_{i}_{index}')
-
-# ZET ERGENSANDERS DIT PAST HIER NIET BV ZET IN utils
-def save_best_genome(arm: Arm, label: str):
-    filename = (f'output/{int(time.time())}-mu_{get_config().coevolution_parents}' +
-                f'-lambda_{get_config().coevolution_children}-gamma_{get_config().gamma}-{label}.xml')
-
-    xml_str = minidom.parseString(arm.urdf).toprettyxml(indent="    ")
-    with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
-        f.write(xml_str)
+        save_best_genome(parent, f'coevolution_{index}_{index}')
