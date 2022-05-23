@@ -91,7 +91,6 @@ class Genome:
 
     def __hash__(self):
         return hash((
-            self.amount_of_modules,
             self.genotype_graph,
             time.ctime(),
         ))
