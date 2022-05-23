@@ -81,73 +81,28 @@ class Genome:
             elif own_node.module_type != other_node.module_type:
                 diversity += 1/amount_of_modules
             else:
-                lenght_longest_module = max(own_node.length, other_node.length)
-                diversity += (abs(own_node.length - other_node.length)/lenght_longest_module)/amount_of_modules
+                length_longest_module = max(own_node.length, other_node.length)
+                diversity += (abs(own_node.length - other_node.length)/length_longest_module)/amount_of_modules
 
         return diversity 
 
-    # pylint: disable-msg=too-many-branches
     def crossover(self, other_genome: Genome) -> Genome:
         genome = Genome()
 
         # make combination of the modules
-        genotype_graph = Graph(Node(ModuleType.ANCHOR, [1]))
-        last_node = genotype_graph.anchor
-        amount_of_modules = 0
+        genotype_graph = Graph()
 
-        self_node, self_node_lengths_index = self.genotype_graph.anchor.next, 0
-        other_node, other_node_lengths_index = other_genome.genotype_graph.anchor.next, 0
-
-        while self_node is not None and other_node is not None:
+        for own_module, other_module in zip_longest(self.genotype_graph, other_genome.genotype_graph):
             if random.randint(0, 1):
-                module_type = self_node.module_type
-                length = self_node.lengths[self_node_lengths_index]
+                module = own_module
             else:
-                module_type = other_node.module_type
-                length = other_node.lengths[other_node_lengths_index]
-            if last_node.module_type == module_type:
-                last_node.lengths.append(length)
-            else:
-                new_node = Node(module_type, [length])
-                last_node.next = new_node
-                last_node = new_node
-            amount_of_modules += 1
+                module = other_module
 
-            if self_node is not None:
-                self_node_lengths_index += 1
-                if self_node_lengths_index >= len(self_node.lengths):
-                    self_node = self_node.next
-                    self_node_lengths_index = 0
-            if other_node is not None:
-                other_node_lengths_index += 1
-                if other_node_lengths_index >= len(other_node.lengths):
-                    other_node = other_node.next
-                    other_node_lengths_index = 0
-
-        # maybe add leftover modules of the longest arm
-        if random.randint(0, 1) and amount_of_modules < max(self.amount_of_modules, other_genome.amount_of_modules):
-            if self.amount_of_modules > other_genome.amount_of_modules:
-                node = self_node
-                node_lengths_index = self_node_lengths_index
-            else:
-                node = other_node
-                node_lengths_index = other_node_lengths_index
-            while node is not None:
-                if last_node.module_type == node.module_type:
-                    last_node.lengths.append(node.lengths[node_lengths_index])
-                else:
-                    new_node = Node(node.module_type, [node.lengths[node_lengths_index]])
-                    last_node.next = new_node
-                    last_node = new_node
-                amount_of_modules += 1
-
-                node_lengths_index += 1
-                if node_lengths_index >= len(node.lengths):
-                    node = node.next
-                    node_lengths_index = 0
+            if module:
+                genotype_graph.add_module(module.module_type, module.length)
 
         genome.genotype_graph = genotype_graph
-        genome.amount_of_modules = amount_of_modules
+        genome.amount_of_modules = len(genotype_graph)
         return genome
 
     def get_amount_of_joints(self):
@@ -204,11 +159,29 @@ class Node:
 
 
 class Graph:
-    def __init__(self, anchor: Node):
+    def __init__(self, anchor: Optional[Node] = None):
         self.anchor = anchor
 
+    def add_module(self, module_type: ModuleType, length: int):
+        last_module = self.get_last_module()
+
+        if last_module.module_type == module_type:
+            last_module.lengths.append(length)
+        else:
+            new_module = Node(module_type, [length])
+            last_module.next = new_module
+
+    def get_last_module(self):
+        if not self.anchor.next:
+            return self.anchor
+
+        current_module = self.anchor
+        while current_module.next:
+            current_module = current_module.next
+        return current_module
+
     def __iter__(self):
-        NodeTuple = namedtuple('NodeTuple', 'module_type lenght') 
+        NodeTuple = namedtuple('NodeTuple', 'module_type length') 
 
         current_node = self.anchor
         current_node_index = 0
@@ -219,7 +192,9 @@ class Graph:
             if current_node_index >= len(current_node.lengths):
                 current_node = current_node.next
                 current_node_index = 0
- 
+
+    def __len__(self):
+        return len([None for _ in self])
 
     def __hash__(self):
         nodes = []
