@@ -41,6 +41,7 @@ public class WallBuilder : MonoBehaviour
             }
             pos.y += scaleY;
         }
+        wallAmount++;
     }
 
     private void AddWallTile(Vector3 pos)
