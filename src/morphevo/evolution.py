@@ -18,22 +18,22 @@ from util.util import alternate, generate_arms, normalize
 
 
 def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
-    parameters = get_config()
+    config = get_config()
 
     # pylint: disable=no-member
     evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=MORPHEVO_USE_GRAPHICS,
-                                   sample_size=parameters.sample_size)
+                                   sample_size=config.sample_size)
                   for _ in range(NUM_CORES)]
     pool = ActorPool(evaluators)
 
     parents = []
     if not children:
-        children = generate_arms(amount=parameters.evolution_children)
+        children = generate_arms(amount=config.evolution_children)
 
-    for generation in tqdm(range(parameters.evolution_generations), desc='Generation'):
+    for generation in tqdm(range(config.evolution_generations), desc='Generation'):
         # Evaluate children
         children = list(pool.map_unordered(
-            lambda evaluator, arm: evaluator.eval_arm.remote(arm), children))
+            lambda evaluator, arm: evaluator.eval_arm.remote(arm, config), children))
 
         population = children + parents
 
@@ -43,7 +43,7 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
 
         children = mutate_with_crossover(parents)
 
-    save_best_genome(parents[-1], parameters.evolution_generations)
+    save_best_genome(parents[-1], config.evolution_generations)
 
     return parents
 
@@ -146,8 +146,9 @@ def mutate_with_crossover_coevolution(parents: List[Arm]) -> List[Arm]:
 
 
 def create_crossover_children(parents: List[Arm], amount: int):
-    if len(parents) < 1:
-        return []
+    if len(parents) <= 1:
+        raise ValueError(f"You can't do crossover on {len(parents)} parent")
+
     children = []
     while len(children) <= amount:
         parent1 = parents[randint(0, len(parents) - 1)]
