@@ -13,6 +13,7 @@ import numpy as np
 from morphevo.urdf_generator import URDFGenerator
 from morphevo.workspace import Workspace
 from util.config import get_config
+from util.util import run_chance
 
 Module = namedtuple('Module', 'module_type length') 
 
@@ -36,15 +37,7 @@ class Genome:
         self.genome_id = hash(self)
 
     def mutate(self) -> None:
-        mu, sigma = 0, 0.1
-        node: Node = self.genotype_graph.anchor.next
-        while node is not None:
-            node.lengths = [np.clip(length + np.random.normal(mu, sigma), self.LENGTH_LOWER_BOUND,
-                                    self.LENGTH_UPPER_BOUND) for length in node.lengths]
-
-            if np.random.rand() < get_config().chance_of_type_mutation:
-                node.module_type = np.random.choice(get_config().module_choices)
-            node = node.next
+        self.genotype_graph = self.genotype_graph.mutate()
 
     def get_urdf(self) -> str:
         urdf_generator = URDFGenerator(str(self.genome_id))
@@ -52,10 +45,9 @@ class Genome:
 
         for module in self.genotype_graph:
             urdf_generator.add_module(module.length,
-                                      can_tilt=module.module_type in (ModuleType.TILTING,
-                                                                    ModuleType.TILTING_AND_ROTATING),
-                                      can_rotate=module.module_type in (ModuleType.ROTATING,
-                                                                      ModuleType.TILTING_AND_ROTATING))
+                              can_tilt=module.module_type in (ModuleType.TILTING, ModuleType.TILTING_AND_ROTATING),
+                              can_rotate=module.module_type in (ModuleType.ROTATING, ModuleType.TILTING_AND_ROTATING),
+                           )
         return urdf_generator.get_urdf()
 
     def calculate_diversity_from(self, other_genome: Genome):
@@ -145,6 +137,35 @@ class Graph:
             current_module = current_module.next
 
         return current_module
+
+    def mutate(self):
+        config = get_config()
+
+        mutated_graph = Graph(self.anchor.lengths[0])
+
+        drop_index = self.get_change_index(chance=config.chance_module_drop)
+        add_index = self.get_change_index(chance=config.chance_module_add)
+
+        for index, module in enumerate(self):
+            if drop_index == index and add_index != index:
+                continue
+            elif add_index == index:
+                mutated_graph.add_module(*self.get_random_module())
+
+            module_type = np.random.choice(get_config().module_choices) if run_chance(config.chance_type_mutation) else module.module_type
+            length = np.clip(module.length + np.random.normal(0, config.standard_deviation_length), config.length_lower_bound, config.length_upper_bound)
+            mutated_graph.add_module(module_type, length)
+
+        return mutated_graph
+
+    def get_change_index(self, chance: float):
+        return random.randint(0, len(self)) if run_chance(chance) else None
+
+    def get_random_module(self):
+        config = get_config()
+        module_type = np.random.choice(get_config().module_choices)
+        length = np.random.rand() * (config.length_upper_bound - config.length_upper_bound) + config.length_lower_bound
+        return Module(module_type, length)
 
     def __iter__(self):
         return self.iterate_graph()

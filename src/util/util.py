@@ -1,4 +1,5 @@
 import locale
+import random
 
 import numpy as np
 
@@ -39,3 +40,7 @@ def write_morphevo_benchmarks(arm: Arm):
         file.write(f'{arm.genome.workspace.side_length},{arm.genome.workspace.cube_offset},'
                    f'{sum(module_lengths)},{arm.genome.amount_of_modules},'
                    f'{arm.genome.workspace.calculate_coverage()}\n')
+
+def run_chance(amount):
+    return random.uniform(0,1) < amount
+
