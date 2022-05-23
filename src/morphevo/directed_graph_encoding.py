@@ -77,7 +77,7 @@ class Genome:
 
         return joint_amount
 
-    def _generate_genotype_graph(self):
+    def _generate_random_genotype_graph(self):
         config = get_config()
 
         amount_of_modules = random.randint(config.minimum_amount_modules, config.maximum_amount_modules)
@@ -91,7 +91,6 @@ class Genome:
 
     def __hash__(self):
         return hash((
-            self.amount_of_modules,
             self.genotype_graph,
             time.ctime(),
         ))
