@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class WallBuilder : MonoBehaviour
@@ -10,9 +9,12 @@ public class WallBuilder : MonoBehaviour
 
     private static float scaleX = 2f;
     private static float scaleY = 2f;
-    private static float scaleZ = 0.3f;
-    private static Vector3 startCoordinate = new Vector3(0, 1f + scaleY / 2, 8f);
+    private static float scaleZ = 1f;
+    
+    private static float startY = 1f+scaleY/2;
+    private static float startZ = 8f;
 
+    private static int wallAmount = 0;
     private float distanceBetweenWalls = 5.5f;
 
     private List<GameObject> _wallTiles = new List<GameObject>();
@@ -23,12 +25,13 @@ public class WallBuilder : MonoBehaviour
             Destroy(tile);
         }
         _wallTiles = new List<GameObject>();
+        wallAmount = 0;
     }
 
     public void BuildWall(List<List<bool>> wall)
     {
         float startX = -scaleX * wall[0].Count / 2 + scaleX / 2;
-        Vector3 pos = startCoordinate;
+        Vector3 pos = new Vector3(startX, startY, startZ + wallAmount*distanceBetweenWalls);
         for (int r = wall.Count-1; r >= 0; r--) {
             pos.x = startX;
             for (int c = 0; c < wall[0].Count; c++) {
@@ -39,7 +42,7 @@ public class WallBuilder : MonoBehaviour
             }
             pos.y += scaleY;
         }
-        startCoordinate.z += distanceBetweenWalls;
+        wallAmount++;
     }
 
     private void AddWallTile(Vector3 pos)

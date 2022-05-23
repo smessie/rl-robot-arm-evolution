@@ -9,6 +9,14 @@ from tqdm import tqdm
 
 from configs.env import (PATH_TO_ROBOT_URDF, PATH_TO_UNITY_EXECUTABLE,
                          RL_USE_GRAPHICS_TESTING, RL_USE_GRAPHICS_TRAINING)
+from configs.walls import (WALL_9x9_GAP_3x3_BOTTOM_LEFT,
+                           WALL_9x9_GAP_3x3_BOTTOM_LEFT_CENTER_COORD,
+                           WALL_9x9_GAP_3x3_BOTTOM_RIGHT,
+                           WALL_9x9_GAP_3x3_BOTTOM_RIGHT_CENTER_COORD,
+                           WALL_9x9_GAP_3x3_TOP_LEFT,
+                           WALL_9x9_GAP_3x3_TOP_LEFT_CENTER_COORD,
+                           WALL_9x9_GAP_3x3_TOP_RIGHT,
+                           WALL_9x9_GAP_3x3_TOP_RIGHT_CENTER_COORD)
 from environment.environment import SimEnv
 from morphevo.workspace import Workspace
 from rl.dqn import DQN
@@ -42,6 +50,7 @@ class DeepQLearner:
         parameters = get_config()
         DeepQLearner.GOAL_BAL_DIAMETER = parameters.goal_bal_diameter
 
+        self.use_walls = parameters.use_walls
         self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
 
         workspace = Workspace(*parameters.workspace_parameters)
@@ -59,6 +68,15 @@ class DeepQLearner:
 
         self.logger = Logger()
 
+        if self.use_walls:
+            self.walls = [  WALL_9x9_GAP_3x3_TOP_LEFT, WALL_9x9_GAP_3x3_TOP_RIGHT,
+                            WALL_9x9_GAP_3x3_BOTTOM_LEFT, WALL_9x9_GAP_3x3_BOTTOM_RIGHT]
+            self.wall_centers = [   WALL_9x9_GAP_3x3_TOP_LEFT_CENTER_COORD,
+                                    WALL_9x9_GAP_3x3_TOP_RIGHT_CENTER_COORD,
+                                    WALL_9x9_GAP_3x3_BOTTOM_LEFT_CENTER_COORD,
+                                    WALL_9x9_GAP_3x3_BOTTOM_RIGHT_CENTER_COORD]
+            self.current_wall_index = 0
+
     def handler(self, *_):
         if self.training:
             res = input("Ctrl-c was pressed. Do you want to save the DQN? (y/n) ")
@@ -73,10 +91,14 @@ class DeepQLearner:
         actions = np.identity(number_of_joints)
         return np.concatenate([actions, (-1)*actions])
 
+    def get_new_wall(self):
+        wall_index = random.randint(0, len(self.walls)-1)
+        return wall_index, self.walls[wall_index], self.wall_centers[wall_index]
+
     def make_dqn(self, network_path=""):
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
         # self.dqn = DQN(len(self.actions), state_size=6 + self.joint_amount * 4, network_path=network_path)
-        return DQN(len(self.actions), state_size=6, network_path=network_path)
+        return DQN(len(self.actions), state_size=9 if self.use_walls else 6, network_path=network_path)
 
     def _calculate_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = goal - pos
@@ -103,6 +125,8 @@ class DeepQLearner:
         ee_pos = self._get_end_effector_position(observations)
 
         # return np.array([*ee_pos, *observations[:self.joint_amount * 4], *goal], dtype=float)
+        if self.use_walls:
+            return np.array([*ee_pos, *goal, *self.wall_centers[self.current_wall_index]], dtype=float)
         return np.array([*ee_pos, *goal], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
@@ -139,6 +163,9 @@ class DeepQLearner:
             self.penalty = 0
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
+            if self.use_walls:
+                self.current_wall_index, new_wall, _ = self.get_new_wall()
+                self.env.replace_walls(new_wall)
 
             goal = self._generate_goal()
             self.env.set_goal(tuple(goal))
@@ -208,7 +235,6 @@ def rl(network_path=""):
                             urdf_path=PATH_TO_ROBOT_URDF,
                             use_graphics=RL_USE_GRAPHICS_TRAINING)
 
-    #model.env.build_wall(WALL_13x19_GAP_13x5)
     signal.signal(signal.SIGINT, model.handler)
     model.learn(logging=True)
 
