@@ -22,7 +22,7 @@ class Genome:
             self.genotype_graph = copy.deepcopy(parent_genome.genotype_graph)
             self.mutate()
         else:
-            self.genotype_graph = self._generate_genotype_graph()
+            self.genotype_graph = self._generate_random_genotype_graph()
 
         self.workspace = Workspace(*get_config().workspace_parameters)
         self.genome_id = hash(self)
