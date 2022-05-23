@@ -7,6 +7,11 @@ arm:
   length_upper_bound: 4
   movements: ['rotate', 'tilt']
 
+mutation:
+  chance_module_drop: 0.05
+  chance_module_add: 0.05
+  chance_type_mutation: 0.05
+
 coevolution:
   generations: 200
   parents: 8

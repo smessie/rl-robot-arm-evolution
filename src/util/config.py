@@ -19,6 +19,12 @@ class Config:
                 self.length_upper_bound = arm['length_upper_bound']
                 self.parse_module_choices(arm)
 
+            if 'mutation' in config:
+                mutation = config['mutation']
+                self.chance_module_drop = mutation['chance_module_drop']
+                self.chance_module_add = mutation['chance_module_add']
+                self.chance_type_mutation = mutation['chance_of_type_mutation']
+
             if 'coevolution' in config:
                 coevolution = config['coevolution']
                 self.coevolution_generations = coevolution['generations']
@@ -35,7 +41,6 @@ class Config:
                 self.evolution_children = morphevo['children']
                 self.evolution_crossover_children = morphevo['crossover_children']
                 self.sample_size = morphevo['sample_size']
-                self.chance_of_type_mutation = morphevo['chance_of_type_mutation'] if 'chance_of_type_mutation' in morphevo else 0.15
                 self.workspace_parameters = self.parse_workspace_parameters(morphevo)
 
             if 'rl' in config:
