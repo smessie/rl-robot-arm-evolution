@@ -1,5 +1,12 @@
 description: "Example config"
 
+arm:
+  minimum_amount_modules: 2
+  maximum_amount_modules: 4
+  length_lowerbound: 1
+  length_upperbound: 4
+  movements: ['rotate', 'tilt']
+
 coevolution:
   generations: 200
   parents: 8
@@ -14,7 +21,7 @@ morphevo:
   children: 4
   crossover_children: 2
   sample_size: 100
-  workspace_type: "moved_cube"
+  workspace_type: 'moved_cube'
 
   # small cube next to arm
   workspace_cube_offset: [0,5,9]

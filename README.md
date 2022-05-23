@@ -6,6 +6,13 @@
 
 ## Config
 
+#### arm: parameters that describe the arm
+  - `minimum_amount_modules`: minimum amount modules excluding the anchor
+  - `maximum_amount_modules`: maximum amount modules excluding the anchor
+  - `length_lowerbound`: lowerbound of the length of a module
+  - `length_upperbound`: upperbound of the length of a module
+  - `movements`: possible movements a module can make: [`rotate`, `tilt`]
+
 #### coevolution: parameters used in coevolution
   - `generations`: amount of generations you want to coevolve
   - `parents`: amount of parents that will produce new children

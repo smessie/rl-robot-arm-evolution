@@ -1,5 +1,6 @@
 import yaml
 
+from morphevo.directed_graph_encoding import ModuleType
 from morphevo.workspace_parameters import WorkspaceParameters
 
 
@@ -9,6 +10,14 @@ class Config:
         def __init__(self, config_file_name: str) -> None:
             with open(config_file_name, 'r', encoding='utf8') as stream:
                 config = yaml.load(stream, yaml.FullLoader)
+
+            if 'arm' in config:
+                arm = config['arm']
+                self.minimum_amount_modules = arm['minimum_amount_modules']
+                self.maximum_amount_modules = arm['maximum_amount_modules']
+                self.length_lowerbound = arm['length_lowerbound']
+                self.length_upperbound = arm['length_upperbound']
+                self.parse_module_choices(arm)
 
             if 'coevolution' in config:
                 coevolution = config['coevolution']
@@ -26,7 +35,7 @@ class Config:
                 self.evolution_children = morphevo['children']
                 self.evolution_crossover_children = morphevo['crossover_children']
                 self.sample_size = morphevo['sample_size']
-                self.chance_of_type_mutation: 0.15 = morphevo['chance_of_type_mutation']
+                self.chance_of_type_mutation = morphevo['chance_of_type_mutation'] if 'chance_of_type_mutation' in morphevo else 0.15
                 self.workspace_parameters = self.parse_workspace_parameters(morphevo)
 
             if 'rl' in config:
@@ -51,6 +60,16 @@ class Config:
                                            tuple(config['workspace_cube_offset']),
                                            config['workspace_side_length'])
             return WorkspaceParameters()
+
+        def parse_module_choices(self, config):
+            self.module_choices = []
+
+            if 'rotate' in config['movements'] and 'tilt' in config['movements']:
+                self.module_choices.append(ModuleType.TILTING_AND_ROTATING)
+            if 'rotate' in config['movements']:
+                self.module_choices.append(ModuleType.ROTATING)
+            if 'tilt' in config['movements']:
+                self.module_choices.append(ModuleType.TILTING)
 
     instance = None
 
