@@ -31,7 +31,7 @@ class Config:
                 self.standard_deviation_length = mutation['standard_deviation_length']
                 self.chance_module_drop = mutation['chance_module_drop']
                 self.chance_module_add = mutation['chance_module_add']
-                self.chance_type_mutation = mutation['chance_of_type_mutation']
+                self.chance_type_mutation = mutation['chance_type_mutation']
 
             if 'coevolution' in config:
                 coevolution = config['coevolution']
