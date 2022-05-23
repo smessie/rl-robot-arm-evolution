@@ -7,6 +7,7 @@ from mlagents_envs.exception import UnityWorkerInUseException
 from environment.environment import SimEnv
 from morphevo.workspace import Workspace
 from util.arm import Arm
+from util.config import get_config
 
 
 @ray.remote(num_cpus=1)
@@ -34,6 +35,17 @@ class Evaluator:
                 worker_id = (np.random.randint(low=1000, high=9000) + worker_id) % 65535
 
         return env
+
+    def _generate_joint_angles_samples(self, angle_amount, samples_amount) -> np.ndarray:
+        base_joint_angle_options = list(range(-180, 180, self.JOINT_ANGLE_STEP * 4))
+        angle_options = list(range(0, 105, self.JOINT_ANGLE_STEP))
+
+        samples = []
+        for _ in range(samples_amount):
+            samples.append(np.array([np.choose(1, base_joint_angle_options)] + [np.choose(1, angle_options) for _ in angle_amount]))
+
+        return np.array(samples)
+
 
     def _generate_joint_angles(self, angle_amount) -> np.ndarray:
         base_joint_angle_options = list(range(-180, 180, self.JOINT_ANGLE_STEP * 4))
@@ -129,7 +141,7 @@ class Evaluator:
         self.env = self._initialize_environment(arm.genome.get_urdf(), arm.genome.genome_id)
         self.env.reset()
 
-        joint_angles = self._generate_joint_angles(self.env.joint_amount)
+        joint_angles = self._generate_joint_angles_samples(self.env.joint_amount, get_config().samples_amount)
         observation_parser = self._create_observation_parser()
 
         selected_joint_angles_indices = np.random.choice(joint_angles.shape[0], self.sample_size)
@@ -137,8 +149,6 @@ class Evaluator:
 
         for target_angles in selected_joint_angles:
             self._step_until_target_angles(target_angles, arm.genome.workspace, observation_parser)
-
-        # self._step_random_directions(self.env.joint_amount, arm.genome.workspace, observation_parser)
 
         self.env.close()
         return arm
