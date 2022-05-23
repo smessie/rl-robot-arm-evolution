@@ -40,7 +40,6 @@
 #### rl: parameters used in rl
   - `episodes`: amount of episodes you want to run rl
   - `steps_per_episode`: amount of steps you want to do every episode
-  ##### @ FREYA IWIJN
   - `gamma`: how important do we find future rewards? Higher gamma = more important.
   - `eps_end`: the lowest the epsilon value will go to. This is the value that will be reached when epsilon is fully decayed.
   - `eps_decay`: how fast should epsilon decay. Higher = faster.
@@ -67,4 +66,11 @@
 - Go to File > Build Settings...
   + Click "Add open scenes"
   + Click "Build". Build the project with name 'simenv' in a directory `build/` in the repository root.
+
+## Demo
+
+
+https://user-images.githubusercontent.com/30521286/169860706-c2e6a811-2cd6-4289-ba29-e1c8d2fbe414.mp4
+
+
 
