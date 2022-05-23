@@ -32,7 +32,7 @@ class Genome:
         if MODULES_MAY_TILT:
             self.module_choices.append(ModuleType.TILTING)
 
-        if parent_genome is not None:
+        if parent_genome:
             self.amount_of_modules = parent_genome.amount_of_modules
             self.genotype_graph = copy.deepcopy(parent_genome.genotype_graph)
             self.mutate()
@@ -72,14 +72,14 @@ class Genome:
         diversity = 0
         amount_of_modules = max(self.amount_of_modules, other_genome.amount_of_modules)
 
-        for own_node, other_node in zip_longest(self.genotype_graph, other_genome.genotype_graph):
-            if not own_node or not other_node:
+        for own_module, other_module in zip_longest(self.genotype_graph, other_genome.genotype_graph):
+            if not own_module or not other_module:
                 diversity += 1/amount_of_modules
-            elif own_node.module_type != other_node.module_type:
+            elif own_module.module_type != other_module.module_type:
                 diversity += 1/amount_of_modules
             else:
-                length_longest_module = max(own_node.length, other_node.length)
-                diversity += (abs(own_node.length - other_node.length)/length_longest_module)/amount_of_modules
+                length_longest_module = max(own_module.length, other_module.length)
+                diversity += (abs(own_module.length - other_module.length)/length_longest_module)/amount_of_modules
 
         return diversity 
 
@@ -88,11 +88,7 @@ class Genome:
 
         genotype_graph = Graph()
         for own_module, other_module in zip_longest(self.genotype_graph, other_genome.genotype_graph):
-            if random.randint(0, 1):
-                module = own_module
-            else:
-                module = other_module
-
+            module = own_module if random.randint(0, 1) else other_module
             if module:
                 genotype_graph.add_module(module.module_type, module.length)
 
@@ -102,11 +98,8 @@ class Genome:
 
     def get_amount_of_joints(self):
         joints_amount = 0
-        for module in self.genotype_graph:
-            if module.module_type == ModuleType.TILTING_AND_ROTATING:
-                joints_amount += 2
-            else:
-                joints_amount += 1 
+        for module in self.genotype_graph.iterate_graph(ignore_anchor=False):
+            joints_amount += 2 if module.module_type == ModuleType.TILTING_AND_ROTATING else 1
 
         return joints_amount
 
@@ -165,9 +158,9 @@ class Graph:
         return current_module
 
     def __iter__(self):
-        return self.iterate_graph(ignore_anchor=True)
+        return self.iterate_graph()
 
-    def iterate_graph(self, ignore_anchor=False):
+    def iterate_graph(self, ignore_anchor=True):
         current_node = self.anchor.next if ignore_anchor else self.anchor
         current_module_index = 0
         while current_node:
