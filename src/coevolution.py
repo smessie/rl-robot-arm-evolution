@@ -35,4 +35,4 @@ def start_coevolution():
 
     #save_best_genome(parents[-1], 'final_rl_best')
     for index, parent in enumerate(parents):
-        save_best_genome(parent, f'coevolution_{index}_{index}')
+        save_best_genome(parent, f'coevolution_{i}_{index}')
