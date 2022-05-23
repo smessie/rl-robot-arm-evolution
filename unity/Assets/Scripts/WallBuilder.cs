@@ -10,11 +10,12 @@ public class WallBuilder : MonoBehaviour
     private static float scaleX = 2f;
     private static float scaleY = 2f;
     private static float scaleZ = 1f;
+    
     private static float startY = 1f+scaleY/2;
-    private static float startZ = 10f;
+    private static float startZ = 8f;
 
     private static int wallAmount = 0;
-    private float distanceBetweenWalls = 6;
+    private float distanceBetweenWalls = 5.5f;
 
     private List<GameObject> _wallTiles = new List<GameObject>();
 
