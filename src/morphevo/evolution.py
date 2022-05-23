@@ -33,7 +33,7 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
     for generation in tqdm(range(config.evolution_generations), desc='Generation'):
         # Evaluate children
         children = list(pool.map_unordered(
-            lambda evaluator, arm: evaluator.eval_arm.remote(arm, config), children))
+            lambda evaluator, arm: evaluator.eval_arm.remote(arm), children))
 
         population = children + parents
 
