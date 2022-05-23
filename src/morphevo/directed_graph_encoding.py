@@ -18,11 +18,6 @@ from util.util import run_chance
 Module = namedtuple('Module', 'module_type length') 
 
 class Genome:
-    LENGTH_LOWER_BOUND = 1
-    LENGTH_UPPER_BOUND = 4
-    MIN_AMOUNT_OF_MODULES = 2
-    MAX_AMOUNT_OF_MODULES = 4
-
     def __init__(self, parent_genome: Optional[Genome] = None) -> None:
 
         if parent_genome:
@@ -32,12 +27,12 @@ class Genome:
         else:
             self.genotype_graph = self._generate_genotype_graph()
 
-        workspace_parameters = get_config().workspace_parameters
-        self.workspace = Workspace(*workspace_parameters)
+        self.workspace = Workspace(*get_config().workspace_parameters)
         self.genome_id = hash(self)
 
     def mutate(self) -> None:
         self.genotype_graph = self.genotype_graph.mutate()
+        self.amount_of_modules = len(self.genotype_graph)
 
     def get_urdf(self) -> str:
         urdf_generator = URDFGenerator(str(self.genome_id))
@@ -56,14 +51,14 @@ class Genome:
 
         for own_module, other_module in zip_longest(self.genotype_graph, other_genome.genotype_graph):
             if not own_module or not other_module:
-                diversity += 1/amount_of_modules
+                diversity += 1
             elif own_module.module_type != other_module.module_type:
-                diversity += 1/amount_of_modules
+                diversity += 1
             else:
                 length_longest_module = max(own_module.length, other_module.length)
-                diversity += (abs(own_module.length - other_module.length)/length_longest_module)/amount_of_modules
+                diversity += (abs(own_module.length - other_module.length)/length_longest_module)
 
-        return diversity 
+        return diversity / amount_of_modules
 
     def crossover(self, other_genome: Genome) -> Genome:
         genome = Genome()
@@ -123,13 +118,13 @@ class Graph:
         self.anchor = Node(ModuleType.ANCHOR, [anchor_length])
 
     def add_module(self, module_type: ModuleType, length: float):
-        last_module = self.get_last_module()
+        head_module = self.get_last_module()
 
-        if last_module.module_type == module_type:
-            last_module.lengths.append(length)
+        if head_module.module_type == module_type:
+            head_module.lengths.append(length)
         else:
             new_module = Node(module_type, [length])
-            last_module.next = new_module
+            head_module.next = new_module
 
     def get_last_module(self):
         current_module = self.anchor
