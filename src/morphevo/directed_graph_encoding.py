@@ -105,15 +105,14 @@ class Genome:
 
     def get_amount_of_joints(self):
         joints_amount = 0
-        node = self.genotype_graph.anchor.next
-        while node is not None:
-            if node.module_type == ModuleType.TILTING_AND_ROTATING:
-                joints_amount += 2 * len(node.lengths)
+        for module in self.genotype_graph:
+            if module.module_type == ModuleType.TILTING_AND_ROTATING:
+                joints_amount += 2
             else:
-                joints_amount += len(node.lengths)
-            node = node.next
-        if self.anchor_can_rotate:
-            joints_amount += 1
+                joints_amount += 1 
+
+        if not self.anchor_can_rotate:
+            joints_amount -= 1
         return joints_amount
 
     def _generate_genotype_graph(self):
