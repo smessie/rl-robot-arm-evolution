@@ -83,7 +83,7 @@ class Genome:
 
         amount_of_modules = random.randint(config.minimum_amount_modules, config.maximum_amount_modules)
         genotype_graph = Graph()
-        for _ in range(amount_of_modules):
+        for _ in range(amount_of_modules + 1):
             module_type = np.random.choice(get_config().module_choices)
             length = np.random.rand()*(config.length_upper_bound-config.length_upper_bound) + config.length_lower_bound
             genotype_graph.add_module(module_type, length)
