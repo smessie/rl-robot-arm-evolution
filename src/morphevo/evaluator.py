@@ -7,7 +7,6 @@ from mlagents_envs.exception import UnityWorkerInUseException
 from environment.environment import SimEnv
 from morphevo.workspace import Workspace
 from util.arm import Arm
-from util.config import get_config
 
 
 @ray.remote(num_cpus=1)
