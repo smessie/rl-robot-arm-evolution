@@ -89,9 +89,7 @@ class Genome:
     def crossover(self, other_genome: Genome) -> Genome:
         genome = Genome()
 
-        # make combination of the modules
         genotype_graph = Graph()
-
         for own_module, other_module in zip_longest(self.genotype_graph, other_genome.genotype_graph):
             if random.randint(0, 1):
                 module = own_module
