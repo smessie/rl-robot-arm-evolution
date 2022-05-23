@@ -50,6 +50,7 @@ class DeepQLearner:
         parameters = get_config()
         DeepQLearner.GOAL_BAL_DIAMETER = parameters.goal_bal_diameter
 
+        self.use_walls = parameters.use_walls
         self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
 
         workspace = Workspace(*parameters.workspace_parameters)
@@ -67,11 +68,14 @@ class DeepQLearner:
 
         self.logger = Logger()
 
-        self.walls = [  WALL_9x9_GAP_3x3_TOP_LEFT, WALL_9x9_GAP_3x3_TOP_RIGHT,
-                        WALL_9x9_GAP_3x3_BOTTOM_LEFT, WALL_9x9_GAP_3x3_BOTTOM_RIGHT]
-        self.wall_centers = [   WALL_9x9_GAP_3x3_TOP_LEFT_CENTER_COORD, WALL_9x9_GAP_3x3_TOP_RIGHT_CENTER_COORD,
-                                WALL_9x9_GAP_3x3_BOTTOM_LEFT_CENTER_COORD, WALL_9x9_GAP_3x3_BOTTOM_RIGHT_CENTER_COORD]
-        self.current_wall_index = 0
+        if self.use_walls:
+            self.walls = [  WALL_9x9_GAP_3x3_TOP_LEFT, WALL_9x9_GAP_3x3_TOP_RIGHT,
+                            WALL_9x9_GAP_3x3_BOTTOM_LEFT, WALL_9x9_GAP_3x3_BOTTOM_RIGHT]
+            self.wall_centers = [   WALL_9x9_GAP_3x3_TOP_LEFT_CENTER_COORD,
+                                    WALL_9x9_GAP_3x3_TOP_RIGHT_CENTER_COORD,
+                                    WALL_9x9_GAP_3x3_BOTTOM_LEFT_CENTER_COORD,
+                                    WALL_9x9_GAP_3x3_BOTTOM_RIGHT_CENTER_COORD]
+            self.current_wall_index = 0
 
     def handler(self, *_):
         if self.training:
@@ -94,7 +98,7 @@ class DeepQLearner:
     def make_dqn(self, network_path=""):
         # state_size is 6: 3 coords for the end effector position, 3 coords for the goal
         # self.dqn = DQN(len(self.actions), state_size=6 + self.joint_amount * 4, network_path=network_path)
-        return DQN(len(self.actions), state_size=9, network_path=network_path)
+        return DQN(len(self.actions), state_size=9 if self.use_walls else 6, network_path=network_path)
 
     def _calculate_direction(self, pos: np.ndarray, goal: np.ndarray):
         direction = goal - pos
@@ -121,7 +125,9 @@ class DeepQLearner:
         ee_pos = self._get_end_effector_position(observations)
 
         # return np.array([*ee_pos, *observations[:self.joint_amount * 4], *goal], dtype=float)
-        return np.array([*ee_pos, *goal, *self.wall_centers[self.current_wall_index]], dtype=float)
+        if self.use_walls:
+            return np.array([*ee_pos, *goal, *self.wall_centers[self.current_wall_index]], dtype=float)
+        return np.array([*ee_pos, *goal], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray):
         return observations[self.env.joint_amount * 4:self.env.joint_amount * 4 + 3]
@@ -157,8 +163,9 @@ class DeepQLearner:
             self.penalty = 0
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
-            self.current_wall_index, new_wall, _ = self.get_new_wall()
-            self.env.replace_walls(new_wall)
+            if self.use_walls:
+                self.current_wall_index, new_wall, _ = self.get_new_wall()
+                self.env.replace_walls(new_wall)
 
             goal = self._generate_goal()
             self.env.set_goal(tuple(goal))

@@ -43,6 +43,11 @@ class Config:
 
                 self.goal_bal_diameter = rl['goal_bal_diameter']
 
+                try:
+                    self.use_walls = rl['use_walls']
+                except KeyError:
+                    self.use_walls = False
+
         def parse_workspace_parameters(self, config) -> WorkspaceParameters:
             if ('workspace_type' in config
                     and 'workspace_cube_offset' in config
