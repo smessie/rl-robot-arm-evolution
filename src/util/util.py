@@ -1,8 +1,11 @@
 import locale
+import time
+from xml.dom import minidom
 
 import numpy as np
 
 from util.arm import Arm
+from util.config import get_config
 
 
 def generate_arms(amount: int):
@@ -29,7 +32,7 @@ def normalize(raw):
     return [i / sum_raw for i in raw]
 
 
-def write_morphevo_benchmarks(arm: Arm):
+def write_morphevo_benchmarks(arm):
     with open("morphevo-benchmarks.csv", 'a', encoding=locale.getpreferredencoding(False)) as file:
         module_lengths = np.array([])
         node = arm.genome.genotype_graph.anchor.next
@@ -39,3 +42,11 @@ def write_morphevo_benchmarks(arm: Arm):
         file.write(f'{arm.genome.workspace.side_length},{arm.genome.workspace.cube_offset},'
                    f'{sum(module_lengths)},{arm.genome.amount_of_modules},'
                    f'{arm.genome.workspace.calculate_coverage()}\n')
+
+def save_best_genome(arm: Arm, label: str):
+    filename = (f'output/{int(time.time())}-mu_{get_config().coevolution_parents}' +
+                f'-lambda_{get_config().coevolution_children}-gamma_{get_config().gamma}-{label}.xml')
+
+    xml_str = minidom.parseString(arm.urdf).toprettyxml(indent="    ")
+    with open(filename, "w", encoding=locale.getpreferredencoding(False)) as f:
+        f.write(xml_str)
