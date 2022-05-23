@@ -48,7 +48,6 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
     return parents
 
 
-# TODOo try to make selection something with a calculate_fitness function (maybe difficult bcs select_fit_div function)
 def selection(selection_function: Callable, population: List[Arm]) -> List[Arm]:
     return selection_function(population)
 
@@ -146,6 +145,8 @@ def mutate_with_crossover_coevolution(parents: List[Arm]) -> List[Arm]:
 
 
 def create_crossover_children(parents: List[Arm], amount: int):
+    if amount == 0:
+        return []
     if len(parents) <= 1:
         raise ValueError(f"You can't do crossover on {len(parents)} parent")
 
