@@ -42,7 +42,9 @@ class Evaluator:
 
         samples = []
         for _ in range(samples_amount):
-            samples.append(np.array([np.choose(1, base_joint_angle_options)] + [np.choose(1, angle_options) for _ in angle_amount]))
+            anchor_angle = [np.random.choice(base_joint_angle_options)]
+            other_angles = [np.random.choice(angle_options) for _ in range(angle_amount - 1)]
+            samples.append(np.array(anchor_angle + other_angles))
 
         return np.array(samples)
 
@@ -137,11 +139,11 @@ class Evaluator:
             current_angles, ee_pos = parse_observation(observations)
             workspace.add_ee_position(ee_pos, current_angles)
 
-    def eval_arm(self, arm: Arm) -> Arm:
+    def eval_arm(self, arm: Arm, config) -> Arm:
         self.env = self._initialize_environment(arm.genome.get_urdf(), arm.genome.genome_id)
         self.env.reset()
 
-        joint_angles = self._generate_joint_angles_samples(self.env.joint_amount, get_config().samples_amount)
+        joint_angles = self._generate_joint_angles_samples(self.env.joint_amount, config.sample_size)
         observation_parser = self._create_observation_parser()
 
         selected_joint_angles_indices = np.random.choice(joint_angles.shape[0], self.sample_size)
