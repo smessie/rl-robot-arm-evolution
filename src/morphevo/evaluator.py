@@ -48,38 +48,6 @@ class Evaluator:
 
         return np.array(samples)
 
-
-    def _generate_joint_angles(self, angle_amount) -> np.ndarray:
-        base_joint_angle_options = list(range(-180, 180, self.JOINT_ANGLE_STEP * 4))
-        angle_options = list(range(0, 105, self.JOINT_ANGLE_STEP))
-
-        joint_angles = []
-        t_values = [1 for _ in range(angle_amount)]
-        for base_joint_angle_option in base_joint_angle_options:
-            self._generate_extra_angle(
-                joint_angles, angle_options, [base_joint_angle_option], t_values, angle_amount - 1, 0
-            )
-
-        self.joint_angles = np.array(joint_angles)
-        return self.joint_angles
-
-    # pylint: disable=too-many-arguments
-    def _generate_extra_angle(self, joint_angles, angle_options, joint_options_others,
-                              t_values, angle_amount, current_angle):
-        for joint_option in angle_options[::t_values[current_angle]]:
-            if current_angle >= angle_amount - 1:
-                joint_angles.append(joint_options_others[:] + [joint_option])
-            else:
-                self._generate_extra_angle(
-                    joint_angles,
-                    angle_options,
-                    joint_options_others[:] + [joint_option],
-                    t_values,
-                    angle_amount,
-                    current_angle + 1
-                )
-        t_values[current_angle] *= -1
-
     def _create_observation_parser(self):
 
         def parse_observation(observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
