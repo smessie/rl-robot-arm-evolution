@@ -41,7 +41,7 @@ rl:
   episodes: 60
   steps_per_episode: 1000
   gamma: 0.95
-  eps_end: 0
+  eps_end: 0.08
   eps_decay: 0.99995
   batch_size: 4
   mem_size: 20
