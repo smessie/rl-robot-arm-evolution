@@ -72,4 +72,14 @@
 
 We use [Roslynator](https://github.com/JosefPihrt/Roslynator). Install it for your editor.
 
+There is a `unity/unity.ruleset` file for specific rules for this Unity project.
+When analyzing the code: add these lines to your `Assembly-CSharp.csproj`:
+```
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>unity.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+```
+We also ignore errors in the `unity/Assets/StarterAssets/` folder, because that was included from the StarterAssets package.
+
 Note: for it to work on my setup in Visual Studio Code, you might have to downgrade the Visual Studio Code C# Extension to 1.24.1. See [this issue](https://github.com/OmniSharp/omnisharp-vscode/issues/5160).
+

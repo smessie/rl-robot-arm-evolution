@@ -48,15 +48,13 @@ public class WallSC : SideChannel
         }
         catch
         {
-            _wallBuilder.clearWalls();
+            _wallBuilder.ClearWalls();
 
             stringToSend = "Walls cleared";
         }
 
-        using (var msgOut = new OutgoingMessage())
-        {
-            msgOut.WriteString(stringToSend);
-            QueueMessageToSend(msgOut);
-        }
+        using var msgOut = new OutgoingMessage();
+        msgOut.WriteString(stringToSend);
+        QueueMessageToSend(msgOut);
     }
 }
