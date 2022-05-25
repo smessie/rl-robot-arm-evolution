@@ -9,8 +9,6 @@ import numpy as np
 from ray.util import ActorPool
 from tqdm import tqdm
 
-from configs.env import (MORPHEVO_USE_GRAPHICS, NUM_CORES,
-                         PATH_TO_UNITY_EXECUTABLE)
 from morphevo.evaluator import Evaluator
 from util.arm import Arm
 from util.config import get_config
@@ -21,9 +19,14 @@ def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
     config = get_config()
 
     # pylint: disable=no-member
-    evaluators = [Evaluator.remote(PATH_TO_UNITY_EXECUTABLE, use_graphics=MORPHEVO_USE_GRAPHICS,
-                                   sample_size=config.sample_size)
-                  for _ in range(NUM_CORES)]
+    evaluators = [
+              Evaluator.remote(
+                  config.path_to_unity_executable,
+                  use_graphics=config.morphevo_use_graphics,
+                  sample_size=config.sample_size
+              )
+              for _ in range(config.amount_of_cores)
+        ]
     pool = ActorPool(evaluators)
 
     parents = []

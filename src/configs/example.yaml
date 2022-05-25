@@ -1,11 +1,19 @@
 description: "Example config"
 
+environment:
+  path_to_unity_executable: '../build/simenv.x86_64'
+  path_to_robot_urdf: 'environment/robot.urdf'
+  morphevo_use_graphics: false
+  rl_use_graphics_training: false
+  rl_use_graphics_testing: false
+  amount_of_cores: 8
+
 arm:
   minimum_amount_modules: 2
   maximum_amount_modules: 4
   length_lower_bound: 1
   length_upper_bound: 4
-  movements: ['rotate', 'tilt']
+  movements: ['rotate', 'tilt', 'complex']
 
 mutation:
   standard_deviation_length: 0.5

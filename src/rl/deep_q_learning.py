@@ -7,8 +7,6 @@ from typing import List, Tuple
 import numpy as np
 from tqdm import tqdm
 
-from configs.env import (PATH_TO_ROBOT_URDF, PATH_TO_UNITY_EXECUTABLE,
-                         RL_USE_GRAPHICS_TESTING, RL_USE_GRAPHICS_TRAINING)
 from configs.walls import (WALL_9x9_GAP_3x3_BOTTOM_LEFT,
                            WALL_9x9_GAP_3x3_BOTTOM_LEFT_CENTER_COORD,
                            WALL_9x9_GAP_3x3_BOTTOM_RIGHT,
@@ -225,15 +223,16 @@ class DeepQLearner:
         return self.learn(num_episodes=episodes)
 
 def rl(network_path=""):
+    config = get_config()
     if network_path:
-        model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE,
-                            urdf_path=PATH_TO_ROBOT_URDF,
-                            use_graphics=RL_USE_GRAPHICS_TESTING,
+        model = DeepQLearner(env_path=config.path_to_unity_executable,
+                            urdf_path=config.path_to_robot_urdf,
+                            use_graphics=config.rl_use_graphics_testing,
                             network_path=network_path)
     else:
-        model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE,
-                            urdf_path=PATH_TO_ROBOT_URDF,
-                            use_graphics=RL_USE_GRAPHICS_TRAINING)
+        model = DeepQLearner(env_path=config.path_to_unity_executable,
+                            urdf_path=config.path_to_robot_urdf,
+                            use_graphics=config.rl_use_graphics_training)
 
     signal.signal(signal.SIGINT, model.handler)
     model.learn(logging=True)
@@ -241,7 +240,10 @@ def rl(network_path=""):
 def train(arms: List[Arm]) -> List[Arm]:
     config = get_config()
     for arm in arms:
-        model = DeepQLearner(env_path=PATH_TO_UNITY_EXECUTABLE, urdf=arm.urdf, use_graphics=RL_USE_GRAPHICS_TRAINING)
+        model = DeepQLearner(env_path=config.path_to_unity_executable,
+                             urdf=arm.urdf,
+                             use_graphics=config.rl_use_graphics_training)
+
         arm.success_rate = model.learn(
             num_episodes=config.episodes, steps_per_episode=config.steps_per_episode, logging=False
         )
