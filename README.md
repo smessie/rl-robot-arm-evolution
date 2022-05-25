@@ -5,13 +5,20 @@
 - [Unity Project Docs](https://smessie.github.io/SELab3-2022-01/unity/)
 
 ## Config
+#### environment: parameters that are used for the environment and training
+  - `path_to_unity_executable`: path to the unity executable
+  - `path_to_robot_urdf`: path to a urdf file that represents an arm, is only for rl
+  - `morphevo_use_graphics`: use graphics for morphevo sampling
+  - `rl_use_graphics_training`: use graphics for rl training
+  - `rl_use_graphics_testing`: use graphics for rl testing
+  - `amount_of_cores`: amount of cores you want to use, only used in morphevo
 
 #### arm: parameters that describe the arm
   - `minimum_amount_modules`: minimum amount modules excluding the anchor
   - `maximum_amount_modules`: maximum amount modules excluding the anchor
   - `length_lowerbound`: lowerbound of the length of a module
   - `length_upperbound`: upperbound of the length of a module
-  - `movements`: possible movements a module can make: [`rotate`, `tilt`]
+  - `movements`: possible movements a module can make (`complex` is both rotating and tilting): [`rotate`, `tilt`, `complex`]
 
 #### mutation: parameters that will be used for mutation in coevolution and morphologic evolution
   - `standard_deviation_length`: standard deviation used to mutate length of module
