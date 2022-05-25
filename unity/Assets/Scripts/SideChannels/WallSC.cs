@@ -8,14 +8,18 @@ public class WallSC : SideChannel
 {
     private WallBuilder _wallBuilder;
 
+#pragma warning disable CS0649 // (Field is never assigned to) These fields are assigned to by JsonUtilty
     [System.Serializable]
-    class WallSpec {
+    class WallSpec
+    {
         public List<WallRow> wall;
     }
     [System.Serializable]
-    class WallRow {
+    class WallRow
+    {
         public List<bool> row;
     }
+#pragma warning restore CS0649
 
     public WallSC(GameObject manipulator)
     {
@@ -28,18 +32,22 @@ public class WallSC : SideChannel
     {
         string wallString = msg.ReadString();
         string stringToSend;
-        try {
+        try
+        {
             WallSpec wallSpec = JsonUtility.FromJson<WallSpec>(wallString);
 
             List<List<bool>> wall = new List<List<bool>>();
-            foreach (WallRow wallRow in wallSpec.wall) {
+            foreach (WallRow wallRow in wallSpec.wall)
+            {
                 wall.Add(wallRow.row);
             }
 
             _wallBuilder.BuildWall(wall);
 
             stringToSend = "Wall built";
-        } catch {
+        }
+        catch
+        {
             _wallBuilder.clearWalls();
 
             stringToSend = "Walls cleared";

@@ -68,3 +68,8 @@
   + Click "Add open scenes"
   + Click "Build". Build the project with name 'simenv' in a directory `build/` in the repository root.
 
+## Setting up C# code style analysis
+
+We use [Roslynator](https://github.com/JosefPihrt/Roslynator). Install it for your editor.
+
+Note: for it to work on my setup in Visual Studio Code, you might have to downgrade the Visual Studio Code C# Extension to 1.24.1. See [this issue](https://github.com/OmniSharp/omnisharp-vscode/issues/5160).

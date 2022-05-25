@@ -76,7 +76,8 @@ public class AgentBrain : Agent
     private void FixedUpdate()
     {
         _screenshotCounter++;
-        if (_makeScreenshots && _screenshotCounter % 1000 == 0) {
+        if (_makeScreenshots && _screenshotCounter % 1000 == 0)
+        {
             ScreenCapture.CaptureScreenshot("screenshot-" + _screenshotCounter / 1000 + ".png", 15);
         }
     }

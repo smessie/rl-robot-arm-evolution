@@ -9,7 +9,8 @@ public class JointController : MonoBehaviour
 
     public List<ArticulationBody> ArticulationBodies { get; set; }
 
-    private void Awake() {
+    private void Awake()
+    {
         int seed;
         bool seedProvided = Int32.TryParse(Environment.GetEnvironmentVariable("SEED"), out seed);
         UnityEngine.Random.InitState(seedProvided ? seed : DateTime.Now.Millisecond);
@@ -23,9 +24,12 @@ public class JointController : MonoBehaviour
 
         var xDrive = articulationBody.xDrive;
         var newTarget = xDrive.target + stepSize * step;
-        if (xDrive.lowerLimit < 0.0001 && xDrive.upperLimit > 359.9999) {
+        if (xDrive.lowerLimit < 0.0001 && xDrive.upperLimit > 359.9999)
+        {
             xDrive.target = newTarget;
-        } else {
+        }
+        else
+        {
             xDrive.target = Mathf.Clamp(newTarget, xDrive.lowerLimit, xDrive.upperLimit);
         }
         articulationBody.xDrive = xDrive;

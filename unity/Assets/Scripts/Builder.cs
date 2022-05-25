@@ -45,21 +45,26 @@ public class Builder : MonoBehaviour
         return ModuleType.Invalid;
     }
 
-    private GameObject GetTailPrefab(ModuleType type) {
-        if (type == ModuleType.Tilting || type == ModuleType.Complex) {
+    private GameObject GetTailPrefab(ModuleType type)
+    {
+        if (type == ModuleType.Tilting || type == ModuleType.Complex)
+        {
             return tiltingModuleConnectorPrefab;
         }
         return moduleConnectorPrefab;
     }
 
-    private GameObject GetBodyPrefab(ModuleType type) {
-        if (type == ModuleType.Tilting) {  // anchor, rotating and complex have rotating joint
+    private GameObject GetBodyPrefab(ModuleType type)
+    {
+        if (type == ModuleType.Tilting)
+        {  // anchor, rotating and complex have rotating joint
             return moduleBodyPrefab;
         }
         return rotatingModuleBodyPrefab;
     }
 
-    private float GetLength(GeometrySpec geometry, ModuleType type) {
+    private float GetLength(GeometrySpec geometry, ModuleType type)
+    {
         if (type == ModuleType.Anchor) { return geometry.AnchorModule.Length; }
         if (type == ModuleType.Tilting) { return geometry.TiltingModule.Length; }
         if (type == ModuleType.Rotating) { return geometry.RotatingModule.Length; }
@@ -69,20 +74,24 @@ public class Builder : MonoBehaviour
     public bool BuildAgent(string urdf)
     {
         // Parse URDF
-        try {
+        try
+        {
             robotSpecification = ParseURDF(urdf);
             bool success = BuildAgent(robotSpecification);
 
             Instantiate(manipulatorAgentPrefab, Vector3.zero, Quaternion.identity, transform);
             return success;
-        } catch {
+        }
+        catch
+        {
             return false;
         }
     }
 
     public bool BuildAgent(RobotSpecification robotSpec)
     {
-        try {
+        try
+        {
             endEffector = anchor;
             _articulationBodies = new List<ArticulationBody>();
             bool success = AddModules(robotSpec);
@@ -90,21 +99,27 @@ public class Builder : MonoBehaviour
             GetComponent<JointController>().ArticulationBodies = _articulationBodies;
 
             return success;
-        } catch {
+        }
+        catch
+        {
             return false;
         }
     }
 
-    public void DestroyAgent() {
-        foreach (var part in allRobotParts) {
+    public void DestroyAgent()
+    {
+        foreach (var part in allRobotParts)
+        {
             Destroy(part);
         }
         allRobotParts = new List<GameObject>();
     }
 
-    public bool RebuildAgent() {
+    public bool RebuildAgent()
+    {
         DestroyAgent();
-        if (robotSpecification != null) {
+        if (robotSpecification != null)
+        {
             return BuildAgent(robotSpecification);
         }
         return false;
@@ -116,24 +131,28 @@ public class Builder : MonoBehaviour
         MemoryStream stream = new MemoryStream(byteArray);
 
         XmlSerializer serializer = new XmlSerializer(typeof(RobotSpecification));
-        return (RobotSpecification) serializer.Deserialize(stream);
+        return (RobotSpecification)serializer.Deserialize(stream);
     }
 
     private bool AddModules(RobotSpecification robotSpec)
     {
         LinkSpec firstLink = robotSpec.Links[0];
-        if (TypeOfLink(firstLink) != ModuleType.Anchor) {
+        if (TypeOfLink(firstLink) != ModuleType.Anchor)
+        {
             return false;
         }
         AddAnchorModule(firstLink);
 
         // Add modules
-        foreach (var link in robotSpec.Links.GetRange(1, robotSpec.Links.Count-1))
+        foreach (var link in robotSpec.Links.GetRange(1, robotSpec.Links.Count - 1))
         {
             ModuleType type = TypeOfLink(link);
-            if (type != ModuleType.Invalid && type != ModuleType.Anchor) {
+            if (type != ModuleType.Invalid && type != ModuleType.Anchor)
+            {
                 AddModule(link, type);
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }
@@ -155,12 +174,12 @@ public class Builder : MonoBehaviour
             module.transform
         );
         allRobotParts.Add(moduleBody);
-        moduleBody.transform.localScale = new Vector3(1f, length*2, 1f); // Multiply by 2 because we only show half of module
+        moduleBody.transform.localScale = new Vector3(1f, length * 2, 1f); // Multiply by 2 because we only show half of module
 
         // Change mass according to length.
         moduleBody.GetComponent<ArticulationBody>().mass = length;
 
-        yPos += length*2;
+        yPos += length * 2;
         GameObject moduleHead = Instantiate(
             moduleConnectorPrefab, // type GameObject we want to make
             new Vector3(0f, yPos, 0f), // Position on where we want to instantiate it
@@ -172,7 +191,8 @@ public class Builder : MonoBehaviour
         moduleHead.transform.parent = moduleBody.transform;
         module.transform.parent = endEffector.transform;
 
-        if (anchorLink.RotationSpec != null) {
+        if (anchorLink.RotationSpec != null)
+        {
             ConfigureRotatingJoint(moduleBody, anchorLink.RotationSpec);
         }
         endEffector = moduleHead;
@@ -220,10 +240,12 @@ public class Builder : MonoBehaviour
         moduleHead.transform.parent = moduleBody.transform;
         module.transform.parent = endEffector.transform;
 
-        if (type == ModuleType.Tilting || type == ModuleType.Complex) {
+        if (type == ModuleType.Tilting || type == ModuleType.Complex)
+        {
             ConfigureTiltingJoint(moduleTail, link.TiltingSpec);
         }
-        if (type == ModuleType.Rotating || type == ModuleType.Complex) {
+        if (type == ModuleType.Rotating || type == ModuleType.Complex)
+        {
             ConfigureRotatingJoint(moduleBody, link.RotationSpec);
         }
 
@@ -262,11 +284,14 @@ public class Builder : MonoBehaviour
 
         ArticulationDrive xDrive = articulationBody.xDrive;
 
-        if (rotationSpec.LowerBound < 0.0001 && rotationSpec.UpperBound > 359.9999) {
-            xDrive.lowerLimit = -360*100;
-            xDrive.upperLimit = 360*100;
+        if (rotationSpec.LowerBound < 0.0001 && rotationSpec.UpperBound > 359.9999)
+        {
+            xDrive.lowerLimit = -360 * 100;
+            xDrive.upperLimit = 360 * 100;
             xDrive.target = 0;
-        } else {
+        }
+        else
+        {
             xDrive.lowerLimit = rotationSpec.LowerBound;
             xDrive.upperLimit = rotationSpec.UpperBound;
         }

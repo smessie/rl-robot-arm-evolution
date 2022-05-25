@@ -7,7 +7,8 @@ using UnityEngine;
 public class CreationSC : SideChannel
 {
 
-    public class RobotInfo {
+    public class RobotInfo
+    {
         public string Status;
         public int JointAmount;
     }
