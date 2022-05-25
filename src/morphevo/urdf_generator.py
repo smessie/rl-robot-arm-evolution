@@ -36,7 +36,7 @@ class URDFGenerator:
         """! Get the name of a module type.
         @param can_tilt If module can tilt.
         @param can_rotate If a module can rotate.
-        @returns name of module type.
+        @return name of module type.
         """
         if can_tilt:
             if can_rotate:
@@ -86,6 +86,6 @@ class URDFGenerator:
 
     def get_urdf(self) -> str:
         """! Get the generated urdf string.
-        @returns The generated urdf string.
+        @return The generated urdf string.
         """
         return ET.tostring(self.urdf, encoding='unicode')
