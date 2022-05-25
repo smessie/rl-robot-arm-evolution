@@ -41,7 +41,7 @@ class Genome:
 
     def get_urdf(self) -> str:
         """! Get the urdf string for an encoding.
-        @returns The urdf string for an encoding.
+        @return The urdf string for an encoding.
         """
         urdf_generator = URDFGenerator(str(self.genome_id))
         urdf_generator.add_anchor(length=self.genotype_graph.anchor.lengths[0], can_rotate=True)
@@ -60,7 +60,7 @@ class Genome:
         difference between the modules.
 
         @param other_genome The genome you want to compare with.
-        @returns A percentage on how different the genomes are.
+        @return A percentage on how different the genomes are.
         """
         diversity = 0
         amount_of_modules = max(self.amount_of_modules, other_genome.amount_of_modules)
@@ -81,7 +81,7 @@ class Genome:
         of which parent you will include its module. If one parent is shorter the top modules of the other
         parent can still be included at the end of the arm.
         @param other_genome The other genome to crossover with.
-        @returns A new genome with an encoding that is the result of crossover on its parents.
+        @return A new genome with an encoding that is the result of crossover on its parents.
         """
         genome = Genome()
 
@@ -107,7 +107,7 @@ class Genome:
 
     def _generate_random_genotype_graph(self) -> GenotypeGraph:
         """! Generate a new random genotype encoding.
-        @returns A random GenotypeGraph.
+        @return A random GenotypeGraph.
         """
         config = get_config()
 
@@ -168,7 +168,7 @@ class GenotypeGraph:
 
     def get_last_node(self) -> GenotypeGraphNode:
         """! Get the last node in the graphencoding.
-        @returns The last node in the graphencoding.
+        @return The last node in the graphencoding.
         """
         current_module = self.anchor
         while current_module.next:
@@ -178,7 +178,7 @@ class GenotypeGraph:
 
     def mutate(self) -> GenotypeGraph:
         """! Create a new graphencoding that is a mutation of itself.
-        @returns The mutated graphencoding.
+        @return The mutated graphencoding.
         """
         config = get_config()
 
