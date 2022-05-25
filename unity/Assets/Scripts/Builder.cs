@@ -9,23 +9,6 @@ using UnityEngine;
 
 public class Builder : MonoBehaviour
 {
-    public GameObject moduleBodyPrefab;
-    public GameObject rotatingModuleBodyPrefab;
-    public GameObject moduleConnectorPrefab;
-    public GameObject tiltingModuleConnectorPrefab;
-
-    public GameObject manipulatorAgentPrefab;
-
-    public GameObject anchor;
-
-    private RobotSpecification robotSpecification = null;
-    private List<GameObject> allRobotParts = new List<GameObject>();
-    private GameObject endEffector;
-
-    private List<ArticulationBody> _articulationBodies = new List<ArticulationBody>();
-
-    public GameObject EndEffector => endEffector;
-
     private enum ModuleType
     {
         Invalid,
@@ -44,6 +27,22 @@ public class Builder : MonoBehaviour
         if (geometry.ComplexModule != null) { return ModuleType.Complex; }
         return ModuleType.Invalid;
     }
+
+    public GameObject moduleBodyPrefab;
+    public GameObject rotatingModuleBodyPrefab;
+    public GameObject moduleConnectorPrefab;
+    public GameObject tiltingModuleConnectorPrefab;
+    public GameObject manipulatorAgentPrefab;
+
+    public GameObject anchor;
+
+    private RobotSpecification robotSpecification = null;
+    private List<GameObject> allRobotParts = new List<GameObject>();
+    private GameObject endEffector;
+
+    private List<ArticulationBody> _articulationBodies = new List<ArticulationBody>();
+
+    public GameObject EndEffector => endEffector;
 
     private GameObject GetTailPrefab(ModuleType type)
     {

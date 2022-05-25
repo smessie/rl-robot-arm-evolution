@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -9,10 +6,12 @@ using UnityEngine;
 public class AgentBrain : Agent
 {
     private JointController _jointController;
+
     private GameObject _anchor;
     private GameObject _endEffector;
 
     private readonly bool _makeScreenshots = true;
+
     private int _screenshotCounter = 0;
 
     // Start function of Agent class, will be called before something else happens.

@@ -11,10 +11,9 @@ public class WallBuilder : MonoBehaviour
 
     private const float startY = 1f + (scaleY / 2);
     private const float startZ = 8f;
+    private const float distanceBetweenWalls = 5.5f;
 
-    private static int wallAmount;
-    private readonly float distanceBetweenWalls = 5.5f;
-
+    private int wallAmount;
     private List<GameObject> _wallTiles = new List<GameObject>();
 
     public void ClearWalls()

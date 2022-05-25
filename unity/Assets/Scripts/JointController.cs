@@ -11,7 +11,7 @@ public class JointController : MonoBehaviour
 
     private void Awake()
     {
-        bool seedProvided = Int32.TryParse(Environment.GetEnvironmentVariable("SEED"), out int seed);
+        bool seedProvided = int.TryParse(Environment.GetEnvironmentVariable("SEED"), out int seed);
         UnityEngine.Random.InitState(seedProvided ? seed : DateTime.Now.Millisecond);
     }
 
@@ -31,6 +31,7 @@ public class JointController : MonoBehaviour
         {
             xDrive.target = Mathf.Clamp(newTarget, xDrive.lowerLimit, xDrive.upperLimit);
         }
+
         articulationBody.xDrive = xDrive;
     }
 

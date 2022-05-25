@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class WallSC : SideChannel
 {
-    private WallBuilder _wallBuilder;
-
 #pragma warning disable CS0649 // (Field is never assigned to) These fields are assigned to by JsonUtilty
     [System.Serializable]
     class WallSpec
@@ -20,6 +18,8 @@ public class WallSC : SideChannel
         public List<bool> row;
     }
 #pragma warning restore CS0649
+
+    private WallBuilder _wallBuilder;
 
     public WallSC(GameObject manipulator)
     {

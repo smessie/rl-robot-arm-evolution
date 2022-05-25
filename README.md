@@ -70,10 +70,12 @@
 
 ## Setting up C# code style analysis
 
-We use [Roslynator](https://github.com/JosefPihrt/Roslynator). Install it for your editor.
+First off, format whitespace and braces with `dotnet format unity.sln` in the `unity/` folder.
+
+For code style, we use [Roslynator](https://github.com/JosefPihrt/Roslynator). Install it for your editor.
 
 There is a `unity/unity.ruleset` file for specific rules for this Unity project.
-When analyzing the code: add these lines to your `Assembly-CSharp.csproj`:
+When analyzing the code: add these lines to your `unity/Assembly-CSharp.csproj`:
 ```
   <PropertyGroup>
     <CodeAnalysisRuleSet>unity.ruleset</CodeAnalysisRuleSet>
