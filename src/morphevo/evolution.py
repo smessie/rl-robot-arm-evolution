@@ -191,7 +191,7 @@ def mutate_with_crossover(parents: List[Arm]) -> List[Arm]:
     return children
 
 def mutate_with_crossover_coevolution(parents: List[Arm]) -> List[Arm]:
-    """! Do mutation with coevolution configuration parameters. \
+    """! Do mutation with coevolution configuration parameters.
         First make normal children by mutating parents, after that
     crossover children are added if specified in config.
     @param parents The parents of which you want to make children.
