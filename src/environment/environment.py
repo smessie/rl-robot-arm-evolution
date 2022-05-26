@@ -10,11 +10,11 @@ from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import \
     EngineConfigurationChannel
 
-from configs.env import PATH_TO_UNITY_EXECUTABLE
 from environment.sidechannels.creation_sc import CreationSC
 from environment.sidechannels.goal_sc import GoalSC
 from environment.sidechannels.wall_sc import WallSC
 from environment.sidechannels.workspace_sc import WorkspaceSC
+from util.config import get_config
 
 
 class SimEnv(gym.Env):
@@ -129,7 +129,7 @@ def test_environment():
     # make absolute paths to avoid file-not-found errors
     here = os.path.dirname(os.path.abspath(__file__))
     urdf_filename = os.path.join(here, 'roboteinde.urdf')
-    unity_executable_path = PATH_TO_UNITY_EXECUTABLE
+    unity_executable_path = get_config().path_to_unity_executable
 
     urdf = ET.tostring(ET.parse(urdf_filename).getroot(), encoding='unicode')
 
