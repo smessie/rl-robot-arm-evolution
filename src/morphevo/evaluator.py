@@ -62,7 +62,7 @@ class Evaluator:
     def parse_observation(self, observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """! Function to parse an observation from unity
         @param observations The observation form unity
-        @return The joint angles configuration and the endeffector position
+        @return The joint angles configuration and the end effector position
         """
         # [j0angel, j0x, j0y, j0z, ..., eex, eey, eez]
         last_joint_index = self.env.joint_amount * 4
@@ -72,9 +72,9 @@ class Evaluator:
         return joint_angles, ee_pos
 
     def _step_until_target_angles(self, target_angles: np.ndarray, workspace: Workspace) -> None:
-        """! Let the arm step to given angleconfiguration. This will be done in the unity environment. This
+        """! Let the arm step to given angle configuration. This will be done in the unity environment. This
         will stop when target reached or when no progress is made.
-        @param target_angles The target angleconfiguration.
+        @param target_angles The target angle configuration.
         @param workspace The workspace of the arm, used to register the steps.
         """
 
@@ -108,7 +108,7 @@ class Evaluator:
             prev_angles = current_angles
 
     def eval_arm(self, arm: Arm) -> Arm:
-        """! Evaluate an arm by sampling an amount of angleconfigurations which will be tried to
+        """! Evaluate an arm by sampling an amount of angle configurations which will be tried to
         reach.
         @param arm The arm that will be evaluated.
         @return The evaluated arm.

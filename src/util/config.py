@@ -11,9 +11,11 @@ class ModuleType(Enum):
     ROTATING = 2
     TILTING_AND_ROTATING = 3
 
+
 class Config:
     """! Singleton construction to get the config parameters from the config yaml file.
     """
+
     # pylint: disable=invalid-name
     class __Config:
         # pylint: disable=too-many-statements
@@ -78,12 +80,12 @@ class Config:
                 self.use_walls = rl['use_walls'] if 'use_walls' in rl else False
 
         def parse_workspace_parameters(self, config):
-            if (    'workspace_type'        in config
-                and 'workspace_cube_offset' in config
-                and 'workspace_side_length' in config):
+            if ('workspace_type' in config
+                    and 'workspace_cube_offset' in config
+                    and 'workspace_side_length' in config):
 
                 self.workspace_parameters = WorkspaceParameters(config['workspace_type'],
-                                                          tuple(config['workspace_cube_offset']),
+                                                                tuple(config['workspace_cube_offset']),
                                                                 config['workspace_side_length'])
             else:
                 self.workspace_parameters = WorkspaceParameters()
