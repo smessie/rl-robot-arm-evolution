@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['generate_5farms_0',['generate_arms',['../util_8py.html#a9cf466b348ff5b708f828012a93fac80',1,'util::util']]],
+  ['generate_5farms_0',['generate_arms',['../util_8py.html#a0933ab7b2985dfa522f145b84efa99c2',1,'morphevo::util']]],
   ['genome_1',['Genome',['../classmorphevo_1_1genome_1_1Genome.html',1,'morphevo::genome']]],
   ['genotypegraph_2',['GenotypeGraph',['../classmorphevo_1_1genome_1_1GenotypeGraph.html',1,'morphevo::genome']]],
   ['genotypegraphnode_3',['GenotypeGraphNode',['../classmorphevo_1_1genome_1_1GenotypeGraphNode.html',1,'morphevo::genome']]],
@@ -14,5 +14,8 @@ var searchData=
   ['get_5frandom_5fmodule_11',['get_random_module',['../classmorphevo_1_1genome_1_1GenotypeGraph.html#a0c127122c836b342a6b9fc1f0c6e9a6f',1,'morphevo::genome::GenotypeGraph']]],
   ['get_5fscore_12',['get_score',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html#af9fcbccb45f53f98fc2aad35115f7bf8',1,'rl::deep_q_learning::DeepQLearner']]],
   ['get_5furdf_13',['get_urdf',['../classmorphevo_1_1genome_1_1Genome.html#a8133208891d0a7a5676bb1b551cd6d46',1,'morphevo.genome.Genome.get_urdf()'],['../classmorphevo_1_1urdf__generator_1_1URDFGenerator.html#a5d9c3e97113217dbbe0bc12ec313d25d',1,'morphevo.urdf_generator.URDFGenerator.get_urdf()']]],
-  ['goalsc_14',['GoalSC',['../classenvironment_1_1sidechannels_1_1goal__sc_1_1GoalSC.html',1,'environment::sidechannels::goal_sc']]]
+  ['get_5fx_5frange_14',['get_x_range',['../classmorphevo_1_1workspace_1_1Workspace.html#aa4dfd4c274caeab5c193cc55f915db3a',1,'morphevo::workspace::Workspace']]],
+  ['get_5fy_5frange_15',['get_y_range',['../classmorphevo_1_1workspace_1_1Workspace.html#aef5e4615746712098a9ea0506ca5d6bd',1,'morphevo::workspace::Workspace']]],
+  ['get_5fz_5frange_16',['get_z_range',['../classmorphevo_1_1workspace_1_1Workspace.html#aed87838d864ea1e1857ddb1b2634c5c8',1,'morphevo::workspace::Workspace']]],
+  ['goalsc_17',['GoalSC',['../classenvironment_1_1sidechannels_1_1goal__sc_1_1GoalSC.html',1,'environment::sidechannels::goal_sc']]]
 ];

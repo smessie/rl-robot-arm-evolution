@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['normalize_0',['normalize',['../util_8py.html#a087983a89ffcf7525ac9b8b48440118d',1,'util::util']]]
+  ['normalize_0',['normalize',['../util_8py.html#a76ce7f6c1db82c449a2a031220cdb5bd',1,'morphevo::util']]]
 ];
