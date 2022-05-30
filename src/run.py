@@ -1,3 +1,7 @@
+##
+# @file
+# Various run functions that are executed based on passed command line parameters.
+#
 import logging
 import sys
 from os.path import exists
@@ -13,6 +17,9 @@ from util.util import write_morphevo_benchmarks
 
 
 def start_morphevo():
+    """
+    Run only morphological evolution
+    """
     if len(sys.argv) < 3:
         print("Something wrong with program arguments")
         sys.exit()
@@ -27,6 +34,9 @@ def start_morphevo():
 
 
 def start_rl():
+    """
+    Run only reinforcement learning
+    """
     if len(sys.argv) < 3:
         print("Something wrong with program arguments")
         sys.exit()
@@ -43,10 +53,16 @@ def start_rl():
 
 
 def start_test_env():
+    """
+    Start Unity environment and run tests.
+    """
     environment.test_environment()
 
 
 def init_coevolution():
+    """
+    Run coevolution.
+    """
     ray.init(log_to_driver=False, logging_level=logging.WARNING)
     if len(sys.argv) < 3:
         print("Something wrong with program arguments")
