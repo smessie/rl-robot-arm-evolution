@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// The brain of the AI agent. It has lifecycle methods,
 /// receives actions and sends observations.
-/// Inherits from [Unity.MLAgents.Agent]
+/// Inherits from MLAgents.Agent
 /// </summary>
 public class AgentBrain : Agent
 {

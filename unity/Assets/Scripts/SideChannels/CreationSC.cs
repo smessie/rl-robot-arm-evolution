@@ -1,19 +1,34 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.MLAgents.SideChannels;
 using UnityEngine;
 
+/// <summary>
+/// Side channel to create the robot when initializing
+/// </summary>
 public class CreationSC : SideChannel
 {
+    /// <summary>
+    /// A class to store info about a built robot.
+    /// Used to return info in JSON format through the creation side channel
+    /// </summary>
     public class RobotInfo
     {
+        /// <summary>
+        /// A string containing a status indicating if the robot was built succesful or not
+        /// </summary>
         public string Status;
+        /// <summary>
+        /// The amount of joints the newly built robot has
+        /// </summary>
         public int JointAmount;
     }
 
     private Builder _manipulatorBuilder;
 
+    /// <summary>
+    /// Constructor that takes the main manipulator GameObject.
+    /// <param name="manipulator">object that has the main scripts, like Builder.cs etc</param>
+    /// </summary>
     public CreationSC(GameObject manipulator)
     {
         _manipulatorBuilder = manipulator.GetComponent<Builder>();
@@ -21,6 +36,11 @@ public class CreationSC : SideChannel
         ChannelId = new Guid("2c137891-46b7-4284-94ff-3dc14a7ab993");
     }
 
+    /// <summary>
+    /// Is called when a message is sent through the side channel.
+    /// Uses the Builder to build the agent (robot arm).
+    /// <param name="msg">The message, containing a string of the URDF format</param>
+    /// </summary>
     protected override void OnMessageReceived(IncomingMessage msg)
     {
         string urdf = msg.ReadString();

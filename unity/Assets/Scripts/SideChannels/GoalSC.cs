@@ -1,14 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents.SideChannels;
 using UnityEngine;
 
+/// <summary>
+/// Side channel to set the position of the goal visualization
+/// </summary>
 public class GoalSC : SideChannel
 {
     private GameObject _goal;
     private GameObject _anchor;
 
+    /// <summary>
+    /// Constructor of this side channel
+    /// <param name="goal">The GameObject that is the goal visualization itself.
+    /// The only thing that will change to this object is its position</param>
+    /// <param name="anchor">Anchor, used to calculate the goal position relative to the anchor</param>
+    /// </summary>
     public GoalSC(GameObject goal, GameObject anchor)
     {
         _goal = goal;
@@ -17,6 +25,11 @@ public class GoalSC : SideChannel
         ChannelId = new Guid("2cc47842-41f8-455d-9ff7-5925d152133a");
     }
 
+    /// <summary>
+    /// Is called when a message is sent through the side channel.
+    /// Changes the position of the goal GameObject
+    /// <param name="msg">The message, containing a list of floats indicating the new coordinate of the goal</param>
+    /// </summary>
     protected override void OnMessageReceived(IncomingMessage msg)
     {
         // Format of goalPos is (x, y, z)

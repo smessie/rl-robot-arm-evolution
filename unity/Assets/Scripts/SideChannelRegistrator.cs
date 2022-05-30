@@ -1,10 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.SideChannels;
 using UnityEngine;
 
+/// <summary>
+/// Script that registers all side channels on startup
+/// </summary>
 public class SideChannelRegistrator : MonoBehaviour
 {
     public GameObject anchor;
@@ -16,6 +16,9 @@ public class SideChannelRegistrator : MonoBehaviour
     private WorkspaceSC _workspaceSC;
     private WallSC _wallSC;
 
+    /// <summary>
+    /// Lifcycle method. Registers all side channels on startup.
+    /// </summary>
     public void Awake()
     {
         _creationSC = new CreationSC(gameObject);
@@ -29,6 +32,9 @@ public class SideChannelRegistrator : MonoBehaviour
         SideChannelManager.RegisterSideChannel(_wallSC);
     }
 
+    /// <summary>
+    /// Lifcycle method. Unregisters all side channels on startup.
+    /// </summary>
     public void OnDestroy()
     {
         if (Academy.IsInitialized)
