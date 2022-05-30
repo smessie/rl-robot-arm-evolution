@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['save_0',['save',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html#a507e37a4b577fb552d05f12206505c39',1,'rl::deep_q_learning::DeepQLearner']]],
-  ['simenv_1',['SimEnv',['../classenvironment_1_1environment_1_1SimEnv.html',1,'environment::environment']]],
-  ['step_2',['step',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html#a805c5534dd3f5e18a0c004e2f68cd95f',1,'rl::deep_q_learning::DeepQLearner']]]
+  ['update_0',['update',['../classrl_1_1dqn_1_1DQN.html#a70722326d79747510dbc502374c89792',1,'rl::dqn::DQN']]],
+  ['urdfgenerator_1',['URDFGenerator',['../classmorphevo_1_1urdf__generator_1_1URDFGenerator.html',1,'morphevo::urdf_generator']]]
 ];
