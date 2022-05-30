@@ -26,11 +26,9 @@ public class WorkspaceSC : SideChannel
         _workspaceBox.transform.position = _anchor.transform.position + new Vector3(workspacePos[0], workspacePos[1], workspacePos[2]);
         _workspaceBox.transform.localScale = new Vector3(workspacePos[3], workspacePos[3], workspacePos[3]);
 
-        string stringToSend = "Workspace set";
-        using (var msgOut = new OutgoingMessage())
-        {
-            msgOut.WriteString(stringToSend);
-            QueueMessageToSend(msgOut);
-        }
+        const string stringToSend = "Workspace set";
+        using var msgOut = new OutgoingMessage();
+        msgOut.WriteString(stringToSend);
+        QueueMessageToSend(msgOut);
     }
 }

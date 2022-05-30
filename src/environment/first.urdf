@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<robot name="robot_-3416061343915567627">
+    <link name="anchor">
+        <visual>
+            <geometry>
+                <anchor_module length="1.0"/>
+            </geometry>
+        </visual>
+        <rotation lower_bound="0" upper_bound="180"/>
+    </link>
+    <link name="module_0">
+        <visual>
+            <geometry>
+                <tilting_module length="3.7423821419165515"/>
+            </geometry>
+        </visual>
+        <tilt lower_bound="0" upper_bound="90"/>
+    </link>
+    <joint name="module_0_joint" type="revolute">
+        <parent link="anchor"/>
+        <child link="module_0"/>
+    </joint>
+    <link name="module_1">
+        <visual>
+            <geometry>
+                <rotating_module length="2.1870334272022722"/>
+            </geometry>
+        </visual>
+        <rotation lower_bound="0" upper_bound="180"/>
+    </link>
+    <joint name="module_1_joint" type="revolute">
+        <parent link="anchor"/>
+        <child link="module_1"/>
+    </joint>
+    <link name="module_2">
+        <visual>
+            <geometry>
+                <tilting_module length="1.7247208583000717"/>
+            </geometry>
+        </visual>
+        <tilt lower_bound="0" upper_bound="90"/>
+    </link>
+    <joint name="module_2_joint" type="revolute">
+        <parent link="module_1"/>
+        <child link="module_2"/>
+    </joint>
+    <link name="module_3">
+        <visual>
+            <geometry>
+                <tilting_module length="1.1337611083901284"/>
+            </geometry>
+        </visual>
+        <tilt lower_bound="0" upper_bound="90"/>
+    </link>
+    <joint name="module_3_joint" type="revolute">
+        <parent link="module_2"/>
+        <child link="module_3"/>
+    </joint>
+    <link name="module_4">
+        <visual>
+            <geometry>
+                <complex_module length="1.6739363197285564"/>
+            </geometry>
+        </visual>
+        <tilt lower_bound="0" upper_bound="90"/>
+        <rotation lower_bound="0" upper_bound="180"/>
+    </link>
+    <joint name="module_4_joint" type="revolute">
+        <parent link="module_3"/>
+        <child link="module_4"/>
+    </joint>
+</robot>

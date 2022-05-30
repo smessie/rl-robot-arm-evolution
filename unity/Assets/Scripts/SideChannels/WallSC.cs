@@ -6,16 +6,20 @@ using UnityEngine;
 
 public class WallSC : SideChannel
 {
-    private WallBuilder _wallBuilder;
-
+#pragma warning disable CS0649 // (Field is never assigned to) These fields are assigned to by JsonUtilty
     [System.Serializable]
-    class WallSpec {
+    class WallSpec
+    {
         public List<WallRow> wall;
     }
     [System.Serializable]
-    class WallRow {
+    class WallRow
+    {
         public List<bool> row;
     }
+#pragma warning restore CS0649
+
+    private WallBuilder _wallBuilder;
 
     public WallSC(GameObject manipulator)
     {
@@ -28,27 +32,29 @@ public class WallSC : SideChannel
     {
         string wallString = msg.ReadString();
         string stringToSend;
-        try {
+        try
+        {
             WallSpec wallSpec = JsonUtility.FromJson<WallSpec>(wallString);
 
             List<List<bool>> wall = new List<List<bool>>();
-            foreach (WallRow wallRow in wallSpec.wall) {
+            foreach (WallRow wallRow in wallSpec.wall)
+            {
                 wall.Add(wallRow.row);
             }
 
             _wallBuilder.BuildWall(wall);
 
             stringToSend = "Wall built";
-        } catch {
-            _wallBuilder.clearWalls();
+        }
+        catch
+        {
+            _wallBuilder.ClearWalls();
 
             stringToSend = "Walls cleared";
         }
 
-        using (var msgOut = new OutgoingMessage())
-        {
-            msgOut.WriteString(stringToSend);
-            QueueMessageToSend(msgOut);
-        }
+        using var msgOut = new OutgoingMessage();
+        msgOut.WriteString(stringToSend);
+        QueueMessageToSend(msgOut);
     }
 }

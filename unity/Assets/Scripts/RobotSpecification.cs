@@ -78,5 +78,4 @@ namespace DefaultNamespace
     {
         [XmlAttribute("link")] public string Link;
     }
-
 }
