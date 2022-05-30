@@ -69,31 +69,49 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classrl_1_1dqn_1_1DQN-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">rl.dqn.DQN Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>The <a class="el" href="classrl_1_1dqn_1_1DQN.html" title="The DQN class.">DQN</a> class.  
+ <a href="classrl_1_1dqn_1_1DQN.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae242482b4db12dfa2319eca10a34c470"><td class="memItemLeft" align="right" valign="top"><a id="ae242482b4db12dfa2319eca10a34c470" name="ae242482b4db12dfa2319eca10a34c470"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, int n_actions, state_size, network_path=&quot;&quot;)</td></tr>
-<tr class="separator:ae242482b4db12dfa2319eca10a34c470"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70722326d79747510dbc502374c89792"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1dqn_1_1DQN.html#a70722326d79747510dbc502374c89792">update</a> (self, _state, new_state, action, reward, finished)</td></tr>
-<tr class="separator:a70722326d79747510dbc502374c89792"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a242a8fef2fb2ab00b81ef66b4972f217"><td class="memItemLeft" align="right" valign="top"><a id="a242a8fef2fb2ab00b81ef66b4972f217" name="a242a8fef2fb2ab00b81ef66b4972f217"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>lookup</b> (self, np.ndarray state)</td></tr>
-<tr class="separator:a242a8fef2fb2ab00b81ef66b4972f217"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b0b2c9cd3105e83c574327ff0ff33e0"><td class="memItemLeft" align="right" valign="top"><a id="a9b0b2c9cd3105e83c574327ff0ff33e0" name="a9b0b2c9cd3105e83c574327ff0ff33e0"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> (self, str path)</td></tr>
-<tr class="separator:a9b0b2c9cd3105e83c574327ff0ff33e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd99679b0c61c140997fa79ab4c115b5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1dqn_1_1DQN.html#afd99679b0c61c140997fa79ab4c115b5">__init__</a> (self, int number_of_actions, int state_size, network_path=&quot;&quot;)</td></tr>
+<tr class="memdesc:afd99679b0c61c140997fa79ab4c115b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classrl_1_1dqn_1_1RobotNetwork.html" title="The Robot Network class.">RobotNetwork</a> class initializer.  <a href="classrl_1_1dqn_1_1DQN.html#afd99679b0c61c140997fa79ab4c115b5">More...</a><br /></td></tr>
+<tr class="separator:afd99679b0c61c140997fa79ab4c115b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6848c16d4ae4343540d91a0c10778069"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1dqn_1_1DQN.html#a6848c16d4ae4343540d91a0c10778069">update</a> (self, np.ndarray state, np.ndarray next_state, int action, float reward, bool finished)</td></tr>
+<tr class="memdesc:a6848c16d4ae4343540d91a0c10778069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the network, should happen between each state transition during training.  <a href="classrl_1_1dqn_1_1DQN.html#a6848c16d4ae4343540d91a0c10778069">More...</a><br /></td></tr>
+<tr class="separator:a6848c16d4ae4343540d91a0c10778069"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81f3b67a826c68a34ca2366fd70071a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1dqn_1_1DQN.html#a81f3b67a826c68a34ca2366fd70071a8">get_best_action</a> (self, np.ndarray state)</td></tr>
+<tr class="memdesc:a81f3b67a826c68a34ca2366fd70071a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Look up the best action for a given state.  <a href="classrl_1_1dqn_1_1DQN.html#a81f3b67a826c68a34ca2366fd70071a8">More...</a><br /></td></tr>
+<tr class="separator:a81f3b67a826c68a34ca2366fd70071a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a0032b51fb9a82e00302612593f995e3e"><td class="memItemLeft" align="right" valign="top"><a id="a0032b51fb9a82e00302612593f995e3e" name="a0032b51fb9a82e00302612593f995e3e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>eps</b></td></tr>
 <tr class="separator:a0032b51fb9a82e00302612593f995e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1891eb05e5091216c5cde2c18affef5b"><td class="memItemLeft" align="right" valign="top"><a id="a1891eb05e5091216c5cde2c18affef5b" name="a1891eb05e5091216c5cde2c18affef5b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>gamma</b></td></tr>
+<tr class="separator:a1891eb05e5091216c5cde2c18affef5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ffbd0a6bd0ae51bfb4d6c95b0e20808"><td class="memItemLeft" align="right" valign="top"><a id="a0ffbd0a6bd0ae51bfb4d6c95b0e20808" name="a0ffbd0a6bd0ae51bfb4d6c95b0e20808"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>eps_end</b></td></tr>
+<tr class="separator:a0ffbd0a6bd0ae51bfb4d6c95b0e20808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01909b4ae501093b05a5e51546aa72ed"><td class="memItemLeft" align="right" valign="top"><a id="a01909b4ae501093b05a5e51546aa72ed" name="a01909b4ae501093b05a5e51546aa72ed"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>eps_decay</b></td></tr>
+<tr class="separator:a01909b4ae501093b05a5e51546aa72ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa994165396d94842bd18fca0c67dc362"><td class="memItemLeft" align="right" valign="top"><a id="aa994165396d94842bd18fca0c67dc362" name="aa994165396d94842bd18fca0c67dc362"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>batch_size</b></td></tr>
+<tr class="separator:aa994165396d94842bd18fca0c67dc362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a852dd7d72b1e644f8f06c1464ca447"><td class="memItemLeft" align="right" valign="top"><a id="a3a852dd7d72b1e644f8f06c1464ca447" name="a3a852dd7d72b1e644f8f06c1464ca447"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>mem_size</b></td></tr>
+<tr class="separator:a3a852dd7d72b1e644f8f06c1464ca447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81a090bcfaaa7c1bdcb63957e4519929"><td class="memItemLeft" align="right" valign="top"><a id="a81a090bcfaaa7c1bdcb63957e4519929" name="a81a090bcfaaa7c1bdcb63957e4519929"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>hidden_nodes</b></td></tr>
+<tr class="separator:a81a090bcfaaa7c1bdcb63957e4519929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6749e3a964331d4c41737e7986a66799"><td class="memItemLeft" align="right" valign="top"><a id="a6749e3a964331d4c41737e7986a66799" name="a6749e3a964331d4c41737e7986a66799"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>network</b></td></tr>
 <tr class="separator:a6749e3a964331d4c41737e7986a66799"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -103,31 +121,102 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a6085f4bf2f3995908f7efa1c08b2b6cb"><td class="memItemLeft" align="right" valign="top"><a id="a6085f4bf2f3995908f7efa1c08b2b6cb" name="a6085f4bf2f3995908f7efa1c08b2b6cb"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>memory</b></td></tr>
 <tr class="separator:a6085f4bf2f3995908f7efa1c08b2b6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:ab0a5e35e9bced89dc7721d7c4ee45a68"><td class="memItemLeft" align="right" valign="top"><a id="ab0a5e35e9bced89dc7721d7c4ee45a68" name="ab0a5e35e9bced89dc7721d7c4ee45a68"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>GAMMA</b> = 0.99</td></tr>
-<tr class="separator:ab0a5e35e9bced89dc7721d7c4ee45a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b7d583453854b1ea7b438148e858101"><td class="memItemLeft" align="right" valign="top"><a id="a6b7d583453854b1ea7b438148e858101" name="a6b7d583453854b1ea7b438148e858101"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>EPS_END</b> = 0.1</td></tr>
-<tr class="separator:a6b7d583453854b1ea7b438148e858101"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0c63efe37b14f1e9b9cc1f187365ce4"><td class="memItemLeft" align="right" valign="top"><a id="aa0c63efe37b14f1e9b9cc1f187365ce4" name="aa0c63efe37b14f1e9b9cc1f187365ce4"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>EPS_DECAY</b> = 0.999992</td></tr>
-<tr class="separator:aa0c63efe37b14f1e9b9cc1f187365ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b8aeffd8a88d7245132290efbf8ab58"><td class="memItemLeft" align="right" valign="top"><a id="a5b8aeffd8a88d7245132290efbf8ab58" name="a5b8aeffd8a88d7245132290efbf8ab58"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>BATCH_SIZE</b> = 64</td></tr>
-<tr class="separator:a5b8aeffd8a88d7245132290efbf8ab58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca948c7545b9cffe47def19bdba70c52"><td class="memItemLeft" align="right" valign="top"><a id="aca948c7545b9cffe47def19bdba70c52" name="aca948c7545b9cffe47def19bdba70c52"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>MEM_SIZE</b> = 1000</td></tr>
-<tr class="separator:aca948c7545b9cffe47def19bdba70c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ef643907fb0f71b62158d043503551f"><td class="memItemLeft" align="right" valign="top"><a id="a2ef643907fb0f71b62158d043503551f" name="a2ef643907fb0f71b62158d043503551f"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>HIDDEN_NODES</b> = 32</td></tr>
-<tr class="separator:a2ef643907fb0f71b62158d043503551f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >The <a class="el" href="classrl_1_1dqn_1_1DQN.html" title="The DQN class.">DQN</a> class. </p>
+<p >Defines the class that will represent the Deep Q-Network. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="afd99679b0c61c140997fa79ab4c115b5" name="afd99679b0c61c140997fa79ab4c115b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd99679b0c61c140997fa79ab4c115b5">&#9670;&nbsp;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def rl.dqn.DQN.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>number_of_actions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>state_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>network_path</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The <a class="el" href="classrl_1_1dqn_1_1RobotNetwork.html" title="The Robot Network class.">RobotNetwork</a> class initializer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">number_of_actions</td><td>The number of hidden nodes for the hidden layers. </td></tr>
+    <tr><td class="paramname">state_size</td><td>The number of variables in a state, important for the nodes needed as input. </td></tr>
+    <tr><td class="paramname">network_path</td><td>The path to the file that contains a (trained) network. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of the <a class="el" href="classrl_1_1dqn_1_1DQN.html" title="The DQN class.">DQN</a> class. </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a70722326d79747510dbc502374c89792" name="a70722326d79747510dbc502374c89792"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70722326d79747510dbc502374c89792">&#9670;&nbsp;</a></span>update()</h2>
+<a id="a81f3b67a826c68a34ca2366fd70071a8" name="a81f3b67a826c68a34ca2366fd70071a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81f3b67a826c68a34ca2366fd70071a8">&#9670;&nbsp;</a></span>get_best_action()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> int rl.dqn.DQN.get_best_action </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Look up the best action for a given state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>An input state representing the environment. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An action, represented as a number. </dd></dl>
+
+</div>
+</div>
+<a id="a6848c16d4ae4343540d91a0c10778069" name="a6848c16d4ae4343540d91a0c10778069"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6848c16d4ae4343540d91a0c10778069">&#9670;&nbsp;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,31 +230,31 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>HIDDEN_NODES</b> = 32<
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>_state</em>, </td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>new_state</em>, </td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>next_state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>action</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>reward</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>finished</em>&#160;</td>
         </tr>
         <tr>
@@ -175,10 +264,19 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>HIDDEN_NODES</b> = 32<
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Method for updating the network
-Parameters:
-    _state: [int]
-</pre> 
+
+<p>Update the network, should happen between each state transition during training. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The start state of the environment. </td></tr>
+    <tr><td class="paramname">next_state</td><td>The resulting, next state after executing an action. </td></tr>
+    <tr><td class="paramname">action</td><td>The action that was executed. </td></tr>
+    <tr><td class="paramname">reward</td><td>The reward resulting from the action. </td></tr>
+    <tr><td class="paramname">finished</td><td>If the next_state is a finishing state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

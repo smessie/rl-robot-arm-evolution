@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['parse_5fobservation_0',['parse_observation',['../classmorphevo_1_1evaluator_1_1Evaluator.html#a4cfd66b7c58fe03cd122d69fce6783f5',1,'morphevo::evaluator::Evaluator']]]
+  ['learn_0',['learn',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html#a34f1cfc317e597422d521a4b9f89e965',1,'rl::deep_q_learning::DeepQLearner']]],
+  ['log_5fepisode_1',['log_episode',['../classrl_1_1logger_1_1Logger.html#a1e8fb8a7a4eef020fdf1dd29470bca4d',1,'rl::logger::Logger']]]
 ];
