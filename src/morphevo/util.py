@@ -23,7 +23,7 @@ def generate_arms(amount: int):
 def alternate(what, times):
     """! Function to make an alternation of a list for x items.
     Example what = [1,2,3,4] times = 6 -> [1,2,3,4,1,2].
-    @param what The list that you want to alternate. 
+    @param what The list that you want to alternate.
     @param times Amount of times you want to alterate your items.
     @return Alternating list of size 'times'
     """
@@ -37,7 +37,7 @@ def alternate(what, times):
 def alternate_infinite(what):
     """! Function to make an alternation of a list on which you can iterate till infinity.
     Example what = [1,2,3,4] -> 1,2,3,4,1,2,3,4,1,2,3,4,...
-    @param what The list that you want to alternate. 
+    @param what The list that you want to alternate.
     @return Next iteration.
     """
     current_index = 0

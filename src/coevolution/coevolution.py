@@ -4,9 +4,9 @@
 #
 from morphevo.evolution import (mutate, mutate_with_crossover_coevolution,
                                 selection, selection_succes_rate)
+from morphevo.util import generate_arms, save_genome
 from rl.deep_q_learning import train_arms
 from util.config import get_config
-from morphevo.util import generate_arms, save_genome
 
 
 def run_coevolution():
@@ -30,4 +30,3 @@ def run_coevolution():
                 f.write(f"{parent.success_rate}\n")
 
         children = mutate(mutate_with_crossover_coevolution, parents)
-

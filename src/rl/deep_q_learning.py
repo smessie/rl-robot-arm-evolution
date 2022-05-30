@@ -3,8 +3,11 @@ import signal
 import sys
 import xml.etree.ElementTree as ET
 from typing import List, Tuple
+
 import numpy as np
 from tqdm import tqdm
+
+from coevolution.arm import Arm
 from configs.walls import (WALL_9x9_GAP_3x3_BOTTOM_LEFT,
                            WALL_9x9_GAP_3x3_BOTTOM_LEFT_CENTER_COORD,
                            WALL_9x9_GAP_3x3_BOTTOM_RIGHT,
@@ -17,7 +20,6 @@ from environment.environment import SimEnv
 from morphevo.workspace import Workspace
 from rl.dqn import DQN
 from rl.logger import Logger
-from coevolution.arm import Arm
 from util.config import get_config
 
 

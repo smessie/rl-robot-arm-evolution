@@ -122,4 +122,3 @@ class WorkspaceNotFoundError(Exception):
     """!
     Exception class invoked when a workspace is tried to use that is unknown.
     """
-    pass

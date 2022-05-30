@@ -11,9 +11,9 @@ import ray
 from coevolution.coevolution import run_coevolution
 from environment import environment
 from morphevo.evolution import run_evolution
+from morphevo.util import write_morphevo_benchmarks
 from rl.deep_q_learning import run_reinforcement_learning
 from util.config import set_config
-from morphevo.util import write_morphevo_benchmarks
 
 
 def start_morphevo():

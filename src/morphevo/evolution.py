@@ -15,10 +15,10 @@ import numpy as np
 from ray.util import ActorPool
 from tqdm import tqdm
 
-from morphevo.evaluator import Evaluator
 from coevolution.arm import Arm
-from util.config import get_config
+from morphevo.evaluator import Evaluator
 from morphevo.util import alternate, generate_arms, normalize
+from util.config import get_config
 
 
 def run_evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
