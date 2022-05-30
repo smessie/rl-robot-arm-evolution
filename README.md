@@ -31,10 +31,9 @@
   - `children`: amount of children produced from parents
   - `crossover_children`: amount of the children that will undergo crossover
   - `sample_size`: amount of angles you want to sample to calculate coverage in workspace
-  ##### @IEBEN 
-  - `workspace_type`: "moved_cube"
-  - `workspace_cube_offset`: [0,5,9]
-  - `workspace_side_length`: 4 
+  - `workspace_type`: type of workspace: normalized_cube or moved_cube
+  - `workspace_cube_offset`: tuple containing the offset of the moved cube
+  - `workspace_side_length`: the length of each side in case the workspace is a normalized or moved cube
 
 
 #### rl: parameters used in rl
