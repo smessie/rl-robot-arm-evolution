@@ -20,6 +20,7 @@ from rl.logger import Logger
 from coevolution.arm import Arm
 from util.config import get_config
 
+
 class DeepQLearner:
     """! The Deep Q learner class.
     Defines the class that will learn based on a Deep-Q Network.
@@ -267,7 +268,7 @@ def train_arms(arms: List[Arm]) -> List[Arm]:
 
     return arms
 
-def rl(network_path=""):
+def run_reinforcement_learning(network_path=""):
     """! Run reinforcement learning
     @param network_path The path to a network that is passed when the training has been done and we want to test.
     """

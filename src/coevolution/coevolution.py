@@ -9,7 +9,7 @@ from util.config import get_config
 from morphevo.util import generate_arms, save_genome
 
 
-def start_coevolution():
+def run_coevolution():
     """!
     Run the coevolution process which uses morphological evolution and reinforcement learning for this.
     Every coevolution step, all genomes' URDF are saved.
