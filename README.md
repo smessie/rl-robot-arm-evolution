@@ -2,7 +2,7 @@
 ## Docs
 
 - [Python Docs](https://smessie.github.io/SELab3-2022-01/python/annotated.html)
-- [Unity Project Docs](https://smessie.github.io/SELab3-2022-01/unity/)
+- [Unity Project Docs](https://smessie.github.io/SELab3-2022-01/unity/annotated.html)
 
 
 ## Setup
