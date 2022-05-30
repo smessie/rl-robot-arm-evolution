@@ -17,8 +17,7 @@ from util.util import write_morphevo_benchmarks
 
 
 def start_morphevo():
-    """
-    Run only morphological evolution
+    """! Run only morphological evolution
     """
     if len(sys.argv) < 3:
         print("Something wrong with program arguments")
@@ -34,8 +33,7 @@ def start_morphevo():
 
 
 def start_rl():
-    """
-    Run only reinforcement learning
+    """! Run only reinforcement learning
     """
     if len(sys.argv) < 3:
         print("Something wrong with program arguments")
@@ -53,15 +51,13 @@ def start_rl():
 
 
 def start_test_env():
-    """
-    Start Unity environment and run tests.
+    """! Start Unity environment and run tests.
     """
     environment.test_environment()
 
 
 def init_coevolution():
-    """
-    Run coevolution.
+    """! Run coevolution.
     """
     ray.init(log_to_driver=False, logging_level=logging.WARNING)
     if len(sys.argv) < 3:
