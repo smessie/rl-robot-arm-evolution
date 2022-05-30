@@ -47,6 +47,7 @@
   - `eps_start`: the first value of epsilon, before there was any decay.
   - `hidden_nodes`: the size of the middle layers of the DQN model.
   - `goal_bal_diameter`: the diameter of the goal ball. This is essentially the distance from the goal center the end effector has to be at to be seen as "goal reached".
+  - `use_walls`: boolean that decides whether or not to use the randomnly chosen walls during training. If this parameter is not present in the config file, it is assumed to be False.
 
 
 ## Building unity
