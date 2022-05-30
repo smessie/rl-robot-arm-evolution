@@ -1,3 +1,7 @@
+##
+# @file
+# TODO: klaas
+#
 import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -18,13 +22,19 @@ from util.config import get_config
 
 
 class SimEnv(gym.Env):
-    """Custom Environment that follows gym interface"""
+    """! Custom Environment that follows gym interface
+    """
     metadata = {'render.modes': ['human']}
     MAX_N_MODULES = 10
     JOINT_ANGLE_STEP = 10
 
-    def __init__(self, env_path: str, urdf: str, use_graphics: bool,
-                 worker_id: int = 0) -> None:
+    def __init__(self, env_path: str, urdf: str, use_graphics: bool, worker_id: int = 0) -> None:
+        """! The SimEnv class initializer.
+        @param env_path Path of the environment executable.
+        @param urdf Instance that represents the robot urdf.
+        @param use_graphics Boolean that turns graphics on or off.
+        @return  An instance of the SimEnv class.
+        """
         super().__init__()
 
         assert Path(env_path).exists(), (
@@ -94,10 +104,18 @@ class SimEnv(gym.Env):
         self.wall_sc.remove_walls()
 
     def replace_walls(self, wall: List[List[bool]]) -> None:
+        """! Replace all the walls, build 1 new one
+        @param wall The new wall
+        """
         self.remove_walls()
         self.build_wall(wall)
 
     def step(self, action: np.ndarray, return_observations=True) -> np.ndarray:
+        """! Do 1 step in the unity environment
+        @param action The action this step
+        @param return_observations Whether to return observations after the step is taken
+        @return Observations after the step is taken
+        """
         self._set_unity_actions(action)
         self.u_env.step()
 
@@ -126,6 +144,8 @@ class SimEnv(gym.Env):
 
 
 def test_environment():
+    """! Test certain basic functions of the environment.
+    """
     # make absolute paths to avoid file-not-found errors
     here = os.path.dirname(os.path.abspath(__file__))
     urdf_filename = os.path.join(here, 'roboteinde.urdf')
@@ -137,72 +157,9 @@ def test_environment():
                  urdf=urdf,
                  use_graphics=True)
 
-    # _ = env.reset()
-
-    # env.set_goal((0, 5.5, 12.0))
-    # env.pause(300)
-
-    # env.step([1, 0, 0, 0, 0])
-    # env.step([1, 0, 0, 0, 0])
-    # env.step([1, 0, 0, 0, 0])
-
-    # env.step([0, 1, 0, 0, 0])
-    # env.step([0, 1, 0, 0, 0])
-    # env.step([0, 1, 0, 0, 0])
-    # env.step([0, 1, 0, 0, 0])
-
-    # env.step([0, 0, 1, 0, 0])
-    # env.step([0, 0, 1, 0, 0])
-    # env.step([0, 0, 1, 0, 0])
-    # env.step([0, 0, 1, 0, 0])
-    # env.step([0, 0, 1, 0, 0])
-    # env.step([0, 0, 0.5, 0, 0])
-
-    # env.step([0, 0, 0, 1, 0])
-    # env.step([0, 0, 0, 1, 0])
-    # env.step([0, 0, 0, 1, 0])
-    # env.step([0, 0, 0, 1, 0])
-
-    # env.step([0, 0, 0, 0, -1])
-    # env.step([0, 0, 0, 0, -1])
-    # env.step([0, 0, 0, 0, -1])
-
     env.pause(100)
-
-    # env.build_wall(WALL_9x9_GAP_SCREENSHOT_2)
-    # env.build_wall(WALL_9x9_GAP_SCREENSHOT)
-
-    # env.set_workspace((0, 11.5, 19, 8))
-    # env.set_goal((1, 9.420, 19.5))
-
-    env.step([-1, 0, 0, 0, 0])
-    env.step([-1, 0, 0, 0, 0])
-    env.step([-1, 0, 0, 0, 0])
-    env.step([-1, 0, 0, 0, 0])
-
-    env.step([0, 1, 0, 0, 0])
-    env.step([0, 1, 0, 0, 0])
-    env.step([0, 1, 0, 0, 0])
-
-    env.step([0, 0, 1, 0, 0])
-    env.step([0, 0, 1, 0, 0])
-    env.step([0, 0, 1, 0, 0])
-    env.step([0, 0, 1, 0, 0])
-    env.step([0, 0, 1, 0, 0])
-    env.step([0, 0, 1, 0, 0])
-
-    env.step([0, 0, 0, 1, 0])
-    env.step([0, 0, 0, 1, 0])
-    env.step([0, 0, 0, 1, 0])
-    env.step([0, 0, 0, 1, 0])
-    env.step([0, 0, 0, 1, 0])
-
-    env.step([0, 0, 0, 0, 1])
-    env.step([0, 0, 0, 0, 1])
-    env.step([0, 0, 0, 0, 1])
-
     env.set_workspace((0, 5, 9, 4))
-    # env.set_goal((1, 3.5, 5.5))
+    env.set_goal((1, 3.5, 5.5))
 
     env.pause(10000)
     env.remove_walls()
