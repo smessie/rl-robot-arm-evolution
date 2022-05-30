@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['sidechannelregistrator_0',['SideChannelRegistrator',['../classSideChannelRegistrator.html',1,'']]]
+  ['tiltingmodule_0',['TiltingModule',['../classDefaultNamespace_1_1TiltingModule.html',1,'DefaultNamespace']]],
+  ['tiltingspec_1',['TiltingSpec',['../classDefaultNamespace_1_1TiltingSpec.html',1,'DefaultNamespace']]]
 ];
