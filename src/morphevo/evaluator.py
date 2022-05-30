@@ -96,6 +96,8 @@ class Evaluator:
                 break
 
             angle_diff = current_angles - target_angles
+            angle_diff[angle_diff > 180] -= 360
+
             actions[angle_diff > 0] = -1
             actions[angle_diff < 0] = 1
             actions[abs(angle_diff) <= 5] = 0
