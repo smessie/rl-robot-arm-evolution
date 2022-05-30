@@ -90,7 +90,7 @@ class Evaluator:
         done = False
         while not done:
             current_angles, ee_pos = self.parse_observation(observations)
-            workspace.add_ee_position(ee_pos, current_angles)
+            workspace.add_end_effector_position(ee_pos, current_angles)
 
             if abs(np.sum(current_angles - prev_angles)) < 0.01:
                 break
