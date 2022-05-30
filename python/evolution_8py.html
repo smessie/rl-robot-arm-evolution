@@ -77,9 +77,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9c4bdc81d4ac9007df91996ada6839ef"><td class="memItemLeft" align="right" valign="top">List[Arm]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evolution_8py.html#a9c4bdc81d4ac9007df91996ada6839ef">morphevo.evolution.evolution</a> (Optional[List[Arm]] children=None)</td></tr>
-<tr class="memdesc:a9c4bdc81d4ac9007df91996ada6839ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve arms with following scheme:  <a href="evolution_8py.html#a9c4bdc81d4ac9007df91996ada6839ef">More...</a><br /></td></tr>
-<tr class="separator:a9c4bdc81d4ac9007df91996ada6839ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc7aa2d92401537ca6a437ea636cf7a"><td class="memItemLeft" align="right" valign="top">List[Arm]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evolution_8py.html#a4fc7aa2d92401537ca6a437ea636cf7a">morphevo.evolution.run_evolution</a> (Optional[List[Arm]] children=None)</td></tr>
+<tr class="memdesc:a4fc7aa2d92401537ca6a437ea636cf7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve arms with following scheme:  <a href="evolution_8py.html#a4fc7aa2d92401537ca6a437ea636cf7a">More...</a><br /></td></tr>
+<tr class="separator:a4fc7aa2d92401537ca6a437ea636cf7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd8fed6a8cead22bcab5ed9769c4327d"><td class="memItemLeft" align="right" valign="top">List[Arm]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evolution_8py.html#abd8fed6a8cead22bcab5ed9769c4327d">morphevo.evolution.selection</a> (Callable selection_function, List[Arm] population)</td></tr>
 <tr class="memdesc:abd8fed6a8cead22bcab5ed9769c4327d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do a selection on a list of parents given a selection function.  <a href="evolution_8py.html#abd8fed6a8cead22bcab5ed9769c4327d">More...</a><br /></td></tr>
 <tr class="separator:abd8fed6a8cead22bcab5ed9769c4327d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -263,39 +263,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9c4bdc81d4ac9007df91996ada6839ef" name="a9c4bdc81d4ac9007df91996ada6839ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c4bdc81d4ac9007df91996ada6839ef">&#9670;&nbsp;</a></span>evolution()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> List[Arm] morphevo.evolution.evolution </td>
-          <td>(</td>
-          <td class="paramtype">Optional[List[Arm]] &#160;</td>
-          <td class="paramname"><em>children</em> = <code>None</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Evolve arms with following scheme: </p>
-<ul>
-<li>evaluate arms</li>
-<li>select best arms (selection includes best arms previous generation)</li>
-<li>mutate best arms</li>
-<li>restart loop with mutated arms <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">children</td><td>Optional list of children to start from. Else children will be randomly generated. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>List of evolved arms. </dd></dl>
-</li>
-</ul>
-
-</div>
-</div>
 <a id="addf65349e118b32e96170aad3e157add" name="addf65349e118b32e96170aad3e157add"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#addf65349e118b32e96170aad3e157add">&#9670;&nbsp;</a></span>mutate()</h2>
 
@@ -385,6 +352,39 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>List of mutated children. </dd></dl>
+
+</div>
+</div>
+<a id="a4fc7aa2d92401537ca6a437ea636cf7a" name="a4fc7aa2d92401537ca6a437ea636cf7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fc7aa2d92401537ca6a437ea636cf7a">&#9670;&nbsp;</a></span>run_evolution()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> List[Arm] morphevo.evolution.run_evolution </td>
+          <td>(</td>
+          <td class="paramtype">Optional[List[Arm]] &#160;</td>
+          <td class="paramname"><em>children</em> = <code>None</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Evolve arms with following scheme: </p>
+<ul>
+<li>evaluate arms</li>
+<li>select best arms (selection includes best arms previous generation)</li>
+<li>mutate best arms</li>
+<li>restart loop with mutated arms <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">children</td><td>Optional list of children to start from. Else children will be randomly generated. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>List of evolved arms. </dd></dl>
+</li>
+</ul>
 
 </div>
 </div>
