@@ -24,9 +24,8 @@ class DeepQLearner:
     """! The Deep Q learner class.
     Defines the class that will learn based on a Deep-Q Network.
     """
-
     def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
-                 use_graphics: bool = False, network_path="") -> None:
+                 use_graphics: bool = False, network_path:str = "") -> None:
         """! The DeepQLearner class initializer.
         @param env_path Path of the environment executable.
         @param urdf_path Path to the robot urdf file.
@@ -70,13 +69,15 @@ class DeepQLearner:
             self.current_wall_index = 0
 
     def handler(self, *_):
+        """! Handler for saving the Deep Q-network upon interrupting the execution of the program.
+        """
         if self.training:
             res = input("Ctrl-c was pressed. Do you want to save the DQN? (y/n) ")
             if res == 'y':
                 self.save()
             sys.exit(1)
 
-    def save(self, path = "./rl/networks/most_recently_saved_network.pkl"):
+    def save(self, path:str = "./rl/networks/most_recently_saved_network.pkl") -> None:
         """! Save the trained network in a pickle file
         @param path Path to file where the network will be saved.
         """
@@ -91,7 +92,7 @@ class DeepQLearner:
         actions = np.identity(number_of_joints)
         return np.concatenate([actions, (-1)*actions])
 
-    def get_new_wall(self) -> Tuple[int, np.ndarray, Tuple]:
+    def get_random_wall(self) -> Tuple[int, np.ndarray, Tuple]:
         """! Get one of the possible walls at random
         @return A wall.
         """
@@ -121,12 +122,12 @@ class DeepQLearner:
         @param goal Goal used to calculate the state.
         @return The state.
         """
-        ee_pos = self._get_end_effector_position(observations)
+        end_effector_position = self._get_end_effector_position(observations)
 
-        # return np.array([*ee_pos, *observations[:self.joint_amount * 4], *goal], dtype=float)
         if self.use_walls:
-            return np.array([*ee_pos, *goal, *self.wall_centers[self.current_wall_index]], dtype=float)
-        return np.array([*ee_pos, *goal], dtype=float)
+            return np.array([*end_effector_position, *goal, *self.wall_centers[self.current_wall_index]], dtype=float)
+
+        return np.array([*end_effector_position, *goal], dtype=float)
 
     def _get_end_effector_position(self, observations: np.ndarray) -> np.ndarray:
         """! Get the end effector position
@@ -148,18 +149,18 @@ class DeepQLearner:
 
         if new_distance_from_goal <= self.goal_ball_diameter:
             return 30, True
+
         moved_distance = prev_distance_from_goal - new_distance_from_goal
 
         return 12 * moved_distance, False
 
     def step(self, state: np.ndarray) -> Tuple[int, np.ndarray]:
         """! Move 1 step forward in the simulation
-        @param state Current staten.
+        @param state Current state of the environment.
         @return The action that was taken and the observations that were made.
         """
         action_index = self.predict(state)
         action = np.array(self.actions[action_index])
-        # Execute the action in the environment
         observations = self.env.step(action)
         return action_index, observations
 
@@ -176,7 +177,7 @@ class DeepQLearner:
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
             if self.use_walls:
-                self.current_wall_index, new_wall, _ = self.get_new_wall()
+                self.current_wall_index, new_wall, _ = self.get_random_wall()
                 self.env.replace_walls(new_wall)
 
             goal = self._generate_goal()
@@ -220,15 +221,16 @@ class DeepQLearner:
         return total_finished/number_of_episodes
 
     def predict(self, state: np.ndarray) -> int:
-        """! Take an action
-        @param state Current state.
+        """! Pick the best or a random action depending on epsilon value of the Deep-Q Network. 
+        @param state Current state of the environment.
         @return The chosen action.
         """
         if self.training and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.actions))
-        # The testing also needs some randomness
-        if not self.training and np.random.rand() < 0.2:
+
+        if not self.training and np.random.rand() < 0.15:
             return np.random.randint(len(self.actions))
+
         action = self.dqn.get_best_action(state)
         return action
 
@@ -247,6 +249,24 @@ class DeepQLearner:
         self.dqn = self.make_dqn()
         return self.learn(number_of_episodes=episodes)
 
+
+def train_arms(arms: List[Arm]) -> List[Arm]:
+    """! Run a reinforcement learning training cycle on each given arm and save its success rate.
+    @param arms The list of arms.
+    @return The arms with their reinforcement learning model and success rate added.
+    """
+    config = get_config()
+    for arm in arms:
+        model = DeepQLearner(env_path=config.path_to_unity_executable,
+                             urdf=arm.urdf,
+                             use_graphics=config.rl_use_graphics_training)
+
+        arm.success_rate = model.learn(
+            number_of_episodes=config.coevolution_rl_episodes, steps_per_episode=config.steps_per_episode)
+        arm.rl_model = model.dqn
+
+    return arms
+
 def rl(network_path=""):
     """! Run reinforcement learning
     @param network_path The path to a network that is passed when the training has been done and we want to test.
@@ -263,22 +283,4 @@ def rl(network_path=""):
                             use_graphics=config.rl_use_graphics_training)
 
     signal.signal(signal.SIGINT, model.handler)
-    model.learn(logging=True)
-
-def train(arms: List[Arm]) -> List[Arm]:
-    """! Run a reinforcement learning training cycle on each given arm.
-    @param arms The list of arms.
-    @return The arms with their reinforcement learning model and success rate added.
-    """
-    config = get_config()
-    for arm in arms:
-        model = DeepQLearner(env_path=config.path_to_unity_executable,
-                             urdf=arm.urdf,
-                             use_graphics=config.rl_use_graphics_training)
-
-        arm.success_rate = model.learn(
-            number_of_episodes=config.episodes, steps_per_episode=config.steps_per_episode, logging=False
-        )
-        arm.rl_model = model.dqn
-
-    return arms
+    model.learn(number_of_episodes=config.episodes, steps_per_episode=config.steps_per_episode, logging=True)

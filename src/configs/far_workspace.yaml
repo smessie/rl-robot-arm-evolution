@@ -5,7 +5,7 @@ arm:
   maximum_amount_modules: 4
   length_lower_bound: 1.5 
   length_upper_bound: 6 
-  movements: ['rotate', 'tilt']
+  movements: ['rotate', 'tilt', 'complex']
 
 mutation:
   standard_deviation_length: 0.4
@@ -38,7 +38,7 @@ morphevo:
   # workspace_side_length: 17.5
 
 rl:
-  episodes: 80
+  episodes: 1000 
   steps_per_episode: 1000
   gamma: 0.95
   eps_end: 0.15

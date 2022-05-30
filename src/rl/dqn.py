@@ -20,11 +20,12 @@ class RobotNetwork(torch.nn.Module):
         self.linear2 = torch.nn.Linear(hidden_nodes, hidden_nodes)
         self.linear3 = torch.nn.Linear(hidden_nodes, number_of_actions)
 
-    def forward(self, x):
+    def forward(self, input):
         """! Internal function of the network, used for processing the input of the network. 
-        @param The network input.
+        @param input The network input.
         """
-        return self.linear3(self.linear2(self.linear1(x)))
+        return self.linear3(self.linear2(self.linear1(input)))
+
 
 class DQN:
     """! The DQN class.
@@ -60,7 +61,7 @@ class DQN:
         """
         torch.save(self.network, path)
 
-    def _calculate_current_q_value(self, state_batch: torch.Tensor, action_batch: torch.Tensor):
+    def _calculate_current_q_value(self, state_batch: torch.Tensor, action_batch: torch.Tensor) -> torch.Tensor:
         """! Calculate the current Q-value.
         @param state_batch The states batch. 
         @param action_batch The actions batch. 
@@ -69,7 +70,7 @@ class DQN:
         current_q = self.network(state_batch.float()).gather(1, action_batch.unsqueeze(1))
         return current_q.squeeze(1)
 
-    def _calculate_targets(self, dones: torch.Tensor, next_states: torch.Tensor, reward_batch: torch.Tensor):
+    def _calculate_targets(self, dones: torch.Tensor, next_states: torch.Tensor, reward_batch: torch.Tensor) -> torch.Tensor:
         """! Calculate the targets.
         @param dones Tensor list with finished value or not finished. 
         @param next_states The next states. 
@@ -80,7 +81,7 @@ class DQN:
 
         return reward_batch + (self.gamma * max_next_q)
 
-    def _apply_loss(self, current_q: torch.Tensor, targets: torch.Tensor):
+    def _apply_loss(self, current_q: torch.Tensor, targets: torch.Tensor) -> None:
         """! Apply the loss function.
         @param The current Q-value.
         @param next_states The targets. 
@@ -90,7 +91,7 @@ class DQN:
         self.optimizer.zero_grad()
         loss.backward()
 
-    def _experience_replay(self):
+    def _experience_replay(self) -> None:
         """! Apply experience replay to the network.
         """
         batch = random.sample(self.memory, self.batch_size)
