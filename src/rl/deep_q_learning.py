@@ -138,21 +138,22 @@ class DeepQLearner:
         """
         return observations[self.env.joint_amount * 4:self.env.joint_amount * 4 + 3]
 
-    def _calculate_reward(self, prev_pos: np.ndarray, new_pos: np.ndarray, goal: np.ndarray) -> Tuple[float, bool]:
+    def _calculate_reward(self, previous_position: np.ndarray, new_position: np.ndarray, goal: np.ndarray) \
+            -> Tuple[float, bool]:
         """! Calculate the reward
-        @param prev_pos Previous position the end effector was in.
-        @param new_pos New position the end effector is in.
+        @param previous_position Previous position the end effector was in.
+        @param new_position New position the end effector is in.
         @param goal Goal the end effector is trying to reach.
         @return The reward and if the goal was reached.
         """
-        prev_distance_from_goal = np.linalg.norm(prev_pos - goal)
-        new_distance_from_goal = np.linalg.norm(new_pos - goal)
+        prev_distance_from_goal = np.linalg.norm(previous_position - goal)
+        new_distance_from_goal = np.linalg.norm(new_position - goal)
 
         if new_distance_from_goal <= self.goal_ball_diameter:
             return 30, True
         moved_distance = prev_distance_from_goal - new_distance_from_goal
 
-        return 12*moved_distance, False
+        return 12 * moved_distance, False
 
     def step(self, state: np.ndarray) -> Tuple[int, np.ndarray]:
         """! Move 1 step forward in the simulation
@@ -165,16 +166,16 @@ class DeepQLearner:
         observations = self.env.step(action)
         return action_index, observations
 
-    def learn(self, num_episodes: int = 10000, steps_per_episode: int = 1000, logging: bool = False) -> float:
+    def learn(self, number_of_episodes: int = 10000, steps_per_episode: int = 1000, logging: bool = False) -> float:
         """! The learning loop of the reinforcement learning part.
-        @param num_episodes Maximum amount of episodes.
+        @param number_of_episodes Maximum amount of episodes.
         @param steps_per_episode Maximum amount of steps each episode.
         @param logging If true there will be wandb logs
         @return Success rate throughout training.
         """
         episodes_finished = [False] * 50
         total_finished = 0
-        for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
+        for episode in tqdm(range(number_of_episodes), desc='Deep Q-Learning'):
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
             if self.use_walls:
@@ -185,7 +186,7 @@ class DeepQLearner:
             self.env.set_goal(tuple(goal))
 
             state = self._calculate_state(observations, goal)
-            prev_pos = self._get_end_effector_position(observations)
+            previous_position = self._get_end_effector_position(observations)
             episode_step = 0
             finished = False
             while not finished and episode_step < steps_per_episode:
@@ -195,10 +196,10 @@ class DeepQLearner:
                 new_state = self._calculate_state(observations, goal)
 
                 # Calculate reward
-                new_pos = self._get_end_effector_position(observations)
+                new_position = self._get_end_effector_position(observations)
                 reward, finished = self._calculate_reward(
-                    prev_pos, new_pos, goal)
-                prev_pos = new_pos  # this is not in the state, but is useful for reward calculation
+                    previous_position, new_position, goal)
+                previous_position = new_position  # this is not in the state, but is useful for reward calculation
 
                 # network update
                 if self.training:
@@ -219,7 +220,7 @@ class DeepQLearner:
             self.save()
 
         self.env.close()
-        return total_finished/num_episodes
+        return total_finished/number_of_episodes
 
     def predict(self, state: np.ndarray) -> int:
         """! Take an action
@@ -247,7 +248,7 @@ class DeepQLearner:
 
         self.actions = self.get_action_space(number_of_joints)
         self.dqn = self.make_dqn()
-        return self.learn(num_episodes=episodes)
+        return self.learn(number_of_episodes=episodes)
 
 def rl(network_path=""):
     """! Run reinforcement learning
@@ -279,7 +280,7 @@ def train(arms: List[Arm]) -> List[Arm]:
                              use_graphics=config.rl_use_graphics_training)
 
         arm.success_rate = model.learn(
-            num_episodes=config.episodes, steps_per_episode=config.steps_per_episode, logging=False
+            number_of_episodes=config.episodes, steps_per_episode=config.steps_per_episode, logging=False
         )
         arm.rl_model = model.dqn
 
