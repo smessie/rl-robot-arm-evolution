@@ -36,14 +36,9 @@ morphevo:
   crossover_children: 4
   sample_size: 100
   workspace_type: 'moved_cube'
-
-  # small cube next to arm
-  workspace_cube_offset: [0,5,9]
-  workspace_side_length: 4 
-
-  # cube over whole environment
-  #workspace_cube_offset: [0,2,0]
-  #workspace_side_length: 17.5
+  # cube over the whole surrounding area of the arm
+  workspace_cube_offset: [0,2,0]
+  workspace_side_length: 17.5
 
 rl:
   episodes: 60

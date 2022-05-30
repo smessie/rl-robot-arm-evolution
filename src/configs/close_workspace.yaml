@@ -1,5 +1,13 @@
 description: "Example config"
 
+environment:
+  path_to_unity_executable: '../build/simenv.x86_64'
+  path_to_robot_urdf: 'environment/robot.urdf'
+  morphevo_use_graphics: false
+  rl_use_graphics_training: false
+  rl_use_graphics_testing: false
+  amount_of_cores: 8
+
 arm:
   minimum_amount_modules: 2
   maximum_amount_modules: 4
@@ -28,14 +36,9 @@ morphevo:
   crossover_children: 4
   sample_size: 100
   workspace_type: 'moved_cube'
-
   # small cube next to arm
   workspace_cube_offset: [0,5,9]
   workspace_side_length: 4 
-
-  # cube over whole environment
-  #workspace_cube_offset: [0,2,0]
-  #workspace_side_length: 17.5
 
 rl:
   episodes: 60

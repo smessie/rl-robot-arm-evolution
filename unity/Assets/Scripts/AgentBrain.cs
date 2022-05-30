@@ -39,8 +39,10 @@ public class AgentBrain : Agent
     }
 
     /// <summary>
-    /// Observations are collected that we want to send back to the Python side
-    /// Joint angles and joint positions in the space, and the position of the end effector (= last game object within manipulator)
+    /// Observations are collected that we want to send back to the Python side.
+    ///
+    /// Joint angles and joint positions in the space, and the position of the end effector (= last game object within manipulator).
+    ///
     /// Like this: [j1_x, j1_y, j1_z, j1_θ, j2_x, j2_y, j2_z, j2_θ, ..., ee_x, ee_y, ee_z]
     /// </summary>
     /// <param name="sensor">Object on which observations are added</param>

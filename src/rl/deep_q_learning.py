@@ -3,10 +3,8 @@ import signal
 import sys
 import xml.etree.ElementTree as ET
 from typing import List, Tuple
-
 import numpy as np
 from tqdm import tqdm
-
 from configs.walls import (WALL_9x9_GAP_3x3_BOTTOM_LEFT,
                            WALL_9x9_GAP_3x3_BOTTOM_LEFT_CENTER_COORD,
                            WALL_9x9_GAP_3x3_BOTTOM_RIGHT,
@@ -21,7 +19,6 @@ from rl.dqn import DQN
 from rl.logger import Logger
 from util.arm import Arm
 from util.config import get_config
-
 
 class DeepQLearner:
     """! The Deep Q learner class.
@@ -232,7 +229,7 @@ class DeepQLearner:
         # The testing also needs some randomness
         if not self.training and np.random.rand() < 0.2:
             return np.random.randint(len(self.actions))
-        action = self.dqn.lookup(state)
+        action = self.dqn.get_best_action(state)
         return action
 
     def get_score(self, number_of_joints: int, workspace: Workspace, episodes: int = 200) -> float:
