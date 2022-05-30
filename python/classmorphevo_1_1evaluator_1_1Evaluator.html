@@ -69,23 +69,19 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classmorphevo_1_1evaluator_1_1Evaluator-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">morphevo.evaluator.Evaluator Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Class that is used to evaluate an arm.  
- <a href="classmorphevo_1_1evaluator_1_1Evaluator.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad40766ef6e90f4dd489d3172c83526d3"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1evaluator_1_1Evaluator.html#ad40766ef6e90f4dd489d3172c83526d3">__init__</a> (self, str env_path, bool use_graphics=True, int sample_size=100)</td></tr>
+<tr class="memitem:ad40766ef6e90f4dd489d3172c83526d3"><td class="memItemLeft" align="right" valign="top"><a id="ad40766ef6e90f4dd489d3172c83526d3" name="ad40766ef6e90f4dd489d3172c83526d3"></a>
+None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, str env_path, bool use_graphics=True, int sample_size=100)</td></tr>
 <tr class="separator:ad40766ef6e90f4dd489d3172c83526d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cfd66b7c58fe03cd122d69fce6783f5"><td class="memItemLeft" align="right" valign="top">Tuple[np.ndarray, np.ndarray]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1evaluator_1_1Evaluator.html#a4cfd66b7c58fe03cd122d69fce6783f5">parse_observation</a> (self, np.ndarray observations)</td></tr>
-<tr class="memdesc:a4cfd66b7c58fe03cd122d69fce6783f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to parse an observation from unity.  <a href="classmorphevo_1_1evaluator_1_1Evaluator.html#a4cfd66b7c58fe03cd122d69fce6783f5">More...</a><br /></td></tr>
-<tr class="separator:a4cfd66b7c58fe03cd122d69fce6783f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c964bbbfe035495b2f7729818c36b95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classutil_1_1arm_1_1Arm.html">Arm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1evaluator_1_1Evaluator.html#a3c964bbbfe035495b2f7729818c36b95">eval_arm</a> (self, <a class="el" href="classutil_1_1arm_1_1Arm.html">Arm</a> arm)</td></tr>
-<tr class="memdesc:a3c964bbbfe035495b2f7729818c36b95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate an arm by sampling an amount of angleconfigurations which will be tried to reach.  <a href="classmorphevo_1_1evaluator_1_1Evaluator.html#a3c964bbbfe035495b2f7729818c36b95">More...</a><br /></td></tr>
+<tr class="memitem:a3c964bbbfe035495b2f7729818c36b95"><td class="memItemLeft" align="right" valign="top"><a id="a3c964bbbfe035495b2f7729818c36b95" name="a3c964bbbfe035495b2f7729818c36b95"></a>
+<a class="el" href="classutil_1_1arm_1_1Arm.html">Arm</a>&#160;</td><td class="memItemRight" valign="bottom"><b>eval_arm</b> (self, <a class="el" href="classutil_1_1arm_1_1Arm.html">Arm</a> arm)</td></tr>
 <tr class="separator:a3c964bbbfe035495b2f7729818c36b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -96,139 +92,28 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a074cdf7d95b53e317c9a6e63b68f58a3"><td class="memItemLeft" align="right" valign="top"><a id="a074cdf7d95b53e317c9a6e63b68f58a3" name="a074cdf7d95b53e317c9a6e63b68f58a3"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>env</b></td></tr>
 <tr class="separator:a074cdf7d95b53e317c9a6e63b68f58a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a855f6c44dc06f05dfc1ff01ec914e653"><td class="memItemLeft" align="right" valign="top"><a id="a855f6c44dc06f05dfc1ff01ec914e653" name="a855f6c44dc06f05dfc1ff01ec914e653"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>joint_angles</b></td></tr>
+<tr class="separator:a855f6c44dc06f05dfc1ff01ec914e653"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78001216d9aff37f97a8d0f031d819c8"><td class="memItemLeft" align="right" valign="top"><a id="a78001216d9aff37f97a8d0f031d819c8" name="a78001216d9aff37f97a8d0f031d819c8"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>use_graphics</b></td></tr>
 <tr class="separator:a78001216d9aff37f97a8d0f031d819c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cf30f688125f04ebde2f01f93836fd2"><td class="memItemLeft" align="right" valign="top"><a id="a0cf30f688125f04ebde2f01f93836fd2" name="a0cf30f688125f04ebde2f01f93836fd2"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>sample_size</b></td></tr>
 <tr class="separator:a0cf30f688125f04ebde2f01f93836fd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ada17182f482219b4a73aaaaac0486005"><td class="memItemLeft" align="right" valign="top"><a id="ada17182f482219b4a73aaaaac0486005" name="ada17182f482219b4a73aaaaac0486005"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>JOINT_ANGLE_STEP</b> = 10</td></tr>
+<tr class="separator:ada17182f482219b4a73aaaaac0486005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2e1269290ffaf2de2a5022c4d9ab6cd"><td class="memItemLeft" align="right" valign="top"><a id="ac2e1269290ffaf2de2a5022c4d9ab6cd" name="ac2e1269290ffaf2de2a5022c4d9ab6cd"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>EVALUATIONS_AMOUNT</b> = 1000</td></tr>
+<tr class="separator:ac2e1269290ffaf2de2a5022c4d9ab6cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75494672d86a762a11d09fbcefb0cb95"><td class="memItemLeft" align="right" valign="top"><a id="a75494672d86a762a11d09fbcefb0cb95" name="a75494672d86a762a11d09fbcefb0cb95"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>STEPS_PER_EVALUATION</b> = 20</td></tr>
+<tr class="separator:a75494672d86a762a11d09fbcefb0cb95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >Class that is used to evaluate an arm. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad40766ef6e90f4dd489d3172c83526d3" name="ad40766ef6e90f4dd489d3172c83526d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad40766ef6e90f4dd489d3172c83526d3">&#9670;&nbsp;</a></span>__init__()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> None morphevo.evaluator.Evaluator.__init__ </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">str&#160;</td>
-          <td class="paramname"><em>env_path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool &#160;</td>
-          <td class="paramname"><em>use_graphics</em> = <code>True</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &#160;</td>
-          <td class="paramname"><em>sample_size</em> = <code>100</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">env_path</td><td>Path to the unity executable. </td></tr>
-    <tr><td class="paramname">use_graphics</td><td>To show the environment or not. </td></tr>
-    <tr><td class="paramname">sample_size</td><td>Amount of samples that will be used to evaluate arm. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3c964bbbfe035495b2f7729818c36b95" name="a3c964bbbfe035495b2f7729818c36b95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c964bbbfe035495b2f7729818c36b95">&#9670;&nbsp;</a></span>eval_arm()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> <a class="el" href="classutil_1_1arm_1_1Arm.html">Arm</a> morphevo.evaluator.Evaluator.eval_arm </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classutil_1_1arm_1_1Arm.html">Arm</a>&#160;</td>
-          <td class="paramname"><em>arm</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Evaluate an arm by sampling an amount of angleconfigurations which will be tried to reach. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">arm</td><td>The arm that will be evaluated. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The evaluated arm. </dd></dl>
-
-</div>
-</div>
-<a id="a4cfd66b7c58fe03cd122d69fce6783f5" name="a4cfd66b7c58fe03cd122d69fce6783f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cfd66b7c58fe03cd122d69fce6783f5">&#9670;&nbsp;</a></span>parse_observation()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> Tuple[np.ndarray, np.ndarray] morphevo.evaluator.Evaluator.parse_observation </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">np.ndarray&#160;</td>
-          <td class="paramname"><em>observations</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function to parse an observation from unity. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">observations</td><td>The observation form unity </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The joint angles configuration and the endeffector position </dd></dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/morphevo/evaluator.py</li>
 </ul>
