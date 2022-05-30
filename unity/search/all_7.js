@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['onactionreceived_0',['OnActionReceived',['../classAgentBrain.html#af8d77b415d8b22a4b27de4e8f4400d57',1,'AgentBrain']]],
-  ['onepisodebegin_1',['OnEpisodeBegin',['../classAgentBrain.html#a9b94c91acd45f49d42307d3120113775',1,'AgentBrain']]]
+  ['robotinfo_0',['RobotInfo',['../classCreationSC_1_1RobotInfo.html',1,'CreationSC']]],
+  ['robotspecification_1',['RobotSpecification',['../classDefaultNamespace_1_1RobotSpecification.html',1,'DefaultNamespace']]],
+  ['rotatingmodule_2',['RotatingModule',['../classDefaultNamespace_1_1RotatingModule.html',1,'DefaultNamespace']]],
+  ['rotationspec_3',['RotationSpec',['../classDefaultNamespace_1_1RotationSpec.html',1,'DefaultNamespace']]]
 ];
