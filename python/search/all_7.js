@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['moduletype_0',['ModuleType',['../classutil_1_1config_1_1ModuleType.html',1,'util::config']]]
+  ['logger_0',['Logger',['../classrl_1_1logger_1_1Logger.html',1,'rl::logger']]]
 ];
