@@ -60,7 +60,6 @@ class DeepQLearner:
         self.dqn = self.make_dqn(network_path)
 
         self.training = not network_path
-        self.penalty = 0
 
         self.logger = Logger()
 
@@ -176,7 +175,6 @@ class DeepQLearner:
         episodes_finished = [False] * 50
         total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
-            self.penalty = 0
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
             if self.use_walls:
