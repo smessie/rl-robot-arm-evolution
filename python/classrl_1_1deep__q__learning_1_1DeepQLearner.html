@@ -100,9 +100,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>handler</b> (self, *_)
 <tr class="memitem:a805c5534dd3f5e18a0c004e2f68cd95f"><td class="memItemLeft" align="right" valign="top">Tuple[int, np.ndarray]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a805c5534dd3f5e18a0c004e2f68cd95f">step</a> (self, np.ndarray state)</td></tr>
 <tr class="memdesc:a805c5534dd3f5e18a0c004e2f68cd95f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move 1 step forward in the simulation.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a805c5534dd3f5e18a0c004e2f68cd95f">More...</a><br /></td></tr>
 <tr class="separator:a805c5534dd3f5e18a0c004e2f68cd95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3269afbe1871f7b4b26e34087c495a5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#ac3269afbe1871f7b4b26e34087c495a5">learn</a> (self, int num_episodes=10000, int steps_per_episode=1000, bool logging=False)</td></tr>
-<tr class="memdesc:ac3269afbe1871f7b4b26e34087c495a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The learning loop of the reinforcement learning part.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#ac3269afbe1871f7b4b26e34087c495a5">More...</a><br /></td></tr>
-<tr class="separator:ac3269afbe1871f7b4b26e34087c495a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34f1cfc317e597422d521a4b9f89e965"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a34f1cfc317e597422d521a4b9f89e965">learn</a> (self, int number_of_episodes=10000, int steps_per_episode=1000, bool logging=False)</td></tr>
+<tr class="memdesc:a34f1cfc317e597422d521a4b9f89e965"><td class="mdescLeft">&#160;</td><td class="mdescRight">The learning loop of the reinforcement learning part.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a34f1cfc317e597422d521a4b9f89e965">More...</a><br /></td></tr>
+<tr class="separator:a34f1cfc317e597422d521a4b9f89e965"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a268d0cfb7f3cdbcce9e7111ee48f4f09"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a268d0cfb7f3cdbcce9e7111ee48f4f09">predict</a> (self, np.ndarray state)</td></tr>
 <tr class="memdesc:a268d0cfb7f3cdbcce9e7111ee48f4f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take an action.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a268d0cfb7f3cdbcce9e7111ee48f4f09">More...</a><br /></td></tr>
 <tr class="separator:a268d0cfb7f3cdbcce9e7111ee48f4f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -331,8 +331,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac3269afbe1871f7b4b26e34087c495a5" name="ac3269afbe1871f7b4b26e34087c495a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3269afbe1871f7b4b26e34087c495a5">&#9670;&nbsp;</a></span>learn()</h2>
+<a id="a34f1cfc317e597422d521a4b9f89e965" name="a34f1cfc317e597422d521a4b9f89e965"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34f1cfc317e597422d521a4b9f89e965">&#9670;&nbsp;</a></span>learn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -347,7 +347,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int &#160;</td>
-          <td class="paramname"><em>num_episodes</em> = <code>10000</code>, </td>
+          <td class="paramname"><em>number_of_episodes</em> = <code>10000</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -372,7 +372,7 @@ Public Attributes</h2></td></tr>
 <p>The learning loop of the reinforcement learning part. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">num_episodes</td><td>Maximum amount of episodes. </td></tr>
+    <tr><td class="paramname">number_of_episodes</td><td>Maximum amount of episodes. </td></tr>
     <tr><td class="paramname">steps_per_episode</td><td>Maximum amount of steps each episode. </td></tr>
     <tr><td class="paramname">logging</td><td>If true there will be wandb logs </td></tr>
   </table>
