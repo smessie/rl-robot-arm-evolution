@@ -1,6 +1,7 @@
 ##
 # @file
-# TODO: Ieben
+# File that brings together all morphological evolution related function like the general evolution process and all
+# related functions for mutation, crossover and selection.
 #
 
 import locale
@@ -66,7 +67,7 @@ def run_evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
 def selection(selection_function: Callable, population: List[Arm]) -> List[Arm]:
     """! Do a selection on a list of parents given a selection function.
     @param selection_function The function used for selection.
-    @param parents The parents that will be selected.
+    @param population The parents that will be selected from.
     @return Selected parents.
     """
     return selection_function(population)
@@ -107,6 +108,7 @@ def selection_succes_rate(population: List[Arm]) -> List[Arm]:
 
     return parents
 
+
 def selection_fitness_diversity(population: List[Arm]) -> List[Arm]:
     """! Do selection in a fitness-diversity way.
     @param population The population on which you want to do selection.
@@ -119,6 +121,7 @@ def selection_fitness_diversity(population: List[Arm]) -> List[Arm]:
         current_parents.append(next_parent)
 
     return current_parents
+
 
 def select_next_parent(population: List[Arm], parents: List[Arm]) -> Arm:
     """! Select the next parent that will be added to parents. Do this by making a consideration between
@@ -194,6 +197,7 @@ def mutate_with_crossover(parents: List[Arm]) -> List[Arm]:
     children += create_crossover_children(parents, config.evolution_crossover_children)
 
     return children
+
 
 def mutate_with_crossover_coevolution(parents: List[Arm]) -> List[Arm]:
     """! Do mutation with coevolution configuration parameters.
