@@ -28,8 +28,6 @@ class DeepQLearner:
     Defines the class that will learn based on a Deep-Q Network.
     """
 
-    GOAL_BAL_DIAMETER = 1.1
-
     def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
                  use_graphics: bool = False, network_path="") -> None:
         """! The DeepQLearner class initializer.
@@ -46,7 +44,7 @@ class DeepQLearner:
         assert urdf is not None, "Error: No urdf given."
 
         parameters = get_config()
-        DeepQLearner.GOAL_BAL_DIAMETER = parameters.goal_bal_diameter
+        self.goal_ball_diameter = parameters.goal_bal_diameter
 
         self.use_walls = parameters.use_walls
         self.env = SimEnv(env_path, str(urdf), use_graphics=use_graphics)
@@ -62,7 +60,6 @@ class DeepQLearner:
         self.dqn = self.make_dqn(network_path)
 
         self.training = not network_path
-        self.penalty = 0
 
         self.logger = Logger()
 
@@ -151,7 +148,7 @@ class DeepQLearner:
         prev_distance_from_goal = np.linalg.norm(prev_pos - goal)
         new_distance_from_goal = np.linalg.norm(new_pos - goal)
 
-        if new_distance_from_goal <= self.GOAL_BAL_DIAMETER:
+        if new_distance_from_goal <= self.goal_ball_diameter:
             return 30, True
         moved_distance = prev_distance_from_goal - new_distance_from_goal
 
@@ -178,7 +175,6 @@ class DeepQLearner:
         episodes_finished = [False] * 50
         total_finished = 0
         for episode in tqdm(range(num_episodes), desc='Deep Q-Learning'):
-            self.penalty = 0
             # the end effector position is already randomized after reset()
             observations = self.env.reset()
             if self.use_walls:
