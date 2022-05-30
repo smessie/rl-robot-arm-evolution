@@ -8,6 +8,7 @@ from mlagents_envs.side_channel.side_channel import (OutgoingMessage,
 
 
 class WallSC(SideChannel):
+    """! Side channel to build and remove walls"""
 
     def __init__(self) -> None:
         # Make sure this is the same UUID as in unity!

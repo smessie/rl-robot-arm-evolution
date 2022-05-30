@@ -7,6 +7,7 @@ from mlagents_envs.side_channel.side_channel import (OutgoingMessage,
 
 
 class WorkspaceSC(SideChannel):
+    """! Side channel to send the workspace"""
 
     def __init__(self) -> None:
         # Make sure this is the same UUID as in unity!
