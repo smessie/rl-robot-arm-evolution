@@ -7,6 +7,8 @@ from mlagents_envs.side_channel.side_channel import (OutgoingMessage,
 
 
 class GoalSC(SideChannel):
+    """! Side channel to send a goal to the environment
+    """
 
     def __init__(self) -> None:
         # Make sure this is the same UUID as in unity!

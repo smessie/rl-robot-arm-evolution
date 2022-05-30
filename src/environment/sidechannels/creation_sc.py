@@ -8,7 +8,7 @@ from mlagents_envs.side_channel.side_channel import (OutgoingMessage,
 
 
 class CreationSC(SideChannel):
-
+    """! Side channel to create the robot arm"""
     def __init__(self) -> None:
         # Make sure this is the same UUID as in unity!
         super().__init__(uuid.UUID("2c137891-46b7-4284-94ff-3dc14a7ab993"))
@@ -16,6 +16,9 @@ class CreationSC(SideChannel):
         self.info = None
 
     def send_build_command(self, urdf: str) -> None:
+        """! Sent urdf string to environment via side channel
+        @param urdf The urdf to build
+        """
         # Add the string to an OutgoingMessage
         msg = OutgoingMessage()
         msg.write_string(urdf)
@@ -31,4 +34,6 @@ class CreationSC(SideChannel):
         self.creation_done = True
 
     def get_joint_amount(self):
+        """! Get the amount of joints that are present in the robot arm.
+        """
         return self.info['JointAmount']
