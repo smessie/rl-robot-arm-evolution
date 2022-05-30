@@ -4,57 +4,6 @@
 - [Python Docs](https://smessie.github.io/SELab3-2022-01/python/annotated.html)
 - [Unity Project Docs](https://smessie.github.io/SELab3-2022-01/unity/)
 
-## Config
-#### environment: parameters that are used for the environment and training
-  - `path_to_unity_executable`: path to the unity executable
-  - `path_to_robot_urdf`: path to a urdf file that represents an arm, is only for rl
-  - `morphevo_use_graphics`: use graphics for morphevo sampling
-  - `rl_use_graphics_training`: use graphics for rl training
-  - `rl_use_graphics_testing`: use graphics for rl testing
-  - `amount_of_cores`: amount of cores you want to use, only used in morphevo
-
-#### arm: parameters that describe the arm
-  - `minimum_amount_modules`: minimum amount modules excluding the anchor
-  - `maximum_amount_modules`: maximum amount modules excluding the anchor
-  - `length_lowerbound`: lowerbound of the length of a module
-  - `length_upperbound`: upperbound of the length of a module
-  - `movements`: possible movements a module can make (`complex` is both rotating and tilting): [`rotate`, `tilt`, `complex`]
-
-#### mutation: parameters that will be used for mutation in coevolution and morphologic evolution
-  - `standard_deviation_length`: standard deviation used to mutate length of module
-  - `chance_module_drop`: chance one of the modules gets dropped while mutating, maximum one module will be dropped
-  - `chance_module_add`: chance one module gets added while mutating, maximum one module will added dropped
-  - `chance_type_mutation`: chance the type of a module mutates, all modules can mutate, chance will be ran every time
-
-#### coevolution: parameters used in coevolution
-  - `generations`: amount of generations you want to coevolve
-  - `parents`: amount of parents that will produce new children
-  - `children`: amount of children produced from parents
-  - `crossover_children`: amount of the children that will undergo crossover
-
-#### morphevo: parameters used in evolution
-  - `generations`: amount of generations you want to run evolution on arms
-  - `parents`: amount of parents that will produce new children
-  - `children`: amount of children produced from parents
-  - `crossover_children`: amount of the children that will undergo crossover
-  - `sample_size`: amount of angles you want to sample to calculate coverage in workspace
-  - `workspace_type`: type of workspace: normalized_cube or moved_cube
-  - `workspace_cube_offset`: tuple containing the offset of the moved cube
-  - `workspace_side_length`: the length of each side in case the workspace is a normalized or moved cube
-
-
-#### rl: parameters used in rl
-  - `episodes`: amount of episodes you want to run rl
-  - `steps_per_episode`: amount of steps you want to do every episode
-  - `gamma`: how important do we find future rewards? Higher gamma = more important.
-  - `eps_end`: the lowest the epsilon value will go to. This is the value that will be reached when epsilon is fully decayed.
-  - `eps_decay`: how fast should epsilon decay. Higher = faster.
-  - `batch_size`: size of batch that is sampled from replay memory.
-  - `mem_size`: size of the replay memory.
-  - `eps_start`: the first value of epsilon, before there was any decay.
-  - `hidden_nodes`: the size of the middle layers of the DQN model.
-  - `goal_bal_diameter`: the diameter of the goal ball. This is essentially the distance from the goal center the end effector has to be at to be seen as "goal reached".
-  - `use_walls`: boolean that decides whether or not to use the randomnly chosen walls during training. If this parameter is not present in the config file, it is assumed to be False.
 
 ## Setup
 
@@ -135,3 +84,55 @@ We also ignore errors in the `unity/Assets/StarterAssets/` folder, because that 
 
 Note: for it to work on my setup in Visual Studio Code, you might have to downgrade the Visual Studio Code C# Extension to 1.24.1. See [this issue](https://github.com/OmniSharp/omnisharp-vscode/issues/5160).
 
+
+## What do the config parameters mean?
+#### environment: parameters that are used for the environment and training
+  - `path_to_unity_executable`: path to the unity executable
+  - `path_to_robot_urdf`: path to a urdf file that represents an arm, is only for rl
+  - `morphevo_use_graphics`: use graphics for morphevo sampling
+  - `rl_use_graphics_training`: use graphics for rl training
+  - `rl_use_graphics_testing`: use graphics for rl testing
+  - `amount_of_cores`: amount of cores you want to use, only used in morphevo
+
+#### arm: parameters that describe the arm
+  - `minimum_amount_modules`: minimum amount modules excluding the anchor
+  - `maximum_amount_modules`: maximum amount modules excluding the anchor
+  - `length_lowerbound`: lowerbound of the length of a module
+  - `length_upperbound`: upperbound of the length of a module
+  - `movements`: possible movements a module can make (`complex` is both rotating and tilting): [`rotate`, `tilt`, `complex`]
+
+#### mutation: parameters that will be used for mutation in coevolution and morphologic evolution
+  - `standard_deviation_length`: standard deviation used to mutate length of module
+  - `chance_module_drop`: chance one of the modules gets dropped while mutating, maximum one module will be dropped
+  - `chance_module_add`: chance one module gets added while mutating, maximum one module will added dropped
+  - `chance_type_mutation`: chance the type of a module mutates, all modules can mutate, chance will be ran every time
+
+#### coevolution: parameters used in coevolution
+  - `generations`: amount of generations you want to coevolve
+  - `parents`: amount of parents that will produce new children
+  - `children`: amount of children produced from parents
+  - `crossover_children`: amount of the children that will undergo crossover
+
+#### morphevo: parameters used in evolution
+  - `generations`: amount of generations you want to run evolution on arms
+  - `parents`: amount of parents that will produce new children
+  - `children`: amount of children produced from parents
+  - `crossover_children`: amount of the children that will undergo crossover
+  - `sample_size`: amount of angles you want to sample to calculate coverage in workspace
+  - `workspace_type`: type of workspace: normalized_cube or moved_cube
+  - `workspace_cube_offset`: tuple containing the offset of the moved cube
+  - `workspace_side_length`: the length of each side in case the workspace is a normalized or moved cube
+
+
+#### rl: parameters used in rl
+  - `episodes`: amount of episodes you want to run rl
+  - `steps_per_episode`: amount of steps you want to do every episode
+  - `gamma`: how important do we find future rewards? Higher gamma = more important.
+  - `eps_end`: the lowest the epsilon value will go to. This is the value that will be reached when epsilon is fully decayed.
+  - `eps_decay`: how fast should epsilon decay. Higher = faster.
+  - `batch_size`: size of batch that is sampled from replay memory.
+  - `mem_size`: size of the replay memory.
+  - `eps_start`: the first value of epsilon, before there was any decay.
+  - `hidden_nodes`: the size of the middle layers of the DQN model.
+  - `goal_bal_diameter`: the diameter of the goal ball. This is essentially the distance from the goal center the end effector has to be at to be seen as "goal reached".
+  - `use_walls`: boolean that decides whether or not to use the randomnly chosen walls during training. If this parameter is not present in the config file, it is assumed to be False.
