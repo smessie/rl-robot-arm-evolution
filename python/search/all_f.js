@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['wallsc_0',['WallSC',['../classenvironment_1_1sidechannels_1_1wall__sc_1_1WallSC.html',1,'environment::sidechannels::wall_sc']]],
-  ['workspace_1',['Workspace',['../classmorphevo_1_1workspace_1_1Workspace.html',1,'morphevo::workspace']]],
-  ['workspacenotfounderror_2',['WorkspaceNotFoundError',['../classmorphevo_1_1workspace_1_1WorkspaceNotFoundError.html',1,'morphevo::workspace']]],
-  ['workspaceparameters_3',['WorkspaceParameters',['../classmorphevo_1_1workspace__parameters_1_1WorkspaceParameters.html',1,'morphevo::workspace_parameters']]],
-  ['workspacesc_4',['WorkspaceSC',['../classenvironment_1_1sidechannels_1_1workspace__sc_1_1WorkspaceSC.html',1,'environment::sidechannels::workspace_sc']]],
-  ['write_5fmorphevo_5fbenchmarks_5',['write_morphevo_benchmarks',['../util_8py.html#ac1edcb80969c859bbb65c735949e4384',1,'util::util']]]
+  ['update_0',['update',['../classrl_1_1dqn_1_1DQN.html#a6848c16d4ae4343540d91a0c10778069',1,'rl::dqn::DQN']]],
+  ['urdfgenerator_1',['URDFGenerator',['../classmorphevo_1_1urdf__generator_1_1URDFGenerator.html',1,'morphevo::urdf_generator']]],
+  ['util_2epy_2',['util.py',['../util_8py.html',1,'']]]
 ];
