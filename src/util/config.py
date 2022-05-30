@@ -12,6 +12,8 @@ class ModuleType(Enum):
     TILTING_AND_ROTATING = 3
 
 class Config:
+    """! Singleton construction to get the config parameters from the config yaml file.
+    """
     # pylint: disable=invalid-name
     class __Config:
         # pylint: disable=too-many-statements
