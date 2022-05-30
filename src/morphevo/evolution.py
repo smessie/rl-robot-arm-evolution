@@ -1,3 +1,8 @@
+##
+# @file
+# Collection of functions for evolution.py
+#
+
 import locale
 import time
 from math import sqrt
