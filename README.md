@@ -56,8 +56,23 @@
   - `goal_bal_diameter`: the diameter of the goal ball. This is essentially the distance from the goal center the end effector has to be at to be seen as "goal reached".
   - `use_walls`: boolean that decides whether or not to use the randomnly chosen walls during training. If this parameter is not present in the config file, it is assumed to be False.
 
+## Setup
 
-## Building unity
+- Create a virtual environment and enter it.
+- Install the requirements:
+```
+pip install -r requirements.txt
+```
+
+- Install ml-agents via [these](https://github.com/Unity-Technologies/ml-agents/blob/release_19_docs/docs/Installation.md) instructions.
+```
+git clone --branch release_19 https://github.com/Unity-Technologies/ml-agents.git
+cd ml-agents
+pip install -e ./ml-agents-envs
+pip install -e ./ml-agents
+```
+
+#### Building unity
 
 - Open the `unity/` folder in Unity 2020.3.30f1
 
@@ -73,6 +88,29 @@
 - Go to File > Build Settings...
   + Click "Add open scenes"
   + Click "Build". Build the project with name 'simenv' in a directory `build/` in the repository root.
+
+## How to run
+All following commands should be executed in the root of the project inside your virtual environment which was configured in the Setup section.
+
+#### Coevolution
+```
+python ./src/run.py coevolution ./configs/example.yaml
+```
+
+#### Reinforcement learning
+```
+python ./src/run.py rl ./configs/example.yaml
+```
+
+#### Morphological evolution
+```
+python ./src/run.py morphevo ./configs/example.yaml
+```
+
+#### Environment tests
+```
+python ./src/run.py start_test_env
+```
 
 ## Demo
 
