@@ -73,28 +73,31 @@ $(function() {
   <div class="headertitle"><div class="title">morphevo.workspace.Workspace Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class that represents a <a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html" title="A class that represents a Workspace, which is actually the goal space i.e.">Workspace</a>, which is actually the goal space i.e.  
+ <a href="classmorphevo_1_1workspace_1_1Workspace.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1c82d323e62d335f1ac800dbbbb12cd3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html#a1c82d323e62d335f1ac800dbbbb12cd3">__init__</a> (self, str workspace='normalized_cube', tuple cube_offset=(0, 0, 0), float side_length=13, float discretization_step=1.0)</td></tr>
 <tr class="separator:a1c82d323e62d335f1ac800dbbbb12cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05776d0259a48e0eb520c524bea13896"><td class="memItemLeft" align="right" valign="top"><a id="a05776d0259a48e0eb520c524bea13896" name="a05776d0259a48e0eb520c524bea13896"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>add_ee_position</b> (self, np.ndarray ee_pos, np.ndarray joint_angles)</td></tr>
-<tr class="separator:a05776d0259a48e0eb520c524bea13896"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e3bcbb4140bf7c1df5991e0adda333f"><td class="memItemLeft" align="right" valign="top"><a id="a9e3bcbb4140bf7c1df5991e0adda333f" name="a9e3bcbb4140bf7c1df5991e0adda333f"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>calculate_coverage</b> (self)</td></tr>
+<tr class="memitem:ae63e65c8f8b29050580845bdef438e64"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html#ae63e65c8f8b29050580845bdef438e64">add_end_effector_position</a> (self, np.ndarray end_effector_position, np.ndarray joint_angles)</td></tr>
+<tr class="memdesc:ae63e65c8f8b29050580845bdef438e64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a visit of the end effector at the given position in the workspaces internal grid.  <a href="classmorphevo_1_1workspace_1_1Workspace.html#ae63e65c8f8b29050580845bdef438e64">More...</a><br /></td></tr>
+<tr class="separator:ae63e65c8f8b29050580845bdef438e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e3bcbb4140bf7c1df5991e0adda333f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html#a9e3bcbb4140bf7c1df5991e0adda333f">calculate_coverage</a> (self)</td></tr>
+<tr class="memdesc:a9e3bcbb4140bf7c1df5991e0adda333f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the coverage by dividing the amount of visited cells by the amount of all cells in the workspace.  <a href="classmorphevo_1_1workspace_1_1Workspace.html#a9e3bcbb4140bf7c1df5991e0adda333f">More...</a><br /></td></tr>
 <tr class="separator:a9e3bcbb4140bf7c1df5991e0adda333f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90d93f8fe829f481373883d704d377f3"><td class="memItemLeft" align="right" valign="top"><a id="a90d93f8fe829f481373883d704d377f3" name="a90d93f8fe829f481373883d704d377f3"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>calculate_average_redundancy</b> (self)</td></tr>
+<tr class="memitem:a90d93f8fe829f481373883d704d377f3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html#a90d93f8fe829f481373883d704d377f3">calculate_average_redundancy</a> (self)</td></tr>
+<tr class="memdesc:a90d93f8fe829f481373883d704d377f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the average redundancy by dividing the total amount of visits by the amount of all cells in the workspace.  <a href="classmorphevo_1_1workspace_1_1Workspace.html#a90d93f8fe829f481373883d704d377f3">More...</a><br /></td></tr>
 <tr class="separator:a90d93f8fe829f481373883d704d377f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4dfd4c274caeab5c193cc55f915db3a"><td class="memItemLeft" align="right" valign="top"><a id="aa4dfd4c274caeab5c193cc55f915db3a" name="aa4dfd4c274caeab5c193cc55f915db3a"></a>
-List[float]&#160;</td><td class="memItemRight" valign="bottom"><b>get_x_range</b> (self)</td></tr>
+<tr class="memitem:aa4dfd4c274caeab5c193cc55f915db3a"><td class="memItemLeft" align="right" valign="top">List[float]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html#aa4dfd4c274caeab5c193cc55f915db3a">get_x_range</a> (self)</td></tr>
+<tr class="memdesc:aa4dfd4c274caeab5c193cc55f915db3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the range as [min, max] of the workspace on the x-axis.  <a href="classmorphevo_1_1workspace_1_1Workspace.html#aa4dfd4c274caeab5c193cc55f915db3a">More...</a><br /></td></tr>
 <tr class="separator:aa4dfd4c274caeab5c193cc55f915db3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef5e4615746712098a9ea0506ca5d6bd"><td class="memItemLeft" align="right" valign="top"><a id="aef5e4615746712098a9ea0506ca5d6bd" name="aef5e4615746712098a9ea0506ca5d6bd"></a>
-List[float]&#160;</td><td class="memItemRight" valign="bottom"><b>get_y_range</b> (self)</td></tr>
+<tr class="memitem:aef5e4615746712098a9ea0506ca5d6bd"><td class="memItemLeft" align="right" valign="top">List[float]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html#aef5e4615746712098a9ea0506ca5d6bd">get_y_range</a> (self)</td></tr>
+<tr class="memdesc:aef5e4615746712098a9ea0506ca5d6bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the range as [min, max] of the workspace on the y-axis.  <a href="classmorphevo_1_1workspace_1_1Workspace.html#aef5e4615746712098a9ea0506ca5d6bd">More...</a><br /></td></tr>
 <tr class="separator:aef5e4615746712098a9ea0506ca5d6bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed87838d864ea1e1857ddb1b2634c5c8"><td class="memItemLeft" align="right" valign="top"><a id="aed87838d864ea1e1857ddb1b2634c5c8" name="aed87838d864ea1e1857ddb1b2634c5c8"></a>
-List[float]&#160;</td><td class="memItemRight" valign="bottom"><b>get_z_range</b> (self)</td></tr>
+<tr class="memitem:aed87838d864ea1e1857ddb1b2634c5c8"><td class="memItemLeft" align="right" valign="top">List[float]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html#aed87838d864ea1e1857ddb1b2634c5c8">get_z_range</a> (self)</td></tr>
+<tr class="memdesc:aed87838d864ea1e1857ddb1b2634c5c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the range as [min, max] of the workspace on the z-axis.  <a href="classmorphevo_1_1workspace_1_1Workspace.html#aed87838d864ea1e1857ddb1b2634c5c8">More...</a><br /></td></tr>
 <tr class="separator:aed87838d864ea1e1857ddb1b2634c5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -118,7 +121,10 @@ Public Attributes</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>grid</b></td></tr>
 <tr class="separator:a41f836d76707fb5d634b3eb77a6c9605"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >A class that represents a <a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html" title="A class that represents a Workspace, which is actually the goal space i.e.">Workspace</a>, which is actually the goal space i.e. </p>
+<p >all coordinates where the goal can appear. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1c82d323e62d335f1ac800dbbbb12cd3" name="a1c82d323e62d335f1ac800dbbbb12cd3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1c82d323e62d335f1ac800dbbbb12cd3">&#9670;&nbsp;</a></span>__init__()</h2>
 
@@ -162,11 +168,165 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">side_length:            the length of each side in case the workspace is a normalized or moved cube
-discretization_step:    step size for discretization
-workspace:              type of workspace: normalized_cube or moved_cube
-cube_offset:            tuple containing the offset of the moved cube
-</pre> 
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">side_length</td><td>the length of each side in case the workspace is a normalized or moved cube </td></tr>
+    <tr><td class="paramname">discretization_step</td><td>step size for discretization </td></tr>
+    <tr><td class="paramname">workspace</td><td>type of workspace: normalized_cube or moved_cube </td></tr>
+    <tr><td class="paramname">cube_offset</td><td>tuple containing the offset of the moved cube </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae63e65c8f8b29050580845bdef438e64" name="ae63e65c8f8b29050580845bdef438e64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae63e65c8f8b29050580845bdef438e64">&#9670;&nbsp;</a></span>add_end_effector_position()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None morphevo.workspace.Workspace.add_end_effector_position </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>end_effector_position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>joint_angles</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers a visit of the end effector at the given position in the workspaces internal grid. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">end_effector_position</td><td>numpy array consisting of the position [x,y,z] of the end effector </td></tr>
+    <tr><td class="paramname">joint_angles</td><td>numpy array containing all joint angles of the genome in the form [j0angel, j0x, j0y, j0z, ...] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a90d93f8fe829f481373883d704d377f3" name="a90d93f8fe829f481373883d704d377f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90d93f8fe829f481373883d704d377f3">&#9670;&nbsp;</a></span>calculate_average_redundancy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> float morphevo.workspace.Workspace.calculate_average_redundancy </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the average redundancy by dividing the total amount of visits by the amount of all cells in the workspace. </p>
+<dl class="section return"><dt>Returns</dt><dd>The calculated average redundancy. </dd></dl>
+
+</div>
+</div>
+<a id="a9e3bcbb4140bf7c1df5991e0adda333f" name="a9e3bcbb4140bf7c1df5991e0adda333f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e3bcbb4140bf7c1df5991e0adda333f">&#9670;&nbsp;</a></span>calculate_coverage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> float morphevo.workspace.Workspace.calculate_coverage </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the coverage by dividing the amount of visited cells by the amount of all cells in the workspace. </p>
+<dl class="section return"><dt>Returns</dt><dd>The calculated coverage. </dd></dl>
+
+</div>
+</div>
+<a id="aa4dfd4c274caeab5c193cc55f915db3a" name="aa4dfd4c274caeab5c193cc55f915db3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4dfd4c274caeab5c193cc55f915db3a">&#9670;&nbsp;</a></span>get_x_range()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> List[float] morphevo.workspace.Workspace.get_x_range </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the range as [min, max] of the workspace on the x-axis. </p>
+<dl class="section return"><dt>Returns</dt><dd>A list of 2 containing the minimum and maximum. </dd></dl>
+
+</div>
+</div>
+<a id="aef5e4615746712098a9ea0506ca5d6bd" name="aef5e4615746712098a9ea0506ca5d6bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef5e4615746712098a9ea0506ca5d6bd">&#9670;&nbsp;</a></span>get_y_range()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> List[float] morphevo.workspace.Workspace.get_y_range </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the range as [min, max] of the workspace on the y-axis. </p>
+<dl class="section return"><dt>Returns</dt><dd>A list of 2 containing the minimum and maximum. </dd></dl>
+
+</div>
+</div>
+<a id="aed87838d864ea1e1857ddb1b2634c5c8" name="aed87838d864ea1e1857ddb1b2634c5c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed87838d864ea1e1857ddb1b2634c5c8">&#9670;&nbsp;</a></span>get_z_range()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> List[float] morphevo.workspace.Workspace.get_z_range </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the range as [min, max] of the workspace on the z-axis. </p>
+<dl class="section return"><dt>Returns</dt><dd>A list of 2 containing the minimum and maximum. </dd></dl>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
