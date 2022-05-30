@@ -69,7 +69,6 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classrl_1_1deep__q__learning_1_1DeepQLearner-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">rl.deep_q_learning.DeepQLearner Class Reference</div></div>
 </div><!--header-->
@@ -86,33 +85,36 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a75849a28ed4bdc0e4167c8132786428f"><td class="memItemLeft" align="right" valign="top"><a id="a75849a28ed4bdc0e4167c8132786428f" name="a75849a28ed4bdc0e4167c8132786428f"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>handler</b> (self, *_)</td></tr>
 <tr class="separator:a75849a28ed4bdc0e4167c8132786428f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6285af0864fe05bf0929b84bc9468de"><td class="memItemLeft" align="right" valign="top"><a id="ae6285af0864fe05bf0929b84bc9468de" name="ae6285af0864fe05bf0929b84bc9468de"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> (self, file_name=&quot;./rl/networks/most_recently_saved_network.pkl&quot;)</td></tr>
-<tr class="separator:ae6285af0864fe05bf0929b84bc9468de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd7a33a433480e7b4daaae0a68492230"><td class="memItemLeft" align="right" valign="top"><a id="abd7a33a433480e7b4daaae0a68492230" name="abd7a33a433480e7b4daaae0a68492230"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>get_action_space</b> (self, number_of_joints)</td></tr>
-<tr class="separator:abd7a33a433480e7b4daaae0a68492230"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae205182b8086a717c60dac9879ee1182"><td class="memItemLeft" align="right" valign="top"><a id="ae205182b8086a717c60dac9879ee1182" name="ae205182b8086a717c60dac9879ee1182"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>get_new_wall</b> (self)</td></tr>
-<tr class="separator:ae205182b8086a717c60dac9879ee1182"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61c324e3e2921a5cf602c5bd1e4e2ace"><td class="memItemLeft" align="right" valign="top"><a id="a61c324e3e2921a5cf602c5bd1e4e2ace" name="a61c324e3e2921a5cf602c5bd1e4e2ace"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>make_dqn</b> (self, network_path=&quot;&quot;)</td></tr>
-<tr class="separator:a61c324e3e2921a5cf602c5bd1e4e2ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5af58205681d9592aef790433e490625"><td class="memItemLeft" align="right" valign="top"><a id="a5af58205681d9592aef790433e490625" name="a5af58205681d9592aef790433e490625"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>step</b> (self, state)</td></tr>
-<tr class="separator:a5af58205681d9592aef790433e490625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3269afbe1871f7b4b26e34087c495a5"><td class="memItemLeft" align="right" valign="top"><a id="ac3269afbe1871f7b4b26e34087c495a5" name="ac3269afbe1871f7b4b26e34087c495a5"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>learn</b> (self, int num_episodes=10000, int steps_per_episode=1000, bool logging=False)</td></tr>
-<tr class="separator:ac3269afbe1871f7b4b26e34087c495a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae216d9e4f48759447c7b80d523b254ce"><td class="memItemLeft" align="right" valign="top"><a id="ae216d9e4f48759447c7b80d523b254ce" name="ae216d9e4f48759447c7b80d523b254ce"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>predict</b> (self, np.ndarray state, bool stochastic=False)</td></tr>
-<tr class="separator:ae216d9e4f48759447c7b80d523b254ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ced99887e36d0915bb08f1f71157bd4"><td class="memItemLeft" align="right" valign="top"><a id="a3ced99887e36d0915bb08f1f71157bd4" name="a3ced99887e36d0915bb08f1f71157bd4"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>get_score</b> (self, int number_of_joints, <a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html">Workspace</a> workspace, int episodes=200)</td></tr>
-<tr class="separator:a3ced99887e36d0915bb08f1f71157bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a507e37a4b577fb552d05f12206505c39"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a507e37a4b577fb552d05f12206505c39">save</a> (self, path=&quot;./rl/networks/most_recently_saved_network.pkl&quot;)</td></tr>
+<tr class="memdesc:a507e37a4b577fb552d05f12206505c39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the trained network in a pickle file.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a507e37a4b577fb552d05f12206505c39">More...</a><br /></td></tr>
+<tr class="separator:a507e37a4b577fb552d05f12206505c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12ce10f7f101eae7b5932239a7fcf0e0"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a12ce10f7f101eae7b5932239a7fcf0e0">get_action_space</a> (self, number_of_joints)</td></tr>
+<tr class="memdesc:a12ce10f7f101eae7b5932239a7fcf0e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all possible actions given the amount of joints.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a12ce10f7f101eae7b5932239a7fcf0e0">More...</a><br /></td></tr>
+<tr class="separator:a12ce10f7f101eae7b5932239a7fcf0e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab88b818d8721cdbfdc4dd1a657d8e338"><td class="memItemLeft" align="right" valign="top">Tuple[int, np.ndarray, Tuple]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#ab88b818d8721cdbfdc4dd1a657d8e338">get_new_wall</a> (self)</td></tr>
+<tr class="memdesc:ab88b818d8721cdbfdc4dd1a657d8e338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get one of the possible walls at random.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#ab88b818d8721cdbfdc4dd1a657d8e338">More...</a><br /></td></tr>
+<tr class="separator:ab88b818d8721cdbfdc4dd1a657d8e338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4e068824c7711fbfafa6fe0ea463be9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrl_1_1dqn_1_1DQN.html">DQN</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#ae4e068824c7711fbfafa6fe0ea463be9">make_dqn</a> (self, network_path=&quot;&quot;)</td></tr>
+<tr class="memdesc:ae4e068824c7711fbfafa6fe0ea463be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an instance of the DQN.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#ae4e068824c7711fbfafa6fe0ea463be9">More...</a><br /></td></tr>
+<tr class="separator:ae4e068824c7711fbfafa6fe0ea463be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a805c5534dd3f5e18a0c004e2f68cd95f"><td class="memItemLeft" align="right" valign="top">Tuple[int, np.ndarray]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a805c5534dd3f5e18a0c004e2f68cd95f">step</a> (self, np.ndarray state)</td></tr>
+<tr class="memdesc:a805c5534dd3f5e18a0c004e2f68cd95f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move 1 step forward in the simulation.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a805c5534dd3f5e18a0c004e2f68cd95f">More...</a><br /></td></tr>
+<tr class="separator:a805c5534dd3f5e18a0c004e2f68cd95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34f1cfc317e597422d521a4b9f89e965"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a34f1cfc317e597422d521a4b9f89e965">learn</a> (self, int number_of_episodes=10000, int steps_per_episode=1000, bool logging=False)</td></tr>
+<tr class="memdesc:a34f1cfc317e597422d521a4b9f89e965"><td class="mdescLeft">&#160;</td><td class="mdescRight">The learning loop of the reinforcement learning part.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a34f1cfc317e597422d521a4b9f89e965">More...</a><br /></td></tr>
+<tr class="separator:a34f1cfc317e597422d521a4b9f89e965"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a268d0cfb7f3cdbcce9e7111ee48f4f09"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a268d0cfb7f3cdbcce9e7111ee48f4f09">predict</a> (self, np.ndarray state)</td></tr>
+<tr class="memdesc:a268d0cfb7f3cdbcce9e7111ee48f4f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take an action.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#a268d0cfb7f3cdbcce9e7111ee48f4f09">More...</a><br /></td></tr>
+<tr class="separator:a268d0cfb7f3cdbcce9e7111ee48f4f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9fcbccb45f53f98fc2aad35115f7bf8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#af9fcbccb45f53f98fc2aad35115f7bf8">get_score</a> (self, int number_of_joints, <a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html">Workspace</a> workspace, int episodes=200)</td></tr>
+<tr class="memdesc:af9fcbccb45f53f98fc2aad35115f7bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a training cycle on a robot arm and workspace.  <a href="classrl_1_1deep__q__learning_1_1DeepQLearner.html#af9fcbccb45f53f98fc2aad35115f7bf8">More...</a><br /></td></tr>
+<tr class="separator:af9fcbccb45f53f98fc2aad35115f7bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a568d3732ea67f3c1ee3f65d179725341"><td class="memItemLeft" align="right" valign="top"><a id="a568d3732ea67f3c1ee3f65d179725341" name="a568d3732ea67f3c1ee3f65d179725341"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>goal_ball_diameter</b></td></tr>
+<tr class="separator:a568d3732ea67f3c1ee3f65d179725341"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfbe91c29604e7fb94968576d338aa2c"><td class="memItemLeft" align="right" valign="top"><a id="abfbe91c29604e7fb94968576d338aa2c" name="abfbe91c29604e7fb94968576d338aa2c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>use_walls</b></td></tr>
 <tr class="separator:abfbe91c29604e7fb94968576d338aa2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,9 +139,6 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a95cd9c030aa7ba1e18c762a2bce9a87c"><td class="memItemLeft" align="right" valign="top"><a id="a95cd9c030aa7ba1e18c762a2bce9a87c" name="a95cd9c030aa7ba1e18c762a2bce9a87c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>training</b></td></tr>
 <tr class="separator:a95cd9c030aa7ba1e18c762a2bce9a87c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab884dc112e8758d152d50d51832c3b96"><td class="memItemLeft" align="right" valign="top"><a id="ab884dc112e8758d152d50d51832c3b96" name="ab884dc112e8758d152d50d51832c3b96"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>penalty</b></td></tr>
-<tr class="separator:ab884dc112e8758d152d50d51832c3b96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a374fa41a586b4b77b46bd9e6e8fa8bfe"><td class="memItemLeft" align="right" valign="top"><a id="a374fa41a586b4b77b46bd9e6e8fa8bfe" name="a374fa41a586b4b77b46bd9e6e8fa8bfe"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>logger</b></td></tr>
 <tr class="separator:a374fa41a586b4b77b46bd9e6e8fa8bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,12 +151,6 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a56957e8815b1d77a6868a0a9d613d18f"><td class="memItemLeft" align="right" valign="top"><a id="a56957e8815b1d77a6868a0a9d613d18f" name="a56957e8815b1d77a6868a0a9d613d18f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>current_wall_index</b></td></tr>
 <tr class="separator:a56957e8815b1d77a6868a0a9d613d18f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:adbe1fe00179226c701b55c2ba9539e6b"><td class="memItemLeft" align="right" valign="top"><a id="adbe1fe00179226c701b55c2ba9539e6b" name="adbe1fe00179226c701b55c2ba9539e6b"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>GOAL_BAL_DIAMETER</b> = 1.1</td></tr>
-<tr class="separator:adbe1fe00179226c701b55c2ba9539e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >The Deep Q learner class. </p>
@@ -225,6 +218,314 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>GOAL_BAL_DIAMETER</b
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An instance of the <a class="el" href="classrl_1_1deep__q__learning_1_1DeepQLearner.html" title="The Deep Q learner class.">DeepQLearner</a> class. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a12ce10f7f101eae7b5932239a7fcf0e0" name="a12ce10f7f101eae7b5932239a7fcf0e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12ce10f7f101eae7b5932239a7fcf0e0">&#9670;&nbsp;</a></span>get_action_space()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> np.ndarray rl.deep_q_learning.DeepQLearner.get_action_space </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>number_of_joints</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get all possible actions given the amount of joints. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">number_of_joints</td><td>The amount of joints the robot arm has. A complex module has 2 joints, rotating and tilting. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A list of the actions </dd></dl>
+
+</div>
+</div>
+<a id="ab88b818d8721cdbfdc4dd1a657d8e338" name="ab88b818d8721cdbfdc4dd1a657d8e338"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab88b818d8721cdbfdc4dd1a657d8e338">&#9670;&nbsp;</a></span>get_new_wall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> Tuple[int, np.ndarray, Tuple] rl.deep_q_learning.DeepQLearner.get_new_wall </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get one of the possible walls at random. </p>
+<dl class="section return"><dt>Returns</dt><dd>A wall. </dd></dl>
+
+</div>
+</div>
+<a id="af9fcbccb45f53f98fc2aad35115f7bf8" name="af9fcbccb45f53f98fc2aad35115f7bf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9fcbccb45f53f98fc2aad35115f7bf8">&#9670;&nbsp;</a></span>get_score()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> float rl.deep_q_learning.DeepQLearner.get_score </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>number_of_joints</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmorphevo_1_1workspace_1_1Workspace.html">Workspace</a>&#160;</td>
+          <td class="paramname"><em>workspace</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>episodes</em> = <code>200</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run a training cycle on a robot arm and workspace. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">number_of_joints</td><td>The amount of joints the robot we run the cycle for has </td></tr>
+    <tr><td class="paramname">workspace</td><td>The goal workspace the robot needs to work on. </td></tr>
+    <tr><td class="paramname">episodes</td><td>Amount of episodes the training cycle needs to do. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The success rate of the training. </dd></dl>
+
+</div>
+</div>
+<a id="a34f1cfc317e597422d521a4b9f89e965" name="a34f1cfc317e597422d521a4b9f89e965"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34f1cfc317e597422d521a4b9f89e965">&#9670;&nbsp;</a></span>learn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> float rl.deep_q_learning.DeepQLearner.learn </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>number_of_episodes</em> = <code>10000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>steps_per_episode</em> = <code>1000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>logging</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The learning loop of the reinforcement learning part. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">number_of_episodes</td><td>Maximum amount of episodes. </td></tr>
+    <tr><td class="paramname">steps_per_episode</td><td>Maximum amount of steps each episode. </td></tr>
+    <tr><td class="paramname">logging</td><td>If true there will be wandb logs </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success rate throughout training. </dd></dl>
+
+</div>
+</div>
+<a id="ae4e068824c7711fbfafa6fe0ea463be9" name="ae4e068824c7711fbfafa6fe0ea463be9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4e068824c7711fbfafa6fe0ea463be9">&#9670;&nbsp;</a></span>make_dqn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> <a class="el" href="classrl_1_1dqn_1_1DQN.html">DQN</a> rl.deep_q_learning.DeepQLearner.make_dqn </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>network_path</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create an instance of the DQN. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">network_path</td><td>Path to network, if the goal is testing, not training. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A DQN instance. </dd></dl>
+
+</div>
+</div>
+<a id="a268d0cfb7f3cdbcce9e7111ee48f4f09" name="a268d0cfb7f3cdbcce9e7111ee48f4f09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a268d0cfb7f3cdbcce9e7111ee48f4f09">&#9670;&nbsp;</a></span>predict()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> int rl.deep_q_learning.DeepQLearner.predict </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Take an action. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Current state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The chosen action. </dd></dl>
+
+</div>
+</div>
+<a id="a507e37a4b577fb552d05f12206505c39" name="a507e37a4b577fb552d05f12206505c39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a507e37a4b577fb552d05f12206505c39">&#9670;&nbsp;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def rl.deep_q_learning.DeepQLearner.save </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>path</em> = <code>&quot;./rl/networks/most_recently_saved_network.pkl&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Save the trained network in a pickle file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>Path to file where the network will be saved. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a805c5534dd3f5e18a0c004e2f68cd95f" name="a805c5534dd3f5e18a0c004e2f68cd95f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a805c5534dd3f5e18a0c004e2f68cd95f">&#9670;&nbsp;</a></span>step()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> Tuple[int, np.ndarray] rl.deep_q_learning.DeepQLearner.step </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Move 1 step forward in the simulation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Current staten. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The action that was taken and the observations that were made. </dd></dl>
 
 </div>
 </div>
