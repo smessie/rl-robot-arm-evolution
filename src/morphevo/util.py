@@ -21,7 +21,11 @@ def generate_arms(amount: int):
 
 
 def alternate(what, times):
-    """! TODO: thor, en wat is what? xD
+    """! Function to make an alternation of a list for x items.
+    Example what = [1,2,3,4] times = 6 -> [1,2,3,4,1,2].
+    @param what The list that you want to alternate. 
+    @param times Amount of times you want to alterate your items.
+    @return Alternating list of size 'times'
     """
     alternations = []
     for alternation, _ in zip(alternate_infinite(what), range(times)):
@@ -31,7 +35,10 @@ def alternate(what, times):
 
 
 def alternate_infinite(what):
-    """! TODO: thor, en wat is what? xD
+    """! Function to make an alternation of a list on which you can iterate till infinity.
+    Example what = [1,2,3,4] -> 1,2,3,4,1,2,3,4,1,2,3,4,...
+    @param what The list that you want to alternate. 
+    @return Next iteration.
     """
     current_index = 0
     while True:
@@ -40,7 +47,9 @@ def alternate_infinite(what):
 
 
 def normalize(raw):
-    """! TODO: thor
+    """! Normalize an list.
+    @param raw List to normalize.
+    @return List in which items are normalized.
     """
     sum_raw = sum(raw) if sum(raw) != 0 else 1
     return [i / sum_raw for i in raw]
