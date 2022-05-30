@@ -3,6 +3,11 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 
+/// <summary>
+/// The brain of the AI agent. It has lifecycle methods,
+/// receives actions and sends observations.
+/// Inherits from [Unity.MLAgents.Agent]
+/// </summary>
 public class AgentBrain : Agent
 {
     private JointController _jointController;
@@ -22,8 +27,10 @@ public class AgentBrain : Agent
         _endEffector = GetComponentInParent<Builder>().EndEffector;
     }
 
-    // Always called first, where manipulator is reset to begin state.
-    // Here: all joint angles back to zero.
+    /// <summary>
+    /// Lifecycle method that gets called in the beginning of an episode (by the mlagents code).
+    /// The robot is rebuilt and the joints are randomized.
+    /// </summary>
     public override void OnEpisodeBegin()
     {
         GetComponentInParent<Builder>().RebuildAgent();
@@ -31,8 +38,15 @@ public class AgentBrain : Agent
         _jointController.RandomizeJoints();
     }
 
-    // Observations are collected that we want to send back to the Python side
-    // Here: joint angles and joint positions in the space, and the position of the end effector (= last game object within manipulator).
+    /// <summary>
+    /// Observations are collected that we want to send back to the Python side.
+    ///
+    /// Joint angles and joint positions in the space, and the position of the end effector (= last game object within manipulator).
+    ///
+    /// Like this: [j1_x, j1_y, j1_z, j1_θ, j2_x, j2_y, j2_z, j2_θ, ..., ee_x, ee_y, ee_z]
+    /// </summary>
+    /// <param name="sensor">Object on which observations are added</param>
+    /// <returns>Nothing</returns>
     public override void CollectObservations(VectorSensor sensor)
     {
         // Foreach joint -> current angle, position (3d)
@@ -56,7 +70,11 @@ public class AgentBrain : Agent
         }
     }
 
-    // We get an action (within action buffer), and we'll apply this action via joint controller on the joints.
+    /// <summary>
+    /// Called when actions are received from the Python side
+    /// </summary>
+    /// <param name="actions">Object that has the actions. Every action represent how much a joint should move</param>
+    /// <returns>Nothing</returns>
     public override void OnActionReceived(ActionBuffers actions)
     {
         for (int i = 0; i < _jointController.ArticulationBodies.Count; i++)
