@@ -17,7 +17,7 @@ from environment.environment import SimEnv
 from morphevo.workspace import Workspace
 from rl.dqn import DQN
 from rl.logger import Logger
-from util.arm import Arm
+from coevolution.arm import Arm
 from util.config import get_config
 
 class DeepQLearner:

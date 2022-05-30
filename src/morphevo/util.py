@@ -1,7 +1,6 @@
 ##
 # @file
-# Some util functions that are used in the reinforcement learning part and/or the morphological evolution part and/or
-# coevolution.py.
+# Some util functions that are used in the morphological evolution part and/or coevolution.py.
 #
 import locale
 import time
@@ -9,7 +8,7 @@ from xml.dom import minidom
 
 import numpy as np
 
-from util.arm import Arm
+from coevolution.arm import Arm
 from util.config import get_config
 
 
@@ -60,6 +59,7 @@ def write_morphevo_benchmarks(arm: Arm):
         file.write(f'{arm.genome.workspace.side_length},{arm.genome.workspace.cube_offset},'
                    f'{sum(module_lengths)},{arm.genome.amount_of_modules},'
                    f'{arm.genome.workspace.calculate_coverage()}\n')
+
 
 def save_genome(arm: Arm, label: str):
     """! Save the urdf of an arm.

@@ -8,12 +8,12 @@ from os.path import exists
 
 import ray
 
-from coevolution import start_coevolution
+from coevolution.coevolution import start_coevolution
 from environment import environment
 from morphevo.evolution import evolution
 from rl.deep_q_learning import rl
 from util.config import set_config
-from util.util import write_morphevo_benchmarks
+from morphevo.util import write_morphevo_benchmarks
 
 
 def start_morphevo():

@@ -15,9 +15,9 @@ from ray.util import ActorPool
 from tqdm import tqdm
 
 from morphevo.evaluator import Evaluator
-from util.arm import Arm
+from coevolution.arm import Arm
 from util.config import get_config
-from util.util import alternate, generate_arms, normalize
+from morphevo.util import alternate, generate_arms, normalize
 
 
 def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
