@@ -210,7 +210,7 @@ class DeepQLearner:
     def predict(self, state: np.ndarray, stochastic: bool = False) -> int:
         if stochastic and np.random.rand() < self.dqn.eps:
             return np.random.randint(len(self.actions))
-        if not self.training and np.random.rand() < 0.3:
+        if not self.training and np.random.rand() < 0.2:
             return np.random.randint(len(self.actions))
         action = self.dqn.lookup(state)
         return action
