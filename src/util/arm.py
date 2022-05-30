@@ -1,6 +1,6 @@
 from typing import Optional
 
-from morphevo.directed_graph_encoding import Genome
+from morphevo.genome import Genome
 from rl.dqn import DQN
 
 

@@ -14,9 +14,19 @@ class ModuleType(Enum):
 class Config:
     # pylint: disable=invalid-name
     class __Config:
+        # pylint: disable=too-many-statements
         def __init__(self, config_file_name: str) -> None:
             with open(config_file_name, 'r', encoding='utf8') as stream:
                 config = yaml.load(stream, yaml.FullLoader)
+
+            if 'environment' in config:
+                environment = config['environment']
+                self.path_to_unity_executable = environment['path_to_unity_executable']
+                self.path_to_robot_urdf = environment['path_to_robot_urdf']
+                self.morphevo_use_graphics = environment['morphevo_use_graphics']
+                self.rl_use_graphics_training = environment['rl_use_graphics_training']
+                self.rl_use_graphics_testing = environment['rl_use_graphics_testing']
+                self.amount_of_cores = environment['amount_of_cores']
 
             if 'arm' in config:
                 arm = config['arm']
@@ -49,7 +59,7 @@ class Config:
                 self.evolution_children = morphevo['children']
                 self.evolution_crossover_children = morphevo['crossover_children']
                 self.sample_size = morphevo['sample_size']
-                self.workspace_parameters = self.parse_workspace_parameters(morphevo)
+                self.parse_workspace_parameters(morphevo)
 
             if 'rl' in config:
                 rl = config['rl']
@@ -62,27 +72,24 @@ class Config:
                 self.mem_size = rl['mem_size']
                 self.eps_start = rl['eps_start']
                 self.hidden_nodes = rl['hidden_nodes']
-
                 self.goal_bal_diameter = rl['goal_bal_diameter']
+                self.use_walls = rl['use_walls'] if 'use_walls' in rl else False
 
-                try:
-                    self.use_walls = rl['use_walls']
-                except KeyError:
-                    self.use_walls = False
+        def parse_workspace_parameters(self, config):
+            if (    'workspace_type'        in config
+                and 'workspace_cube_offset' in config
+                and 'workspace_side_length' in config):
 
-        def parse_workspace_parameters(self, config) -> WorkspaceParameters:
-            if ('workspace_type' in config
-                    and 'workspace_cube_offset' in config
-                    and 'workspace_side_length' in config):
-                return WorkspaceParameters(config['workspace_type'],
-                                           tuple(config['workspace_cube_offset']),
-                                           config['workspace_side_length'])
-            return WorkspaceParameters()
+                self.workspace_parameters = WorkspaceParameters(config['workspace_type'],
+                                                          tuple(config['workspace_cube_offset']),
+                                                                config['workspace_side_length'])
+            else:
+                self.workspace_parameters = WorkspaceParameters()
 
         def parse_module_choices(self, config):
             self.module_choices = []
 
-            if 'rotate' in config['movements'] and 'tilt' in config['movements']:
+            if 'complex' in config['movements']:
                 self.module_choices.append(ModuleType.TILTING_AND_ROTATING)
             if 'rotate' in config['movements']:
                 self.module_choices.append(ModuleType.ROTATING)

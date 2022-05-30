@@ -25,11 +25,9 @@ public class GoalSC : SideChannel
 
         _goal.transform.position = _anchor.transform.position + new Vector3(goalPos[0], goalPos[1], goalPos[2]);
 
-        string stringToSend = "Goal set";
-        using (var msgOut = new OutgoingMessage())
-        {
-            msgOut.WriteString(stringToSend);
-            QueueMessageToSend(msgOut);
-        }
+        const string stringToSend = "Goal set";
+        using var msgOut = new OutgoingMessage();
+        msgOut.WriteString(stringToSend);
+        QueueMessageToSend(msgOut);
     }
 }

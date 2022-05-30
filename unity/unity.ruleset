@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="My Rules" ToolsVersion="15.0">
+  <Rules AnalyzerId="Roslynator.CSharp.Analyzers" RuleNamespace="Roslynator.CSharp.Analyzers">
+    <!-- "Remove unused member declaration". Unity scripts lifecycle methods -->
+    <Rule Id="RCS1213" Action="None" />
+    <!-- "Make field read-only". Unity sets private fields set from the outside -->
+    <Rule Id="RCS1169" Action="None" />
+
+    <!-- "Declare type inside namespace". This project is not big enough for namespaces to be necessary. It only makes code uglier. -->
+    <Rule Id="RCS1110" Action="None" />
+  </Rules>
+
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <!-- "Remove unused private member". Unity scripts lifecycle methods & Unity sets private fields set from the outside -->
+    <Rule Id="IDE0051" Action="None" />
+    <Rule Id="IDE0044" Action="None" />
+  </Rules>
+</RuleSet>
