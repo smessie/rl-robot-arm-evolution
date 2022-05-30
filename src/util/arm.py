@@ -9,7 +9,7 @@ class Arm:
     """
     def __init__(self, genome: Optional[Genome] = None) -> None:
         """! The Arm class initializer
-        @param genome Representation of the arm as a phenotype
+        @param genome Representation of the arm as a phenotype. If genome is None, self.genome is a random Genome.
         """
         self.urdf_path: str = ""
         self.genome: Genome = Genome(genome) if genome else Genome()

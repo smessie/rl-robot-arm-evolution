@@ -2,7 +2,7 @@ from morphevo.evolution import (mutate, mutate_with_crossover_coevolution,
                                 selection, selection_succes_rate)
 from rl.deep_q_learning import train
 from util.config import get_config
-from util.util import generate_arms, save_best_genome
+from util.util import generate_arms, save_genome
 
 
 def start_coevolution():
@@ -23,7 +23,7 @@ def start_coevolution():
             f.write(f"generation: {i}:\n")
             for index, parent in enumerate(parents):
                 # save genomes
-                save_best_genome(parent, f'coevolution_{i}_{index}')
+                save_genome(parent, f'coevolution_{i}_{index}')
 
                 # save success rates
                 f.write(f"{parent.success_rate}\n")
@@ -35,4 +35,4 @@ def start_coevolution():
 
     #save_best_genome(parents[-1], 'final_rl_best')
     for index, parent in enumerate(parents):
-        save_best_genome(parent, f'coevolution_{i}_{index}')
+        save_genome(parent, f'coevolution_{i}_{index}')
