@@ -20,7 +20,7 @@ from util.config import get_config
 from morphevo.util import alternate, generate_arms, normalize
 
 
-def evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
+def run_evolution(children: Optional[List[Arm]] = None) -> List[Arm]:
     """! Evolve arms with following scheme:
         - evaluate arms
         - select best arms (selection includes best arms previous generation)
