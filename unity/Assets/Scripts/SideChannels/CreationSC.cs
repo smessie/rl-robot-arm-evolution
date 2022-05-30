@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class CreationSC : SideChannel
 {
-
-    public class RobotInfo {
+    public class RobotInfo
+    {
         public string Status;
         public int JointAmount;
     }
@@ -27,15 +27,15 @@ public class CreationSC : SideChannel
 
         bool success = _manipulatorBuilder.BuildAgent(urdf);
 
-        RobotInfo robotInfo = new RobotInfo();
-        robotInfo.Status = success ? "success" : "failed";
-        robotInfo.JointAmount = _manipulatorBuilder.getJointAmount();
+        RobotInfo robotInfo = new RobotInfo
+        {
+            Status = success ? "success" : "failed",
+            JointAmount = _manipulatorBuilder.GetJointAmount()
+        };
 
         string stringToSend = JsonUtility.ToJson(robotInfo);
-        using (var msgOut = new OutgoingMessage())
-        {
-            msgOut.WriteString(stringToSend);
-            QueueMessageToSend(msgOut);
-        }
+        using var msgOut = new OutgoingMessage();
+        msgOut.WriteString(stringToSend);
+        QueueMessageToSend(msgOut);
     }
 }

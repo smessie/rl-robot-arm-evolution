@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -8,12 +5,13 @@ using UnityEngine;
 
 public class AgentBrain : Agent
 {
-
     private JointController _jointController;
+
     private GameObject _anchor;
     private GameObject _endEffector;
 
-    private bool _makeScreenshots = true;
+    private readonly bool _makeScreenshots = true;
+
     private int _screenshotCounter = 0;
 
     // Start function of Agent class, will be called before something else happens.
@@ -37,7 +35,6 @@ public class AgentBrain : Agent
     // Here: joint angles and joint positions in the space, and the position of the end effector (= last game object within manipulator).
     public override void CollectObservations(VectorSensor sensor)
     {
-
         // Foreach joint -> current angle, position (3d)
         foreach (var articulationBody in _jointController.ArticulationBodies)
         {
@@ -52,7 +49,7 @@ public class AgentBrain : Agent
         sensor.AddObservation(_endEffector.transform.position - _anchor.transform.position);
 
         // Make sure we will always send 43 observations.
-        int numObsToAdd = 43 - 4 * _jointController.ArticulationBodies.Count - 3;
+        int numObsToAdd = 43 - (4 * _jointController.ArticulationBodies.Count) - 3;
         for (int i = 0; i < numObsToAdd; i++)
         {
             sensor.AddObservation(0f);
@@ -62,7 +59,6 @@ public class AgentBrain : Agent
     // We get an action (within action buffer), and we'll apply this action via joint controller on the joints.
     public override void OnActionReceived(ActionBuffers actions)
     {
-
         for (int i = 0; i < _jointController.ArticulationBodies.Count; i++)
         {
             float angleStep = actions.ContinuousActions[i];
@@ -76,8 +72,9 @@ public class AgentBrain : Agent
     private void FixedUpdate()
     {
         _screenshotCounter++;
-        if (_makeScreenshots && _screenshotCounter % 1000 == 0) {
-            ScreenCapture.CaptureScreenshot("screenshot-" + _screenshotCounter / 1000 + ".png", 15);
+        if (_makeScreenshots && _screenshotCounter % 1000 == 0)
+        {
+            ScreenCapture.CaptureScreenshot("screenshot-" + (_screenshotCounter / 1000) + ".png", 15);
         }
     }
 }
