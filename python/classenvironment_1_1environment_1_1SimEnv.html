@@ -109,11 +109,10 @@ None&#160;</td><td class="memItemRight" valign="bottom"><b>remove_walls</b> (sel
 <tr class="memdesc:a3fa19baa10feb6a247e26153f89ef30a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do 1 step in the unity environment.  <a href="classenvironment_1_1environment_1_1SimEnv.html#a3fa19baa10feb6a247e26153f89ef30a">More...</a><br /></td></tr>
 <tr class="separator:a3fa19baa10feb6a247e26153f89ef30a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac1fb862d246ef955a4715d142987e95"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1environment_1_1SimEnv.html#aac1fb862d246ef955a4715d142987e95">reset</a> (self)</td></tr>
-<tr class="memdesc:aac1fb862d246ef955a4715d142987e95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the Unity Environment, essentially starting a new episode The effect is that OnEpisodeBegin is called in Unity.  <a href="classenvironment_1_1environment_1_1SimEnv.html#aac1fb862d246ef955a4715d142987e95">More...</a><br /></td></tr>
+<tr class="memdesc:aac1fb862d246ef955a4715d142987e95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the Unity Environment, essentially starting a new episode.  <a href="classenvironment_1_1environment_1_1SimEnv.html#aac1fb862d246ef955a4715d142987e95">More...</a><br /></td></tr>
 <tr class="separator:aac1fb862d246ef955a4715d142987e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75ff6eebc4a34712c78076d7a359458f"><td class="memItemLeft" align="right" valign="top"><a id="a75ff6eebc4a34712c78076d7a359458f" name="a75ff6eebc4a34712c78076d7a359458f"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>pause</b> (self, steps=200)</td></tr>
-<tr class="memdesc:a75ff6eebc4a34712c78076d7a359458f"><td class="mdescLeft">&#160;</td><td class="mdescRight">For a certain amount of steps, take no action Achieved by taking "zero" actions. <br /></td></tr>
+<tr class="memitem:a75ff6eebc4a34712c78076d7a359458f"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1environment_1_1SimEnv.html#a75ff6eebc4a34712c78076d7a359458f">pause</a> (self, steps=200)</td></tr>
+<tr class="memdesc:a75ff6eebc4a34712c78076d7a359458f"><td class="mdescLeft">&#160;</td><td class="mdescRight">For a certain amount of steps, take no action.  <a href="classenvironment_1_1environment_1_1SimEnv.html#a75ff6eebc4a34712c78076d7a359458f">More...</a><br /></td></tr>
 <tr class="separator:a75ff6eebc4a34712c78076d7a359458f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a233c6f3bf2b9cb8b426e7c7f7b9d6d19"><td class="memItemLeft" align="right" valign="top"><a id="a233c6f3bf2b9cb8b426e7c7f7b9d6d19" name="a233c6f3bf2b9cb8b426e7c7f7b9d6d19"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>close</b> (self)</td></tr>
@@ -250,10 +249,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>JOINT_ANGLE_STEP</b> =
 </div><div class="memdoc">
 
 <p>Build a new wall The first wall will be built on a certain distance from the anchor. </p>
-<p >Every subsequent wall will be built on a certain distance from the previous wall</p>
-<p >Walls are represented by a 2D array of booleans. True means there is a tile on that 'coordinate/index' and False meaning there is not </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Every subsequent wall will be built on a certain distance from the previous wall.</p>
+<p >Walls are represented by a 2D array of booleans True means there is a tile on that 'coordinate/index' and False meaning there is not </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">wall</td><td>The new wall </td></tr>
+    <tr><td class="paramname">wall</td><td>The new wall. </td></tr>
   </table>
   </dd>
 </dl>
@@ -277,7 +276,38 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>JOINT_ANGLE_STEP</b> =
 </div><div class="memdoc">
 
 <p>Get the observations from the Unity environment. </p>
-<dl class="section return"><dt>Returns</dt><dd>The observations </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The observations. </dd></dl>
+
+</div>
+</div>
+<a id="a75ff6eebc4a34712c78076d7a359458f" name="a75ff6eebc4a34712c78076d7a359458f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75ff6eebc4a34712c78076d7a359458f">&#9670;&nbsp;</a></span>pause()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None environment.environment.SimEnv.pause </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>200</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>For a certain amount of steps, take no action. </p>
+<p >Achieved by taking "zero" actions. </p>
 
 </div>
 </div>
@@ -333,8 +363,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>JOINT_ANGLE_STEP</b> =
       </table>
 </div><div class="memdoc">
 
-<p>Reset the Unity Environment, essentially starting a new episode The effect is that OnEpisodeBegin is called in Unity. </p>
-<dl class="section return"><dt>Returns</dt><dd>Observations obtained after the reset </dd></dl>
+<p>Reset the Unity Environment, essentially starting a new episode. </p>
+<p >The effect is that OnEpisodeBegin is called in Unity. </p><dl class="section return"><dt>Returns</dt><dd>Observations obtained after the reset. </dd></dl>
 
 </div>
 </div>
@@ -367,7 +397,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>JOINT_ANGLE_STEP</b> =
 <p>Set the coordinates of the goal visualization. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">goal</td><td>The coordinates: (x, y, z) </td></tr>
+    <tr><td class="paramname">goal</td><td>The coordinates: (x, y, z). </td></tr>
   </table>
   </dd>
 </dl>
@@ -403,7 +433,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>JOINT_ANGLE_STEP</b> =
 <p>Set the coordinates and size of the workspace visualization. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">workspace</td><td>The coordinates and size: (x, y, z, sideLength) </td></tr>
+    <tr><td class="paramname">workspace</td><td>The coordinates and size: (x, y, z, sideLength). </td></tr>
   </table>
   </dd>
 </dl>
@@ -445,12 +475,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>JOINT_ANGLE_STEP</b> =
 <p>Do 1 step in the unity environment. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">action</td><td>The action this step </td></tr>
-    <tr><td class="paramname">return_observations</td><td>Whether to return observations after the step is taken </td></tr>
+    <tr><td class="paramname">action</td><td>The action for this step. </td></tr>
+    <tr><td class="paramname">return_observations</td><td>Whether to return observations after the step is taken. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Observations after the step is taken </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Observations after the step is taken. </dd></dl>
 
 </div>
 </div>
