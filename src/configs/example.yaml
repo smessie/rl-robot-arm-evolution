@@ -26,7 +26,7 @@ coevolution:
   parents: 16
   rl_amount: 8
   rl_episodes: 60
-  crossover_children: 4 
+  crossover_children: 4
   children: 16
 
 morphevo:
@@ -38,16 +38,16 @@ morphevo:
   workspace_type: 'moved_cube'
   # small cube next to arm
   workspace_cube_offset: [0,5,9]
-  workspace_side_length: 4 
+  workspace_side_length: 4
 
 rl:
-  episodes: 1000 
+  episodes: 1000
   steps_per_episode: 1000
   gamma: 0.95
   eps_end: 0.08
   eps_decay: 0.99995
   batch_size: 4
   mem_size: 20
-  eps_start: 1 
+  eps_start: 1
   hidden_nodes: 64
   goal_bal_diameter: 1.1
