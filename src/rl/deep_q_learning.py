@@ -1,3 +1,7 @@
+##
+# @file
+# Contains the DeepQLearner class and some functions to use this class separately or in coevolution.
+#
 import random
 import signal
 import sys
