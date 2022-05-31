@@ -81,15 +81,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a758f0fd6ee7d6d28f0fe9325ecf687bb"><td class="memItemLeft" align="right" valign="top"><a id="a758f0fd6ee7d6d28f0fe9325ecf687bb" name="a758f0fd6ee7d6d28f0fe9325ecf687bb"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</td></tr>
 <tr class="separator:a758f0fd6ee7d6d28f0fe9325ecf687bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e8fb8a7a4eef020fdf1dd29470bca4d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1logger_1_1Logger.html#a1e8fb8a7a4eef020fdf1dd29470bca4d">log_episode</a> (self, int episode, np.ndarray final_state, np.ndarray goal, int timesteps, int total_finished, List[bool] episodes_finished, float reward, float eps)</td></tr>
-<tr class="memdesc:a1e8fb8a7a4eef020fdf1dd29470bca4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log 1 episode.  <a href="classrl_1_1logger_1_1Logger.html#a1e8fb8a7a4eef020fdf1dd29470bca4d">More...</a><br /></td></tr>
-<tr class="separator:a1e8fb8a7a4eef020fdf1dd29470bca4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78940cd6983dc89439a319f3b4138f95"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1logger_1_1Logger.html#a78940cd6983dc89439a319f3b4138f95">log_episode</a> (self, int episode, np.ndarray final_state, np.ndarray goal, int time_steps, int total_finished, List[bool] episodes_finished, float reward, float eps)</td></tr>
+<tr class="memdesc:a78940cd6983dc89439a319f3b4138f95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log 1 episode.  <a href="classrl_1_1logger_1_1Logger.html#a78940cd6983dc89439a319f3b4138f95">More...</a><br /></td></tr>
+<tr class="separator:a78940cd6983dc89439a319f3b4138f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >This class provides logging functionality to the reinforcement part of the code. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1e8fb8a7a4eef020fdf1dd29470bca4d" name="a1e8fb8a7a4eef020fdf1dd29470bca4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e8fb8a7a4eef020fdf1dd29470bca4d">&#9670;&nbsp;</a></span>log_episode()</h2>
+<a id="a78940cd6983dc89439a319f3b4138f95" name="a78940cd6983dc89439a319f3b4138f95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78940cd6983dc89439a319f3b4138f95">&#9670;&nbsp;</a></span>log_episode()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -122,7 +122,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</t
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timesteps</em>, </td>
+          <td class="paramname"><em>time_steps</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -162,7 +162,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</t
     <tr><td class="paramname">episode</td><td>Episode number </td></tr>
     <tr><td class="paramname">final_state</td><td>State at the end of the episode </td></tr>
     <tr><td class="paramname">goal</td><td>Goal this episode </td></tr>
-    <tr><td class="paramname">timesteps</td><td>Amount of steps taken in the episode </td></tr>
+    <tr><td class="paramname">time_steps</td><td>Amount of steps taken in the episode </td></tr>
     <tr><td class="paramname">total_finished</td><td>Total amount of times during the reinforcement run the arm reached the goal. </td></tr>
     <tr><td class="paramname">episodes_finished</td><td>boolean array with length 50. It describes the last 50 episodes. True = the episode finished, False = the episode did not finish. </td></tr>
     <tr><td class="paramname">reward</td><td>The reward of the last step in the episode </td></tr>

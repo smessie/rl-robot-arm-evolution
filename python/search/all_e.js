@@ -7,7 +7,7 @@ var searchData=
   ['selection_4',['selection',['../evolution_8py.html#abd8fed6a8cead22bcab5ed9769c4327d',1,'morphevo::evolution']]],
   ['selection_5ffitness_5',['selection_fitness',['../evolution_8py.html#a5e70461c23098357c3a8c2a9fe747afa',1,'morphevo::evolution']]],
   ['selection_5ffitness_5fdiversity_6',['selection_fitness_diversity',['../evolution_8py.html#a38aae5ab8626d716faf00354caf1582a',1,'morphevo::evolution']]],
-  ['selection_5fsucces_5frate_7',['selection_succes_rate',['../evolution_8py.html#a74cbb6c3784dd4c68f0599eac044698d',1,'morphevo::evolution']]],
+  ['selection_5fsuccess_5frate_7',['selection_success_rate',['../evolution_8py.html#ab82c650381854c24801a9e165c1a5679',1,'morphevo::evolution']]],
   ['send_5fbuild_5fcommand_8',['send_build_command',['../classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html#a6c19a9dfaffa8d354a9650ca2cac1530',1,'environment::sidechannels::creation_sc::CreationSC']]],
   ['simenv_9',['SimEnv',['../classenvironment_1_1environment_1_1SimEnv.html',1,'environment::environment']]],
   ['start_5fcoevolution_10',['start_coevolution',['../run_8py.html#ab851d5843e905ae744b17ed19e99cc1f',1,'run']]],

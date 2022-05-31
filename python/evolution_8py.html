@@ -89,14 +89,14 @@ Functions</h2></td></tr>
 <tr class="memitem:a5e70461c23098357c3a8c2a9fe747afa"><td class="memItemLeft" align="right" valign="top">List[Arm]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evolution_8py.html#a5e70461c23098357c3a8c2a9fe747afa">morphevo.evolution.selection_fitness</a> (List[Arm] population)</td></tr>
 <tr class="memdesc:a5e70461c23098357c3a8c2a9fe747afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do selection on the fitness of the arm.  <a href="evolution_8py.html#a5e70461c23098357c3a8c2a9fe747afa">More...</a><br /></td></tr>
 <tr class="separator:a5e70461c23098357c3a8c2a9fe747afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74cbb6c3784dd4c68f0599eac044698d"><td class="memItemLeft" align="right" valign="top">List[Arm]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evolution_8py.html#a74cbb6c3784dd4c68f0599eac044698d">morphevo.evolution.selection_succes_rate</a> (List[Arm] population)</td></tr>
-<tr class="memdesc:a74cbb6c3784dd4c68f0599eac044698d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do selection on the success_rate of the arm.  <a href="evolution_8py.html#a74cbb6c3784dd4c68f0599eac044698d">More...</a><br /></td></tr>
-<tr class="separator:a74cbb6c3784dd4c68f0599eac044698d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab82c650381854c24801a9e165c1a5679"><td class="memItemLeft" align="right" valign="top">List[Arm]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evolution_8py.html#ab82c650381854c24801a9e165c1a5679">morphevo.evolution.selection_success_rate</a> (List[Arm] population)</td></tr>
+<tr class="memdesc:ab82c650381854c24801a9e165c1a5679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do selection on the success_rate of the arm.  <a href="evolution_8py.html#ab82c650381854c24801a9e165c1a5679">More...</a><br /></td></tr>
+<tr class="separator:ab82c650381854c24801a9e165c1a5679"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38aae5ab8626d716faf00354caf1582a"><td class="memItemLeft" align="right" valign="top">List[Arm]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evolution_8py.html#a38aae5ab8626d716faf00354caf1582a">morphevo.evolution.selection_fitness_diversity</a> (List[Arm] population)</td></tr>
 <tr class="memdesc:a38aae5ab8626d716faf00354caf1582a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do selection in a fitness-diversity way.  <a href="evolution_8py.html#a38aae5ab8626d716faf00354caf1582a">More...</a><br /></td></tr>
 <tr class="separator:a38aae5ab8626d716faf00354caf1582a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86aa2bd6ceffe87ac28e6112a8b41aa1"><td class="memItemLeft" align="right" valign="top">Arm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evolution_8py.html#a86aa2bd6ceffe87ac28e6112a8b41aa1">morphevo.evolution.select_next_parent</a> (List[Arm] population, List[Arm] parents)</td></tr>
-<tr class="memdesc:a86aa2bd6ceffe87ac28e6112a8b41aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the next parent that will be added to parents.  <a href="evolution_8py.html#a86aa2bd6ceffe87ac28e6112a8b41aa1">More...</a><br /></td></tr>
+<tr class="memdesc:a86aa2bd6ceffe87ac28e6112a8b41aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the next parent that will be added to the parents.  <a href="evolution_8py.html#a86aa2bd6ceffe87ac28e6112a8b41aa1">More...</a><br /></td></tr>
 <tr class="separator:a86aa2bd6ceffe87ac28e6112a8b41aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4cc1a89bd8dc0fe95178e4e5ae1cdd0c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evolution_8py.html#a4cc1a89bd8dc0fe95178e4e5ae1cdd0c">morphevo.evolution.calculate_fitness</a> (Arm arm)</td></tr>
 <tr class="memdesc:a4cc1a89bd8dc0fe95178e4e5ae1cdd0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the fitness of a genome by calculating its coverage.  <a href="evolution_8py.html#a4cc1a89bd8dc0fe95178e4e5ae1cdd0c">More...</a><br /></td></tr>
@@ -214,7 +214,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Calculate a score on which selection can be done for fitness-diversity selection. </p>
-<p >First normalize fitness and diversity scores. Than calculate the distance to (1,1). If fitness and diversity are 1,1 this means 100% fit and 100% diverse from all previously selected parents. </p><dl class="params"><dt>Parameters</dt><dd>
+<p >First normalize fitness and diversity scores. Then calculate the distance to (1,1). If fitness and diversity are 1,1 this means 100% fit and 100% diverse from all previously selected parents. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">population_fitnesses</td><td>The fitnesses of a population. </td></tr>
     <tr><td class="paramname">population_diversities</td><td>The diversities of a population. </td></tr>
@@ -252,7 +252,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Function to create crossover children, pick 2 random parents, check if they are the same. </p>
-<p >If not do crossover else pick again. </p><dl class="params"><dt>Parameters</dt><dd>
+<p >If not do the crossover else pick again. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">parents</td><td>A list of parents to choose from. </td></tr>
     <tr><td class="paramname">amount</td><td>The amount of crossover children you want. </td></tr>
@@ -451,7 +451,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Select the next parent that will be added to parents. </p>
+<p>Select the next parent that will be added to the parents. </p>
 <p >Do this by making a consideration between fitness and diversity. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">population</td><td>Current population. </td></tr>
@@ -459,7 +459,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The parent that scores the highes on fitness-diversity compared to already selected parents. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The parent that scores the highest on fitness-diversity compared to already selected parents. </dd></dl>
 
 </div>
 </div>
@@ -555,14 +555,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a74cbb6c3784dd4c68f0599eac044698d" name="a74cbb6c3784dd4c68f0599eac044698d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74cbb6c3784dd4c68f0599eac044698d">&#9670;&nbsp;</a></span>selection_succes_rate()</h2>
+<a id="ab82c650381854c24801a9e165c1a5679" name="ab82c650381854c24801a9e165c1a5679"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab82c650381854c24801a9e165c1a5679">&#9670;&nbsp;</a></span>selection_success_rate()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"> List[Arm] morphevo.evolution.selection_succes_rate </td>
+          <td class="memname"> List[Arm] morphevo.evolution.selection_success_rate </td>
           <td>(</td>
           <td class="paramtype">List[Arm]&#160;</td>
           <td class="paramname"><em>population</em></td><td>)</td>
