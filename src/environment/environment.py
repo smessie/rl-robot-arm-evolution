@@ -6,6 +6,7 @@
 #
 import os
 import xml.etree.ElementTree as ET
+from abc import ABC
 from pathlib import Path
 from typing import List, Tuple
 
@@ -23,7 +24,7 @@ from environment.sidechannels.workspace_sc import WorkspaceSC
 from util.config import get_config
 
 
-class SimEnv(gym.Env):
+class SimEnv(gym.Env, ABC):
     """! Custom Environment that follows gym interface
     """
     metadata = {'render.modes': ['human']}
@@ -32,9 +33,9 @@ class SimEnv(gym.Env):
 
     def __init__(self, env_path: str, urdf: str, use_graphics: bool, worker_id: int = 0) -> None:
         """! The SimEnv class initializer.
-        @param env_path Path of the environment executable.
-        @param urdf Instance that represents the robot urdf.
-        @param use_graphics Boolean that turns graphics on or off.
+        @param env_path: Path of the environment executable.
+        @param urdf: Instance that represents the robot urdf.
+        @param use_graphics: Boolean that turns graphics on or off.
         @return  An instance of the SimEnv class.
         """
         super().__init__()
@@ -130,15 +131,15 @@ class SimEnv(gym.Env):
     def replace_walls(self, wall: List[List[bool]]) -> None:
         """! Replace all the walls, build 1 new one
         See build_wall for how a wall is represented
-        @param wall The new wall
+        @param wall: The new wall
         """
         self.remove_walls()
         self.build_wall(wall)
 
     def step(self, action: np.ndarray, return_observations=True) -> np.ndarray:
         """! Do 1 step in the unity environment
-        @param action The action this step
-        @param return_observations Whether to return observations after the step is taken
+        @param action: The action this step
+        @param return_observations: Whether to return observations after the step is taken
         @return Observations after the step is taken
         """
         self._set_unity_actions(action)

@@ -20,9 +20,9 @@ class Genome:
     """
 
     def __init__(self, parent_genome: Optional[Genome] = None) -> None:
-        """! Create a Genome, if no parent is given a random encoding will be generated. Otherwise it will
+        """! Create a Genome, if no parent is given a random encoding will be generated. Otherwise, it will
         use the mutated encoding of its parent as encoding.
-        @param parent_genome The optional parent.
+        @param parent_genome: The optional parent.
         """
         if parent_genome:
             self.amount_of_modules = parent_genome.amount_of_modules
@@ -62,7 +62,7 @@ class Genome:
         modules in the longest arm (same for missing modules). Else you calculate the percentage of length
         difference between the modules.
 
-        @param other_genome The genome you want to compare with.
+        @param other_genome: The genome you want to compare with.
         @return A percentage on how different the genomes are.
         """
         diversity = 0
@@ -83,7 +83,7 @@ class Genome:
         """! Do a crossover with another genome. For every module you will run a chance to determine
         of which parent you will include its module. If one parent is shorter the top modules of the other
         parent can still be included at the end of the arm.
-        @param other_genome The other genome to crossover with.
+        @param other_genome: The other genome to crossover with.
         @return A new genome with an encoding that is the result of crossover on its parents.
         """
         genome = Genome()
@@ -100,7 +100,7 @@ class Genome:
 
     def get_amount_of_joints(self) -> int:
         """! Count the amount of joints a genotype represents.
-        @retursn amount of joints.
+        @return amount of joints.
         """
         joint_amount = 0
         for module in self.genotype_graph.iterate_graph(ignore_anchor=False):
@@ -143,8 +143,8 @@ class GenotypeGraphNode:
 
     def __init__(self, module_type: ModuleType, lengths: List[float]) -> None:
         """!
-        @param module_type The type of the module(s) that will be represented.
-        @param lengths The length(s) of the represented module(s).
+        @param module_type: The type of the module(s) that will be represented.
+        @param lengths: The length(s) of the represented module(s).
         """
         self.module_type = module_type
         self.lengths = lengths
@@ -157,14 +157,14 @@ class GenotypeGraph:
 
     def __init__(self, anchor_length: float = 1.0) -> None:
         """!
-        @param anchor_length The length of the anchor module.
+        @param anchor_length: The length of the anchor module.
         """
         self.anchor = GenotypeGraphNode(ModuleType.ANCHOR, [anchor_length])
 
     def add_module(self, module_type: ModuleType, length: float) -> None:
         """! Add a module to the graph, will join nodes if type is the same as last node.
-        @param module_type The type of the module.
-        @param length The length of the module.
+        @param module_type: The type of the module.
+        @param length: The length of the module.
         """
         head_module = self.get_last_node()
 
@@ -175,8 +175,8 @@ class GenotypeGraph:
             head_module.next = new_module
 
     def get_last_node(self) -> GenotypeGraphNode:
-        """! Get the last node in the graphencoding.
-        @return The last node in the graphencoding.
+        """! Get the last node in the graph encoding.
+        @return The last node in the graph encoding.
         """
         current_module = self.anchor
         while current_module.next:
@@ -185,8 +185,8 @@ class GenotypeGraph:
         return current_module
 
     def mutate(self) -> GenotypeGraph:
-        """! Create a new graphencoding that is a mutation of itself.
-        @return The mutated graphencoding.
+        """! Create a new graph encoding that is a mutation of itself.
+        @return The mutated graph encoding.
         """
         config = get_config()
 
@@ -218,7 +218,7 @@ class GenotypeGraph:
 
     def get_change_index(self, chance: float) -> int | None:
         """!
-        Get the index where a change (addition of deletion) can occure. This depends on the outcome of
+        Get the index where a change (addition of deletion) can occur. This depends on the outcome of
         a chance. If chance fails None is returned to represent no mutation.
 
         @return Index of mutation or None.
@@ -240,7 +240,7 @@ class GenotypeGraph:
         """!
         Iterator to iterate graph module after module instead of node after node.
 
-        @param ignore_anchor Choice to skip anchor in iteration.
+        @param ignore_anchor: Choice to skip anchor in iteration.
         """
         current_node = self.anchor.next if ignore_anchor else self.anchor
         current_module_index = 0
@@ -264,7 +264,7 @@ class GenotypeGraph:
 
 def run_chance(chance: float) -> bool:
     """! Run a chance.
-    @param chance Chance of being True on 1
+    @param chance: Chance of being True on 1
     @return True or False depending on result of chance test.
     """
     return random.uniform(0, 1) < chance

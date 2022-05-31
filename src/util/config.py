@@ -38,6 +38,7 @@ class Config:
                 self.maximum_amount_modules = arm['maximum_amount_modules']
                 self.length_lower_bound = arm['length_lower_bound']
                 self.length_upper_bound = arm['length_upper_bound']
+                self.module_choices = None
                 self.parse_module_choices(arm)
 
             if 'mutation' in config:
@@ -63,6 +64,7 @@ class Config:
                 self.evolution_children = morphevo['children']
                 self.evolution_crossover_children = morphevo['crossover_children']
                 self.sample_size = morphevo['sample_size']
+                self.workspace_parameters = None
                 self.parse_workspace_parameters(morphevo)
 
             if 'rl' in config:

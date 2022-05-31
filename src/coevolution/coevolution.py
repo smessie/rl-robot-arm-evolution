@@ -3,7 +3,7 @@
 # File that contains the main function of the coevolution process and brings together all other sub-phases.
 #
 from morphevo.evolution import (mutate, mutate_with_crossover_coevolution,
-                                selection, selection_succes_rate)
+                                selection, selection_success_rate)
 from morphevo.util import generate_arms, save_genome
 from rl.deep_q_learning import train_arms
 from util.config import get_config
@@ -12,7 +12,7 @@ from util.config import get_config
 def run_coevolution():
     """!
     Run the coevolution process which uses morphological evolution and reinforcement learning.
-    Every coevolution step, all genomes' URDF and succes rates are saved.
+    Every coevolution step, all genomes' URDF and success rates are saved.
     """
     config = get_config()
     parents = []
@@ -21,7 +21,7 @@ def run_coevolution():
     for i in range(config.coevolution_generations):
         trained_arms = train_arms(children)
 
-        parents = selection(selection_succes_rate, trained_arms + parents)
+        parents = selection(selection_success_rate, trained_arms + parents)
 
         with open("success_rate.txt", "a", encoding="utf8") as f:
             f.write(f"generation: {i}:\n")
