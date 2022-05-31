@@ -74,6 +74,9 @@ $(function() {
   <div class="headertitle"><div class="title">environment.environment.SimEnv Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Custom Environment that follows gym interface.  
+ <a href="classenvironment_1_1environment_1_1SimEnv.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for environment.environment.SimEnv:</div>
 <div class="dyncontent">
@@ -83,8 +86,8 @@ Inheritance diagram for environment.environment.SimEnv:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a02cb4fa659ca1bbf253b4aa19195a554"><td class="memItemLeft" align="right" valign="top"><a id="a02cb4fa659ca1bbf253b4aa19195a554" name="a02cb4fa659ca1bbf253b4aa19195a554"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, str env_path, str urdf, bool use_graphics, int worker_id=0)</td></tr>
+<tr class="memitem:a02cb4fa659ca1bbf253b4aa19195a554"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1environment_1_1SimEnv.html#a02cb4fa659ca1bbf253b4aa19195a554">__init__</a> (self, str env_path, str urdf, bool use_graphics, int worker_id=0)</td></tr>
+<tr class="memdesc:a02cb4fa659ca1bbf253b4aa19195a554"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classenvironment_1_1environment_1_1SimEnv.html" title="Custom Environment that follows gym interface.">SimEnv</a> class initializer.  <a href="classenvironment_1_1environment_1_1SimEnv.html#a02cb4fa659ca1bbf253b4aa19195a554">More...</a><br /></td></tr>
 <tr class="separator:a02cb4fa659ca1bbf253b4aa19195a554"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83199b86627d1e728ba2fefcf2c373e4"><td class="memItemLeft" align="right" valign="top"><a id="a83199b86627d1e728ba2fefcf2c373e4" name="a83199b86627d1e728ba2fefcf2c373e4"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>set_goal</b> (self, tuple goal)</td></tr>
@@ -98,11 +101,11 @@ None&#160;</td><td class="memItemRight" valign="bottom"><b>build_wall</b> (self,
 <tr class="memitem:a1e03bdb3fe25e966fe9f5165811c1c48"><td class="memItemLeft" align="right" valign="top"><a id="a1e03bdb3fe25e966fe9f5165811c1c48" name="a1e03bdb3fe25e966fe9f5165811c1c48"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>remove_walls</b> (self)</td></tr>
 <tr class="separator:a1e03bdb3fe25e966fe9f5165811c1c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b44197ba7e9b4b31d3b04d3f2db9a3a"><td class="memItemLeft" align="right" valign="top"><a id="a8b44197ba7e9b4b31d3b04d3f2db9a3a" name="a8b44197ba7e9b4b31d3b04d3f2db9a3a"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>replace_walls</b> (self, List[List[bool]] wall)</td></tr>
+<tr class="memitem:a8b44197ba7e9b4b31d3b04d3f2db9a3a"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1environment_1_1SimEnv.html#a8b44197ba7e9b4b31d3b04d3f2db9a3a">replace_walls</a> (self, List[List[bool]] wall)</td></tr>
+<tr class="memdesc:a8b44197ba7e9b4b31d3b04d3f2db9a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace all the walls, build 1 new one.  <a href="classenvironment_1_1environment_1_1SimEnv.html#a8b44197ba7e9b4b31d3b04d3f2db9a3a">More...</a><br /></td></tr>
 <tr class="separator:a8b44197ba7e9b4b31d3b04d3f2db9a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fa19baa10feb6a247e26153f89ef30a"><td class="memItemLeft" align="right" valign="top"><a id="a3fa19baa10feb6a247e26153f89ef30a" name="a3fa19baa10feb6a247e26153f89ef30a"></a>
-np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><b>step</b> (self, np.ndarray action, return_observations=True)</td></tr>
+<tr class="memitem:a3fa19baa10feb6a247e26153f89ef30a"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1environment_1_1SimEnv.html#a3fa19baa10feb6a247e26153f89ef30a">step</a> (self, np.ndarray action, return_observations=True)</td></tr>
+<tr class="memdesc:a3fa19baa10feb6a247e26153f89ef30a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do 1 step in the unity environment.  <a href="classenvironment_1_1environment_1_1SimEnv.html#a3fa19baa10feb6a247e26153f89ef30a">More...</a><br /></td></tr>
 <tr class="separator:a3fa19baa10feb6a247e26153f89ef30a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac1fb862d246ef955a4715d142987e95"><td class="memItemLeft" align="right" valign="top"><a id="aac1fb862d246ef955a4715d142987e95" name="aac1fb862d246ef955a4715d142987e95"></a>
 np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> (self)</td></tr>
@@ -157,8 +160,148 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>JOINT_ANGLE_STEP</b> =
 <tr class="separator:a4f5264fba7e9bf8e35171d32fe0ec211"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">Custom Environment that follows gym interface</pre> </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/environment/environment.py</li>
+<div class="textblock"><p >Custom Environment that follows gym interface. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a02cb4fa659ca1bbf253b4aa19195a554" name="a02cb4fa659ca1bbf253b4aa19195a554"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02cb4fa659ca1bbf253b4aa19195a554">&#9670;&nbsp;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None environment.environment.SimEnv.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>env_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>urdf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>use_graphics</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>worker_id</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The <a class="el" href="classenvironment_1_1environment_1_1SimEnv.html" title="Custom Environment that follows gym interface.">SimEnv</a> class initializer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">env_path</td><td>Path of the environment executable. </td></tr>
+    <tr><td class="paramname">urdf</td><td>Instance that represents the robot urdf. </td></tr>
+    <tr><td class="paramname">use_graphics</td><td>Boolean that turns graphics on or off. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of the <a class="el" href="classenvironment_1_1environment_1_1SimEnv.html" title="Custom Environment that follows gym interface.">SimEnv</a> class. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8b44197ba7e9b4b31d3b04d3f2db9a3a" name="a8b44197ba7e9b4b31d3b04d3f2db9a3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b44197ba7e9b4b31d3b04d3f2db9a3a">&#9670;&nbsp;</a></span>replace_walls()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None environment.environment.SimEnv.replace_walls </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List[List[bool]]&#160;</td>
+          <td class="paramname"><em>wall</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Replace all the walls, build 1 new one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wall</td><td>The new wall </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3fa19baa10feb6a247e26153f89ef30a" name="a3fa19baa10feb6a247e26153f89ef30a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fa19baa10feb6a247e26153f89ef30a">&#9670;&nbsp;</a></span>step()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> np.ndarray environment.environment.SimEnv.step </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>action</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>return_observations</em> = <code>True</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Do 1 step in the unity environment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">action</td><td>The action this step </td></tr>
+    <tr><td class="paramname">return_observations</td><td>Whether to return observations after the step is taken </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Observations after the step is taken </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>src/environment/<a class="el" href="environment_8py.html">environment.py</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

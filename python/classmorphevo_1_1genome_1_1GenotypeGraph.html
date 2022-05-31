@@ -85,13 +85,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a0e18a50f7d41d3d9008299e665c4dd3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a module to the graph, will join nodes if type is the same as last node.  <a href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a0e18a50f7d41d3d9008299e665c4dd3c">More...</a><br /></td></tr>
 <tr class="separator:a0e18a50f7d41d3d9008299e665c4dd3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d83ecd2cb7257cc0dfbd307bf0c1e56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmorphevo_1_1genome_1_1GenotypeGraphNode.html">GenotypeGraphNode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a0d83ecd2cb7257cc0dfbd307bf0c1e56">get_last_node</a> (self)</td></tr>
-<tr class="memdesc:a0d83ecd2cb7257cc0dfbd307bf0c1e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last node in the graphencoding.  <a href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a0d83ecd2cb7257cc0dfbd307bf0c1e56">More...</a><br /></td></tr>
+<tr class="memdesc:a0d83ecd2cb7257cc0dfbd307bf0c1e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last node in the graph encoding.  <a href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a0d83ecd2cb7257cc0dfbd307bf0c1e56">More...</a><br /></td></tr>
 <tr class="separator:a0d83ecd2cb7257cc0dfbd307bf0c1e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b66cc44d323c50c6eb868a10588fef1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmorphevo_1_1genome_1_1GenotypeGraph.html">GenotypeGraph</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a4b66cc44d323c50c6eb868a10588fef1">mutate</a> (self)</td></tr>
-<tr class="memdesc:a4b66cc44d323c50c6eb868a10588fef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new graphencoding that is a mutation of itself.  <a href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a4b66cc44d323c50c6eb868a10588fef1">More...</a><br /></td></tr>
+<tr class="memdesc:a4b66cc44d323c50c6eb868a10588fef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new graph encoding that is a mutation of itself.  <a href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a4b66cc44d323c50c6eb868a10588fef1">More...</a><br /></td></tr>
 <tr class="separator:a4b66cc44d323c50c6eb868a10588fef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a069ee0e621a6a722f95bbb2ff8559c78"><td class="memItemLeft" align="right" valign="top">int|None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a069ee0e621a6a722f95bbb2ff8559c78">get_change_index</a> (self, float chance)</td></tr>
-<tr class="memdesc:a069ee0e621a6a722f95bbb2ff8559c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the index where a change (addition of deletion) can occure.  <a href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a069ee0e621a6a722f95bbb2ff8559c78">More...</a><br /></td></tr>
+<tr class="memdesc:a069ee0e621a6a722f95bbb2ff8559c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the index where a change (addition of deletion) can occur.  <a href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a069ee0e621a6a722f95bbb2ff8559c78">More...</a><br /></td></tr>
 <tr class="separator:a069ee0e621a6a722f95bbb2ff8559c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c127122c836b342a6b9fc1f0c6e9a6f"><td class="memItemLeft" align="right" valign="top">Module&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a0c127122c836b342a6b9fc1f0c6e9a6f">get_random_module</a> (self)</td></tr>
 <tr class="memdesc:a0c127122c836b342a6b9fc1f0c6e9a6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator to iterate graph module after module instead of node after node.  <a href="classmorphevo_1_1genome_1_1GenotypeGraph.html#a0c127122c836b342a6b9fc1f0c6e9a6f">More...</a><br /></td></tr>
@@ -220,7 +220,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get the index where a change (addition of deletion) can occure. </p>
+<p>Get the index where a change (addition of deletion) can occur. </p>
 <p >This depends on the outcome of a chance. If chance fails None is returned to represent no mutation.</p>
 <dl class="section return"><dt>Returns</dt><dd>Index of mutation or None. </dd></dl>
 
@@ -242,8 +242,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get the last node in the graphencoding. </p>
-<dl class="section return"><dt>Returns</dt><dd>The last node in the graphencoding. </dd></dl>
+<p>Get the last node in the graph encoding. </p>
+<dl class="section return"><dt>Returns</dt><dd>The last node in the graph encoding. </dd></dl>
 
 </div>
 </div>
@@ -283,7 +283,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
+          <td class="paramtype">bool &#160;</td>
           <td class="paramname"><em>ignore_anchor</em> = <code>True</code>&#160;</td>
         </tr>
         <tr>
@@ -320,8 +320,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Create a new graphencoding that is a mutation of itself. </p>
-<dl class="section return"><dt>Returns</dt><dd>The mutated graphencoding. </dd></dl>
+<p>Create a new graph encoding that is a mutation of itself. </p>
+<dl class="section return"><dt>Returns</dt><dd>The mutated graph encoding. </dd></dl>
 
 </div>
 </div>

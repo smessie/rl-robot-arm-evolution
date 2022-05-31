@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['defaultnamespace_0',['DefaultNamespace',['../namespaceDefaultNamespace.html',1,'']]]
+  ['robotspecificationnamespace_0',['RobotSpecificationNamespace',['../namespaceRobotSpecificationNamespace.html',1,'']]]
 ];

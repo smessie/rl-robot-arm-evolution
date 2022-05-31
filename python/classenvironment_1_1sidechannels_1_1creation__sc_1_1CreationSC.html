@@ -73,6 +73,9 @@ $(function() {
   <div class="headertitle"><div class="title">environment.sidechannels.creation_sc.CreationSC Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Side channel to create the robot arm.  
+ <a href="classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for environment.sidechannels.creation_sc.CreationSC:</div>
 <div class="dyncontent">
@@ -85,14 +88,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a11223b509bfb0d3151433959629211a3"><td class="memItemLeft" align="right" valign="top"><a id="a11223b509bfb0d3151433959629211a3" name="a11223b509bfb0d3151433959629211a3"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</td></tr>
 <tr class="separator:a11223b509bfb0d3151433959629211a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c19a9dfaffa8d354a9650ca2cac1530"><td class="memItemLeft" align="right" valign="top"><a id="a6c19a9dfaffa8d354a9650ca2cac1530" name="a6c19a9dfaffa8d354a9650ca2cac1530"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>send_build_command</b> (self, str urdf)</td></tr>
+<tr class="memitem:a6c19a9dfaffa8d354a9650ca2cac1530"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html#a6c19a9dfaffa8d354a9650ca2cac1530">send_build_command</a> (self, str urdf)</td></tr>
+<tr class="memdesc:a6c19a9dfaffa8d354a9650ca2cac1530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send urdf string to environment via side channel.  <a href="classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html#a6c19a9dfaffa8d354a9650ca2cac1530">More...</a><br /></td></tr>
 <tr class="separator:a6c19a9dfaffa8d354a9650ca2cac1530"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acce5c069bca22fdf20ce5c53b369eac4"><td class="memItemLeft" align="right" valign="top"><a id="acce5c069bca22fdf20ce5c53b369eac4" name="acce5c069bca22fdf20ce5c53b369eac4"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>on_message_received</b> (self, IncomingMessage msg)</td></tr>
 <tr class="separator:acce5c069bca22fdf20ce5c53b369eac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1523fbcea75a7e889c8de15e7cd8ae47"><td class="memItemLeft" align="right" valign="top"><a id="a1523fbcea75a7e889c8de15e7cd8ae47" name="a1523fbcea75a7e889c8de15e7cd8ae47"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>get_joint_amount</b> (self)</td></tr>
+<tr class="memdesc:a1523fbcea75a7e889c8de15e7cd8ae47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the amount of joints that are present in the robot arm. <br /></td></tr>
 <tr class="separator:a1523fbcea75a7e889c8de15e7cd8ae47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -104,6 +108,45 @@ Public Attributes</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>info</b></td></tr>
 <tr class="separator:a3893e271308c601befbcb451e1ca1176"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Side channel to create the robot arm. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6c19a9dfaffa8d354a9650ca2cac1530" name="a6c19a9dfaffa8d354a9650ca2cac1530"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c19a9dfaffa8d354a9650ca2cac1530">&#9670;&nbsp;</a></span>send_build_command()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None environment.sidechannels.creation_sc.CreationSC.send_build_command </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>urdf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send urdf string to environment via side channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">urdf</td><td>The urdf to build </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/environment/sidechannels/creation_sc.py</li>
 </ul>

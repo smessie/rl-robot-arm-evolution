@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['linkspec_0',['LinkSpec',['../classDefaultNamespace_1_1LinkSpec.html',1,'DefaultNamespace']]]
+  ['sidechannelregistrator_0',['SideChannelRegistrator',['../classSideChannelRegistrator.html',1,'']]]
 ];
