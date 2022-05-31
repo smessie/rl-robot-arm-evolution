@@ -7,7 +7,7 @@ from mlagents_envs.side_channel.side_channel import (OutgoingMessage,
 
 
 class GoalSC(SideChannel):
-    """! Side channel to send a goal to the environment"""
+    """! Side channel to send a goal to the environment."""
 
     def __init__(self) -> None:
         """! The GoalSC class initializer. """
@@ -16,8 +16,8 @@ class GoalSC(SideChannel):
         self.goal_set = False
 
     def send_goal_position(self, goal: Tuple[float]) -> None:
-        """! Send goal string to environment via side channel
-        @param goal: The goal to show
+        """! Send goal string to environment via side channel.
+        @param goal: The goal to show.
         """
         self.goal_set = False
 
