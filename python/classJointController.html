@@ -70,9 +70,6 @@ $(function() {
   <div class="headertitle"><div class="title">JointController Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Class that keeps a list of the joints of the robot arm and can control them  
- <a href="classJointController.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for JointController:</div>
 <div class="dyncontent">
@@ -82,80 +79,28 @@ Inheritance diagram for JointController:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aedb153a88723ca21a91c22d85ef21099"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJointController.html#aedb153a88723ca21a91c22d85ef21099">ActuateJoint</a> (int jointIndex, float step)</td></tr>
-<tr class="memdesc:aedb153a88723ca21a91c22d85ef21099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actuate one joint of the robot arm  <a href="classJointController.html#aedb153a88723ca21a91c22d85ef21099">More...</a><br /></td></tr>
+<tr class="memitem:aedb153a88723ca21a91c22d85ef21099"><td class="memItemLeft" align="right" valign="top"><a id="aedb153a88723ca21a91c22d85ef21099" name="aedb153a88723ca21a91c22d85ef21099"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ActuateJoint</b> (int jointIndex, float step)</td></tr>
 <tr class="separator:aedb153a88723ca21a91c22d85ef21099"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae18e5e0c1e5e25b8eebed99ca718d5da"><td class="memItemLeft" align="right" valign="top"><a id="ae18e5e0c1e5e25b8eebed99ca718d5da" name="ae18e5e0c1e5e25b8eebed99ca718d5da"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ResetJoints</b> ()</td></tr>
-<tr class="memdesc:ae18e5e0c1e5e25b8eebed99ca718d5da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all the targets of the robot joints to 0. <br /></td></tr>
 <tr class="separator:ae18e5e0c1e5e25b8eebed99ca718d5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8cf087b6c8f3931b8ab5aec5c01dc31"><td class="memItemLeft" align="right" valign="top"><a id="ae8cf087b6c8f3931b8ab5aec5c01dc31" name="ae8cf087b6c8f3931b8ab5aec5c01dc31"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>RandomizeJoints</b> ()</td></tr>
-<tr class="memdesc:ae8cf087b6c8f3931b8ab5aec5c01dc31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all the targets of the robot joints to a random amount of degrees between -20 and 20, clamped by the limits of the joints. <br /></td></tr>
 <tr class="separator:ae8cf087b6c8f3931b8ab5aec5c01dc31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a15bcd23fac6b2381be8444d92c02d66e"><td class="memItemLeft" align="right" valign="top"><a id="a15bcd23fac6b2381be8444d92c02d66e" name="a15bcd23fac6b2381be8444d92c02d66e"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>stepSize</b> = 10</td></tr>
-<tr class="memdesc:a15bcd23fac6b2381be8444d92c02d66e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actions are between -1 and 1. This variable is multiplied with the action and that is how many degrees the joint wil actuate <br /></td></tr>
 <tr class="separator:a15bcd23fac6b2381be8444d92c02d66e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a0ceda08bbbd2e7eb80418ac874a0c00b"><td class="memItemLeft" align="right" valign="top"><a id="a0ceda08bbbd2e7eb80418ac874a0c00b" name="a0ceda08bbbd2e7eb80418ac874a0c00b"></a>
 List&lt; ArticulationBody &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ArticulationBodies</b><code> [get, set]</code></td></tr>
-<tr class="memdesc:a0ceda08bbbd2e7eb80418ac874a0c00b"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of joints of the robot arm <br /></td></tr>
 <tr class="separator:a0ceda08bbbd2e7eb80418ac874a0c00b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >Class that keeps a list of the joints of the robot arm and can control them </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aedb153a88723ca21a91c22d85ef21099" name="aedb153a88723ca21a91c22d85ef21099"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aedb153a88723ca21a91c22d85ef21099">&#9670;&nbsp;</a></span>ActuateJoint()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void JointController.ActuateJoint </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>jointIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>step</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Actuate one joint of the robot arm </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">jointIndex</td><td>Which joint should be actuated. Starts at the base of the robot arm</td></tr>
-    <tr><td class="paramname">step</td><td>Value that is clamped between -1 and 1, indicating which direction the actuation should be in and how big it should be. It is multiplied by the stepSize member, so the maximum actuation is stepSize degrees.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>unity/Assets/Scripts/JointController.cs</li>
 </ul>

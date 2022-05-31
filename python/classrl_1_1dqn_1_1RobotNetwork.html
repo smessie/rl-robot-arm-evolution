@@ -73,9 +73,6 @@ $(function() {
   <div class="headertitle"><div class="title">rl.dqn.RobotNetwork Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>The Robot Network class.  
- <a href="classrl_1_1dqn_1_1RobotNetwork.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for rl.dqn.RobotNetwork:</div>
 <div class="dyncontent">
@@ -85,12 +82,12 @@ Inheritance diagram for rl.dqn.RobotNetwork:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1aae41bb96380bd95e60de0f6cb7143f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1dqn_1_1RobotNetwork.html#a1aae41bb96380bd95e60de0f6cb7143f">__init__</a> (self, int hidden_nodes, int number_of_actions, int state_size)</td></tr>
-<tr class="memdesc:a1aae41bb96380bd95e60de0f6cb7143f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classrl_1_1dqn_1_1RobotNetwork.html" title="The Robot Network class.">RobotNetwork</a> class initializer.  <a href="classrl_1_1dqn_1_1RobotNetwork.html#a1aae41bb96380bd95e60de0f6cb7143f">More...</a><br /></td></tr>
-<tr class="separator:a1aae41bb96380bd95e60de0f6cb7143f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeb3be21ca51a563045e0e688ff3b0b7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1dqn_1_1RobotNetwork.html#abeb3be21ca51a563045e0e688ff3b0b7">forward</a> (self, network_input)</td></tr>
-<tr class="memdesc:abeb3be21ca51a563045e0e688ff3b0b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal function of the network, used for processing the input of the network.  <a href="classrl_1_1dqn_1_1RobotNetwork.html#abeb3be21ca51a563045e0e688ff3b0b7">More...</a><br /></td></tr>
-<tr class="separator:abeb3be21ca51a563045e0e688ff3b0b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c3cedd3b60c4609f2a3ee1a765debf6"><td class="memItemLeft" align="right" valign="top"><a id="a1c3cedd3b60c4609f2a3ee1a765debf6" name="a1c3cedd3b60c4609f2a3ee1a765debf6"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, hidden_nodes, number_of_actions, state_size)</td></tr>
+<tr class="separator:a1c3cedd3b60c4609f2a3ee1a765debf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae28229da7c18568b2103b8647d494603"><td class="memItemLeft" align="right" valign="top"><a id="ae28229da7c18568b2103b8647d494603" name="ae28229da7c18568b2103b8647d494603"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>forward</b> (self, x)</td></tr>
+<tr class="separator:ae28229da7c18568b2103b8647d494603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -104,98 +101,6 @@ Public Attributes</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>linear3</b></td></tr>
 <tr class="separator:a63e3ed2e4ccbef0e3dc28b46bd6d4902"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >The Robot Network class. </p>
-<p >Defines the class that will represent the network that is used for deep Q-learning. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1aae41bb96380bd95e60de0f6cb7143f" name="a1aae41bb96380bd95e60de0f6cb7143f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1aae41bb96380bd95e60de0f6cb7143f">&#9670;&nbsp;</a></span>__init__()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def rl.dqn.RobotNetwork.__init__ </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>hidden_nodes</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>number_of_actions</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>state_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The <a class="el" href="classrl_1_1dqn_1_1RobotNetwork.html" title="The Robot Network class.">RobotNetwork</a> class initializer. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">hidden_nodes</td><td>The number of hidden nodes for the hidden layers. </td></tr>
-    <tr><td class="paramname">number_of_actions</td><td>The number of possible actions, important for nodes needed as output. </td></tr>
-    <tr><td class="paramname">state_size</td><td>The number of variables in a state, important for the nodes needed as input. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>An instance of the <a class="el" href="classrl_1_1dqn_1_1RobotNetwork.html" title="The Robot Network class.">RobotNetwork</a> class. </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="abeb3be21ca51a563045e0e688ff3b0b7" name="abeb3be21ca51a563045e0e688ff3b0b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abeb3be21ca51a563045e0e688ff3b0b7">&#9670;&nbsp;</a></span>forward()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def rl.dqn.RobotNetwork.forward </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>network_input</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Internal function of the network, used for processing the input of the network. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network_input</td><td>The network input. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/rl/dqn.py</li>
 </ul>

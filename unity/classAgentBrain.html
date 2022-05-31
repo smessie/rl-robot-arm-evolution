@@ -68,9 +68,6 @@ $(function() {
   <div class="headertitle"><div class="title">AgentBrain Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>The brain of the AI agent. It has lifecycle methods, receives actions and sends observations. Inherits from MLAgents.Agent  
- <a href="classAgentBrain.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for AgentBrain:</div>
 <div class="dyncontent">
@@ -82,90 +79,14 @@ Inheritance diagram for AgentBrain:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9b94c91acd45f49d42307d3120113775"><td class="memItemLeft" align="right" valign="top"><a id="a9b94c91acd45f49d42307d3120113775" name="a9b94c91acd45f49d42307d3120113775"></a>
 override void&#160;</td><td class="memItemRight" valign="bottom"><b>OnEpisodeBegin</b> ()</td></tr>
-<tr class="memdesc:a9b94c91acd45f49d42307d3120113775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lifecycle method that gets called in the beginning of an episode (by the mlagents code). The robot is rebuilt and the joints are randomized. <br /></td></tr>
 <tr class="separator:a9b94c91acd45f49d42307d3120113775"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acece71a0024f97365d3e8fd7bb5920f7"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAgentBrain.html#acece71a0024f97365d3e8fd7bb5920f7">CollectObservations</a> (VectorSensor sensor)</td></tr>
-<tr class="memdesc:acece71a0024f97365d3e8fd7bb5920f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Observations are collected that we want to send back to the Python side.  <a href="classAgentBrain.html#acece71a0024f97365d3e8fd7bb5920f7">More...</a><br /></td></tr>
+<tr class="memitem:acece71a0024f97365d3e8fd7bb5920f7"><td class="memItemLeft" align="right" valign="top"><a id="acece71a0024f97365d3e8fd7bb5920f7" name="acece71a0024f97365d3e8fd7bb5920f7"></a>
+override void&#160;</td><td class="memItemRight" valign="bottom"><b>CollectObservations</b> (VectorSensor sensor)</td></tr>
 <tr class="separator:acece71a0024f97365d3e8fd7bb5920f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8d77b415d8b22a4b27de4e8f4400d57"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAgentBrain.html#af8d77b415d8b22a4b27de4e8f4400d57">OnActionReceived</a> (ActionBuffers actions)</td></tr>
-<tr class="memdesc:af8d77b415d8b22a4b27de4e8f4400d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when actions are received from the Python side  <a href="classAgentBrain.html#af8d77b415d8b22a4b27de4e8f4400d57">More...</a><br /></td></tr>
+<tr class="memitem:af8d77b415d8b22a4b27de4e8f4400d57"><td class="memItemLeft" align="right" valign="top"><a id="af8d77b415d8b22a4b27de4e8f4400d57" name="af8d77b415d8b22a4b27de4e8f4400d57"></a>
+override void&#160;</td><td class="memItemRight" valign="bottom"><b>OnActionReceived</b> (ActionBuffers actions)</td></tr>
 <tr class="separator:af8d77b415d8b22a4b27de4e8f4400d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >The brain of the AI agent. It has lifecycle methods, receives actions and sends observations. Inherits from MLAgents.Agent </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="acece71a0024f97365d3e8fd7bb5920f7" name="acece71a0024f97365d3e8fd7bb5920f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acece71a0024f97365d3e8fd7bb5920f7">&#9670;&nbsp;</a></span>CollectObservations()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">override void AgentBrain.CollectObservations </td>
-          <td>(</td>
-          <td class="paramtype">VectorSensor&#160;</td>
-          <td class="paramname"><em>sensor</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Observations are collected that we want to send back to the Python side. </p>
-<p >Joint angles and joint positions in the space, and the position of the end effector (= last game object within manipulator).</p>
-<p >Like this: [j1_x, j1_y, j1_z, j1_θ, j2_x, j2_y, j2_z, j2_θ, ..., ee_x, ee_y, ee_z] </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sensor</td><td>Object on which observations are added</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Nothing</dd></dl>
-
-</div>
-</div>
-<a id="af8d77b415d8b22a4b27de4e8f4400d57" name="af8d77b415d8b22a4b27de4e8f4400d57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8d77b415d8b22a4b27de4e8f4400d57">&#9670;&nbsp;</a></span>OnActionReceived()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">override void AgentBrain.OnActionReceived </td>
-          <td>(</td>
-          <td class="paramtype">ActionBuffers&#160;</td>
-          <td class="paramname"><em>actions</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Called when actions are received from the Python side </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">actions</td><td>Object that has the actions. Every action represent how much a joint should move</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Nothing</dd></dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>unity/Assets/Scripts/AgentBrain.cs</li>
 </ul>

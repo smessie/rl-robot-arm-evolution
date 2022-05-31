@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['robotinfo_0',['RobotInfo',['../classCreationSC_1_1RobotInfo.html',1,'CreationSC']]],
-  ['robotspecification_1',['RobotSpecification',['../classRobotSpecificationNamespace_1_1RobotSpecification.html',1,'RobotSpecificationNamespace']]]
+  ['jointcontroller_0',['JointController',['../classJointController.html',1,'']]],
+  ['jointlink_1',['JointLink',['../classDefaultNamespace_1_1JointLink.html',1,'DefaultNamespace']]],
+  ['jointspec_2',['JointSpec',['../classDefaultNamespace_1_1JointSpec.html',1,'DefaultNamespace']]]
 ];

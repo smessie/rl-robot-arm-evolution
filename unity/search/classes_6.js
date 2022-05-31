@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['wallbuilder_0',['WallBuilder',['../classWallBuilder.html',1,'']]],
-  ['wallrow_1',['WallRow',['../classWallSC_1_1WallRow.html',1,'WallSC']]],
-  ['wallsc_2',['WallSC',['../classWallSC.html',1,'']]],
-  ['wallspec_3',['WallSpec',['../classWallSC_1_1WallSpec.html',1,'WallSC']]],
-  ['workspacesc_4',['WorkspaceSC',['../classWorkspaceSC.html',1,'']]]
+  ['robotinfo_0',['RobotInfo',['../classCreationSC_1_1RobotInfo.html',1,'CreationSC']]],
+  ['robotspecification_1',['RobotSpecification',['../classDefaultNamespace_1_1RobotSpecification.html',1,'DefaultNamespace']]],
+  ['rotatingmodule_2',['RotatingModule',['../classDefaultNamespace_1_1RotatingModule.html',1,'DefaultNamespace']]],
+  ['rotationspec_3',['RotationSpec',['../classDefaultNamespace_1_1RotationSpec.html',1,'DefaultNamespace']]]
 ];
