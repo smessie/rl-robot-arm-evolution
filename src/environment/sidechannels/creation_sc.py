@@ -37,7 +37,7 @@ class CreationSC(SideChannel):
         self.creation_done = True
 
     def get_joint_amount(self):
-        """! Get the amount of joints that are present in the robot arm. 
+        """! Get the amount of joints that are present in the robot arm.
         @return The amount of joints.
         """
         return self.info['JointAmount']
