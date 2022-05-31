@@ -51,23 +51,22 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print("Please specify a command ('start_test_env', 'morphevo', 'rl', 'coevolution')")
         sys.exit()
-    if sys.argv[1] == "start_test_env":
-        start_test_env()
+    elif len(sys.argv) < 3:
+        print("Please specify a config file.")
+        sys.exit()
+    elif not exists(sys.argv[2]):
+        print(f"Configfile '{sys.argv[2]}' does not exist.")
+        sys.exit()
     else:
-        if len(sys.argv) < 3:
-            print("Something wrong with program arguments, please check out the correct syntax.")
-            sys.exit()
-        elif not exists(sys.argv[2]):
-            print(f"Configfile '{sys.argv[2]}' does not exist.")
-            sys.exit()
+        set_config(sys.argv[2])
+        if sys.argv[1] == "morphevo":
+            start_morphevo()
+        elif sys.argv[1] == "rl":
+            start_rl()
+        elif sys.argv[1] == "coevolution":
+            start_coevolution()
+        elif sys.argv[1] == "start_test_env":
+            start_test_env()
         else:
-            set_config(sys.argv[2])
-            if sys.argv[1] == "morphevo":
-                start_morphevo()
-            elif sys.argv[1] == "rl":
-                start_rl()
-            elif sys.argv[1] == "coevolution":
-                start_coevolution()
-            else:
-                print("Please specify a valid command ('start_test_env', 'morphevo', 'rl', 'coevolution')")
-                sys.exit()
+            print("Please specify a valid command ('start_test_env', 'morphevo', 'rl', 'coevolution')")
+            sys.exit()

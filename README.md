@@ -27,6 +27,8 @@ pip install -e ./ml-agents
 
 #### Building unity
 
+- Change the path to ml-agents in `unity/Packages/manifest.json`
+
 - Open the `unity/` folder in Unity 2020.3.30f1
 
 - Go to Window > Package Manager.
@@ -43,6 +45,7 @@ pip install -e ./ml-agents
   + Click "Build". Build the project with name 'simenv' in a directory `build/` in the repository root.
 
 ## How to run
+
 All following commands should be executed in the root of the project inside your virtual environment which was configured in the Setup section.
 
 #### Coevolution
@@ -62,7 +65,7 @@ python src/run.py morphevo src/configs/example.yaml
 
 #### Environment tests
 ```
-python ./src/run.py start_test_env
+python ./src/run.py start_test_env src/configs/example.yaml
 ```
 
 ## Demo
@@ -86,7 +89,7 @@ When analyzing the code: add these lines to your `unity/Assembly-CSharp.csproj`:
 ```
 We also ignore errors in the `unity/Assets/StarterAssets/` folder, because that was included from the StarterAssets package.
 
-Note: for it to work on my setup in Visual Studio Code, you might have to downgrade the Visual Studio Code C# Extension to 1.24.1. See [this issue](https://github.com/OmniSharp/omnisharp-vscode/issues/5160).
+Note: for it to work on your setup in Visual Studio Code, you might have to downgrade the Visual Studio Code C# Extension to 1.24.1. See [this issue](https://github.com/OmniSharp/omnisharp-vscode/issues/5160).
 
 
 ## What do the config parameters mean?
