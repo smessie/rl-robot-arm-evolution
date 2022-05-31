@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['linkspec_0',['LinkSpec',['../classDefaultNamespace_1_1LinkSpec.html',1,'DefaultNamespace']]]
+  ['robotinfo_0',['RobotInfo',['../classCreationSC_1_1RobotInfo.html',1,'CreationSC']]]
 ];

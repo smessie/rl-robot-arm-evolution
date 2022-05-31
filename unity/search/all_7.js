@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['robotinfo_0',['RobotInfo',['../classCreationSC_1_1RobotInfo.html',1,'CreationSC']]],
-  ['robotspecification_1',['RobotSpecification',['../classDefaultNamespace_1_1RobotSpecification.html',1,'DefaultNamespace']]],
-  ['rotatingmodule_2',['RotatingModule',['../classDefaultNamespace_1_1RotatingModule.html',1,'DefaultNamespace']]],
-  ['rotationspec_3',['RotationSpec',['../classDefaultNamespace_1_1RotationSpec.html',1,'DefaultNamespace']]]
+  ['sidechannelregistrator_0',['SideChannelRegistrator',['../classSideChannelRegistrator.html',1,'']]],
+  ['status_1',['Status',['../classCreationSC_1_1RobotInfo.html#a50b2905c3c744e8561b9586a651d51e5',1,'CreationSC::RobotInfo']]],
+  ['stepsize_2',['stepSize',['../classJointController.html#a15bcd23fac6b2381be8444d92c02d66e',1,'JointController']]]
 ];

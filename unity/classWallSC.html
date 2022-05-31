@@ -70,6 +70,9 @@ $(function() {
   <div class="headertitle"><div class="title">WallSC Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Side channel to place walls in the environment.  
+ <a href="classWallSC.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for WallSC:</div>
 <div class="dyncontent">
@@ -77,19 +80,45 @@ Inheritance diagram for WallSC:</div>
   <img src="classWallSC.png" alt=""/>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallSC_1_1WallRow.html">WallRow</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A serializable class used to parse JSON sent through the wall side channel  <a href="classWallSC_1_1WallRow.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallSC_1_1WallSpec.html">WallSpec</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A serializable class used to parse JSON sent through the wall side channel  <a href="classWallSC_1_1WallSpec.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aabf6d5cc172092a566f7fdc1e72e09ca"><td class="memItemLeft" align="right" valign="top"><a id="aabf6d5cc172092a566f7fdc1e72e09ca" name="aabf6d5cc172092a566f7fdc1e72e09ca"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>WallSC</b> (GameObject manipulator)</td></tr>
+<tr class="memdesc:aabf6d5cc172092a566f7fdc1e72e09ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of this side channel </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">manipulator</td><td>object that has the main scripts, like Builder.cs etc</td></tr>
+  </table>
+  </dd>
+</dl>
+<br /></td></tr>
 <tr class="separator:aabf6d5cc172092a566f7fdc1e72e09ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a04cf356b645a26b9d16bbb4b20ba4b8e"><td class="memItemLeft" align="right" valign="top"><a id="a04cf356b645a26b9d16bbb4b20ba4b8e" name="a04cf356b645a26b9d16bbb4b20ba4b8e"></a>
 override void&#160;</td><td class="memItemRight" valign="bottom"><b>OnMessageReceived</b> (IncomingMessage msg)</td></tr>
+<tr class="memdesc:a04cf356b645a26b9d16bbb4b20ba4b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called when a message is sent through the side channel. When the message is a wall, instructs the <a class="el" href="classWallBuilder.html">WallBuilder</a> to build a new wall. Otherwise all walls are cleared. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>The message, either a JSON string parseable to <a class="el" href="classWallSC_1_1WallSpec.html" title="A serializable class used to parse JSON sent through the wall side channel">WallSpec</a> (for building a new wall) or any other string (to remove all walls)</td></tr>
+  </table>
+  </dd>
+</dl>
+<br /></td></tr>
 <tr class="separator:a04cf356b645a26b9d16bbb4b20ba4b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Side channel to place walls in the environment. </p>
+<p >It supports two operations: adding one wall and removing all walls. </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>unity/Assets/Scripts/SideChannels/WallSC.cs</li>
 </ul>
 </div><!-- contents -->
