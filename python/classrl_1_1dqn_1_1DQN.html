@@ -82,6 +82,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afd99679b0c61c140997fa79ab4c115b5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1dqn_1_1DQN.html#afd99679b0c61c140997fa79ab4c115b5">__init__</a> (self, int number_of_actions, int state_size, network_path=&quot;&quot;)</td></tr>
 <tr class="memdesc:afd99679b0c61c140997fa79ab4c115b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classrl_1_1dqn_1_1RobotNetwork.html" title="The Robot Network class.">RobotNetwork</a> class initializer.  <a href="classrl_1_1dqn_1_1DQN.html#afd99679b0c61c140997fa79ab4c115b5">More...</a><br /></td></tr>
 <tr class="separator:afd99679b0c61c140997fa79ab4c115b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b0b2c9cd3105e83c574327ff0ff33e0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1dqn_1_1DQN.html#a9b0b2c9cd3105e83c574327ff0ff33e0">save</a> (self, str path)</td></tr>
+<tr class="memdesc:a9b0b2c9cd3105e83c574327ff0ff33e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the network to a given path.  <a href="classrl_1_1dqn_1_1DQN.html#a9b0b2c9cd3105e83c574327ff0ff33e0">More...</a><br /></td></tr>
+<tr class="separator:a9b0b2c9cd3105e83c574327ff0ff33e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6848c16d4ae4343540d91a0c10778069"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrl_1_1dqn_1_1DQN.html#a6848c16d4ae4343540d91a0c10778069">update</a> (self, np.ndarray state, np.ndarray next_state, int action, float reward, bool finished)</td></tr>
 <tr class="memdesc:a6848c16d4ae4343540d91a0c10778069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the network, should happen between each state transition during training.  <a href="classrl_1_1dqn_1_1DQN.html#a6848c16d4ae4343540d91a0c10778069">More...</a><br /></td></tr>
 <tr class="separator:a6848c16d4ae4343540d91a0c10778069"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,6 +215,42 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An action, represented as a number. </dd></dl>
+
+</div>
+</div>
+<a id="a9b0b2c9cd3105e83c574327ff0ff33e0" name="a9b0b2c9cd3105e83c574327ff0ff33e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b0b2c9cd3105e83c574327ff0ff33e0">&#9670;&nbsp;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def rl.dqn.DQN.save </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Save the network to a given path. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The file path to save the network to. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

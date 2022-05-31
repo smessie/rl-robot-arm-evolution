@@ -12,10 +12,9 @@ var searchData=
   ['get_5flast_5fnode_9',['get_last_node',['../classmorphevo_1_1genome_1_1GenotypeGraph.html#a0d83ecd2cb7257cc0dfbd307bf0c1e56',1,'morphevo::genome::GenotypeGraph']]],
   ['get_5frandom_5fmodule_10',['get_random_module',['../classmorphevo_1_1genome_1_1GenotypeGraph.html#a0c127122c836b342a6b9fc1f0c6e9a6f',1,'morphevo::genome::GenotypeGraph']]],
   ['get_5frandom_5fwall_11',['get_random_wall',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html#a0703f32f0e8fac25cf249bb6f093a0cd',1,'rl::deep_q_learning::DeepQLearner']]],
-  ['get_5fscore_12',['get_score',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html#af9fcbccb45f53f98fc2aad35115f7bf8',1,'rl::deep_q_learning::DeepQLearner']]],
-  ['get_5furdf_13',['get_urdf',['../classmorphevo_1_1genome_1_1Genome.html#a8133208891d0a7a5676bb1b551cd6d46',1,'morphevo.genome.Genome.get_urdf()'],['../classmorphevo_1_1urdf__generator_1_1URDFGenerator.html#a5d9c3e97113217dbbe0bc12ec313d25d',1,'morphevo.urdf_generator.URDFGenerator.get_urdf()']]],
-  ['get_5fx_5frange_14',['get_x_range',['../classmorphevo_1_1workspace_1_1Workspace.html#aa4dfd4c274caeab5c193cc55f915db3a',1,'morphevo::workspace::Workspace']]],
-  ['get_5fy_5frange_15',['get_y_range',['../classmorphevo_1_1workspace_1_1Workspace.html#aef5e4615746712098a9ea0506ca5d6bd',1,'morphevo::workspace::Workspace']]],
-  ['get_5fz_5frange_16',['get_z_range',['../classmorphevo_1_1workspace_1_1Workspace.html#aed87838d864ea1e1857ddb1b2634c5c8',1,'morphevo::workspace::Workspace']]],
-  ['goalsc_17',['GoalSC',['../classenvironment_1_1sidechannels_1_1goal__sc_1_1GoalSC.html',1,'environment::sidechannels::goal_sc']]]
+  ['get_5furdf_12',['get_urdf',['../classmorphevo_1_1genome_1_1Genome.html#a8133208891d0a7a5676bb1b551cd6d46',1,'morphevo.genome.Genome.get_urdf()'],['../classmorphevo_1_1urdf__generator_1_1URDFGenerator.html#a5d9c3e97113217dbbe0bc12ec313d25d',1,'morphevo.urdf_generator.URDFGenerator.get_urdf()']]],
+  ['get_5fx_5frange_13',['get_x_range',['../classmorphevo_1_1workspace_1_1Workspace.html#aa4dfd4c274caeab5c193cc55f915db3a',1,'morphevo::workspace::Workspace']]],
+  ['get_5fy_5frange_14',['get_y_range',['../classmorphevo_1_1workspace_1_1Workspace.html#aef5e4615746712098a9ea0506ca5d6bd',1,'morphevo::workspace::Workspace']]],
+  ['get_5fz_5frange_15',['get_z_range',['../classmorphevo_1_1workspace_1_1Workspace.html#aed87838d864ea1e1857ddb1b2634c5c8',1,'morphevo::workspace::Workspace']]],
+  ['goalsc_16',['GoalSC',['../classenvironment_1_1sidechannels_1_1goal__sc_1_1GoalSC.html',1,'environment::sidechannels::goal_sc']]]
 ];

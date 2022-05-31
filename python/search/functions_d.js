@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['save_0',['save',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html#ae4a1091ce46d01c7d2beba31a5f2c48d',1,'rl::deep_q_learning::DeepQLearner']]],
+  ['save_0',['save',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html#ab9acc6874cb317d37712e6934379fc96',1,'rl.deep_q_learning.DeepQLearner.save()'],['../classrl_1_1dqn_1_1DQN.html#a9b0b2c9cd3105e83c574327ff0ff33e0',1,'rl.dqn.DQN.save()']]],
   ['save_5fbest_5fgenome_1',['save_best_genome',['../evolution_8py.html#a64cd1b25e6967b5d2a18f9abbbf91735',1,'morphevo::evolution']]],
   ['save_5fgenome_2',['save_genome',['../util_8py.html#a7c8a95f5df6bc7e8714daf4a949a8a5b',1,'morphevo::util']]],
   ['select_5fnext_5fparent_3',['select_next_parent',['../evolution_8py.html#a86aa2bd6ceffe87ac28e6112a8b41aa1',1,'morphevo::evolution']]],
