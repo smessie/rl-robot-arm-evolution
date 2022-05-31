@@ -27,8 +27,6 @@ pip install -e ./ml-agents
 
 #### Building unity
 
-- Change the path to ml-agents in `unity/Packages/manifest.json`
-
 - Open the `unity/` folder in Unity 2020.3.30f1
 
 - Go to Window > Package Manager.
