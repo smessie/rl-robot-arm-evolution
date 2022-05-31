@@ -70,6 +70,9 @@ $(function() {
   <div class="headertitle"><div class="title">CreationSC Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Side channel to create the robot when initializing  
+ <a href="classCreationSC.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for CreationSC:</div>
 <div class="dyncontent">
@@ -80,21 +83,38 @@ Inheritance diagram for CreationSC:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCreationSC_1_1RobotInfo.html">RobotInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class to store info about a built robot. Used to return info in JSON format through the creation side channel  <a href="classCreationSC_1_1RobotInfo.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a420fcfb479c0a9fb23efdec16f33cba5"><td class="memItemLeft" align="right" valign="top"><a id="a420fcfb479c0a9fb23efdec16f33cba5" name="a420fcfb479c0a9fb23efdec16f33cba5"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>CreationSC</b> (GameObject manipulator)</td></tr>
+<tr class="memdesc:a420fcfb479c0a9fb23efdec16f33cba5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that takes the main manipulator GameObject. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">manipulator</td><td>object that has the main scripts, like Builder.cs etc</td></tr>
+  </table>
+  </dd>
+</dl>
+<br /></td></tr>
 <tr class="separator:a420fcfb479c0a9fb23efdec16f33cba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1d117e258fd8796a815b1fe7104fd617"><td class="memItemLeft" align="right" valign="top"><a id="a1d117e258fd8796a815b1fe7104fd617" name="a1d117e258fd8796a815b1fe7104fd617"></a>
 override void&#160;</td><td class="memItemRight" valign="bottom"><b>OnMessageReceived</b> (IncomingMessage msg)</td></tr>
+<tr class="memdesc:a1d117e258fd8796a815b1fe7104fd617"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called when a message is sent through the side channel. Uses the <a class="el" href="classBuilder.html">Builder</a> to build the agent (robot arm). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>The message, containing a string of the URDF format</td></tr>
+  </table>
+  </dd>
+</dl>
+<br /></td></tr>
 <tr class="separator:a1d117e258fd8796a815b1fe7104fd617"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Side channel to create the robot when initializing </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>unity/Assets/Scripts/SideChannels/CreationSC.cs</li>
 </ul>
 </div><!-- contents -->
