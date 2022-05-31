@@ -11,8 +11,8 @@ from util.config import get_config
 
 def run_coevolution():
     """!
-    Run the coevolution process which uses morphological evolution and reinforcement learning for this.
-    Every coevolution step, all genomes' URDF are saved.
+    Run the coevolution process which uses morphological evolution and reinforcement learning.
+    Every coevolution step, all genomes' URDF and succes rates are saved.
     """
     config = get_config()
     parents = []
