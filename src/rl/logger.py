@@ -15,7 +15,7 @@ class Logger:
     def log_episode(self, episode: int, final_state: np.ndarray,
                     goal: np.ndarray, timesteps: int, total_finished: int, episodes_finished: List[bool],
                     reward: float, eps: float):
-        """! Log 1 episode
+        """! Log 1 episode.
         @param episode Episode number
         @param final_state State at the end of the episode
         @param goal Goal this episode
@@ -24,7 +24,7 @@ class Logger:
         @param episodes_finished boolean array with length 50. It describes the last 50 episodes.
             True = the episode finished, False = the episode did not finish.
         @param reward The reward of the last step in the episode
-        @param eps EPS of the DQN at this moment.
+        @param eps Epsilon parameter of the DQN at this moment.
         """
 
         final_distance = np.linalg.norm(final_state[:3] - goal)

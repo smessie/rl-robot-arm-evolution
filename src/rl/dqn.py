@@ -87,8 +87,8 @@ class DQN:
 
     def _apply_loss(self, current_q: torch.Tensor, targets: torch.Tensor) -> None:
         """! Apply the loss function.
-        @param The current Q-value.
-        @param next_states The targets.
+        @param current_q The current Q-value.
+        @param targets The targets.
         """
         loss_fn = torch.nn.MSELoss()
         loss = loss_fn(current_q, targets.float())
@@ -115,7 +115,6 @@ class DQN:
         self.eps *= self.eps_decay
         self.eps = max(self.eps_end, self.eps)
 
-    # pylint: disable-msg=too-many-locals
     def update(self, state: np.ndarray, next_state: np.ndarray, action: int, reward: float, finished: bool):
         """! Update the network, should happen between each state transition during training.
         @param state The start state of the environment.
