@@ -80,9 +80,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a0933ab7b2985dfa522f145b84efa99c2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8py.html#a0933ab7b2985dfa522f145b84efa99c2">morphevo.util.generate_arms</a> (int amount)</td></tr>
 <tr class="memdesc:a0933ab7b2985dfa522f145b84efa99c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a list of initial random arms with random genome.  <a href="util_8py.html#a0933ab7b2985dfa522f145b84efa99c2">More...</a><br /></td></tr>
 <tr class="separator:a0933ab7b2985dfa522f145b84efa99c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c2c8546fd16f2ac9d9ec01a548f3cd7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8py.html#a4c2c8546fd16f2ac9d9ec01a548f3cd7">morphevo.util.alternate</a> (what, times)</td></tr>
-<tr class="memdesc:a4c2c8546fd16f2ac9d9ec01a548f3cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to make an alternation of a list for x items.  <a href="util_8py.html#a4c2c8546fd16f2ac9d9ec01a548f3cd7">More...</a><br /></td></tr>
-<tr class="separator:a4c2c8546fd16f2ac9d9ec01a548f3cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e78927bbd65893059e6fc7d9542c274"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8py.html#a7e78927bbd65893059e6fc7d9542c274">morphevo.util.alternate</a> (list_to_alternate, times)</td></tr>
+<tr class="memdesc:a7e78927bbd65893059e6fc7d9542c274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to make an alternation of a list for x items.  <a href="util_8py.html#a7e78927bbd65893059e6fc7d9542c274">More...</a><br /></td></tr>
+<tr class="separator:a7e78927bbd65893059e6fc7d9542c274"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaf0af9278a821894f815c529b4e621a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8py.html#abaf0af9278a821894f815c529b4e621a">morphevo.util.alternate_infinite</a> (list_to_alternate)</td></tr>
 <tr class="memdesc:abaf0af9278a821894f815c529b4e621a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to make an alternation of a list on which you can iterate till infinity.  <a href="util_8py.html#abaf0af9278a821894f815c529b4e621a">More...</a><br /></td></tr>
 <tr class="separator:abaf0af9278a821894f815c529b4e621a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -99,8 +99,8 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Some util functions that are used in the morphological evolution part and/or <a class="el" href="coevolution_8py.html" title="File that contains the main function of the coevolution process and brings together all other sub-pha...">coevolution.py</a>. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a4c2c8546fd16f2ac9d9ec01a548f3cd7" name="a4c2c8546fd16f2ac9d9ec01a548f3cd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c2c8546fd16f2ac9d9ec01a548f3cd7">&#9670;&nbsp;</a></span>alternate()</h2>
+<a id="a7e78927bbd65893059e6fc7d9542c274" name="a7e78927bbd65893059e6fc7d9542c274"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e78927bbd65893059e6fc7d9542c274">&#9670;&nbsp;</a></span>alternate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -109,7 +109,7 @@ Functions</h2></td></tr>
           <td class="memname">def morphevo.util.alternate </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>what</em>, </td>
+          <td class="paramname"><em>list_to_alternate</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -128,7 +128,7 @@ Functions</h2></td></tr>
 <p>Function to make an alternation of a list for x items. </p>
 <p >Example what = [1,2,3,4] times = 6 -&gt; [1,2,3,4,1,2]. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">what</td><td>The list that you want to alternate. </td></tr>
+    <tr><td class="paramname">list_to_alternate</td><td>The list that you want to alternate. </td></tr>
     <tr><td class="paramname">times</td><td>Amount of times you want to alterate your items. </td></tr>
   </table>
   </dd>
