@@ -4,7 +4,7 @@ environment:
   path_to_unity_executable: './build/simenv.x86_64'
   path_to_robot_urdf: './src/configs/robots/example_robot.urdf'
   morphevo_use_graphics: false
-  rl_use_graphics_training: false
+  rl_use_graphics_training: true
   rl_use_graphics_testing: false
   amount_of_cores: 8
 
@@ -37,8 +37,8 @@ morphevo:
   sample_size: 100
   workspace_type: 'moved_cube'
   # cube over the whole surrounding area of the arm
-  workspace_cube_offset: [0,2,0]
-  workspace_side_length: 17.5
+  workspace_cube_offset: [ 0,5,15 ]
+  workspace_side_length: 5
 
 rl:
   episodes: 1000 
@@ -51,4 +51,4 @@ rl:
   eps_start: 1 
   hidden_nodes: 64
   goal_bal_diameter: 1.1
-  use_walls: False
+  use_walls: True
