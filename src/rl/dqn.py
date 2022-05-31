@@ -8,7 +8,7 @@ from util.config import get_config
 
 
 class RobotNetwork(torch.nn.Module):
-    """! The Robot Network class.
+    """! The RobotNetwork class.
     Defines the class that will represent the network that is used for deep Q-learning.
     """
     def __init__(self, hidden_nodes: int, number_of_actions: int, state_size: int):
