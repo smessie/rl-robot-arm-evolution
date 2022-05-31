@@ -6,6 +6,9 @@ using System.Xml.Serialization;
 /// </summary>
 namespace RobotSpecificationNamespace
 {
+    /// <summary>
+    /// The class containing the full specification of the robot arm
+    /// </summary>
     [XmlRoot("robot")]
     public class RobotSpecification
     {

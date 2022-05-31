@@ -23,8 +23,8 @@ public class AgentBrain : Agent
     private void Awake()
     {
         _jointController = GetComponentInParent<JointController>();
-        _anchor = GetComponentInParent<Builder>().anchor;
-        _endEffector = GetComponentInParent<Builder>().EndEffector;
+        _anchor = GetComponentInParent<ArmBuilder>().anchor;
+        _endEffector = GetComponentInParent<ArmBuilder>().EndEffector;
     }
 
     /// <summary>
@@ -33,8 +33,8 @@ public class AgentBrain : Agent
     /// </summary>
     public override void OnEpisodeBegin()
     {
-        GetComponentInParent<Builder>().RebuildAgent();
-        _endEffector = GetComponentInParent<Builder>().EndEffector;
+        GetComponentInParent<ArmBuilder>().RebuildAgent();
+        _endEffector = GetComponentInParent<ArmBuilder>().EndEffector;
         _jointController.RandomizeJoints();
     }
 

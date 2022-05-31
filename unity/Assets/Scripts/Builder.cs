@@ -5,9 +5,23 @@ using System.Xml.Serialization;
 using RobotSpecificationNamespace;
 using UnityEngine;
 
-public class Builder : MonoBehaviour
+/// <summary>
+/// Script on the main manipulator to build the robot arm
+/// </summary>
+public class ArmBuilder : MonoBehaviour
 {
-    private enum ModuleType
+    /// <summary>
+    /// Each module has a type. Outside of the Invalid type, there are 4 types:
+    ///
+    /// Anchor: Special case for the lowest module. Has 0 or 1 joints.
+    ///
+    /// Tilting: Module that has 1 joint at the base that can 'tilt' the robot.
+    ///
+    /// Rotating: Module that has 1 joint in the middle, rotating along the axis of the module.
+    ///
+    /// Complex: Module that has 2 joints: a tilting and a rotating one.
+    /// </summary>
+    public enum ModuleType
     {
         Invalid,
         Anchor,
@@ -16,7 +30,10 @@ public class Builder : MonoBehaviour
         Complex
     }
 
-    private ModuleType TypeOfLink(LinkSpec link)
+    /// <summary>
+    /// Converts the XML-parsed LinkSpec to ModuleType
+    /// </summary>
+    public ModuleType TypeOfLink(LinkSpec link)
     {
         GeometrySpec geometry = link.VisualSpec.Geometry;
         if (geometry.AnchorModule != null) { return ModuleType.Anchor; }
@@ -26,12 +43,18 @@ public class Builder : MonoBehaviour
         return ModuleType.Invalid;
     }
 
+    /// <summary>Prefab instantiated by Unity</summary>
     public GameObject moduleBodyPrefab;
+    /// <summary>Prefab instantiated by Unity</summary>
     public GameObject rotatingModuleBodyPrefab;
+    /// <summary>Prefab instantiated by Unity</summary>
     public GameObject moduleConnectorPrefab;
+    /// <summary>Prefab instantiated by Unity</summary>
     public GameObject tiltingModuleConnectorPrefab;
+    /// <summary>Prefab instantiated by Unity</summary>
     public GameObject manipulatorAgentPrefab;
 
+    /// <summary>The anchor GameObject, instantiated by Unity</summary>
     public GameObject anchor;
 
     private RobotSpecification robotSpecification = null;
@@ -68,6 +91,14 @@ public class Builder : MonoBehaviour
         return geometry.ComplexModule.Length;
     }
 
+    /// <summary>
+    /// Build a robot arm. Should only be called once, in the beginning, because the manipulatorAgent
+    /// would be instantiated twice.
+    /// Saves the RobotSpec specification after parsing so the robot can be rebuild (see RebuildAgent)
+    /// </summary>
+    /// <param name="urdf">The robot specfication in URDF format, to be parsed by using
+    /// XmlSerializer with the RobotSpec specification</param>
+    /// <returns>Whether the parsing and building was successful</returns>
     public bool BuildAgent(string urdf)
     {
         // Parse URDF
@@ -85,7 +116,13 @@ public class Builder : MonoBehaviour
         }
     }
 
-    public bool BuildAgent(RobotSpecification robotSpec)
+    /// <summary>
+    /// Variant of BuildAgent method that takes a RobotSpec specification.
+    /// Is called by BuildAgent(string) the first time and after that by RebuildAgent
+    /// </summary>
+    /// <param name="robotSpec">The robot specfication</param>
+    /// <returns>Whether the building was successful</returns>
+    private bool BuildAgent(RobotSpecification robotSpec)
     {
         try
         {
@@ -103,6 +140,9 @@ public class Builder : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes the current robot arm
+    /// </summary>
     public void DestroyAgent()
     {
         foreach (var part in allRobotParts)
@@ -112,6 +152,10 @@ public class Builder : MonoBehaviour
         allRobotParts = new List<GameObject>();
     }
 
+    /// <summary>
+    /// Removes the current robot arm and rebuilds it.
+    /// </summary>
+    /// <returns>Whether the rebuilding was successful</returns>
     public bool RebuildAgent()
     {
         DestroyAgent();
@@ -122,6 +166,12 @@ public class Builder : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Parse a string in URDF format, to be parsed by using
+    /// XmlSerializer with the RobotSpec specification
+    /// </summary>
+    /// <param name="urdf">The robot specfication string</param>
+    /// <returns>The parsed specification</returns>
     private RobotSpecification ParseURDF(string urdf)
     {
         byte[] byteArray = Encoding.ASCII.GetBytes(urdf);
@@ -131,6 +181,11 @@ public class Builder : MonoBehaviour
         return (RobotSpecification)serializer.Deserialize(stream);
     }
 
+    /// <summary>
+    /// Private method that is the core of BuildAgent(RobotSpec)
+    /// </summary>
+    /// <param name="robotSpec">The robot specfication</param>
+    /// <returns>Whether the building was successful</returns>
     private bool AddModules(RobotSpecification robotSpec)
     {
         LinkSpec firstLink = robotSpec.Links[0];
@@ -156,7 +211,13 @@ public class Builder : MonoBehaviour
         return true;
     }
 
-    void AddAnchorModule(LinkSpec anchorLink)
+    /// <summary>
+    /// Method called when building the robot to add the anchor module.
+    ///
+    /// Instantiates the two prefabs necessary to build this module and configures the joint if necessary
+    /// </summary>
+    /// <param name="anchorLink">The anchor module specification</param>
+    private void AddAnchorModule(LinkSpec anchorLink)
     {
         // Add a module with the given length.
         GameObject module = new GameObject(anchorLink.Name);
@@ -195,7 +256,14 @@ public class Builder : MonoBehaviour
         endEffector = moduleHead;
     }
 
-    void AddModule(LinkSpec link, ModuleType type)
+    /// <summary>
+    /// Method called when building the robot to add a module other than the anchor module.
+    ///
+    /// Instantiates the three prefabs necessary to build this module and configures the joint(s)
+    /// </summary>
+    /// <param name="link">The module specification</param>
+    /// <param name="type">The module type</param>
+    private void AddModule(LinkSpec link, ModuleType type)
     {
         // Add a module with the given length.
         GameObject module = new GameObject(link.Name);
@@ -249,7 +317,12 @@ public class Builder : MonoBehaviour
         endEffector = moduleHead;
     }
 
-    void ConfigureTiltingJoint(GameObject moduleTail, TiltingSpec tiltingSpec)
+    /// <summary>
+    /// Method called when building the robot to configure a tilting joint
+    /// </summary>
+    /// <param name="moduleTail">The GameObject that 'carries' the joint</param>
+    /// <param name="tiltingSpec">The specification of the joint</param>
+    private void ConfigureTiltingJoint(GameObject moduleTail, TiltingSpec tiltingSpec)
     {
         ArticulationBody articulationBody = moduleTail.GetComponent<ArticulationBody>();
 
@@ -269,7 +342,12 @@ public class Builder : MonoBehaviour
         _articulationBodies.Add(moduleTail.GetComponent<ArticulationBody>());
     }
 
-    void ConfigureRotatingJoint(GameObject moduleBody, RotationSpec rotationSpec)
+    /// <summary>
+    /// Method called when building the robot to configure a rotating joint
+    /// </summary>
+    /// <param name="moduleBody">The GameObject that 'carries' the joint</param>
+    /// <param name="rotationSpec">The specification of the rotation</param>
+    private void ConfigureRotatingJoint(GameObject moduleBody, RotationSpec rotationSpec)
     {
         ArticulationBody articulationBody = moduleBody.GetComponent<ArticulationBody>();
 
@@ -300,6 +378,10 @@ public class Builder : MonoBehaviour
         _articulationBodies.Add(moduleBody.GetComponent<ArticulationBody>());
     }
 
+    /// <summary>
+    /// Returns the amount of joints the currently built robot arm has (zero if no arm built)
+    /// </summary>
+    /// <returns>The amount of joints</returns>
     public int GetJointAmount()
     {
         return _articulationBodies.Count;

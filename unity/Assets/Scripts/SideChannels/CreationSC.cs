@@ -23,7 +23,7 @@ public class CreationSC : SideChannel
         public int JointAmount;
     }
 
-    private Builder _manipulatorBuilder;
+    private ArmBuilder _manipulatorBuilder;
 
     /// <summary>
     /// Constructor that takes the main manipulator GameObject.
@@ -31,7 +31,7 @@ public class CreationSC : SideChannel
     /// </summary>
     public CreationSC(GameObject manipulator)
     {
-        _manipulatorBuilder = manipulator.GetComponent<Builder>();
+        _manipulatorBuilder = manipulator.GetComponent<ArmBuilder>();
 
         ChannelId = new Guid("2c137891-46b7-4284-94ff-3dc14a7ab993");
     }
