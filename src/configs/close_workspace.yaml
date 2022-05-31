@@ -1,8 +1,8 @@
-description: "Example config"
+description: "Config for a nearby workspace"
 
 environment:
-  path_to_unity_executable: '../build/simenv.x86_64'
-  path_to_robot_urdf: 'environment/robot.urdf'
+  path_to_unity_executable: './build/simenv.x86_64'
+  path_to_robot_urdf: './src/configs/robots/manual_robot.urdf'
   morphevo_use_graphics: false
   rl_use_graphics_training: false
   rl_use_graphics_testing: false

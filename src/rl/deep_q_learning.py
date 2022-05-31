@@ -27,6 +27,9 @@ class DeepQLearner:
     """! The Deep Q learner class.
     Defines the class that will learn based on a Deep-Q Network.
     """
+    STATE_SIZE = 6
+    WALL_STATE_SIZE = 9
+
     def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
                  use_graphics: bool = False, network_path:str = "") -> None:
         """! The DeepQLearner class initializer.
@@ -80,7 +83,7 @@ class DeepQLearner:
                 self.save()
             sys.exit(1)
 
-    def save(self, path:str = "./rl/networks/most_recently_saved_network.pkl") -> None:
+    def save(self, path:str = "./src/rl/networks/most_recently_saved_network.pkl") -> None:
         """! Save the trained network in a pickle file
         @param path Path to file where the network will be saved.
         """
@@ -107,7 +110,9 @@ class DeepQLearner:
         @param network_path Path to network, if the goal is testing, not training.
         @return A DQN instance.
         """
-        return DQN(len(self.actions), state_size=9 if self.use_walls else 6, network_path=network_path)
+        return DQN(len(self.actions),
+                   state_size=self.WALL_STATE_SIZE if self.use_walls else self.STATE_SIZE,
+                   network_path=network_path)
 
     def _generate_goal(self) -> np.ndarray:
         """! Generate a goal inside the goal space
@@ -168,7 +173,7 @@ class DeepQLearner:
         return action_index, observations
 
     def learn(self, number_of_episodes: int = 10000, steps_per_episode: int = 1000, logging: bool = False) -> float:
-        """! The learning loop of the reinforcement learning part.
+        """! The training or testing loop (depending on variable 'training') of the deep q-learning.
         @param number_of_episodes Maximum amount of episodes.
         @param steps_per_episode Maximum amount of steps each episode.
         @param logging If true there will be wandb logs
@@ -176,9 +181,10 @@ class DeepQLearner:
         """
         episodes_finished = [False] * 50
         total_finished = 0
+
         for episode in tqdm(range(number_of_episodes), desc='Deep Q-Learning'):
-            # the end effector position is already randomized after reset()
             observations = self.env.reset()
+
             if self.use_walls:
                 self.current_wall_index, new_wall, _ = self.get_random_wall()
                 self.env.replace_walls(new_wall)
@@ -190,19 +196,17 @@ class DeepQLearner:
             previous_position = self._get_end_effector_position(observations)
             episode_step = 0
             finished = False
+
             while not finished and episode_step < steps_per_episode:
-                # Get an action and execute
                 action_index, observations = self.step(state)
-
                 new_state = self._calculate_state(observations, goal)
-
-                # Calculate reward
                 new_position = self._get_end_effector_position(observations)
+
                 reward, finished = self._calculate_reward(
                     previous_position, new_position, goal)
-                previous_position = new_position  # this is not in the state, but is useful for reward calculation
 
-                # network update
+                previous_position = new_position
+
                 if self.training:
                     self.dqn.update(state, new_state, action_index, reward, finished)
 
@@ -224,7 +228,7 @@ class DeepQLearner:
         return total_finished/number_of_episodes
 
     def predict(self, state: np.ndarray) -> int:
-        """! Pick the best or a random action depending on epsilon value of the Deep-Q Network. 
+        """! Pick the best or a random action depending on epsilon value of the Deep-Q Network.
         @param state Current state of the environment.
         @return The chosen action.
         """
@@ -236,21 +240,6 @@ class DeepQLearner:
 
         action = self.dqn.get_best_action(state)
         return action
-
-    def get_score(self, number_of_joints: int, workspace: Workspace, episodes: int = 200) -> float:
-        """! Run a training cycle on a robot arm and workspace.
-        @param number_of_joints The amount of joints the robot we run the cycle for has
-        @param workspace The goal workspace the robot needs to work on.
-        @param episodes Amount of episodes the training cycle needs to do.
-        @return The success rate of the training.
-        """
-        self.x_range = workspace.get_x_range()
-        self.y_range = workspace.get_y_range()
-        self.z_range = workspace.get_z_range()
-
-        self.actions = self.get_action_space(number_of_joints)
-        self.dqn = self.make_dqn()
-        return self.learn(number_of_episodes=episodes)
 
 
 def train_arms(arms: List[Arm]) -> List[Arm]:
@@ -271,7 +260,7 @@ def train_arms(arms: List[Arm]) -> List[Arm]:
     return arms
 
 def run_reinforcement_learning(network_path=""):
-    """! Run reinforcement learning
+    """! Run reinforcement learning: train a network with a certain config and save it in the end
     @param network_path The path to a network that is passed when the training has been done and we want to test.
     """
     config = get_config()

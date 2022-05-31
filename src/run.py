@@ -69,7 +69,7 @@ if __name__ == '__main__':
         start_test_env()
     else:
         if len(sys.argv) < 3:
-            print("Something wrong with program arguments")
+            print("Something wrong with program arguments, please check out the correct syntax.")
             sys.exit()
         elif sys.argv[1] == "morphevo":
             start_morphevo()
