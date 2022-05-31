@@ -51,11 +51,9 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print("Please specify a command ('start_test_env', 'morphevo', 'rl', 'coevolution')")
         sys.exit()
-    if sys.argv[1] == "start_test_env":
-        start_test_env()
     else:
         if len(sys.argv) < 3:
-            print("Something wrong with program arguments, please check out the correct syntax.")
+            print("Please specify a config file.")
             sys.exit()
         elif not exists(sys.argv[2]):
             print(f"Configfile '{sys.argv[2]}' does not exist.")
@@ -68,6 +66,8 @@ if __name__ == '__main__':
                 start_rl()
             elif sys.argv[1] == "coevolution":
                 start_coevolution()
+            elif sys.argv[1] == "start_test_env":
+                start_test_env()
             else:
                 print("Please specify a valid command ('start_test_env', 'morphevo', 'rl', 'coevolution')")
                 sys.exit()

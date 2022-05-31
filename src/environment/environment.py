@@ -188,10 +188,8 @@ def test_environment():
     """! Start the Unity environment and test certain functions like.
     actions and the functionality of side channels.
     """
-    # make absolute paths to avoid file-not-found errors
-    here = os.path.dirname(os.path.abspath(__file__))
-    urdf_filename = os.path.join(here, 'roboteinde.urdf')
     unity_executable_path = get_config().path_to_unity_executable
+    urdf_filename = get_config().path_to_robot_urdf
 
     urdf = ET.tostring(ET.parse(urdf_filename).getroot(), encoding='unicode')
 

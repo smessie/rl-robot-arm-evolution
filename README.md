@@ -27,6 +27,8 @@ pip install -e ./ml-agents
 
 #### Building unity
 
+- Change the path to ml-agents in `unity/Packages/manifest.json`
+
 - Open the `unity/` folder in Unity 2020.3.30f1
 
 - Go to Window > Package Manager.
@@ -43,6 +45,7 @@ pip install -e ./ml-agents
   + Click "Build". Build the project with name 'simenv' in a directory `build/` in the repository root.
 
 ## How to run
+
 All following commands should be executed in the root of the project inside your virtual environment which was configured in the Setup section.
 
 #### Coevolution
@@ -62,7 +65,7 @@ python src/run.py morphevo src/configs/example.yaml
 
 #### Environment tests
 ```
-python ./src/run.py start_test_env
+python ./src/run.py start_test_env src/configs/example.yaml
 ```
 
 ## Demo
