@@ -6,5 +6,6 @@ var searchData=
   ['robotnetwork_3',['RobotNetwork',['../classrl_1_1dqn_1_1RobotNetwork.html',1,'rl::dqn']]],
   ['run_2epy_4',['run.py',['../run_8py.html',1,'']]],
   ['run_5fcoevolution_5',['run_coevolution',['../coevolution_8py.html#a7c721330dc082ba88121401dff089480',1,'coevolution']]],
-  ['run_5fevolution_6',['run_evolution',['../evolution_8py.html#a4fc7aa2d92401537ca6a437ea636cf7a',1,'morphevo::evolution']]]
+  ['run_5fevolution_6',['run_evolution',['../evolution_8py.html#a4fc7aa2d92401537ca6a437ea636cf7a',1,'morphevo::evolution']]],
+  ['run_5freinforcement_5flearning_7',['run_reinforcement_learning',['../deep__q__learning_8py.html#ac2f8d0a9e9cbe56b2b66de74d1cd01bb',1,'rl::deep_q_learning']]]
 ];

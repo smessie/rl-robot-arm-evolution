@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['environment_2epy_0',['environment.py',['../environment_8py.html',1,'']]],
-  ['evolution_2epy_1',['evolution.py',['../evolution_8py.html',1,'']]]
+  ['deep_5fq_5flearning_2epy_0',['deep_q_learning.py',['../deep__q__learning_8py.html',1,'']]]
 ];
