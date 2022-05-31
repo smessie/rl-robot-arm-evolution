@@ -6,7 +6,7 @@ using RobotSpecificationNamespace;
 using UnityEngine;
 
 /// <summary>
-/// Script on the main manipulator to build the robot arm
+/// Script on the main manipulator to build the robot arm and remove it
 /// </summary>
 public class ArmBuilder : MonoBehaviour
 {
