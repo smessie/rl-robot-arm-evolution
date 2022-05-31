@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['wall_0',['wall',['../classWallSC_1_1WallSpec.html#a1fc60f0d85857a682119a2c7d0b82f03',1,'WallSC::WallSpec']]],
-  ['wallbuilder_1',['WallBuilder',['../classWallBuilder.html',1,'']]],
-  ['wallrow_2',['WallRow',['../classWallSC_1_1WallRow.html',1,'WallSC']]],
-  ['wallsc_3',['WallSC',['../classWallSC.html',1,'WallSC'],['../classWallSC.html#aabf6d5cc172092a566f7fdc1e72e09ca',1,'WallSC.WallSC(GameObject manipulator)']]],
-  ['wallspec_4',['WallSpec',['../classWallSC_1_1WallSpec.html',1,'WallSC']]],
-  ['workspacesc_5',['WorkspaceSC',['../classWorkspaceSC.html',1,'WorkspaceSC'],['../classWorkspaceSC.html#a95d7acbee0fdd3c0538556622c0d093d',1,'WorkspaceSC.WorkspaceSC()']]]
+  ['randomizejoints_0',['RandomizeJoints',['../classJointController.html#ae8cf087b6c8f3931b8ab5aec5c01dc31',1,'JointController']]],
+  ['rebuildagent_1',['RebuildAgent',['../classArmBuilder.html#ab091a6b266a4470f5dda1bcf26737128',1,'ArmBuilder']]],
+  ['resetjoints_2',['ResetJoints',['../classJointController.html#ae18e5e0c1e5e25b8eebed99ca718d5da',1,'JointController']]],
+  ['robotinfo_3',['RobotInfo',['../classCreationSC_1_1RobotInfo.html',1,'CreationSC']]],
+  ['robotspecification_4',['RobotSpecification',['../classRobotSpecificationNamespace_1_1RobotSpecification.html',1,'RobotSpecificationNamespace']]],
+  ['robotspecificationnamespace_5',['RobotSpecificationNamespace',['../namespaceRobotSpecificationNamespace.html',1,'']]],
+  ['rotatingmodulebodyprefab_6',['rotatingModuleBodyPrefab',['../classArmBuilder.html#a624309ac9f0694600bece264413177e6',1,'ArmBuilder']]],
+  ['row_7',['row',['../classWallSC_1_1WallRow.html#a666b89d47c70a773387f436865e92cfa',1,'WallSC::WallRow']]]
 ];

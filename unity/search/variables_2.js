@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['status_0',['Status',['../classCreationSC_1_1RobotInfo.html#a50b2905c3c744e8561b9586a651d51e5',1,'CreationSC::RobotInfo']]],
-  ['stepsize_1',['stepSize',['../classJointController.html#a15bcd23fac6b2381be8444d92c02d66e',1,'JointController']]]
+  ['manipulatoragentprefab_0',['manipulatorAgentPrefab',['../classArmBuilder.html#ad3f7387dfa2e039f1bcacec4c7ce6f8d',1,'ArmBuilder']]],
+  ['modulebodyprefab_1',['moduleBodyPrefab',['../classArmBuilder.html#afcf3161a4a97748eb3b83bbb85b21332',1,'ArmBuilder']]],
+  ['moduleconnectorprefab_2',['moduleConnectorPrefab',['../classArmBuilder.html#aae4d2f6920550b48b73e3bae3d5dcc30',1,'ArmBuilder']]]
 ];

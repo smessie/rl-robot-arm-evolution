@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['goalsc_0',['GoalSC',['../classGoalSC.html#af140a3073960783a2d2c891a6eab8d00',1,'GoalSC']]]
+  ['collectobservations_0',['CollectObservations',['../classAgentBrain.html#acece71a0024f97365d3e8fd7bb5920f7',1,'AgentBrain']]],
+  ['creationsc_1',['CreationSC',['../classCreationSC.html#a420fcfb479c0a9fb23efdec16f33cba5',1,'CreationSC']]]
 ];

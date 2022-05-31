@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['goalsc_0',['GoalSC',['../classGoalSC.html',1,'GoalSC'],['../classGoalSC.html#af140a3073960783a2d2c891a6eab8d00',1,'GoalSC.GoalSC()']]]
+  ['destroyagent_0',['DestroyAgent',['../classArmBuilder.html#ad3b155c4f3b72618a29ad77bd4abafc1',1,'ArmBuilder']]]
 ];

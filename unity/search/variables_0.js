@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jointamount_0',['JointAmount',['../classCreationSC_1_1RobotInfo.html#a9fc08c63dd9154f885a61f7100cb2814',1,'CreationSC::RobotInfo']]]
+  ['anchor_0',['anchor',['../classArmBuilder.html#a3897f54e665dc06d92fdc437f52bb1b5',1,'ArmBuilder']]]
 ];

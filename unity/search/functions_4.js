@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['randomizejoints_0',['RandomizeJoints',['../classJointController.html#ae8cf087b6c8f3931b8ab5aec5c01dc31',1,'JointController']]],
-  ['resetjoints_1',['ResetJoints',['../classJointController.html#ae18e5e0c1e5e25b8eebed99ca718d5da',1,'JointController']]]
+  ['getjointamount_0',['GetJointAmount',['../classArmBuilder.html#a3b696e8c1c18a91cecd1c7475f0070a1',1,'ArmBuilder']]],
+  ['goalsc_1',['GoalSC',['../classGoalSC.html#af140a3073960783a2d2c891a6eab8d00',1,'GoalSC']]]
 ];

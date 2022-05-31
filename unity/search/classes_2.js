@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['creationsc_0',['CreationSC',['../classCreationSC.html',1,'']]]
+  ['goalsc_0',['GoalSC',['../classGoalSC.html',1,'']]]
 ];

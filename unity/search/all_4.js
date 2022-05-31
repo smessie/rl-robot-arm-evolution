@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['jointamount_0',['JointAmount',['../classCreationSC_1_1RobotInfo.html#a9fc08c63dd9154f885a61f7100cb2814',1,'CreationSC::RobotInfo']]],
-  ['jointcontroller_1',['JointController',['../classJointController.html',1,'']]]
+  ['getjointamount_0',['GetJointAmount',['../classArmBuilder.html#a3b696e8c1c18a91cecd1c7475f0070a1',1,'ArmBuilder']]],
+  ['goalsc_1',['GoalSC',['../classGoalSC.html',1,'GoalSC'],['../classGoalSC.html#af140a3073960783a2d2c891a6eab8d00',1,'GoalSC.GoalSC()']]]
 ];

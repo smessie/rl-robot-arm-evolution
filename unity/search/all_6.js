@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['randomizejoints_0',['RandomizeJoints',['../classJointController.html#ae8cf087b6c8f3931b8ab5aec5c01dc31',1,'JointController']]],
-  ['resetjoints_1',['ResetJoints',['../classJointController.html#ae18e5e0c1e5e25b8eebed99ca718d5da',1,'JointController']]],
-  ['robotinfo_2',['RobotInfo',['../classCreationSC_1_1RobotInfo.html',1,'CreationSC']]],
-  ['robotspecificationnamespace_3',['RobotSpecificationNamespace',['../namespaceRobotSpecificationNamespace.html',1,'']]],
-  ['row_4',['row',['../classWallSC_1_1WallRow.html#a666b89d47c70a773387f436865e92cfa',1,'WallSC::WallRow']]]
+  ['manipulatoragentprefab_0',['manipulatorAgentPrefab',['../classArmBuilder.html#ad3f7387dfa2e039f1bcacec4c7ce6f8d',1,'ArmBuilder']]],
+  ['modulebodyprefab_1',['moduleBodyPrefab',['../classArmBuilder.html#afcf3161a4a97748eb3b83bbb85b21332',1,'ArmBuilder']]],
+  ['moduleconnectorprefab_2',['moduleConnectorPrefab',['../classArmBuilder.html#aae4d2f6920550b48b73e3bae3d5dcc30',1,'ArmBuilder']]],
+  ['moduletype_3',['ModuleType',['../classArmBuilder.html#a4811e4a7df8d0851069e302286cf2298',1,'ArmBuilder']]]
 ];

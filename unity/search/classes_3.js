@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['goalsc_0',['GoalSC',['../classGoalSC.html',1,'']]]
+  ['jointcontroller_0',['JointController',['../classJointController.html',1,'']]]
 ];
