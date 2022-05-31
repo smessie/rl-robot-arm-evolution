@@ -4,6 +4,7 @@
 #
 import os
 import xml.etree.ElementTree as ET
+from abc import ABC
 from pathlib import Path
 from typing import List, Tuple
 
@@ -21,7 +22,7 @@ from environment.sidechannels.workspace_sc import WorkspaceSC
 from util.config import get_config
 
 
-class SimEnv(gym.Env):
+class SimEnv(gym.Env, ABC):
     """! Custom Environment that follows gym interface
     """
     metadata = {'render.modes': ['human']}

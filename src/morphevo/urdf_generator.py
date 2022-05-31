@@ -6,6 +6,7 @@ from typing import Tuple
 class URDFGenerator:
     """! A class that helps to generate the urdf string of an arm.
     """
+
     def __init__(self, genome_id: str) -> None:
         """!
         @param genome_id: The id of the genome that will be translated to urdf.
@@ -61,7 +62,7 @@ class URDFGenerator:
             raise Exception("Anchor has to be added first")
 
         link = ET.SubElement(self.urdf, 'link', {
-                             'name': f'module_{self.module_index}'})
+            'name': f'module_{self.module_index}'})
         visual = ET.SubElement(link, 'visual')
         geometry = ET.SubElement(visual, 'geometry')
         module_name = self._get_module_name(can_tilt, can_rotate)
@@ -69,11 +70,10 @@ class URDFGenerator:
 
         if can_tilt:
             ET.SubElement(link, 'tilt', {'lower_bound': f'{tilt_bounds[0]}',
-                                        'upper_bound': f'{tilt_bounds[1]}'})
+                                         'upper_bound': f'{tilt_bounds[1]}'})
         if can_rotate:
             ET.SubElement(link, 'rotation', {'lower_bound': f'{rotation_bounds[0]}',
                                              'upper_bound': f'{rotation_bounds[1]}'})
-
 
         joint = ET.SubElement(self.urdf, 'joint', {'name': f'module_{self.module_index}_joint',
                                                    'type': 'revolute'})

@@ -128,8 +128,6 @@ class DQN:
 
         self.memory.append((state, action, reward, next_state, int(finished)))
 
-        state = next_state
-
         if len(self.memory) >= self.batch_size:
             self._experience_replay()
 

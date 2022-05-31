@@ -192,7 +192,8 @@ def mutate_with_crossover(parents: List[Arm]) -> List[Arm]:
 
     children = [
         Arm(parent.genome)
-        for parent in alternate(what=parents, times=config.evolution_children - config.evolution_crossover_children)
+        for parent in alternate(list_to_alternate=parents,
+                                times=config.evolution_children - config.evolution_crossover_children)
     ]
     children += create_crossover_children(parents, config.evolution_crossover_children)
 
@@ -210,7 +211,8 @@ def mutate_with_crossover_coevolution(parents: List[Arm]) -> List[Arm]:
 
     children = [
         Arm(parent.genome)
-        for parent in alternate(what=parents, times=config.coevolution_children - config.coevolution_crossover_children)
+        for parent in alternate(list_to_alternate=parents,
+                                times=config.coevolution_children - config.coevolution_crossover_children)
     ]
     children += create_crossover_children(parents, config.coevolution_crossover_children)
 
