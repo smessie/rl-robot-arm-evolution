@@ -4,6 +4,10 @@
 - [Python Docs](https://smessie.github.io/SELab3-2022-01/python/annotated.html)
 - [Unity Project Docs](https://smessie.github.io/SELab3-2022-01/unity/annotated.html)
 
+## Results
+
+- [Conclusions can be found in the wiki](https://github.com/smessie/SELab3-2022-01/wiki/Final-results)
+
 
 ## Setup
 
@@ -86,6 +90,7 @@ Note: for it to work on my setup in Visual Studio Code, you might have to downgr
 
 
 ## What do the config parameters mean?
+
 #### environment: parameters that are used for the environment and training
   - `path_to_unity_executable`: path to the unity executable
   - `path_to_robot_urdf`: path to a urdf file that represents an arm, is only for rl
