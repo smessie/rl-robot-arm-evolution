@@ -5,7 +5,7 @@ using UnityEngine;
 /// Script on the main manipulator to build walls and remove them
 ///
 /// The first wall will be built on a certain distance from the anchor.
-/// Every subsequent wall will be built on a certain distance from that wall
+/// Every subsequent wall will be built on a certain distance from the previous wall
 ///
 /// When removing walls, all walls are removed at one time
 ///
