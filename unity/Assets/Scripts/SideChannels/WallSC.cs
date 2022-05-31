@@ -18,7 +18,7 @@ public class WallSC : SideChannel
     /// which are Lists of booleans
     /// </summary>
     [System.Serializable]
-    class WallSpec
+    public class WallSpec
     {
         /// <summary>
         /// List of WallRow, the horizontal rows of a wall
@@ -31,7 +31,7 @@ public class WallSC : SideChannel
     /// Represents a row of tiles in the wall
     /// </summary>
     [System.Serializable]
-    class WallRow
+    public class WallRow
     {
         /// <summary>
         /// List of bool, each representing a tile in the wall

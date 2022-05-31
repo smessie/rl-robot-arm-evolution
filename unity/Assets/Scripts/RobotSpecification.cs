@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace DefaultNamespace
+/// <summary>
+/// Used to parse the XML files in URDF format with XmlSerializer
+/// </summary>
+namespace RobotSpecificationNamespace
 {
     [XmlRoot("robot")]
     public class RobotSpecification
