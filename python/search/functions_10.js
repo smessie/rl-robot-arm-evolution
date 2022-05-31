@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['write_5fmorphevo_5fbenchmarks_0',['write_morphevo_benchmarks',['../util_8py.html#a52623538487d383f1c5ed9b5f77749d8',1,'morphevo::util']]]
+  ['update_0',['update',['../classrl_1_1dqn_1_1DQN.html#a6848c16d4ae4343540d91a0c10778069',1,'rl::dqn::DQN']]]
 ];

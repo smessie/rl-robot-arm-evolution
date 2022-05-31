@@ -87,12 +87,13 @@ Inheritance diagram for environment.sidechannels.goal_sc.GoalSC:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a77d30332633c9b00e933a0db8f4a78d0"><td class="memItemLeft" align="right" valign="top"><a id="a77d30332633c9b00e933a0db8f4a78d0" name="a77d30332633c9b00e933a0db8f4a78d0"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</td></tr>
+<tr class="memdesc:a77d30332633c9b00e933a0db8f4a78d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classenvironment_1_1sidechannels_1_1goal__sc_1_1GoalSC.html" title="Side channel to send a goal to the environment.">GoalSC</a> class initializer. <br /></td></tr>
 <tr class="separator:a77d30332633c9b00e933a0db8f4a78d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8a46a2dcec3b38aa8c57654e0b401f1"><td class="memItemLeft" align="right" valign="top"><a id="ad8a46a2dcec3b38aa8c57654e0b401f1" name="ad8a46a2dcec3b38aa8c57654e0b401f1"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>send_goal_position</b> (self, Tuple[float] goal)</td></tr>
+<tr class="memitem:ad8a46a2dcec3b38aa8c57654e0b401f1"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1sidechannels_1_1goal__sc_1_1GoalSC.html#ad8a46a2dcec3b38aa8c57654e0b401f1">send_goal_position</a> (self, Tuple[float] goal)</td></tr>
+<tr class="memdesc:ad8a46a2dcec3b38aa8c57654e0b401f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send goal string to environment via side channel.  <a href="classenvironment_1_1sidechannels_1_1goal__sc_1_1GoalSC.html#ad8a46a2dcec3b38aa8c57654e0b401f1">More...</a><br /></td></tr>
 <tr class="separator:ad8a46a2dcec3b38aa8c57654e0b401f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24700f3a6ed734b48d085a9d358f0233"><td class="memItemLeft" align="right" valign="top"><a id="a24700f3a6ed734b48d085a9d358f0233" name="a24700f3a6ed734b48d085a9d358f0233"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>on_message_received</b> (self, IncomingMessage _)</td></tr>
+<tr class="memitem:a24700f3a6ed734b48d085a9d358f0233"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1sidechannels_1_1goal__sc_1_1GoalSC.html#a24700f3a6ed734b48d085a9d358f0233">on_message_received</a> (self, IncomingMessage _)</td></tr>
+<tr class="memdesc:a24700f3a6ed734b48d085a9d358f0233"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called when the python side receives a message from the Unity environment.  <a href="classenvironment_1_1sidechannels_1_1goal__sc_1_1GoalSC.html#a24700f3a6ed734b48d085a9d358f0233">More...</a><br /></td></tr>
 <tr class="separator:a24700f3a6ed734b48d085a9d358f0233"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -103,7 +104,80 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Side channel to send a goal to the environment. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a24700f3a6ed734b48d085a9d358f0233" name="a24700f3a6ed734b48d085a9d358f0233"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24700f3a6ed734b48d085a9d358f0233">&#9670;&nbsp;</a></span>on_message_received()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None environment.sidechannels.goal_sc.GoalSC.on_message_received </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IncomingMessage&#160;</td>
+          <td class="paramname"><em>_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Is called when the python side receives a message from the Unity environment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>The message that is received in plain text. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad8a46a2dcec3b38aa8c57654e0b401f1" name="ad8a46a2dcec3b38aa8c57654e0b401f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8a46a2dcec3b38aa8c57654e0b401f1">&#9670;&nbsp;</a></span>send_goal_position()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None environment.sidechannels.goal_sc.GoalSC.send_goal_position </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Tuple[float]&#160;</td>
+          <td class="paramname"><em>goal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send goal string to environment via side channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">goal</td><td>The goal to show </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/environment/sidechannels/goal_sc.py</li>
 </ul>
 </div><!-- contents -->

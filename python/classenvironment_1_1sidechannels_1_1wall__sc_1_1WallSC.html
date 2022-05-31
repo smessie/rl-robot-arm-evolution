@@ -86,20 +86,95 @@ Inheritance diagram for environment.sidechannels.wall_sc.WallSC:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a26da39b19c0a5ffcb969c20d2eb6e286"><td class="memItemLeft" align="right" valign="top"><a id="a26da39b19c0a5ffcb969c20d2eb6e286" name="a26da39b19c0a5ffcb969c20d2eb6e286"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</td></tr>
+<tr class="memdesc:a26da39b19c0a5ffcb969c20d2eb6e286"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classenvironment_1_1sidechannels_1_1wall__sc_1_1WallSC.html" title="Side channel to build and remove walls.">WallSC</a> class initializer. <br /></td></tr>
 <tr class="separator:a26da39b19c0a5ffcb969c20d2eb6e286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab99812ee0d1156eee51bb3a3262d85c1"><td class="memItemLeft" align="right" valign="top"><a id="ab99812ee0d1156eee51bb3a3262d85c1" name="ab99812ee0d1156eee51bb3a3262d85c1"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>send_build_command</b> (self, List[List[bool]] wall)</td></tr>
+<tr class="memitem:ab99812ee0d1156eee51bb3a3262d85c1"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1sidechannels_1_1wall__sc_1_1WallSC.html#ab99812ee0d1156eee51bb3a3262d85c1">send_build_command</a> (self, List[List[bool]] wall)</td></tr>
+<tr class="memdesc:ab99812ee0d1156eee51bb3a3262d85c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send wall string to environment via side channel.  <a href="classenvironment_1_1sidechannels_1_1wall__sc_1_1WallSC.html#ab99812ee0d1156eee51bb3a3262d85c1">More...</a><br /></td></tr>
 <tr class="separator:ab99812ee0d1156eee51bb3a3262d85c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab7b7f8686b86b88339b4aec749e373c"><td class="memItemLeft" align="right" valign="top"><a id="aab7b7f8686b86b88339b4aec749e373c" name="aab7b7f8686b86b88339b4aec749e373c"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>remove_walls</b> (self)</td></tr>
+<tr class="memdesc:aab7b7f8686b86b88339b4aec749e373c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send command to remove all walls from the environment. <br /></td></tr>
 <tr class="separator:aab7b7f8686b86b88339b4aec749e373c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cb03a033e09259b7155d04610a6ecfc"><td class="memItemLeft" align="right" valign="top"><a id="a5cb03a033e09259b7155d04610a6ecfc" name="a5cb03a033e09259b7155d04610a6ecfc"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>on_message_received</b> (self, IncomingMessage msg)</td></tr>
+<tr class="memitem:a5cb03a033e09259b7155d04610a6ecfc"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1sidechannels_1_1wall__sc_1_1WallSC.html#a5cb03a033e09259b7155d04610a6ecfc">on_message_received</a> (self, IncomingMessage msg)</td></tr>
+<tr class="memdesc:a5cb03a033e09259b7155d04610a6ecfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called when the python side receives a message from the Unity environment.  <a href="classenvironment_1_1sidechannels_1_1wall__sc_1_1WallSC.html#a5cb03a033e09259b7155d04610a6ecfc">More...</a><br /></td></tr>
 <tr class="separator:a5cb03a033e09259b7155d04610a6ecfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Side channel to build and remove walls. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5cb03a033e09259b7155d04610a6ecfc" name="a5cb03a033e09259b7155d04610a6ecfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cb03a033e09259b7155d04610a6ecfc">&#9670;&nbsp;</a></span>on_message_received()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None environment.sidechannels.wall_sc.WallSC.on_message_received </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IncomingMessage&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Is called when the python side receives a message from the Unity environment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>The message that is received in plain text. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab99812ee0d1156eee51bb3a3262d85c1" name="ab99812ee0d1156eee51bb3a3262d85c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab99812ee0d1156eee51bb3a3262d85c1">&#9670;&nbsp;</a></span>send_build_command()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None environment.sidechannels.wall_sc.WallSC.send_build_command </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List[List[bool]]&#160;</td>
+          <td class="paramname"><em>wall</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send wall string to environment via side channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wall</td><td>The wall to build </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/environment/sidechannels/wall_sc.py</li>
 </ul>
 </div><!-- contents -->

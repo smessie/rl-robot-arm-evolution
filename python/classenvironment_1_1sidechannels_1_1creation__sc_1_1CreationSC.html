@@ -87,12 +87,13 @@ Inheritance diagram for environment.sidechannels.creation_sc.CreationSC:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a11223b509bfb0d3151433959629211a3"><td class="memItemLeft" align="right" valign="top"><a id="a11223b509bfb0d3151433959629211a3" name="a11223b509bfb0d3151433959629211a3"></a>
 None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</td></tr>
+<tr class="memdesc:a11223b509bfb0d3151433959629211a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html" title="Side channel to create the robot arm.">CreationSC</a> class initializer. <br /></td></tr>
 <tr class="separator:a11223b509bfb0d3151433959629211a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c19a9dfaffa8d354a9650ca2cac1530"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html#a6c19a9dfaffa8d354a9650ca2cac1530">send_build_command</a> (self, str urdf)</td></tr>
 <tr class="memdesc:a6c19a9dfaffa8d354a9650ca2cac1530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send urdf string to environment via side channel.  <a href="classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html#a6c19a9dfaffa8d354a9650ca2cac1530">More...</a><br /></td></tr>
 <tr class="separator:a6c19a9dfaffa8d354a9650ca2cac1530"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acce5c069bca22fdf20ce5c53b369eac4"><td class="memItemLeft" align="right" valign="top"><a id="acce5c069bca22fdf20ce5c53b369eac4" name="acce5c069bca22fdf20ce5c53b369eac4"></a>
-None&#160;</td><td class="memItemRight" valign="bottom"><b>on_message_received</b> (self, IncomingMessage msg)</td></tr>
+<tr class="memitem:acce5c069bca22fdf20ce5c53b369eac4"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html#acce5c069bca22fdf20ce5c53b369eac4">on_message_received</a> (self, IncomingMessage msg)</td></tr>
+<tr class="memdesc:acce5c069bca22fdf20ce5c53b369eac4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called when the python side receives a message from the Unity environment.  <a href="classenvironment_1_1sidechannels_1_1creation__sc_1_1CreationSC.html#acce5c069bca22fdf20ce5c53b369eac4">More...</a><br /></td></tr>
 <tr class="separator:acce5c069bca22fdf20ce5c53b369eac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1523fbcea75a7e889c8de15e7cd8ae47"><td class="memItemLeft" align="right" valign="top"><a id="a1523fbcea75a7e889c8de15e7cd8ae47" name="a1523fbcea75a7e889c8de15e7cd8ae47"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>get_joint_amount</b> (self)</td></tr>
@@ -111,6 +112,42 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Side channel to create the robot arm. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="acce5c069bca22fdf20ce5c53b369eac4" name="acce5c069bca22fdf20ce5c53b369eac4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acce5c069bca22fdf20ce5c53b369eac4">&#9670;&nbsp;</a></span>on_message_received()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None environment.sidechannels.creation_sc.CreationSC.on_message_received </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IncomingMessage&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Is called when the python side receives a message from the Unity environment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>The message that is received in plain text. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a6c19a9dfaffa8d354a9650ca2cac1530" name="a6c19a9dfaffa8d354a9650ca2cac1530"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c19a9dfaffa8d354a9650ca2cac1530">&#9670;&nbsp;</a></span>send_build_command()</h2>
 
