@@ -13,9 +13,9 @@ class RobotNetwork(torch.nn.Module):
     """
     def __init__(self, hidden_nodes: int, number_of_actions: int, state_size: int):
         """! The RobotNetwork class initializer.
-        @param hidden_nodes The number of hidden nodes for the hidden layers.
-        @param number_of_actions The number of possible actions, important for nodes needed as output.
-        @param state_size The number of variables in a state, important for the nodes needed as input.
+        @param hidden_nodes: The number of hidden nodes for the hidden layers.
+        @param number_of_actions: The number of possible actions, important for nodes needed as output.
+        @param state_size: The number of variables in a state, important for the nodes needed as input.
         @return  An instance of the RobotNetwork class.
         """
         super().__init__()
@@ -25,7 +25,7 @@ class RobotNetwork(torch.nn.Module):
 
     def forward(self, network_input):
         """! Internal function of the network, used for processing the input of the network.
-        @param network_input The network input.
+        @param network_input: The network input.
         """
         return self.linear3(self.linear2(self.linear1(network_input)))
 
@@ -36,9 +36,9 @@ class DQN:
     """
     def __init__(self, number_of_actions: int, state_size: int, network_path=""):
         """! The RobotNetwork class initializer.
-        @param number_of_actions The number of hidden nodes for the hidden layers.
-        @param state_size The number of variables in a state, important for the nodes needed as input.
-        @param network_path The path to the file that contains a (trained) network.
+        @param number_of_actions: The number of hidden nodes for the hidden layers.
+        @param state_size: The number of variables in a state, important for the nodes needed as input.
+        @param network_path: The path to the file that contains a (trained) network.
         @return An instance of the DQN class.
         """
         parameters = get_config()
@@ -60,14 +60,14 @@ class DQN:
 
     def save(self, path: str):
         """! Save the network to a given path.
-        @param path The file path to save the network to.
+        @param path: The file path to save the network to.
         """
         torch.save(self.network, path)
 
     def _calculate_current_q_value(self, state_batch: torch.Tensor, action_batch: torch.Tensor) -> torch.Tensor:
         """! Calculate the current Q-value.
-        @param state_batch The states batch.
-        @param action_batch The actions batch.
+        @param state_batch: The states batch.
+        @param action_batch: The actions batch.
         @return Current Q value.
         """
         current_q = self.network(state_batch.float()).gather(1, action_batch.unsqueeze(1))
@@ -76,9 +76,9 @@ class DQN:
     def _calculate_targets(self, dones: torch.Tensor, next_states: torch.Tensor,
                            reward_batch: torch.Tensor) -> torch.Tensor:
         """! Calculate the targets.
-        @param dones Tensor list with finished value or not finished.
-        @param next_states The next states.
-        @param reward_batch The reward batch.
+        @param dones: Tensor list with finished value or not finished.
+        @param next_states: The next states.
+        @param reward_batch: The reward batch.
         @return The targets.
         """
         max_next_q = (1 - dones) * self.network(next_states.float()).max(1)[0].detach()
@@ -87,8 +87,8 @@ class DQN:
 
     def _apply_loss(self, current_q: torch.Tensor, targets: torch.Tensor) -> None:
         """! Apply the loss function.
-        @param current_q The current Q-value.
-        @param targets The targets.
+        @param current_q: The current Q-value.
+        @param targets: The targets.
         """
         loss_fn = torch.nn.MSELoss()
         loss = loss_fn(current_q, targets.float())
@@ -117,11 +117,11 @@ class DQN:
 
     def update(self, state: np.ndarray, next_state: np.ndarray, action: int, reward: float, finished: bool):
         """! Update the network, should happen between each state transition during training.
-        @param state The start state of the environment.
-        @param next_state The resulting, next state after executing an action.
-        @param action The action that was executed.
-        @param reward The reward resulting from the action.
-        @param finished If the next_state is a finishing state.
+        @param state: The start state of the environment.
+        @param next_state: The resulting, next state after executing an action.
+        @param action: The action that was executed.
+        @param reward: The reward resulting from the action.
+        @param finished: If the next_state is a finishing state.
         """
         state = torch.tensor([state], dtype=torch.float)
         next_state = torch.tensor([next_state], dtype=torch.float)
@@ -135,7 +135,7 @@ class DQN:
 
     def get_best_action(self, state: np.ndarray) -> int:
         """! Look up the best action for a given state.
-        @param state An input state representing the environment.
+        @param state: An input state representing the environment.
         @return An action, represented as a number.
         """
         with torch.no_grad():

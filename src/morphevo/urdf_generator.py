@@ -19,9 +19,9 @@ class URDFGenerator:
     def add_anchor(self, length: float = 1.0, can_rotate: bool = True,
                    rotation_bounds: Tuple[float] = (0, 360)) -> None:
         """! Add an anchor module to the urdf.
-        @param length The length of the anchor.
-        @param can_rotate Represents if an anchor can rotate.
-        @param rotation_bounds The bounds in which the arm can rotate.
+        @param length: The length of the anchor.
+        @param can_rotate: Represents if an anchor can rotate.
+        @param rotation_bounds: The bounds in which the arm can rotate.
         """
         link = ET.SubElement(self.urdf, 'link', {'name': 'anchor'})
         visual = ET.SubElement(link, 'visual')
@@ -34,8 +34,8 @@ class URDFGenerator:
 
     def _get_module_name(self, can_tilt: bool, can_rotate: bool):
         """! Get the name of a module type.
-        @param can_tilt If module can tilt.
-        @param can_rotate If a module can rotate.
+        @param can_tilt: If module can tilt.
+        @param can_rotate: If a module can rotate.
         @return name of module type.
         """
         if can_tilt:
@@ -51,11 +51,11 @@ class URDFGenerator:
                    tilt_bounds: Tuple[float] = (0, 90),
                    rotation_bounds: Tuple[float] = (0, 180)) -> None:
         """! Add a module to the urdf string
-        @param length The length of the module.
-        @param can_tilt If a module can tilt.
-        @param can_rotate If a module can rotate.
-        @param tilt_bounds Angle bounds in between a module can tilt.
-        @param rotation_bounds Angle bounds in between a module can rotate.
+        @param length: The length of the module.
+        @param can_tilt: If a module can tilt.
+        @param can_rotate: If a module can rotate.
+        @param tilt_bounds: Angle bounds in between a module can tilt.
+        @param rotation_bounds: Angle bounds in between a module can rotate.
         """
         if not self.anchor_added:
             raise Exception("Anchor has to be added first")

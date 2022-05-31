@@ -30,9 +30,9 @@ class SimEnv(gym.Env):
 
     def __init__(self, env_path: str, urdf: str, use_graphics: bool, worker_id: int = 0) -> None:
         """! The SimEnv class initializer.
-        @param env_path Path of the environment executable.
-        @param urdf Instance that represents the robot urdf.
-        @param use_graphics Boolean that turns graphics on or off.
+        @param env_path: Path of the environment executable.
+        @param urdf: Instance that represents the robot urdf.
+        @param use_graphics: Boolean that turns graphics on or off.
         @return  An instance of the SimEnv class.
         """
         super().__init__()
@@ -105,15 +105,15 @@ class SimEnv(gym.Env):
 
     def replace_walls(self, wall: List[List[bool]]) -> None:
         """! Replace all the walls, build 1 new one
-        @param wall The new wall
+        @param wall: The new wall
         """
         self.remove_walls()
         self.build_wall(wall)
 
     def step(self, action: np.ndarray, return_observations=True) -> np.ndarray:
         """! Do 1 step in the unity environment
-        @param action The action this step
-        @param return_observations Whether to return observations after the step is taken
+        @param action: The action this step
+        @param return_observations: Whether to return observations after the step is taken
         @return Observations after the step is taken
         """
         self._set_unity_actions(action)

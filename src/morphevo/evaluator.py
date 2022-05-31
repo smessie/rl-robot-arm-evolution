@@ -15,9 +15,9 @@ class Evaluator:
     """
     def __init__(self, env_path: str, use_graphics: bool = True, sample_size: int = 100) -> None:
         """!
-        @param env_path Path to the unity executable.
-        @param use_graphics To show the environment or not.
-        @param sample_size Amount of samples that will be used to evaluate arm.
+        @param env_path: Path to the unity executable.
+        @param use_graphics: To show the environment or not.
+        @param sample_size: Amount of samples that will be used to evaluate arm.
         """
         self.env_path = env_path
         self.env = None
@@ -26,8 +26,8 @@ class Evaluator:
 
     def _initialize_environment(self, urdf: str, worker_id: int) -> SimEnv:
         """! Initialize the unity environment.
-        @param urdf The urdf of the arm that will be used in the environment.
-        @param worker_id The id for the environment worker.
+        @param urdf: The urdf of the arm that will be used in the environment.
+        @param worker_id: The id for the environment worker.
         @return The newly created environment.
         """
         env_created = False
@@ -44,9 +44,9 @@ class Evaluator:
 
     def _generate_joint_angles_samples(self, angle_amount, samples_amount) -> np.ndarray:
         """! Generate random angle configurations.
-        @param angle_amount The amount of joints an arm has.
-        @param samples_amount The amount of sample configurations you need.
-        @return Random angleconfiguration samples.
+        @param angle_amount: The amount of joints an arm has.
+        @param samples_amount: The amount of sample configurations you need.
+        @return Random angle configuration samples.
         """
         base_joint_angle_options = list(range(0, 360, self.env.JOINT_ANGLE_STEP * 4))
         angle_options = list(range(0, 105, self.env.JOINT_ANGLE_STEP))
@@ -61,7 +61,7 @@ class Evaluator:
 
     def parse_observation(self, observations: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """! Function to parse an observation from unity
-        @param observations The observation form unity
+        @param observations: The observation form unity
         @return The joint angles configuration and the end effector position
         """
         # [j0angel, j0x, j0y, j0z, ..., eex, eey, eez]
@@ -74,8 +74,8 @@ class Evaluator:
     def _step_until_target_angles(self, target_angles: np.ndarray, workspace: Workspace) -> None:
         """! Let the arm step to given angle configuration. This will be done in the unity environment. This
         will stop when target reached or when no progress is made.
-        @param target_angles The target angle configuration.
-        @param workspace The workspace of the arm, used to register the steps.
+        @param target_angles: The target angle configuration.
+        @param workspace: The workspace of the arm, used to register the steps.
         """
 
         target_angles = (target_angles // self.env.JOINT_ANGLE_STEP) * self.env.JOINT_ANGLE_STEP
@@ -112,7 +112,7 @@ class Evaluator:
     def eval_arm(self, arm: Arm) -> Arm:
         """! Evaluate an arm by sampling an amount of angle configurations which will be tried to
         reach.
-        @param arm The arm that will be evaluated.
+        @param arm: The arm that will be evaluated.
         @return The evaluated arm.
         """
         self.env = self._initialize_environment(arm.genome.get_urdf(), arm.genome.genome_id)

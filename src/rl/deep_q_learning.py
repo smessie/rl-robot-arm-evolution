@@ -33,11 +33,11 @@ class DeepQLearner:
     def __init__(self, env_path: str, urdf_path: str = None, urdf: str = None,
                  use_graphics: bool = False, network_path: str = "") -> None:
         """! The DeepQLearner class initializer.
-        @param env_path Path of the environment executable.
-        @param urdf_path Path to the robot urdf file.
-        @param urdf Instance that represents the robot urdf.
-        @param use_graphics Boolean that turns graphics on or off.
-        @param network_path Path to the Deep-Q network that should be used.
+        @param env_path: Path of the environment executable.
+        @param urdf_path: Path to the robot urdf file.
+        @param urdf: Instance that represents the robot urdf.
+        @param use_graphics: Boolean that turns graphics on or off.
+        @param network_path: Path to the Deep-Q network that should be used.
         @return  An instance of the DeepQLearner class.
         """
 
@@ -85,13 +85,13 @@ class DeepQLearner:
 
     def save(self, path: str = "./src/rl/networks/most_recently_saved_network.pkl") -> None:
         """! Save the trained network in a pickle file.
-        @param path Path to file where the network will be saved.
+        @param path: Path to file where the network will be saved.
         """
         self.dqn.save(path)
 
     def get_action_space(self, number_of_joints) -> np.ndarray:
         """! Get all possible actions given the amount of joints.
-        @param number_of_joints The amount of joints the robot arm has.
+        @param number_of_joints: The amount of joints the robot arm has.
                 A complex module has 2 joints, rotating and tilting.
         @return A list of the actions
         """
@@ -107,7 +107,7 @@ class DeepQLearner:
 
     def make_dqn(self, network_path="") -> DQN:
         """! Create an instance of the DQN.
-        @param network_path Path to network, if the goal is testing, not training.
+        @param network_path: Path to network, if the goal is testing, not training.
         @return A DQN instance.
         """
         return DQN(len(self.actions),
@@ -126,8 +126,8 @@ class DeepQLearner:
 
     def _calculate_state(self, observations: np.ndarray, goal: np.ndarray) -> np.ndarray:
         """! Calculate the current state.
-        @param observations Observations used to calculate the state.
-        @param goal Goal used to calculate the state.
+        @param observations: Observations used to calculate the state.
+        @param goal: Goal used to calculate the state.
         @return The state.
         """
         end_effector_position = self._get_end_effector_position(observations)
@@ -139,7 +139,7 @@ class DeepQLearner:
 
     def _get_end_effector_position(self, observations: np.ndarray) -> np.ndarray:
         """! Get the end effector position.
-        @param observations Observations to extract the end effector position from
+        @param observations: Observations to extract the end effector position from
         @return End effector position.
         """
         return observations[self.env.joint_amount * 4:self.env.joint_amount * 4 + 3]
@@ -147,9 +147,9 @@ class DeepQLearner:
     def _calculate_reward(self, previous_position: np.ndarray, new_position: np.ndarray, goal: np.ndarray) \
             -> Tuple[float, bool]:
         """! Calculate the reward.
-        @param previous_position Previous position the end effector was in.
-        @param new_position New position the end effector is in.
-        @param goal Goal the end effector is trying to reach.
+        @param previous_position: Previous position the end effector was in.
+        @param new_position: New position the end effector is in.
+        @param goal: Goal the end effector is trying to reach.
         @return The reward and if the goal was reached.
         """
         prev_distance_from_goal = np.linalg.norm(previous_position - goal)
@@ -164,7 +164,7 @@ class DeepQLearner:
 
     def step(self, state: np.ndarray) -> Tuple[int, np.ndarray]:
         """! Move 1 step forward in the simulation.
-        @param state Current state of the environment.
+        @param state: Current state of the environment.
         @return The action that was taken and the observations that were made.
         """
         action_index = self.predict(state)
@@ -174,9 +174,9 @@ class DeepQLearner:
 
     def learn(self, number_of_episodes: int = 10000, steps_per_episode: int = 1000, logging: bool = False) -> float:
         """! The training or testing loop (depending on variable 'training') of the deep q-learning.
-        @param number_of_episodes Maximum amount of episodes.
-        @param steps_per_episode Maximum amount of steps each episode.
-        @param logging If true there will be wandb logs
+        @param number_of_episodes: Maximum amount of episodes.
+        @param steps_per_episode: Maximum amount of steps each episode.
+        @param logging: If true there will be wandb logs
         @return Success rate throughout training.
         """
         episodes_finished = [False] * 50
@@ -229,7 +229,7 @@ class DeepQLearner:
 
     def predict(self, state: np.ndarray) -> int:
         """! Pick the best or a random action depending on epsilon value of the Deep-Q Network.
-        @param state Current state of the environment.
+        @param state: Current state of the environment.
         @return The chosen action.
         """
         if self.training and np.random.rand() < self.dqn.eps:
@@ -244,7 +244,7 @@ class DeepQLearner:
 
 def train_arms(arms: List[Arm]) -> List[Arm]:
     """! Run a reinforcement learning training cycle on each given arm and save its success rate.
-    @param arms The list of arms.
+    @param arms: The list of arms.
     @return The arms with their reinforcement learning model and success rate added.
     """
     config = get_config()
@@ -262,7 +262,7 @@ def train_arms(arms: List[Arm]) -> List[Arm]:
 
 def run_reinforcement_learning(network_path=""):
     """! Run reinforcement learning: train a network with a certain config and save it in the end.
-    @param network_path The path to a network that is passed when the training has been done, and we want to test.
+    @param network_path: The path to a network that is passed when the training has been done, and we want to test.
     """
     config = get_config()
     if network_path:
