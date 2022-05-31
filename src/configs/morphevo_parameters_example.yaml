@@ -1,7 +1,0 @@
-description: "Example config"
-generations: 75
-mu: 8
-lambda: 5
-crossover_children: 3
-# mu = # parents
-# lambda = # children

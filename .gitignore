@@ -1,9 +1,8 @@
 wandb
 .DS_Store
 .idea
-simenv_Data
-simenv_BurstDebugInformation_DoNotShip
-UnityPlayer.so
+
+simenv.tar.gz
 
 *timers.json
 *timers.json.meta
@@ -170,4 +169,4 @@ latex/
 env.py
 
 # Output directory where we can write our generated output to.
-output/
+#output/

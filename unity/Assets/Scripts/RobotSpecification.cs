@@ -1,8 +1,14 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace DefaultNamespace
+/// <summary>
+/// Used to parse the XML files in URDF format with XmlSerializer
+/// </summary>
+namespace RobotSpecificationNamespace
 {
+    /// <summary>
+    /// The class containing the full specification of the robot arm
+    /// </summary>
     [XmlRoot("robot")]
     public class RobotSpecification
     {
@@ -78,5 +84,4 @@ namespace DefaultNamespace
     {
         [XmlAttribute("link")] public string Link;
     }
-
 }
