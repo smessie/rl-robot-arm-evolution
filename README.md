@@ -43,17 +43,17 @@ All following commands should be executed in the root of the project inside your
 
 #### Coevolution
 ```
-python ./src/run.py coevolution ./configs/example.yaml
+python src/run.py coevolution src/configs/example.yaml
 ```
 
 #### Reinforcement learning
 ```
-python ./src/run.py rl ./configs/example.yaml
+python src/run.py rl src/configs/example.yaml
 ```
 
 #### Morphological evolution
 ```
-python ./src/run.py morphevo ./configs/example.yaml
+python src/run.py morphevo src/configs/example.yaml
 ```
 
 #### Environment tests
