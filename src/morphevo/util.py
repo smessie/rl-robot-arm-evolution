@@ -14,45 +14,45 @@ from util.config import get_config
 
 def generate_arms(amount: int):
     """! Generate a list of initial random arms with random genome.
-    @param amount Amount of arms needed.
+    @param amount: Amount of arms needed.
     @return List of arms.
     """
     return [Arm() for _ in range(amount)]
 
 
-def alternate(what, times):
+def alternate(list_to_alternate, times):
     """! Function to make an alternation of a list for x items.
     Example what = [1,2,3,4] times = 6 -> [1,2,3,4,1,2].
-    @param what The list that you want to alternate.
+    @param list_to_alternate The list that you want to alternate.
     @param times Amount of times you want to alterate your items.
     @return Alternating list of size 'times'
     """
     alternations = []
-    for alternation, _ in zip(alternate_infinite(what), range(times)):
+    for alternation, _ in zip(alternate_infinite(list_to_alternate), range(times)):
         alternations.append(alternation)
 
     return alternations
 
 
-def alternate_infinite(what):
+def alternate_infinite(list_to_alternate):
     """! Function to make an alternation of a list on which you can iterate till infinity.
-    Example what = [1,2,3,4] -> 1,2,3,4,1,2,3,4,1,2,3,4,...
-    @param what The list that you want to alternate.
+    Example list_to_alternate = [1,2,3,4] -> 1,2,3,4,1,2,3,4,1,2,3,4,...
+    @param list_to_alternate The list that you want to alternate.
     @return Next iteration.
     """
     current_index = 0
     while True:
-        yield what[current_index]
-        current_index = (current_index + 1) % len(what)
+        yield list_to_alternate[current_index]
+        current_index = (current_index + 1) % len(list_to_alternate)
 
 
-def normalize(raw):
+def normalize(list_to_normalize):
     """! Normalize an list.
-    @param raw List to normalize.
+    @param list_to_normalize List to normalize.
     @return List in which items are normalized.
     """
-    sum_raw = sum(raw) if sum(raw) != 0 else 1
-    return [i / sum_raw for i in raw]
+    sum_list = sum(list_to_normalize) if sum(list_to_normalize) != 0 else 1
+    return [i / sum_list for i in list_to_normalize]
 
 
 def write_morphevo_benchmarks(arm: Arm):
