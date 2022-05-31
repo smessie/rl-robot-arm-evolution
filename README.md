@@ -89,7 +89,7 @@ When analyzing the code: add these lines to your `unity/Assembly-CSharp.csproj`:
 ```
 We also ignore errors in the `unity/Assets/StarterAssets/` folder, because that was included from the StarterAssets package.
 
-Note: for it to work on my setup in Visual Studio Code, you might have to downgrade the Visual Studio Code C# Extension to 1.24.1. See [this issue](https://github.com/OmniSharp/omnisharp-vscode/issues/5160).
+Note: for it to work on your setup in Visual Studio Code, you might have to downgrade the Visual Studio Code C# Extension to 1.24.1. See [this issue](https://github.com/OmniSharp/omnisharp-vscode/issues/5160).
 
 
 ## What do the config parameters mean?
