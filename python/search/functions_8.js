@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['learn_0',['learn',['../classrl_1_1deep__q__learning_1_1DeepQLearner.html#a34f1cfc317e597422d521a4b9f89e965',1,'rl::deep_q_learning::DeepQLearner']]],
-  ['log_5fepisode_1',['log_episode',['../classrl_1_1logger_1_1Logger.html#a1e8fb8a7a4eef020fdf1dd29470bca4d',1,'rl::logger::Logger']]]
+  ['update_0',['update',['../classrl_1_1dqn_1_1DQN.html#a70722326d79747510dbc502374c89792',1,'rl::dqn::DQN']]]
 ];
