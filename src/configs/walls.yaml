@@ -1,22 +1,22 @@
-description: "Config for a nearby workspace"
+description: "Example config"
 
 environment:
   path_to_unity_executable: './build/simenv.x86_64'
-  path_to_robot_urdf: './src/configs/robots/manual_robot.urdf'
+  path_to_robot_urdf: './src/configs/robots/example_robot.urdf'
   morphevo_use_graphics: false
-  rl_use_graphics_training: false
+  rl_use_graphics_training: true
   rl_use_graphics_testing: false
   amount_of_cores: 8
 
 arm:
   minimum_amount_modules: 2
   maximum_amount_modules: 4
-  length_lower_bound: 0.7
+  length_lower_bound: 1
   length_upper_bound: 4
   movements: ['rotate', 'tilt', 'complex']
 
 mutation:
-  standard_deviation_length: 0.4
+  standard_deviation_length: 0.5
   chance_module_drop: 0.10
   chance_module_add: 0.10
   chance_type_mutation: 0.05
@@ -36,18 +36,19 @@ morphevo:
   crossover_children: 4
   sample_size: 100
   workspace_type: 'moved_cube'
-  # small cube next to arm
-  workspace_cube_offset: [0,5,9]
-  workspace_side_length: 4 
+  # cube over the whole surrounding area of the arm
+  workspace_cube_offset: [ 0,5,15 ]
+  workspace_side_length: 5
 
 rl:
   episodes: 1000 
   steps_per_episode: 1000
   gamma: 0.95
-  eps_end: 0.08
+  eps_end: 0
   eps_decay: 0.99995
   batch_size: 4
   mem_size: 20
   eps_start: 1 
   hidden_nodes: 64
   goal_bal_diameter: 1.1
+  use_walls: True

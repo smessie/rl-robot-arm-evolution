@@ -11,9 +11,9 @@ import ray
 from coevolution.coevolution import run_coevolution
 from environment import environment
 from morphevo.evolution import run_evolution
+from morphevo.util import write_morphevo_benchmarks
 from rl.deep_q_learning import run_reinforcement_learning
 from util.config import set_config
-from morphevo.util import write_morphevo_benchmarks
 
 
 def start_morphevo():
@@ -69,7 +69,7 @@ if __name__ == '__main__':
         start_test_env()
     else:
         if len(sys.argv) < 3:
-            print("Something wrong with program arguments")
+            print("Something wrong with program arguments, please check out the correct syntax.")
             sys.exit()
         elif sys.argv[1] == "morphevo":
             start_morphevo()

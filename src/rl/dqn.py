@@ -1,8 +1,11 @@
 import random
 from collections import deque
+
 import numpy as np
 import torch
+
 from util.config import get_config
+
 
 class RobotNetwork(torch.nn.Module):
     """! The Robot Network class.
@@ -20,11 +23,12 @@ class RobotNetwork(torch.nn.Module):
         self.linear2 = torch.nn.Linear(hidden_nodes, hidden_nodes)
         self.linear3 = torch.nn.Linear(hidden_nodes, number_of_actions)
 
-    def forward(self, x):
-        """! Internal function of the network, used for processing the input of the network. 
-        @param The network input.
+    def forward(self, network_input):
+        """! Internal function of the network, used for processing the input of the network.
+        @param network_input The network input.
         """
-        return self.linear3(self.linear2(self.linear1(x)))
+        return self.linear3(self.linear2(self.linear1(network_input)))
+
 
 class DQN:
     """! The DQN class.
@@ -54,25 +58,26 @@ class DQN:
         self.optimizer = torch.optim.Adam(self.network.parameters(), lr=0.0001)
         self.memory = deque(maxlen=self.mem_size)
 
-    def _save(self, path: str):
-        """! Save the network to a given path. 
-        @param path The file path to save the network to. 
+    def save(self, path: str):
+        """! Save the network to a given path.
+        @param path The file path to save the network to.
         """
         torch.save(self.network, path)
 
-    def _calculate_current_q_value(self, state_batch: torch.Tensor, action_batch: torch.Tensor):
+    def _calculate_current_q_value(self, state_batch: torch.Tensor, action_batch: torch.Tensor) -> torch.Tensor:
         """! Calculate the current Q-value.
-        @param state_batch The states batch. 
-        @param action_batch The actions batch. 
+        @param state_batch The states batch.
+        @param action_batch The actions batch.
         @return Current Q value.
         """
         current_q = self.network(state_batch.float()).gather(1, action_batch.unsqueeze(1))
         return current_q.squeeze(1)
 
-    def _calculate_targets(self, dones: torch.Tensor, next_states: torch.Tensor, reward_batch: torch.Tensor):
+    def _calculate_targets(self, dones: torch.Tensor, next_states: torch.Tensor,
+                           reward_batch: torch.Tensor) -> torch.Tensor:
         """! Calculate the targets.
-        @param dones Tensor list with finished value or not finished. 
-        @param next_states The next states. 
+        @param dones Tensor list with finished value or not finished.
+        @param next_states The next states.
         @param reward_batch The reward batch.
         @return The targets.
         """
@@ -80,17 +85,17 @@ class DQN:
 
         return reward_batch + (self.gamma * max_next_q)
 
-    def _apply_loss(self, current_q: torch.Tensor, targets: torch.Tensor):
+    def _apply_loss(self, current_q: torch.Tensor, targets: torch.Tensor) -> None:
         """! Apply the loss function.
         @param The current Q-value.
-        @param next_states The targets. 
+        @param next_states The targets.
         """
         loss_fn = torch.nn.MSELoss()
         loss = loss_fn(current_q, targets.float())
         self.optimizer.zero_grad()
         loss.backward()
 
-    def _experience_replay(self):
+    def _experience_replay(self) -> None:
         """! Apply experience replay to the network.
         """
         batch = random.sample(self.memory, self.batch_size)
@@ -130,12 +135,11 @@ class DQN:
             self._experience_replay()
 
     def get_best_action(self, state: np.ndarray) -> int:
-        """! Look up the best action for a given state. 
-        @param state An input state representing the environment. 
+        """! Look up the best action for a given state.
+        @param state An input state representing the environment.
         @return An action, represented as a number.
         """
         with torch.no_grad():
             x = self.network(torch.tensor([state], dtype=torch.float))
             _, indices = torch.topk(x, 1)
             return indices[0].item()
-

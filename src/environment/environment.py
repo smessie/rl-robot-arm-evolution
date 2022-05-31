@@ -40,7 +40,7 @@ class SimEnv(gym.Env):
         assert Path(env_path).exists(), (
             f"Given environment file path does not exist: {env_path}\n"
             f"Make sure this points to the environment executable "
-            f"that you can download from Ufora."
+            f"that make via the instructions present in the README.md."
         )
 
         self.env_path = env_path

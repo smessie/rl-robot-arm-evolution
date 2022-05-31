@@ -4,9 +4,9 @@ import numpy as np
 import ray
 from mlagents_envs.exception import UnityWorkerInUseException
 
+from coevolution.arm import Arm
 from environment.environment import SimEnv
 from morphevo.workspace import Workspace
-from coevolution.arm import Arm
 
 
 @ray.remote(num_cpus=1)
@@ -96,6 +96,8 @@ class Evaluator:
                 break
 
             angle_diff = current_angles - target_angles
+            angle_diff[angle_diff > 180] -= 360
+
             actions[angle_diff > 0] = -1
             actions[angle_diff < 0] = 1
             actions[abs(angle_diff) <= 5] = 0

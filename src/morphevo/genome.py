@@ -18,6 +18,7 @@ class Genome:
     """! A class that represents a Genome, it contains an encoding, methods for evaluation, methods to mutate and
     methods to compare to other genomes.
     """
+
     def __init__(self, parent_genome: Optional[Genome] = None) -> None:
         """! Create a Genome, if no parent is given a random encoding will be generated. Otherwise it will
         use the mutated encoding of its parent as encoding.
@@ -48,9 +49,11 @@ class Genome:
 
         for module in self.genotype_graph:
             urdf_generator.add_module(module.length,
-                              can_tilt=module.module_type in (ModuleType.TILTING, ModuleType.TILTING_AND_ROTATING),
-                              can_rotate=module.module_type in (ModuleType.ROTATING, ModuleType.TILTING_AND_ROTATING),
-                           )
+                                      can_tilt=module.module_type in (
+                                          ModuleType.TILTING, ModuleType.TILTING_AND_ROTATING),
+                                      can_rotate=module.module_type in (
+                                          ModuleType.ROTATING, ModuleType.TILTING_AND_ROTATING),
+                                      )
         return urdf_generator.get_urdf()
 
     def calculate_diversity_from(self, other_genome: Genome) -> float:
@@ -72,7 +75,7 @@ class Genome:
                 diversity += 1
             else:
                 length_longest_module = max(own_module.length, other_module.length)
-                diversity += (abs(own_module.length - other_module.length)/length_longest_module)
+                diversity += (abs(own_module.length - other_module.length) / length_longest_module)
 
         return diversity / amount_of_modules
 
@@ -126,15 +129,18 @@ class Genome:
             time.ctime(),
         ))
 
+
 #
 # Namedtuple that represents a module of the arm.
 #
 Module = namedtuple('Module', 'module_type length')
 
+
 class GenotypeGraphNode:
     """! A node in the GenotypeGraph class.
     Represents the encoding of one or more modules of the same type.
     """
+
     def __init__(self, module_type: ModuleType, lengths: List[float]) -> None:
         """!
         @param module_type The type of the module(s) that will be represented.
@@ -144,9 +150,11 @@ class GenotypeGraphNode:
         self.lengths = lengths
         self.next = None
 
+
 class GenotypeGraph:
     """! GenotypeGraph is a directed graph encoding for the genome of an arm.
     """
+
     def __init__(self, anchor_length: float = 1.0) -> None:
         """!
         @param anchor_length The length of the anchor module.
@@ -199,7 +207,7 @@ class GenotypeGraph:
             if run_chance(config.chance_type_mutation):
                 module_type = np.random.choice(get_config().module_choices)
             else:
-                module_type =module.module_type
+                module_type = module.module_type
             length = np.clip(
                 module.length + np.random.normal(0, config.standard_deviation_length),
                 config.length_lower_bound, config.length_upper_bound
@@ -228,7 +236,7 @@ class GenotypeGraph:
         length = np.random.rand() * (config.length_upper_bound - config.length_lower_bound) + config.length_lower_bound
         return Module(module_type, length)
 
-    def iterate_graph(self, ignore_anchor: bool=True):
+    def iterate_graph(self, ignore_anchor: bool = True):
         """!
         Iterator to iterate graph module after module instead of node after node.
 
@@ -253,9 +261,10 @@ class GenotypeGraph:
         """
         return len([None for _ in self])
 
+
 def run_chance(chance: float) -> bool:
     """! Run a chance.
     @param chance Chance of being True on 1
     @return True or False depending on result of chance test.
     """
-    return random.uniform(0,1) < chance
+    return random.uniform(0, 1) < chance
