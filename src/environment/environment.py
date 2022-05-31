@@ -4,7 +4,6 @@
 # and a function test_environment.
 # The function starts the Unity project and tests some basic things like actions and side channels
 #
-import os
 import xml.etree.ElementTree as ET
 from abc import ABC
 from pathlib import Path
