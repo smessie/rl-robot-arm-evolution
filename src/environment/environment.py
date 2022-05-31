@@ -57,8 +57,8 @@ class SimEnv(gym.Env, ABC):
         self.behavior_spec = self.u_env.behavior_specs[self.behavior_name]
 
     def _initialize_unity_env(self) -> Tuple[CreationSC, GoalSC, WorkspaceSC, WallSC, UnityEnvironment]:
-        """! A function that creates the side channels and starts the Unity environment
-        @return The created side channel objects and the mlagents UnityEnvironment
+        """! A function that creates the side channels and starts the Unity environment.
+        @return The created side channel objects and the mlagents UnityEnvironment.
         """
         creation_sc = CreationSC()
         goal_sc = GoalSC()
@@ -85,46 +85,46 @@ class SimEnv(gym.Env, ABC):
         return creation_sc, goal_sc, workspace_sc, wall_sc, env
 
     def _get_unity_observations(self) -> np.ndarray:
-        """! Get the observations from the Unity environment
-        @return The observations
+        """! Get the observations from the Unity environment.
+        @return The observations.
         """
         decision_steps, _ = self.u_env.get_steps(self.behavior_name)
         return decision_steps.obs[0][0]
 
     def _set_unity_actions(self, actions: np.ndarray) -> None:
-        """! Send an action to the Unity environment
-        @param actions: the actions, numbers between -1 and 1
+        """! Send an action to the Unity environment.
+        @param actions: the actions, numbers between -1 and 1.
         """
         actions = np.pad(actions, (0, self.MAX_N_MODULES - len(actions)))
         actions = actions[None, :]
         self.u_env.set_actions(self.behavior_name, action=ActionTuple(actions))
 
     def set_goal(self, goal: tuple) -> None:
-        """! Set the coordinates of the goal visualization
-        @param goal: The coordinates: (x, y, z)
+        """! Set the coordinates of the goal visualization.
+        @param goal: The coordinates: (x, y, z).
         """
         self.goal_sc.send_goal_position(goal)
 
     def set_workspace(self, workspace: tuple) -> None:
-        """! Set the coordinates and size of the workspace visualization
-        @param workspace: The coordinates and size: (x, y, z, sideLength)
+        """! Set the coordinates and size of the workspace visualization.
+        @param workspace: The coordinates and size: (x, y, z, sideLength).
         """
         self.workspace_sc.send_workspace(workspace)
 
     def build_wall(self, wall: List[List[bool]]) -> None:
         """! Build a new wall
         The first wall will be built on a certain distance from the anchor.
-        Every subsequent wall will be built on a certain distance from the previous wall
+        Every subsequent wall will be built on a certain distance from the previous wall.
 
-        Walls are represented by a 2D array of booleans.
+        Walls are represented by a 2D array of booleans
         True means there is a tile on that 'coordinate/index'
         and False meaning there is not
-        @param wall: The new wall
+        @param wall: The new wall.
         """
         self.wall_sc.send_build_command(wall)
 
     def remove_walls(self) -> None:
-        """! Remove all walls
+        """! Remove all walls.
         """
         self.wall_sc.remove_walls()
 
@@ -137,10 +137,10 @@ class SimEnv(gym.Env, ABC):
         self.build_wall(wall)
 
     def step(self, action: np.ndarray, return_observations=True) -> np.ndarray:
-        """! Do 1 step in the unity environment
-        @param action: The action this step
-        @param return_observations: Whether to return observations after the step is taken
-        @return Observations after the step is taken
+        """! Do 1 step in the unity environment.
+        @param action: The action for this step.
+        @param return_observations: Whether to return observations after the step is taken.
+        @return Observations after the step is taken.
         """
         self._set_unity_actions(action)
         self.u_env.step()
@@ -152,24 +152,24 @@ class SimEnv(gym.Env, ABC):
         return observations
 
     def reset(self) -> np.ndarray:
-        """! Reset the Unity Environment, essentially starting a new episode
-        The effect is that OnEpisodeBegin is called in Unity
-        @return Observations obtained after the reset
+        """! Reset the Unity Environment, essentially starting a new episode.
+        The effect is that OnEpisodeBegin is called in Unity.
+        @return Observations obtained after the reset.
         """
         self.u_env.reset()
         observations = self._get_unity_observations()
         return observations
 
     def pause(self, steps=200) -> None:
-        """! For a certain amount of steps, take no action
-        Achieved by taking "zero" actions
+        """! For a certain amount of steps, take no action.
+        Achieved by taking "zero" actions.
         """
         for _ in range(steps):
             actions = [0] * self.joint_amount
             _ = self.step(np.array(actions))
 
     def close(self) -> None:
-        """! Gym interface function to close the environment
+        """! Gym interface function to close the environment.
         """
         del self.creation_sc
         del self.goal_sc
@@ -178,15 +178,15 @@ class SimEnv(gym.Env, ABC):
         self.u_env.close()
 
     def get_current_state(self) -> np.ndarray:
-        """! Get the observations from the Unity environment
-        @return The observations
+        """! Get the observations from the Unity environment.
+        @return The observations.
         """
         return self._get_unity_observations()
 
 
 def test_environment():
-    """! Start the Unity environment and test certain functions like
-    actions and the functionality of side channels
+    """! Start the Unity environment and test certain functions like.
+    actions and the functionality of side channels.
     """
     # make absolute paths to avoid file-not-found errors
     here = os.path.dirname(os.path.abspath(__file__))
