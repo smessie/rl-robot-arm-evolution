@@ -1,8 +1,8 @@
 description: "Example config"
 
 environment:
-  path_to_unity_executable: '../build/simenv.x86_64'
-  path_to_robot_urdf: 'environment/robot.urdf'
+  path_to_unity_executable: './build/simenv.x86_64'
+  path_to_robot_urdf: './src/configs/robots/example_robot.urdf'
   morphevo_use_graphics: false
   rl_use_graphics_training: false
   rl_use_graphics_testing: false
@@ -51,3 +51,4 @@ rl:
   eps_start: 1 
   hidden_nodes: 64
   goal_bal_diameter: 1.1
+  use_walls: False

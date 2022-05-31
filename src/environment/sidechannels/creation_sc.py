@@ -16,8 +16,8 @@ class CreationSC(SideChannel):
         self.info = None
 
     def send_build_command(self, urdf: str) -> None:
-        """! Sent urdf string to environment via side channel
-        @param urdf The urdf to build
+        """! Send urdf string to environment via side channel
+        @param urdf: The urdf to build
         """
         # Add the string to an OutgoingMessage
         msg = OutgoingMessage()

@@ -169,4 +169,4 @@ latex/
 env.py
 
 # Output directory where we can write our generated output to.
-output/
+#output/
