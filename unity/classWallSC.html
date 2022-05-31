@@ -106,7 +106,7 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a04cf356b645a26b9d16bbb4b20ba4b8e"><td class="memItemLeft" align="right" valign="top"><a id="a04cf356b645a26b9d16bbb4b20ba4b8e" name="a04cf356b645a26b9d16bbb4b20ba4b8e"></a>
 override void&#160;</td><td class="memItemRight" valign="bottom"><b>OnMessageReceived</b> (IncomingMessage msg)</td></tr>
-<tr class="memdesc:a04cf356b645a26b9d16bbb4b20ba4b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called when a message is sent through the side channel. When the message is a wall, instructs the <a class="el" href="classWallBuilder.html">WallBuilder</a> to build a new wall. Otherwise all walls are cleared. </p><dl class="params"><dt>Parameters</dt><dd>
+<tr class="memdesc:a04cf356b645a26b9d16bbb4b20ba4b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called when a message is sent through the side channel. When the message is a wall, instructs the <a class="el" href="classWallBuilder.html" title="Script on the main manipulator to build walls and remove them">WallBuilder</a> to build a new wall. Otherwise all walls are cleared. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">msg</td><td>The message, either a JSON string parseable to <a class="el" href="classWallSC_1_1WallSpec.html" title="A serializable class used to parse JSON sent through the wall side channel">WallSpec</a> (for building a new wall) or any other string (to remove all walls)</td></tr>
   </table>

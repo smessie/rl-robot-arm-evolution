@@ -69,6 +69,9 @@ $(function() {
   <div class="headertitle"><div class="title">WallBuilder Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Script on the main manipulator to build walls and remove them  
+ <a href="classWallBuilder.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for WallBuilder:</div>
 <div class="dyncontent">
@@ -80,17 +83,59 @@ Inheritance diagram for WallBuilder:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad5d5183af5b46c24edaf202badc6b65a"><td class="memItemLeft" align="right" valign="top"><a id="ad5d5183af5b46c24edaf202badc6b65a" name="ad5d5183af5b46c24edaf202badc6b65a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ClearWalls</b> ()</td></tr>
+<tr class="memdesc:ad5d5183af5b46c24edaf202badc6b65a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all walls placed <br /></td></tr>
 <tr class="separator:ad5d5183af5b46c24edaf202badc6b65a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0909928e000df185b6a3fd6958e415b3"><td class="memItemLeft" align="right" valign="top"><a id="a0909928e000df185b6a3fd6958e415b3" name="a0909928e000df185b6a3fd6958e415b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>BuildWall</b> (List&lt; List&lt; bool &gt; &gt; wall)</td></tr>
+<tr class="memitem:a0909928e000df185b6a3fd6958e415b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallBuilder.html#a0909928e000df185b6a3fd6958e415b3">BuildWall</a> (List&lt; List&lt; bool &gt; &gt; wall)</td></tr>
+<tr class="memdesc:a0909928e000df185b6a3fd6958e415b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build one wall. Subsequent walls will be placed at distanceBetweenWalls from this one  <a href="classWallBuilder.html#a0909928e000df185b6a3fd6958e415b3">More...</a><br /></td></tr>
 <tr class="separator:a0909928e000df185b6a3fd6958e415b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a5bab2d2a4f6e1d03e9bd03e6dfc4e8c5"><td class="memItemLeft" align="right" valign="top"><a id="a5bab2d2a4f6e1d03e9bd03e6dfc4e8c5" name="a5bab2d2a4f6e1d03e9bd03e6dfc4e8c5"></a>
 GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>wallTilePrefab</b></td></tr>
+<tr class="memdesc:a5bab2d2a4f6e1d03e9bd03e6dfc4e8c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefab instantiated by Unity representing one tile of the wall <br /></td></tr>
 <tr class="separator:a5bab2d2a4f6e1d03e9bd03e6dfc4e8c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Script on the main manipulator to build walls and remove them </p>
+<p >The first wall will be built on a certain distance from the anchor. Every subsequent wall will be built on a certain distance from that wall</p>
+<p >When removing walls, all walls are removed at one time</p>
+<p >Walls are represented by a 2D array of booleans, true meaning there is a tile on that 'coordinate/index' and false meaning there is not </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0909928e000df185b6a3fd6958e415b3" name="a0909928e000df185b6a3fd6958e415b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0909928e000df185b6a3fd6958e415b3">&#9670;&nbsp;</a></span>BuildWall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WallBuilder.BuildWall </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; List&lt; bool &gt; &gt;&#160;</td>
+          <td class="paramname"><em>wall</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Build one wall. Subsequent walls will be placed at distanceBetweenWalls from this one </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wall</td><td>2D List of bool representing the wall. true meaning there is a tile on that 'coordinate/index' and false meaning there is not</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>unity/Assets/Scripts/WallBuilder.cs</li>
 </ul>
