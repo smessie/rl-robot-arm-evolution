@@ -4,6 +4,9 @@
 - [Python Docs](https://smessie.github.io/SELab3-2022-01/python/)
 - [Unity Project Docs](https://smessie.github.io/SELab3-2022-01/unity/)
 
+## Results
+- [Conclusions can be found in the wiki](https://github.com/smessie/SELab3-2022-01/wiki/Final-results)
+
 ## Config
 #### environment: parameters that are used for the environment and training
   - `path_to_unity_executable`: path to the unity executable
