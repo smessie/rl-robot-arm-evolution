@@ -1,3 +1,8 @@
+# A Fully Self-Learning Robotic Arm
+
+This project was made for the course [Software Engineering Lab 3](https://studiegids.ugent.be/2021/EN/studiefiches/C004072.pdf) at Ghent University.
+
+This research aims to investigate the feasibility of making a system that can fully self-learn the shape and behavior of a robotic arm given a predetermined and varying environments.
 
 ## Docs
 
