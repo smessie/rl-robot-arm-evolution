@@ -6,12 +6,12 @@ This research aims to investigate the feasibility of making a system that can fu
 
 ## Docs
 
-- [Python Docs](https://smessie.github.io/SELab3-2022-01/python/annotated.html)
-- [Unity Project Docs](https://smessie.github.io/SELab3-2022-01/unity/annotated.html)
+- [Python Docs](https://smessie.github.io/rl-robot-arm-evolution/python/annotated.html)
+- [Unity Project Docs](https://smessie.github.io/rl-robot-arm-evolution/unity/annotated.html)
 
 ## Results
 
-- [Conclusions can be found in the wiki](https://github.com/smessie/SELab3-2022-01/wiki/Final-results)
+- [Conclusions can be found in the wiki](https://github.com/smessie/rl-robot-arm-evolution/wiki/Final-results)
 
 
 ## Setup
